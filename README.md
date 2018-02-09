@@ -1,4 +1,4 @@
-# lbaw
+# LBAW
 FEUP LBAW Repository
 
 # Group
@@ -12,6 +12,8 @@ João Dias Conde Azevedo - up201503256@fe.up.pt
 João Pedro Furriel de Moura Pinheiro - up201104913@fe.up.pt
 
 Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
+
+
 
 ### Criar bandas
 Recrutar músicos para bandas
