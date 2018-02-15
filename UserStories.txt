@@ -1,55 +1,72 @@
 ACTORS:
 
-Admin
-User
-Band owner/admin (?)
+GenericUser
+AuthenticatedUser
+UnauthenticatedUser
+Band member
 Band moderator
-Band Member
-Visitor
+Band owner
+Admin 
+Soundcloud API
+Facebook API
+Google API
 
-Visitor:
-As a Visitor, I want to register myself into the system, so that I can login.
-As a Visitor, I want to login into the system, so that I can access privileged information.
-As a Visitor, I want access to the Home Page, so that I can see a description of the website.
 
-User:
-As a User, I want to access my Profile Page and change my information, so that it stays up to date.
-As a User, I want to access the Feed Page, so that I can see posts from the users/bands I follow.
-As a User, I want to follow other users, so that I can see their posts on my feed page.
-As a User, I want to unfollow other users, so that I no longer see their posts on my feed page.
-As a User, I want to follow bands, so that I can see their posts on my feed page.
-As a User, I want to unfollow bands, so that I no longer see their posts on my feed page.
-As a User, I want to create bands' pages, so that I can share my band with other people.
-As a User, I want to apply to bands, so I can join a band looking for a musician.
-As a User, I want to post on the system, so that I can share content.
-As a User, I want to comment on posts from users/bands I follow, so that I can share my opinion.
-As a User, I want to remove my comments/posts from the system, so that I can remove unnecessary comments/posts.
-As a User, I want to report other bands/users' behaviour, so that negative users or negative content gets removed from the system.
-As a User, I want to rate other users/bands, so that I can evaluate their quality. (?)
-As a User, I want to chat with other users, so that I can keep contact with them.
-As a User, I want to access other users' profile pages, so that I can see their information and posts.
-As a User, I want to access bands' pages, so that I can see their information and posts.
+GenericUser:
+As a GenericUser, I want to access about page, so that I can see a complete website's description.
+As a GenericUser, I want to access FAQ page, so that I can see a Frequently Asked Questions.
+As a GenericUser, I want to access contact page, so that I can see the website owners' contacts.
+As a GenericUser, I want to access terms and conditions page, so that I can see a complete list of terms and conditions imposed by the website.
 
-Band Owner:
-As a Band Owner, I want to access the band's page, so that I can see what has been posted there.
-As a Band Onwer, I want to post on the band's page, so that I can keep it updated.
-As a Band Owner, I want to remove posts from the band's page, so that I can remove unnecessary posts.
-As a Band Owner, I want to recruit users to the band, so that they can be band members.
-As a Band Owner, I want to remove users from the band, so that they no longer are band members.
-As a Band Owner, I want to schedule concerts, so that (?).
-As a Band Owner, I want to chat with other band's members, so that we can talk privately on the system.
 
-Band Moderator:
-As a Band Moderator, I want to access the band's page, so that I can see what has been posted there.
-As a Band Moderator, I want to post on the band's page, so that I can keep it updated.
-As a Band Moderator, I want to remove posts from the band's page, so that I can remove unnecessary posts.
-As a Band Moderator, I want to chat with other band's members, so that we can talk privately on the system.
+UnauthenticatedUser:
+As an UnauthenticatedUser, I want to register myself into the system, so that I can login.
+As an UnauthenticatedUser, I want to register myself into the system using the facebook API, so that I can login.
+As an UnauthenticatedUser, I want to register myself into the system using the google API, so that I can login.
+As an UnauthenticatedUser, I want to login into the system, so that I can access privileged information.
+As an UnauthenticatedUser, I want to login into the system using the facebook API, so that I can access privileged information.
+As an UnauthenticatedUser, I want to login into the system using the google API, so that I can access privileged information.
+
+
+
+AuthenticatedUser:
+As an AuthenticatedUser, I want to access my Profile Page and change my information, so that it stays up to date.
+As an AuthenticatedUser, I want to access the Feed Page, so that I can see posts from the users/bands I follow.
+As an AuthenticatedUser, I want to follow other users, so that I can see their posts on my feed page.
+As an AuthenticatedUser, I want to unfollow other users, so that I no longer see their posts on my feed page.
+As an AuthenticatedUser, I want to follow bands, so that I can see their posts on my feed page.
+As an AuthenticatedUser, I want to unfollow bands, so that I no longer see their posts on my feed page.
+As an AuthenticatedUser, I want to create bands' pages, so that I can share my band with other people.
+As an AuthenticatedUser, I want to apply to bands, so I can join a band looking for a musician.
+As an AuthenticatedUser, I want to post on the system, so that I can share content.
+As an AuthenticatedUser, I want to comment on posts from users I follow, so that I can share my opinion.
+As an AuthenticatedUser, I want to comment on posts from bands I follow, so that I can share my opinion.
+As an AuthenticatedUser, I want to remove my posts from the system, so that I can remove unnecessary posts.
+As an AuthenticatedUser, I want to remove my comments from the system, so that I can remove unnecessary comments.
+As an AuthenticatedUser, I want to report other bands' behaviour, so that negative bands or negative content gets removed from the system.
+As an AuthenticatedUser, I want to report other users' behaviour, so that negative users or negative content gets removed from the system.
+As an AuthenticatedUser, I want to rate other bands, so that I can evaluate their quality.
+As an AuthenticatedUser, I want to rate other users, so that I can evaluate their quality.
+As an AuthenticatedUser, I want to chat with other users, so that I can keep contact with them.
+As an AuthenticatedUser, I want to access other users' profile pages, so that I can see their information and posts.
+As an AuthenticatedUser, I want to access bands' pages, so that I can see their information and posts.
+
+Admin:
+As an Admin, I want to remove comments, so that I can remove inappropriate/offensive comments.
+As an Admin, I want to remove posts, so that I can remove inappropriate/offensive posts.
+As an Admin, I want to remove a user from the system, so that I can remove users with negative behaviour.
+As an Admin, I want to give other users Admin privileges, so that they can help me keep the system safer and cleaner.
+
 
 Band Member:
 As a Band Member, I want to access the band's page, so that I can see what has been posted there.
 As a Band Member, I want to chat with other band's members, so that we can talk privately on the system.
 
-Administrator:
-As an Admin, I want to remove comments/posts, so that I can remove inappropriate/offensive comments/posts.
-As an Admin, I want to remove a user from the system, so that I can remove users with negative behaviour.
-As an Admin, I want to give other users Admin privileges, so that they can help me keep the system safer and cleaner.
+Band Moderator:
+As a Band Moderator, I want to post on the band's page, so that I can keep it updated.
+As a Band Moderator, I want to remove posts from the band's page, so that I can remove unnecessary posts.
+
+Band Owner:
+As a Band Owner, I want to recruit users to the band, so that they can be band members.
+As a Band Owner, I want to remove users from the band, so that they no longer are band members.
+As a Band Owner, I want to schedule concerts, so that the band followers know where and when to attend our concerts.
