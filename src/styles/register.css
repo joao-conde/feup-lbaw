@@ -4,7 +4,6 @@
 
 body {
 	background:url(../images/system/test.jpg) no-repeat;
-	padding-top:100px;
 	background-size:cover;
 }
 
@@ -12,14 +11,27 @@ body {
 	background: rgba(0, 0, 0, 0.3);
 }
 
-input {
+.form-group input {
 	border-style: solid;
-	border-width: 20px !important;
 	background: rgba(0, 0, 0, 0);
 	color: #dbbba0;
+	width: 60%;
 }
 
+.jumbotron .container {
+	margin-left: 5%;
+}
+
+#date {
+	padding-left: 8%;
+	text-align: center;
+	font-style: italic;
+}
+
+
 ::placeholder{
+	text-align: center;
+	font-style: italic;
 	color: #dbbba0;
 }
 
@@ -30,7 +42,6 @@ label {
 h2 {
 	color: white;	
 }
-
 
 .jumbotron h5 {
 	color: #dbbba0;
@@ -55,4 +66,4 @@ h2 {
 @keyframes blink-caret {
   from, to { border-color: transparent }
   50% { border-color: orange; }
-}
+}*/
