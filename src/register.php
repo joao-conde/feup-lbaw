@@ -1,23 +1,10 @@
-<!DOCTYPE html>
+<?php  include_once('templates/header.php'); ?>
 
-<html lang="en-US"> 
-    
-    <head>
-        <title>Nome</title>        
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/flatly/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="styles/register.css">    
-    </head>
-
+    <link rel="stylesheet" type="text/css" href="styles/register.css">    
     <body>
         <div id="register" class="container-fluid">
             <div class="row justify-content-center">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
 			<div class="jumbotron jumbotron">
                 <h2>Register</h2>
                 <form action="#">
@@ -59,31 +46,31 @@
 
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-sm-8 text-left">
+                            <div class="col-7 text-left">
                                 <label><input type="checkbox" value="rock">Rock</label>
                             </div>
 
-                            <div class="col-sm-4 text-left">
+                            <div class="col-4 text-left">
                                 <label><input type="checkbox" value="metal">Metal</label>
                             </div>
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="col-sm-8 text-left">
+                            <div class="col-7 text-left">
                                 <label><input type="checkbox" value="pop">Pop</label>
                             </div>
 
-                            <div class="col-sm-4 text-left">
+                            <div class="col-4 text-left">
                                 <label><input type="checkbox" value="jazz">Jazz</label>
                             </div>
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="col-sm-8 text-left">
+                            <div class="col-7 text-left">
                             <label><input type="checkbox" value="blues">Blues</label>
                             </div>
 
-                            <div class="col-sm-4 text-left">
+                            <div class="col-4 text-left">
                                 <label><input type="checkbox" value="country">Country</label>
                             </div>
                         </div>
