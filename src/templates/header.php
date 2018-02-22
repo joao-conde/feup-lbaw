@@ -13,7 +13,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
     <body>  
-        <div class="jumbotron jumbotron-fluid p-2 bg-primary text-white">
+        <div class="jumbotron jumbotron-fluid p-2 bg-primary text-white mb-0">
             <div class="container-fluid">
                 <div class="row align-items-center">
 
@@ -35,5 +35,3 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
