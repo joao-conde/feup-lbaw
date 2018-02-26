@@ -3,61 +3,58 @@
 <script src="scripts/feed.js"></script>
 
 <body>
-    <div class="wrapper">
 
-        <nav id="sidebar">
-            <!-- Close Sidebar Button -->
-            <div id="dismiss">
-                <i class="glyphicon glyphicon-arrow-left"></i>
-            </div>
+    <div id="wrapper" class="toggled">
 
-            <!-- Sidebar Header -->
-            <div class="sidebar-header">
-                <h3>Collapsible Sidebar</h3>
-            </div>
-
-
-            <!-- Sidebar Links -->
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="#">Home</a>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Username
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Bands</a>
+                </li>
+                <li>
+                    <a href="#">Musicians</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
                 </li>
                 <li>
                     <a href="#">About</a>
                 </li>
                 <li>
-                    <!-- Link with dropdown items -->
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Page</a>
-                        </li>
-                        <li>
-                            <a href="#">Page</a>
-                        </li>
-                        <li>
-                            <a href="#">Page</a>
-                        </li>
-                    </ul>
-                    <li>
-                        <a href="#">Portfolio</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
+                    <a href="#">Contact</a>
                 </li>
             </ul>
-        </nav>
-
-        <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
-                Toggle Sidebar
-            </button>
         </div>
+        <!-- /#sidebar-wrapper -->
 
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <h1>News feed</h1>
+                
+                <a href="#">Post1</a><br>
 
-        <div class="overlay"></div>
+                <a href="#">Post2</a><br>
+
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+    </div>
+    <!-- /#wrapper -->
 
 </body>
 

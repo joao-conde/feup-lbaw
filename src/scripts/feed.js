@@ -1,25 +1,7 @@
-$(document).ready(function () {
-
-    $("#sidebar").mCustomScrollbar({
-        theme: "minimal"
-    });
-
-    // when opening the sidebar
-    $('#sidebarCollapse').on('click', function () {
-        // open sidebar
-        $('#sidebar').addClass('active');
-        // fade in the overlay
-        $('.overlay').fadeIn();
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-    });
-
-   
-    // if dismiss or overlay was clicked
-    $('#dismiss, .overlay').on('click', function () {
-      // hide the sidebar
-      $('#sidebar').removeClass('active');
-      // fade out the overlay
-      $('.overlay').fadeOut();
-    });
-});
+//Menu Toggle Script
+/* trying to hide button for large screens making it only available to hide in small devices
+if(document.documentElement.clientHeight < 768){
+    console.log(document.querySelector("#menu-toggle"));
+    document.getElementById("menu-toggle").remove("toggle");
+}*/
+    
