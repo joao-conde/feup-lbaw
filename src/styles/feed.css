@@ -1,69 +1,131 @@
-#register{
-    text-align: center;
+.wrapper {
+    display: block;
 }
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* top layer */
+    z-index: 9999;
+}
+
+.overlay {
+    /* full screen */
+    width: 100vw;
+    height: 100vh;
+    /* transparent black */
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    /* middle layer, i.e. appears below the sidebar */
+    z-index: 9998;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    /* top right corner of the sidebar */
+    top: 10px;
+    right: 10px;
+}
+
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    content: '\e259';
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+    font-size: 0.6em;
+}
+
+a[aria-expanded="true"]::before {
+    content: '\e260';
+}
+
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
+
 
 body {
-	background:url(../images/system/test.jpg) no-repeat;
-	background-size:cover;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
 }
 
-.jumbotron {
-	background: rgba(0, 0, 0, 0.3);
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
 }
 
-.form-group input {
-	border-style: solid;
-	background: rgba(0, 0, 0, 0);
-	color: #dbbba0;
-	width: 60%;
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
-.jumbotron .container {
-	margin-left: 5%;
+#sidebar {
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
 }
 
-#date {
-	padding-left: 8%;
-	text-align: center;
-	font-style: italic;
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
 }
 
-
-::placeholder{
-	text-align: center;
-	font-style: italic;
-	color: #dbbba0;
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
 }
 
-label {
-	color: white;
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
 }
 
-h2 {
-	color: white;	
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
 }
 
-.jumbotron h5 {
-	color: #dbbba0;
-	overflow: hidden; /* Ensures the content is not revealed until the animation */
-  	border-right: .15em solid #dbbba0; /* The typwriter cursor */
-  	white-space: nowrap; /* Keeps the content on a single line */
-  	margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  	animation: 
-    typing 3.5s steps(60, end),
-    blink-caret .75s step-end infinite;
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
 }
-
-.jumbotron h2 {
-	color: #af947c;	
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
 }*/
