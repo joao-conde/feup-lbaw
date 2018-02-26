@@ -2,9 +2,9 @@
 <?php  include_once('templates/header.php'); ?>
 
     <link rel="stylesheet" href="styles/profile.css">
-    <div class="profile-page">
+    <div class="profile-page row">
         <div class="background-image"></div>
-        <div class="card float-right profile-card" style="width:300px">
+        <div class="card float-right profile-card col-4" style="width:300px">
             <img class="card-img-top" src="images/users/example-user.jpg" alt="Card image" style="width:100%">
             <div class="card-body">
                 <div class="row">
@@ -34,9 +34,11 @@
             </div>
         </div>
 
-        <div >
-
-        </div>
+        <!-- <div class="container">
+            <div class="jumbotron col-4">
+                <h3>Some post text</h3>
+            </div>
+        </div> -->
     </div>
 
 </body>

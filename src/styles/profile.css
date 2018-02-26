@@ -1,4 +1,5 @@
 .background-image {
+    /* background: url(../images/system/test.jpg); */
     background: url(../images/users/example-user.jpg);
     height: 800px;
     width: 100%;
@@ -14,11 +15,11 @@
     position: relative;
 }
 
-.profile-card{
+/* .profile-card{
     position:absolute;
     top:0;
-    left: 60px;
-}
+    left: 40px;
+} */
 
 #skills{
     color: ivory;
