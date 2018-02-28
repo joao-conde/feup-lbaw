@@ -11,6 +11,7 @@ input {
 	border-style: solid;
 	background: rgba(0, 0, 0, 0);
 	color: #dbbba0;
+	outline: none;
 }
 
 ::placeholder{
