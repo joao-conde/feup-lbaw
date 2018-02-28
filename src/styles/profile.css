@@ -1,16 +1,3 @@
-.background-image {
-    /* background: url(../images/system/test.jpg); */
-    background: url(../images/users/example-user.jpg);
-    height: 800px;
-    width: 100%;
-    background-size: cover;
-    position: fixed;
-    top: 0;
-    left: 0;
-    filter: opacity(40%) blur(4px);
-    z-index: -1;
-}
-
 .profile-page{
     position: relative;
 }

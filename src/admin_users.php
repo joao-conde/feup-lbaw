@@ -8,13 +8,13 @@
 		<nav class="navbar navbar-expand bg-primary navbar-light p-0">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="./admin_users.php">Users</a>
+					<a class="nav-link text-success" href="./admin_users.php">Users</a>
 				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="./admin_reports.php">Reports</a>
+				<li class="nav-item">
+					<a class="nav-link text-success" href="./admin_reports.php">Reports</a>
 				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="./admin_genres.php">Genres</a>
+				<li class="nav-item">
+					<a class="nav-link text-success" href="./admin_genres.php">Genres</a>
 				</li>
 			</ul>
 		</nav>

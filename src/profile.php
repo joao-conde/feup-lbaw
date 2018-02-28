@@ -3,8 +3,8 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="styles/profile.css">
+    
     <div class="profile-page row m-0" style="width: 100%">
-        <div class="background-image"></div>
         <div class="card float-right profile-card col-3 ml-2">
             <img class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image" style="width:100%">
             <div class="card-body">
@@ -50,7 +50,7 @@
 
         <div class="container col m-0">
 
-            <div class="jumbotron bg-white pt-4 pb-4 mt-2 mb-0">
+            <div class="jumbotron bg-white pt-4 pb-4 mt-0 mb-0">
                 <div class="row mb-3">
                     <img class="user-post-img rounded-circle" src="images/users/example-user.jpg" alt="Profile picture">
                     <h4 class="col-10 pt-2">Leonardo Teixeira</h4>

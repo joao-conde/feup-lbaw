@@ -1,9 +1,9 @@
-<link rel="stylesheet" type="text/css" href="styles/logincss.css">
-
 <?php include('templates/header.php'); ?>
 
+<link rel="stylesheet" type="text/css" href="styles/forms.css">
+
 <div class="container-fluid">
-	<div class="row justify-content-center">
+	<div class="row justify-content-center mt-5">
 		<div class="col-sm-4">
 		<div class="jumbotron text-center">
 		  	<h2>Login</h2>
