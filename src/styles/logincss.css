@@ -1,8 +1,6 @@
 body {
 	background:url(../images/system/test.jpg) no-repeat center center fixed;
-	padding-top:100px;
 	background-size:cover;
-	text-align: center;
 }
 
 .jumbotron {

@@ -1,10 +1,59 @@
 img.logo {
-    width: 70px;
+    width: 60px;
     height: auto;
 }
 
 img.profile {
-    width: 70px;
+    width: 45px;
+    height: 45px;
+    border-radius: 22.5px;
+    border: 1px solid white;
+}
+
+img.search {
+    width: 20px;
     height: auto;
-    border-radius: 35px;
+}
+
+nav.navbar li.active {
+    text-decoration: underline;
+}
+
+@media(min-width: 992px) {
+
+    form#searchbarForm {
+        width: 100%;
+    }
+
+}
+
+div#navBar > div.row,
+div#searchbarHeader > div.row {
+    justify-content: center !important;
+    padding: 0 0 0 1em;
+}
+
+@media(max-width: 767px) {
+
+    img.logo {
+        width: 40px;
+        height: auto;
+    }
+
+    img.profile {
+        width: 40px;
+        height: auto;
+    }
+
+    div#logo h1 {
+        margin: 0;
+    }
+
+    div#logo p {
+        margin: 0;
+        font-size: 0.8em;
+    }
+
+    
+
 }

@@ -1,0 +1,48 @@
+.background-image {
+    /* background: url(../images/system/test.jpg); */
+    background: url(../images/users/example-user.jpg);
+    height: 800px;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    filter: opacity(40%) blur(4px);
+    z-index: -1;
+}
+
+.profile-page{
+    position: relative;
+}
+
+/* .profile-card{
+    position:absolute;
+    top:0;
+    left: 40px;
+} */
+
+#skills{
+    color: ivory;
+}
+
+.edit-icon{
+    cursor: pointer; 
+}
+
+
+.user-post-img {
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+}
+
+
+.post-img {
+    width: 100%;
+}
+
+.carousel-img{
+    height: 100px;
+    width: 200px;
+    overflow: hidden;
+}
