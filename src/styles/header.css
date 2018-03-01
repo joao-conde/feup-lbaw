@@ -1,3 +1,23 @@
+img.profile_img_message {
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+    border: 1px solid white;
+}
+
+div#messagesList {
+    width: 250px;
+    overflow: hidden;
+}
+
+div#messagesList .sender::after{
+    content: ":";
+}
+div#notificationsList .time,
+div#messagesList .time{
+    font-size: 0.6em !important;
+}
+
 img.logo {
     width: 60px;
     height: auto;
