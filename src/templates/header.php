@@ -14,7 +14,7 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     </head>
     <body>  
-        <div id="header" class="container-fluid bg-primary text-white mb-2">
+        <div id="header" class="container-fluid sticky-top bg-primary text-white mb-2">
             
             <div class="row justify-content-between p-2">
 
