@@ -15,11 +15,6 @@
 		<hr>
 
 		<section class="pb-3">
-			<!--ul class="list-group">
-				<li class="list-group-item">First item</li>
-				<li class="list-group-item">Second item</li>
-				<li class="list-group-item">Third item</li>
-			</ul-->
 			<div id="accordion">
 				<div class="card mb-1 bg-primary" style="border: none;">
 					<div class="card-header" id="headingOne">
