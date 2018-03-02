@@ -138,6 +138,14 @@ div#leftfeedmenu {
 }
 
 div.chats {
-  height: 20vh;
+  height: 30vh;
   overflow-y: scroll;
+}
+
+textarea#chat_msg{
+  resize: none;
+  color: black;
+  font-size: 0.8em;
+  outline: none;
+  box-shadow: none;
 }
