@@ -1,13 +1,13 @@
 <?php  include_once('templates/header.php'); ?>
-<link rel="stylesheet" href="styles/feed.css">
-<script src="scripts/feed.js"></script>
+<!-- <link rel="stylesheet" href="styles/feed.css"> -->
+<!-- <script src="scripts/feed.js"></script> -->
 
 <body>
 
     <div id="wrapper" class="toggled">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+        <!-- <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
@@ -30,49 +30,62 @@
                     <a href="#">Contact</a>
                 </li>
             </ul>
-        </div>
+        </div> -->
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <h1>News feed</h1>
+        <!-- <div id="page-content-wrapper"> -->
+        <div class="container-fluid p-1">
+            <!-- <h1>News feed</h1> -->
 
-                <div class="jumbotron">
-                    
-                    <img src="images/system/dummy_profile.svg"/ width = 10%>
-                    <h3> <a href="#">Post1</a> </h3>
+            <div class="jumbotron p-2">
+                <img src="images/system/dummy_profile.svg" / width=1 0%>
+                <h3>
+                    <a href="#">Post1</a>
+                </h3>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis turpis mauris. 
-                        Etiam venenatis tincidunt sapien, quis ullamcorper enim luctus et. In porttitor justo accumsan, 
-                        placerat nisi nec, molestie neque. Proin ut fringilla metus, ac tincidunt nulla. Sed non tristique 
-                        nibh. Fusce ornare ligula et varius blandit. Aenean risus neque, hendrerit sit amet consectetur a, 
-                        sodales auctor tellus. Curabitur justo turpis, placerat in velit non, sollicitudin posuere diam. Ut 
-                        sit amet aliquet orci. Nunc at consequat ante.
-                    </p>
-                   
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis turpis mauris. Etiam venenatis tincidunt
+                    sapien, quis ullamcorper enim luctus et. In porttitor justo accumsan, placerat nisi nec, molestie neque.
+                    Proin ut fringilla metus, ac tincidunt nulla. Sed non tristique nibh. Fusce ornare ligula et varius blandit.
+                    Aenean risus neque, hendrerit sit amet consectetur a, sodales auctor tellus. Curabitur justo turpis,
+                    placerat in velit non, sollicitudin posuere diam. Ut sit amet aliquet orci. Nunc at consequat ante.
+                </p>
+
+            </div>
+
+            <div class="jumbotron p-2">
+
+                <div class="row">
+                    <div class="col-2 align-self-center">
+                        <img src="images/system/dummy_profile.svg">
+                        
+                    </div>
+
+                    <div class="col-auto align-self-center">
+                        <a class="display-5" href="#">Post2</a>
+                    </div>
+
+                </div>
+                <div class="row justify-content-start">
+
+                    <div class="col align-self-center">
+                        
+                        <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis
+                            hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac
+                            dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc
+                            purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora
+                            torquent per conubia nostra, per inceptos himenaeos.
+                        </small>
+
+                    </div>
+
                 </div>
 
-                <div class="jumbotron">
-                    
-                        <img src="images/system/dummy_profile.svg"/ width = 10%>
-                        <h3> <a href="#">Post2</a> </h3>
-    
-                        <p>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis 
-                            lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. 
-                            Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis 
-                            risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. 
-                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-                        </p>
-                       
-                    </div>
-    
-
-
-
-                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
             </div>
+
+            <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
         </div>
+        <!-- </div> -->
         <!-- /#page-content-wrapper -->
 
         <script>
