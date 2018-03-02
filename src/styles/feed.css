@@ -116,12 +116,8 @@
 
   }
 
-  
-@media(max-width:767px) {
-  div.post {
-    border-radius: 0;
-  }
-}
+
+
 
 div#chat {
   position: fixed;
@@ -148,4 +144,19 @@ textarea#chat_msg{
   font-size: 0.8em;
   outline: none;
   box-shadow: none;
+}
+
+@media(max-width:767px) {
+  div.post {
+    border-radius: 0;
+  }
+
+  div.chats {
+    height: 65vh;
+    overflow-y: scroll;
+  }
+
+  /* div#chat {
+    position: static;
+  } */
 }

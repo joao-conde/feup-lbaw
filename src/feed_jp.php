@@ -3,10 +3,19 @@
 
 <div class="container-fluid">
 
-    <div class="row d-md-none mt-2">
+    <div class="row d-md-none my-2 justify-content-between">
         <div class="col-auto">
-            <i class=" text-primary fas fa-bars"></i>
+            <i class="fas fa-bars"></i>
         </div>
+
+        <div class="col-auto">
+            <i class="fas fa-home"></i>
+        </div>
+        
+        <div class="col-auto">
+            <i class="fas fa-comments"></i>        
+        </div>
+
 
     </div>
 
@@ -21,7 +30,7 @@
 
         <div id="posts" class="col-12 col-md-5 p-0">
 
-            <div class="jumbotron p-3 post my-2">
+            <div class="jumbotron p-3 post mb-2">
 
                 <div class="row mb-3 justify-content-between">
                     <div class="col">
@@ -468,7 +477,7 @@
 
         </div>
 
-        <div id="chat" class="py-3 px-0 card bg-light rounded-0 col-3 d-none d-md-block">
+        <div id="chat" class="py-3 px-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block"> <!--  -->
 
             <?php include('chat.html')?>
 
