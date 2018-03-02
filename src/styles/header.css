@@ -1,8 +1,36 @@
+img.profile_img_feed,
 img.profile_img_message {
     width: 25px;
     height: 25px;
     border-radius: 12.5px;
     border: 1px solid white;
+}
+
+img.profile_img_chat {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid white;
+}
+
+img.profile_img_chat_window {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+
+div.online,
+div.offline {
+    margin-bottom: 5px;
+}
+
+div.online img {
+    border: 2px solid #56e25a;
+}
+
+div.offline img {
+    border: 2px solid red;
 }
 
 div#messagesList {
@@ -16,6 +44,10 @@ div#messagesList .sender::after{
 div#notificationsList .time,
 div#messagesList .time{
     font-size: 0.6em !important;
+}
+body {
+    background:url(../images/system/test.jpg) no-repeat center center fixed;
+    background-size:cover;
 }
 
 img.logo {
@@ -73,7 +105,8 @@ div#searchbarHeader > div.row {
         margin: 0;
         font-size: 0.8em;
     }
+}
 
-    
-
+#header {
+    min-height: 10vh;
 }

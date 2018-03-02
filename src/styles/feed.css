@@ -115,4 +115,29 @@
     }
 
   }
+
   
+@media(max-width:767px) {
+  div.post {
+    border-radius: 0;
+  }
+}
+
+div#chat {
+  position: fixed;
+  height: 90vh;
+  right: 0;
+  overflow-y: scroll;
+}
+
+div#leftfeedmenu {
+  position: fixed;
+  height: 100%;
+  left: 0;
+  overflow-y: scroll;
+}
+
+div.chats {
+  height: 20vh;
+  overflow-y: scroll;
+}
