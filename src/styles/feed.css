@@ -141,3 +141,69 @@ div.chats {
   height: 20vh;
   overflow-y: scroll;
 }
+textarea#new_comment_ta {
+  resize: none;
+  font-size: 0.8em;
+  outline: none;
+  box-shadow: none;
+}
+
+@media(max-width:767px) {
+
+  input#toggleleft {
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  input#toggleleft ~ svg {
+    position: relative;
+    top:-3px;
+    left: -20px;
+    z-index: -1;
+  }
+
+  div#leftmenu {
+    position: absolute;
+    width: 250px;
+    left: -250px;
+    top: 30px;
+    /* max-height: 0; */
+    /* left: 0; */
+    z-index: 10;
+    transition: transform 0.2s linear;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  input#toggleleft:checked ~ div {
+
+    transform: translate(100%,0);
+
+  }
+
+  div#leftmenu > ul {
+    padding: 0 0 0 5px; 
+  }
+
+  div#leftmenu > ul > li > ul {
+    padding: 0 0 0 10px;
+  }
+
+  div#leftmenu > ul li {
+    list-style-type: none;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
+  div#leftmenu p {
+    margin: 0;
+    display: inline;
+  }
+  
+  
+
+
+}

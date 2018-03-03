@@ -1,14 +1,6 @@
 
 <?php  include_once('templates/header.php'); ?>
 
-<<<<<<< HEAD
-    <link rel="stylesheet" href="styles/profile.css">
-    
-    <div class="profile-page row m-0">
-        <div class="card float-right profile-card col-3 ml-2">
-            <img class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image" style="width:100%">
-            <div class="card-body px-1">
-=======
 <link rel="stylesheet" href="styles/profile.css">
 
 <div class="profile-page row m-0 ">
@@ -16,7 +8,6 @@
         <div class="card float-right profile-card ml-2 p-3 position-fixed" style="width: 22.5%">
             <img class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image">
             <div class="card-body">
->>>>>>> b5581758febc753385415c5a91d99107010c0d05
                 <div class="row mb-4">
                     <h4 class="card-title col-sm-8 align-self-center m-0">Leonardo Teixeira</h4>
                     <!-- <img class="px-2 pb-2 edit-icon" src="images/system/edit-icon.svg" alt="Edit" width="36" height="36"> -->
