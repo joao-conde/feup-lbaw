@@ -1,308 +1,95 @@
-<div class="row offline ml-2">
-    <div class="col-12">
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<div class="row offline ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatWindow1" role="button" aria-expanded="false"
+    aria-controls="chatWindow">
+    <div class="col">
         <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <a class="text-secondary align-middle" data-toggle="collapse" href="#chatWindow" role="button" aria-expanded="false" aria-controls="chatWindow">
-            <small>Leo</small>
-        </a>
+        <small class="text-secondary">Leo</small>
+
+    </div>
+    <div class="col-2">
+        <span class="badge badge-primary align-middle">1</span>
     </div>
 </div>
 
-<div class="collapse" id="chatWindow">
-    <div class="card card-body rounded-0 p-1 m-0 chats w-100">
-        <div class="row mb-5">
-            <div class="col">
-                <small>16:31</small>
-                <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
-                <small>Hello Hello </small>
+<div class="collapse" id="chatWindow1">
+    <div class="card card-body rounded-0 p-0 m-0 chats">
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-auto px-2">
+                    <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
+                        <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
+                    </a>
+
+                </div>
+                <div class="col px-0">
+                    <small>What is the meaning of life?</small>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-auto px-2">
+                    <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
+                        <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
+                    </a>
+
+                </div>
+                <div class="col px-0">
+                    <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
+                        est, eu rhoncus tellus fermentum quis.</small>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-auto px-2">
+                    <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
+                        <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
+                    </a>
+            
+                </div>
+                <div class="col px-0">
+                    <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
+                        est, eu rhoncus tellus fermentum quis.</small>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-auto px-2">
+                    <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
+                        <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
+                    </a>
+            
+                </div>
+                <div class="col px-0">
+                    <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
+                        est, eu rhoncus tellus fermentum quis.</small>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-auto px-2">
+                    <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
+                        <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
+                    </a>
+
+                </div>
+                <div class="col px-0">
+                    <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices
+                        sollicitudin est, eu rhoncus tellus fermentum quis.</small>
+                </div>
             </div>
 
         </div>
+    </div>
 
-        <div class="row mb-5">
-            <div class="col-12">
-                <small>16:31</small>
-                <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
-                <small>Hello</small>
-            </div>
+    <div class="container">
+        <form class="row form-inline">
+            <img src="images/system/dummy_profile.svg" class="m-2 profile_img_chat">
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
 
-        </div>
-
-        <div class="row mb-5">
-            <div class="col-12">
-                <small>16:31</small>
-                <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
-                <small>Hello Hello Hello Hello Hello Hello Hello Hello</small>
-            </div>
-
-        </div>
-
-        <div class="row mb-5">
-            <div class="col-12">
-                <small>16:31</small>
-                <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
-                <small>Hello Hello Hello Hello Hello Hello Hello Hello</small>
-            </div>
-
-        </div>
-
-        <div class="row mb-5">
-            <div class="col-12">
-                <small>16:31</small>
-                <img src="images/system/dummy_profile.svg" class="profile_img_chat_window">
-                <small>Hello Hello Hello Hello Hello Hello Hello Hello</small>
-            </div>
-
-        </div>
-
-
-
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-<div class="row offline ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">João Pedro</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <a class="text-secondary align-middle" href="#">Leo</a>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
-</div>
-
-
-<div class="row online ml-2">
-    <div class="col">
-        <img src="images/system/dummy_profile.svg" class="mr-2 profile_img_chat">
-        <small class="text-secondary align-middle" href="#">Leo</small>
-    </div>
 </div>

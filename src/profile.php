@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="list-group">
+                <ul class="list-group">
                     <li class="list-group-item active">Skills</li>
                     <li class="list-group-item">
                         <span class="list-group-item-text">Drums</span>
@@ -47,8 +47,8 @@
                         <i class="fas fa-star mt-1 float-right text-info"></i>
                         <i class="fas fa-star mt-1 float-right text-info"></i>
                         <i class="fas fa-star mt-1 float-right text-info"></i>
-                    </li>
-                </div>
+                    </li> 
+                </ul>
             </div>
         </div>
     </div>
