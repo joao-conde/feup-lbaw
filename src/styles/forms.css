@@ -3,10 +3,15 @@ body {
 	background-size:cover;
 }
 
-/*.jumbotron {
-	background: #646970;
+#myVideo {
+	position: fixed;
+	left: 0;
+	bottom: -100px;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -2;
 }
-*/
+
 input {
 	border-style: solid;
 	background: rgba(0, 0, 0, 0);
@@ -14,7 +19,7 @@ input {
 	outline: none;
 }
 
-::placeholder{
+.jumbotron ::placeholder{
 	text-align: center;
 	font-style: italic;
 	color: white;
@@ -32,12 +37,12 @@ h2 {
 .jumbotron h5 {
 	color: #dbbba0;
 	overflow: hidden; /* Ensures the content is not revealed until the animation */
-  	border-right: .15em solid #dbbba0; /* The typwriter cursor */
-  	white-space: nowrap; /* Keeps the content on a single line */
-  	margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  	animation: 
-    typing 3.5s steps(60, end),
-    blink-caret .75s step-end infinite;
+	border-right: .15em solid #dbbba0; /* The typwriter cursor */
+	white-space: nowrap; /* Keeps the content on a single line */
+	margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+	animation: 
+	typing 3.5s steps(60, end),
+	blink-caret .75s step-end infinite;
 }
 
 .jumbotron h2 {
@@ -45,11 +50,11 @@ h2 {
 }
 
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+	from { width: 0 }
+	to { width: 100% }
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
+	from, to { border-color: transparent }
+	50% { border-color: orange; }
 }
