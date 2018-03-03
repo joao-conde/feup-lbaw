@@ -5,7 +5,7 @@
 
 	<div class="container">
 
-		<nav class="navbar navbar-expand bg-primary navbar-light p-0">
+		<nav class="navbar navbar-expand bg-primary navbar-light p-0 mt-3">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item">
 					<a class="nav-link text-success" href="./admin_users.php">Users</a>
@@ -22,8 +22,8 @@
 		<hr>
 
 		<div class="row">
-			<div class="container col-9 col-sm-5 text-center">
-				<ul class="list-group pl-4">
+			<div class="container col-10 col-sm-5 text-center">
+				<ul class="list-group ">
 					<li class="list-group-item font-weight-bold">Genres</li>
 					<li class="list-group-item">Rock</li>
 					<li class="list-group-item">Jazz</li>

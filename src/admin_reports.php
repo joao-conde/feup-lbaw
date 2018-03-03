@@ -5,7 +5,7 @@
 
 	<div class="container">
 
-		<nav class="navbar navbar-expand bg-primary navbar-light p-0">
+		<nav class="navbar navbar-expand bg-primary navbar-light p-0 mt-3">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item">
 					<a class="nav-link text-success" href="./admin_users.php">Users</a>

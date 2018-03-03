@@ -18,8 +18,8 @@
 		<section class="pb-3">
 			<h1 class="mt-3 text-primary">Our Team</h1>
 			<hr>
-			<div class="row text-center py-3">
-				<div class="col-6 d-flex justify-content-center">
+			<div class="row text-center py-3 justify-content-center">
+				<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
 					<div class="card text-center" style="width: 14rem;">
 						<img class="card-img-top" src="images/system/dummy_profile.svg" alt="Card image" style="width:100%">
 						<div class="card-body">
@@ -28,7 +28,7 @@
 					</div>
 				</div>
 
-				<div class="col-6 d-flex justify-content-center">
+				<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
 					<div class="card text-center" style="width: 14rem;">
 						<img class="card-img-top" src="images/system/dummy_profile.svg" alt="Card image" style="width:100%">
 						<div class="card-body">
@@ -36,9 +36,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row text-center py-3">
-				<div class="col-6 d-flex justify-content-center">
+				<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
 					<div class="card text-center" style="width: 14rem;">
 						<img class="card-img-top" src="images/system/dummy_profile.svg" alt="Card image" style="width:100%">
 						<div class="card-body">
@@ -47,7 +45,7 @@
 					</div>
 				</div>
 
-				<div class="col-6 d-flex justify-content-center">
+				<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
 					<div class="card text-center" style="width: 14rem;">
 						<img class="card-img-top" src="images/system/dummy_profile.svg" alt="Card image" style="width:100%">
 						<div class="card-body">

@@ -3,21 +3,21 @@ body {
 	background-size:cover;
 }
 
-.jumbotron {
-	background: rgba(0, 0, 0, 0.3);
+/*.jumbotron {
+	background: #646970;
 }
-
+*/
 input {
 	border-style: solid;
 	background: rgba(0, 0, 0, 0);
-	color: #dbbba0;
+	color: #757575;
 	outline: none;
 }
 
 ::placeholder{
 	text-align: center;
 	font-style: italic;
-	color: #dbbba0;
+	color: white;
 }
 
 label {
