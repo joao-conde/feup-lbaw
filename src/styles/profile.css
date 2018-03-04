@@ -2,15 +2,6 @@
     position: relative;
 }
 
-/* .profile-card{
-    position:absolute;
-    top:0;
-    left: 40px;
-} */
-
-#skills{
-    color: ivory;
-}
 
 .edit-icon{
     cursor: pointer; 
@@ -28,8 +19,87 @@
     width: 100%;
 }
 
-.carousel-img{
-    height: 100px;
-    width: 200px;
-    overflow: hidden;
+
+
+div#right ul {
+    padding-left: 10px;
+    list-style-type: none;
 }
+
+textarea{
+    resize: none;
+    color: black;
+    font-size: 0.8em;
+    outline: none;
+    box-shadow: none;
+  }
+
+@media(min-width: 768px) {
+
+    div#left {
+        position: fixed;
+        height: 550px;
+        left: 0;
+        overflow-y: scroll;
+    }
+    
+    div#right {
+        position: fixed;
+        height: 100%;
+        right: 0;
+        overflow-y: scroll;
+    }
+
+    div#right ul {
+        overflow: scroll;
+        height: 200px;
+    }
+
+    div#right ul a {
+        align-items: center;
+        flex-direction: row !important;
+        margin-bottom: 1em;
+    }
+
+    div#right small {
+        font-size: 1.1em;
+    }
+
+    div#right img {
+        margin-right: 1em;
+    }
+
+}
+
+@media(max-width: 767px) {
+
+    div#right ul {
+        padding-left: 1px;
+        display: flex;
+        flex-wrap: wrap ;
+        align-items: center;
+        justify-content: center;
+    }
+
+    div#right ul > li {
+        margin: 1em;
+    }
+
+    div#right ul a {
+        align-items: center;
+    }
+
+    div.post {
+        border-radius: 0;
+    }
+
+    div#new_post {
+        border-radius: 0;
+    }
+
+}
+
+
+
+
+

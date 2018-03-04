@@ -5,67 +5,53 @@
 <div class="profile-page row m-0 ">
 
     <div id="left" class="container col-12 col-md-3 p-0 my-3 my-md-0 order-1">
-            <div class="row p-2 m-0 bg-primary d-block d-md-none">
-                <h6 class="col-auto m-0 text-success">Me</h6>
-            </div>
-        <div class="card rounded-0 profile-card p-3">
+        <div class="row p-2 m-0 bg-primary d-block d-md-none">
+            <h6 class="col-auto m-0 text-success">Band </h6>
+        </div>
+        <div class="card p-3 rounded-0 profile-card">
 
-            <div class="row">
-
-                <div class="col-5 col-md-12 mb-md-2 align-self-center">
+            <div class="row mb-2">
+                <div class="col-12 mb-md-2 align-self-center">
 
                     <div class="row justify-content-between">
-                        <h6 class="card-title col-8 col-md-8 align-self-center m-0 text-primary">Leonardo Teixeira</h6>
+                        <h6 class="card-title col-8 col-md-8 align-self-center m-0 text-primary">The Does</h6>
                         <div class="container col align-self-center m-0 text-right">
                             <i class="fas fa-pencil-alt"></i>
                         </div>
                     </div>
-                    <img id="profile_pic" class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image">
+                    <img id="profile_pic" class="card-img-top mt-2" src="images/users/example-post2.jpg" alt="Card image">
 
 
                 </div>
+            </div>
 
-                <div class="col-7 col-md-12 align-self-center">
+            <div class="row">
+
+                <div class="col-12 col-md-12 align-self-center">
 
                     <div class="card-body p-0 small">
-                        <ul class="list-group">
-                            <li class="list-group-item active">Skills</li>
-                            <li class="list-group-item">
-                                <span class="list-group-item-text">Drums</span>
 
-                                <small class="mt-1 ml-1 float-right text-info">4.2</small>
-                                <i class="far fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                            </li>
-                            <li class="list-group-item">
-                                <span class="list-group-item-text">Guitar</span>
-                                <small class="mt-1 ml-1 float-right text-info">3.1</small>
-                                <i class="far fa-star mt-1 float-right text-info"></i>
-                                <i class="far fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                            </li>
-                            <li class="list-group-item">
-                                <span class="list-group-item-text">Piano</span>
-                                <small class="mt-1 ml-1 float-right text-info">2.9</small>
-                                <i class="far fa-star mt-1 float-right text-info"></i>
-                                <i class="far fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                                <i class="fas fa-star mt-1 float-right text-info"></i>
-                            </li>
+                        <ul class="list-group">
+                            <li class="list-group-item active">Members</li>
+                            <li class="list-group-item text-success">John Doe</li>
+                            <li class="list-group-item text-success">Jane Doe</li>
+                            <li class="list-group-item text-success">Another Doe</li>
                         </ul>
+
+                        <hr>
+
+                        <ul class="list-group">
+                            <li class="list-group-item active">Genres</li>
+                            <li class="list-group-item text-success">Rock</li>
+                            <li class="list-group-item text-success">Blues</li>
+                            <li class="list-group-item text-success">Jazz</li>
+                        </ul>
+
                     </div>
 
                 </div>
 
             </div>
-
-
 
         </div>
     </div>
@@ -73,7 +59,61 @@
     <div id="posts" class="container col-12 col-md-5 mt-3 p-0 order-3">
 
         <div class="row p-2 m-0 bg-primary d-block d-md-none">
-            <h6 class="col-auto m-0 text-success">My activity</h6>
+            <h6 class="col-auto m-0 text-success">New Content </h6>
+        </div>
+
+        <div id="new_post" class="jumbotron py-2">
+            <div class="row justify-content-between p-0">
+
+                <div class="col-3 col-md-4">
+                    <small>
+                        <i>New Content</i>
+                    </small>
+                </div>
+
+                <div class="col-9 col-md-6 text-right p-0">
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-light">
+                            <i class="far fa-image"></i>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <i class="fas fa-film"></i>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <i class="fas fa-music"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="row p-3">
+
+                <div class="col-12">
+
+                    <form class="form-inline row justify-content-between">
+                        <textarea placeholder="" class="col-9 col-sm-9 col-md-9 text-primary form-control-sm border border-secondary" rows="5" id="new_comment_ta"></textarea>
+                        <input type="submit" value="post" class="btn btn-primary btn-sm col-2">
+                    </form>
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+        <div class="row p-2 m-0 bg-primary d-block d-md-none">
+            <h6 class="col-auto m-0 text-success">Band activity</h6>
         </div>
 
         <div class="jumbotron p-3 post mb-2">
@@ -962,11 +1002,11 @@
                     </li>
 
                 </ul>
-                
+
 
 
                 <div class="row p-2 m-0 bg-primary">
-                    <h6 class="col-auto m-0 text-success">Following (11)</h6>
+                    <h6 class="col-auto m-0 text-success">Applicants (11)</h6>
                 </div>
                 <ul id="follows" class="mb-md-2 p-md-2 mb-0">
                     <li>
@@ -1038,7 +1078,7 @@
 
                 </ul>
 
-                
+
             </div>
         </div>
     </div>
