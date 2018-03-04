@@ -60,9 +60,9 @@
         <div class="col-auto">
             <i class="fas fa-home"></i>
         </div>
-        
+
         <div class="col-auto">
-            <i class="fas fa-comments"></i>        
+            <i class="fas fa-comments"></i>
         </div>
 
 
@@ -80,62 +80,61 @@
         <div id="posts" class="col-12 col-md-5 p-0 mt-2">
 
             <div class="row p-2 m-0 bg-primary d-block d-md-none">
-            <h6 class="col-auto m-0 text-success">New Post</h6>
-        </div>
+                <h6 class="col-auto m-0 text-success">New Post</h6>
+            </div>
 
-        <div id="new_post" class="jumbotron py-2">
-            <div class="row justify-content-between p-0">
+            <div id="new_post" class="jumbotron py-2">
+                <div class="row justify-content-between p-0">
 
-                <div class="col-3 col-md-4">
-                    <small>
-                        <i>New Post</i>
-                    </small>
-                </div>
-
-                <div class="col-9 col-md-6 text-right p-0">
-
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-light">
-                            <i class="far fa-image"></i>
-                        </button>
-                        <button type="button" class="btn btn-light">
-                            <i class="fas fa-film"></i>
-                        </button>
-
-                        <button type="button" class="btn btn-light">
-                            <i class="fas fa-music"></i>
-                        </button>
-
-                        
+                    <div class="col-3 col-md-4">
+                        <small>
+                            <i>New Post</i>
+                        </small>
                     </div>
 
+                    <div class="col-9 col-md-6 text-right p-0">
+
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-light">
+                                <i class="far fa-image"></i>
+                            </button>
+                            <button type="button" class="btn btn-light">
+                                <i class="fas fa-film"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-light">
+                                <i class="fas fa-music"></i>
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <div class="row p-3">
+
+                    <div class="col-12">
+
+                        <form class="form-inline row justify-content-between">
+                            <textarea placeholder="" class="col-9 col-sm-9 col-md-9 text-primary form-control-sm border border-secondary" rows="5" id="new_comment_ta"></textarea>
+                            <input type="submit" value="post" class="btn btn-primary btn-sm col-2">
+                        </form>
+
+                    </div>
+
+
+
                 </div>
 
 
 
-
-
             </div>
-
-            <div class="row p-3">
-
-                <div class="col-12">
-
-                    <form class="form-inline row justify-content-between">
-                        <textarea placeholder="" class="col-9 col-sm-9 col-md-9 text-primary form-control-sm border border-secondary"
-                            rows="5" id="new_comment_ta"></textarea>
-                        <input type="submit" value="post" class="btn btn-primary btn-sm col-2">
-                    </form>
-
-                </div>
-
-
-
-            </div>
-
-
-
-        </div>
 
             <div class="jumbotron p-3 post mb-2">
 
@@ -612,7 +611,8 @@
 
         </div>
 
-        <div id="chat" class="py-3 px-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block"> <!--  -->
+        <div id="chat" class="py-3 px-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block">
+            <!--  -->
 
             <?php include('chat.html')?>
 
