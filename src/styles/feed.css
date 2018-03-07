@@ -5,6 +5,10 @@ div#chat {
   overflow-y: scroll;
 }
 
+div#chat::-webkit-scrollbar {
+  width: 0 !important;
+}
+
 div#mybands,
 div#fellowmusicians {
   font-size: 0.8em;
@@ -24,7 +28,12 @@ div#leftfeedmenu {
 div.chats {
   height: 30vh;
   overflow-y: scroll;
+  
 }
+div.chats::-webkit-scrollbar {
+  width: 0 !important;
+}
+
 textarea#new_comment_ta {
   resize: none;
 }
@@ -115,4 +124,8 @@ textarea#chat_msg{
 
 div.chat_dropdown{
   cursor: pointer;
+}
+
+span.status-dot{
+  font-size: 0.6em;
 }
