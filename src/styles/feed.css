@@ -96,7 +96,8 @@ textarea#chat_msg{
     border-radius: 0;
   }
 
-  /* div#chat {
-    position: static;
-  } */
+}
+
+div.chat_dropdown{
+  cursor: pointer;
 }

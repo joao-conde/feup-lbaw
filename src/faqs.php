@@ -16,9 +16,9 @@
 		<section class="pb-3">
 			<div id="accordion">
 				<div class="card mb-1 bg-primary" style="border: none;">
-					<div class="card-header" id="headingOne">
+					<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link text-secondary font-weight-bold" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							<button class="btn btn-link text-secondary font-weight-bold">
 								FAQ1
 							</button>
 						</h5>
@@ -34,9 +34,9 @@
 				</div>
 				<br>
 				<div class="card mb-1 bg-primary" style="border: none;">
-					<div class="card-header" id="headingOne">
+					<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link text-secondary font-weight-bold" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseOne">
+							<button class="btn btn-link text-secondary font-weight-bold">
 								FAQ2
 							</button>
 						</h5>
@@ -52,9 +52,9 @@
 				</div>
 				<br>
 				<div class="card mb-1 bg-primary" style="border: none;">
-					<div class="card-header" id="headingOne">
+					<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link text-secondary font-weight-bold" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseOne">
+							<button class="btn btn-link text-secondary font-weight-bold">
 								FAQ3
 							</button>
 						</h5>
@@ -70,9 +70,9 @@
 				</div>
 				<br>
 				<div class="card mb-1 bg-primary" style="border: none;">
-					<div class="card-header" id="headingOne">
+					<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link text-secondary font-weight-bold" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseOne">
+							<button class="btn btn-link text-secondary font-weight-bold">
 								FAQ4
 							</button>
 						</h5>
