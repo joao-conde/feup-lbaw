@@ -17,6 +17,8 @@
                     <div class="row justify-content-between">
                         <h6 class="card-title col-8 col-md-8 align-self-center m-0 text-primary">Leonardo Teixeira</h6>
                         <div class="container col align-self-center m-0 text-right">
+                            <!-- <button type="button" class="btn btn-sm btn-success float-right">Follow</button> -->
+                            <!--button type="button" class="btn btn-sm btn-danger float-right">Unfollow</button-->
                             <i class="fas fa-pencil-alt"></i>
                         </div>
                     </div>

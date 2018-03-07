@@ -5,6 +5,15 @@ div#chat {
   overflow-y: scroll;
 }
 
+div#mybands,
+div#fellowmusicians {
+  font-size: 0.8em;
+}
+
+div#mybands button{
+  font-size: 0.8em;
+}
+
 div#leftfeedmenu {
   position: fixed;
   height: 100%;
@@ -26,6 +35,12 @@ textarea#chat_msg{
   font-size: 0.8em;
   outline: none;
   box-shadow: none;
+}
+
+@media(min-width: 768px) {
+  div#main {
+    width: 94%;
+  }
 }
 
 @media(max-width:767px) {
