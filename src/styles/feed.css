@@ -14,8 +14,13 @@ div#leftfeedmenu {
   overflow-y: scroll;
 }
 
-textarea#new_comment_ta {
+
+textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
+  color: black;
+  font-size: 0.8em;
+  outline: none;
+  box-shadow: none;
 }
 
 @media(min-width: 768px) {
@@ -61,7 +66,7 @@ textarea#new_comment_ta {
   }
 
   div#leftmenu > ul {
-    padding: 0 0 0 5px; 
+    padding: 0 0 0 5px;
   }
 
   div#leftmenu > ul > li > ul {
@@ -78,7 +83,7 @@ textarea#new_comment_ta {
     margin: 0;
     display: inline;
   }
-  
+
   div.post {
     border-radius: 0;
   }
@@ -87,4 +92,20 @@ textarea#new_comment_ta {
     border-radius: 0;
   }
 
+<<<<<<< HEAD
 }
+=======
+}
+
+div.chat_dropdown{
+  cursor: pointer;
+}
+
+#new_post_ta {
+  height: 30px;
+}
+
+#new_post_ta:active {
+  height: 150px;
+}
+>>>>>>> 2c09063eb7841f269aa85f4440514cb5b35da912
