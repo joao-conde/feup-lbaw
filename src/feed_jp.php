@@ -70,14 +70,14 @@
 
     <div id="main" class="row justify-content-center">
 
-        <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-3 d-none d-md-block">
+        <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
 
             <?php include('leftfeedmenu.html')?>
 
         </div>
 
 
-        <div id="posts" class="col-12 col-md-5 p-0 mt-2">
+        <div id="posts" class="col-12 col-md-6 p-0 mt-2">
 
             <div class="row p-2 m-0 bg-primary d-block d-md-none">
                 <h6 class="col-auto m-0 text-success">New Post</h6>
