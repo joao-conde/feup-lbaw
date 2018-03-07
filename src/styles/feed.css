@@ -1,10 +1,3 @@
-div#chat {
-  position: fixed;
-  height: 90vh;
-  right: 0;
-  overflow-y: scroll;
-}
-
 div#mybands,
 div#fellowmusicians {
   font-size: 0.8em;
@@ -21,17 +14,13 @@ div#leftfeedmenu {
   overflow-y: scroll;
 }
 
-textarea#chat_msg, textarea#new_post_ta, textarea#new_comment_ta{
+
+textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
   color: black;
   font-size: 0.8em;
   outline: none;
   box-shadow: none;
-}
-
-div.chats {
-  height: 30vh;
-  overflow-y: scroll;
 }
 
 @media(min-width: 768px) {
@@ -99,15 +88,13 @@ div.chats {
     border-radius: 0;
   }
 
-  div.chats {
-    height: 65vh;
-    overflow-y: scroll;
-  }
-
   div#new_post {
     border-radius: 0;
   }
 
+<<<<<<< HEAD
+}
+=======
 }
 
 div.chat_dropdown{
@@ -121,3 +108,4 @@ div.chat_dropdown{
 #new_post_ta:active {
   height: 150px;
 }
+>>>>>>> 2c09063eb7841f269aa85f4440514cb5b35da912

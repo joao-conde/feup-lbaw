@@ -573,7 +573,7 @@
 
     </div>
 
-    <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block">
+    <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block" style="overflow-x: hidden">
       <!--  -->
 
       <?php include('chat.html')?>
