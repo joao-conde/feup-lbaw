@@ -1,7 +1,15 @@
-//Menu Toggle Script
-/* trying to hide button for large screens making it only available to hide in small devices
-if(document.documentElement.clientHeight < 768){
-    console.log(document.querySelector("#menu-toggle"));
-    document.getElementById("menu-toggle").remove("toggle");
-}*/
-    
+'use strict';
+
+let textarea = document.querySelector('#new_post_ta');
+
+textarea.addEventListener('focus',function(){
+  textarea.style.height = '150px';
+})
+
+textarea.style.transition = "height 0.5s";
+
+textarea.addEventListener('focusout',function(){
+  textarea.style.height = '30px';
+})
+
+console.log(textarea.style);
