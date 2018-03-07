@@ -70,26 +70,24 @@
 
     <div id="main" class="row justify-content-center">
 
-        <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-3 d-none d-md-block">
+        <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
 
             <?php include('leftfeedmenu.html')?>
 
         </div>
 
 
-        <div id="posts" class="col-12 col-md-5 p-0 mt-2">
+        <div id="posts" class="col-12 col-md-6 p-0 mt-2">
 
             <div class="row p-2 m-0 bg-primary d-block d-md-none">
                 <h6 class="col-auto m-0 text-success">New Post</h6>
             </div>
 
-            <div id="new_post" class="jumbotron py-2">
+            <div id="new_post" class="jumbotron py-2 mb-3">
                 <div class="row justify-content-between p-0">
 
-                    <div class="col-3 col-md-4">
-                        <small>
-                            <i>New Post</i>
-                        </small>
+                    <div class="col-3 col-md-4 align-self-center">
+                        <i>New Post</i>
                     </div>
 
                     <div class="col-9 col-md-6 text-right p-0">
@@ -117,7 +115,7 @@
 
                 </div>
 
-                <div class="row p-3">
+                <div class="row p-2">
 
                     <div class="col-12">
 
@@ -611,7 +609,7 @@
 
         </div>
 
-        <div id="chat" class="py-3 px-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block">
+        <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block">
             <!--  -->
 
             <?php include('chat.html')?>
