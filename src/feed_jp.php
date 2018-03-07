@@ -84,7 +84,7 @@
         <div class="row">
           <img src="images/system/dummy_profile.svg" class="col-2 profile_img_chat p-0 border-0">
           <textarea placeholder="New post..." class="col-4 col-md-7 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
-          <div class="btn-group col-2" role="group" style="height: 100%;">
+          <div class="btn-group col-2" role="group" style="height: 50%;">
             <button type="button" class="btn btn-light">
               <i class="far fa-image"></i>
             </button>
