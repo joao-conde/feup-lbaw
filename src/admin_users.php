@@ -11,7 +11,10 @@
 					<a class="nav-link text-success" href="./admin_users.php">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-success" href="./admin_reports.php">Reports</a>
+					<a class="nav-link text-success" href="./admin_user_reports.php">User reports</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-success" href="./admin_band_reports.php">Band reports</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-success" href="./admin_genres.php">Genres</a>
@@ -51,6 +54,36 @@
 					</td>
 				</tr>
 				<tr class="row table-light text-center">
+					<td class="col-3">Tom Doe</td>
+					<td class="col-6">tomdoe@doe.com</td>
+					<td class="col-3">
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+					</td>
+				</tr>
+				<tr class="row table-light text-center">
+					<td class="col-3">Doe Doe</td>
+					<td class="col-6">doedoe@doe.com</td>
+					<td class="col-3">
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+					</td>
+				</tr>
+				<tr class="row table-light text-center">
+					<td class="col-3">Moses Doe</td>
+					<td class="col-6">mosesdoe@doe.com</td>
+					<td class="col-3">
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+					</td>
+				</tr>
+				<tr class="row table-light text-center">
 					<td class="col-3">Another Doe</td>
 					<td class="col-6">anotherdoe@doe.com</td>
 					<td class="col-3">
@@ -62,6 +95,20 @@
 				</tr>
 			</tbody>
 		</table>
+
+		<nav aria-label="bandspagination">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link bg-primary" href="#" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link bg-primary" href="#">1</a></li>
+				<li class="page-item"><a class="page-link bg-primary" href="#">2</a></li>
+				<li class="page-item"><a class="page-link bg-primary" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link bg-primary" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 </body>
 </html>

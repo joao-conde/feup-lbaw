@@ -11,7 +11,10 @@
 					<a class="nav-link text-success" href="./admin_users.php">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-success" href="./admin_reports.php">Reports</a>
+					<a class="nav-link text-success" href="./admin_user_reports.php">User reports</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-success" href="./admin_band_reports.php">Band reports</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link text-success" href="./admin_genres.php">Genres</a>
