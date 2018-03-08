@@ -11,8 +11,12 @@ div#leftfeedmenu {
   position: fixed;
   height: 100%;
   left: 0;
+  top:10vh;
 }
 
+div#main {
+  margin-top: 11vh;
+}
 
 textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
@@ -26,9 +30,25 @@ textarea#new_post_ta, textarea#new_comment_ta{
   div#main {
     width: 94%;
   }
+
+  div#posts {
+    display: block;
+  }
+
+
 }
 
 @media(max-width:767px) {
+
+  div#main {
+    margin-top: 16vh;
+  }
+
+  #floatingmenu {
+    position: fixed;
+    top: 10vh;
+    z-index: 1000;
+  }
 
   input#toggleleft {
     opacity: 0;
@@ -90,12 +110,13 @@ textarea#new_post_ta, textarea#new_comment_ta{
   div#new_post {
     border-radius: 0;
   }
+
+  
+
 }
 
-#new_post_ta {
-  height: 30px;
+  body::-webkit-scrollbar {
+    width: 0 !important;
 }
 
-#new_post_ta:active {
-  height: 150px;
-}
+

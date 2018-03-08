@@ -3,11 +3,10 @@
 <script defer src="scripts/feed.js"></script>
 
 <div class="container-fluid">
-
-  <div class="row d-md-none my-2">
+  <div id="floatingmenu" class="row d-md-none my-0 bg-primary text-white w-100 border-top border-secondary py-2">
     <div class="col">
       <input type="checkbox" id="toggleleft">
-      <i class="text-primary align-middle fas fa-bars" id="ham"></i>
+      <i class="align-middle fas fa-bars" id="ham"></i>
       <div class="d-md-none jumbotron jumbotron-fluid bg-primary d-flex py-1" id="leftmenu">
 
         <ul>
@@ -58,11 +57,11 @@
       </div>
     </div>
 
-    <div class="col-auto">
+    <div id="homeButton" class="col-auto">
       <i class="fas fa-home"></i>
     </div>
 
-    <div class="col-auto">
+    <div id="chatButton" class="col-auto">
       <i class="fas fa-comments"></i>
     </div>
 
@@ -77,14 +76,13 @@
 
     </div>
 
-
     <div id="posts" class="col-12 col-md-6 p-0 mt-2">
 
       <div class="jumbotron p-3 post mb-2">
         <div class="row">
           <img src="images/system/dummy_profile.svg" class="col-2 mt-1 profile_img_chat p-0 border-0">
           <textarea placeholder="New post..." class="col-4 col-md-7 mt-1 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
-          <div class="btn-group col-2" role="group" style="height: 100%;">
+          <div class="btn-group col-2" role="group">
             <button type="button" class="btn btn-light">
               <i class="far fa-image"></i>
             </button>

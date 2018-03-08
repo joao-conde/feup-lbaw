@@ -1,10 +1,12 @@
 div#chat {
     position: fixed;
-    height: 90vh;
+    height: 89vh;
     right: 0;
+    top:11vh;
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;
+    display: block;
 }
 
 div#chat::-webkit-scrollbar {
@@ -34,6 +36,13 @@ textarea#chat_msg {
         height: 65vh;
         overflow-y: scroll;
     }
+
+    div#chat {
+        position: static;
+        margin-top: 8px;
+        display: none;
+    }
+
 }
 
 
