@@ -20,6 +20,11 @@
 }
 
 
+#floatingmenu {
+    position: fixed;
+    top: 10vh;
+    z-index: 1000;
+  }
 
 div#right ul {
     padding-left: 10px;
@@ -38,7 +43,7 @@ textarea{
 
     div#left {
         position: fixed;
-        height: 550px;
+        height: 90vh;
         left: 0;
         overflow-y: scroll;
     }
@@ -67,6 +72,15 @@ textarea{
 
     div#right img {
         margin-right: 1em;
+    }
+
+    div#main {
+        width: 94%;
+        margin-top: 10vh;
+    }
+
+    div#posts {
+        display: block;
     }
 
 }

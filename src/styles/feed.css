@@ -11,9 +11,12 @@ div#leftfeedmenu {
   position: fixed;
   height: 100%;
   left: 0;
-  overflow-y: scroll;
+  top:10vh;
 }
 
+div#main {
+  margin-top: 11vh;
+}
 
 textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
@@ -28,11 +31,6 @@ textarea#new_post_ta, textarea#new_comment_ta{
     width: 94%;
   }
 
-  div#chat {
-    display: block;
-
-  }
-
   div#posts {
     display: block;
   }
@@ -41,6 +39,10 @@ textarea#new_post_ta, textarea#new_comment_ta{
 }
 
 @media(max-width:767px) {
+
+  div#main {
+    margin-top: 16vh;
+  }
 
   #floatingmenu {
     position: fixed;
@@ -109,19 +111,12 @@ textarea#new_post_ta, textarea#new_comment_ta{
     border-radius: 0;
   }
 
-  div#main {
-    margin-top: 40px;
-  }
+  
 
-  div#chat {
-    transform: translate(100%,0);
-    display: block;
-  }
+}
 
   body::-webkit-scrollbar {
     width: 0 !important;
-}
-
 }
 
 
