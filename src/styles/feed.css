@@ -92,13 +92,6 @@ textarea#new_post_ta, textarea#new_comment_ta{
     border-radius: 0;
   }
 
-<<<<<<< HEAD
-}
-=======
-}
-
-div.chat_dropdown{
-  cursor: pointer;
 }
 
 #new_post_ta {
@@ -108,4 +101,3 @@ div.chat_dropdown{
 #new_post_ta:active {
   height: 150px;
 }
->>>>>>> 2c09063eb7841f269aa85f4440514cb5b35da912

@@ -191,9 +191,9 @@
 
 
         <form class="form-inline row justify-content-between px-3 pt-2">
-          <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-          rows="2" id="new_comment_ta"></textarea>
-          <input type="submit" value="comment" class="btn btn-primary btn-sm">
+          <textarea placeholder="New comment..." class="col text-primary form-control-sm border border-secondary"
+          rows="1" id="new_comment_ta"></textarea>
+          <input type="submit" value="comment" class="btn btn-primary btn-sm col-auto">
         </form>
 
 
@@ -573,12 +573,9 @@
 
     </div>
 
-    <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 d-none d-md-block" style="overflow-x: hidden">
-      <!--  -->
 
-      <?php include('chat.html')?>
+    <?php include('chat.html')?>
 
-    </div>
 
   </div>
 

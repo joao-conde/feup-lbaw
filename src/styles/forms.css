@@ -58,3 +58,9 @@ h2 {
 	from, to { border-color: transparent }
 	50% { border-color: orange; }
 }
+
+.form-icon{
+	width: 1rem;
+	height: 1rem;
+	color: white;
+}

@@ -83,42 +83,28 @@
 
     <div id="main" class="row justify-content-center w-75">
 
-        <div class="col-8 jumbotron text-center bg-primary">
-            <h2 class="">Register</h2>
+        <div class="col-8 jumbotron text-center bg-primary mt-4">
+            <h2 class="">New Band</h2>
             <form action="#">
                 <div class="row justify-content-center">
                     <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                        <input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 border-secondary" id="username"
-                            placeholder="Enter username" name="username">
+                        <i class="fas fa-heading mr-2 form-icon"></i>
+                        <input type="text" class="border-0 text-center" id="band_name"
+                            placeholder="Enter Band Name" name="band_name">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="fas fa-lock mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                        <input type="password" class="border border-top-0 border-left-0 border-bottom-0 border-right-0 border-secondary" id="pwd"
-                            placeholder="Enter password" name="pwd">
+                        <i class="fas fa-user mr-2 form-icon"></i>
+                        <input type="text" class="border-0 text-cemer" id="pwd"
+                            placeholder="Enter Band Members" name="pwd">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="fas fa-lock mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                        <input type="password" class="border border-bottom-0 border-top-0 border-left-0 border-right-0 border-secondary" id="pwd"
-                            placeholder="Repeat password" name="pwd">
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="far fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                        <input type="text" class="border border-bottom-0 border-top-0 border-left-0 border-right-0 border-secondary" id="name" placeholder="Enter name"
-                            name="name">
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="fas fa-id-card mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                        <input type="text" class="border border-bottom-0 border-top-0 border-left-0 border-right-0 border-secondary" id="surname"
-                            placeholder="Enter surname" name="surname">
+                        <i class="fas fa-music mr-2 form-icon"></i>
+                        <input type="password" class="border-0 text-cemer" id="pwd"
+                            placeholder="Select Genders" name="pwd">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-secondary mt-3">Submit</button>

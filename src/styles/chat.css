@@ -3,6 +3,8 @@ div#chat {
     height: 90vh;
     right: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
 }
 
 div#chat::-webkit-scrollbar {
@@ -43,3 +45,4 @@ div.chat_dropdown {
 span.status-dot {
     font-size: 0.6em;
 }
+
