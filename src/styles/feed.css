@@ -27,9 +27,26 @@ textarea#new_post_ta, textarea#new_comment_ta{
   div#main {
     width: 94%;
   }
+
+  div#chat {
+    display: block;
+
+  }
+
+  div#posts {
+    display: block;
+  }
+
+
 }
 
 @media(max-width:767px) {
+
+  #floatingmenu {
+    position: fixed;
+    top: 10vh;
+    z-index: 1000;
+  }
 
   input#toggleleft {
     opacity: 0;
@@ -92,20 +109,19 @@ textarea#new_post_ta, textarea#new_comment_ta{
     border-radius: 0;
   }
 
-<<<<<<< HEAD
-}
-=======
+  div#main {
+    margin-top: 40px;
+  }
+
+  div#chat {
+    transform: translate(100%,0);
+    display: block;
+  }
+
+  body::-webkit-scrollbar {
+    width: 0 !important;
 }
 
-div.chat_dropdown{
-  cursor: pointer;
 }
 
-#new_post_ta {
-  height: 30px;
-}
 
-#new_post_ta:active {
-  height: 150px;
-}
->>>>>>> 2c09063eb7841f269aa85f4440514cb5b35da912
