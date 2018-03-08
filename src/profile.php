@@ -23,8 +23,6 @@
                         </div>
                     </div>
                     <img id="profile_pic" class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image">
-
-
                 </div>
 
                 <div class="col-7 col-md-12 align-self-center">
