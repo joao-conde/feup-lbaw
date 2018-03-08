@@ -11,7 +11,6 @@ div#leftfeedmenu {
   position: fixed;
   height: 100%;
   left: 0;
-  overflow-y: scroll;
 }
 
 
@@ -91,7 +90,6 @@ textarea#new_post_ta, textarea#new_comment_ta{
   div#new_post {
     border-radius: 0;
   }
-
 }
 
 #new_post_ta {

@@ -16,11 +16,8 @@ div.chats {
   height: 30vh;
   overflow-y: scroll;
 }
-textarea#new_comment_ta {
-  resize: none;
-}
 
-textarea#chat_msg{
+textarea#chat_msg, textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
   color: black;
   font-size: 0.8em;
@@ -65,7 +62,7 @@ textarea#chat_msg{
   }
 
   div#leftmenu > ul {
-    padding: 0 0 0 5px; 
+    padding: 0 0 0 5px;
   }
 
   div#leftmenu > ul > li > ul {
@@ -82,7 +79,7 @@ textarea#chat_msg{
     margin: 0;
     display: inline;
   }
-  
+
   div.post {
     border-radius: 0;
   }
