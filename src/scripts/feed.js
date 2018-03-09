@@ -3,15 +3,19 @@
 //Text are for post
 
 let textarea = document.querySelector('#new_post_ta');
+let postButton = document.querySelector('#postbutton');
 
 textarea.addEventListener('focus',function(){
+  console.log(postbutton);
   textarea.style.height = '150px';
+  postButton.style.display = 'flex';
 })
 
 textarea.style.transition = "height 0.5s";
 
 textarea.addEventListener('focusout',function(){
   textarea.style.height = '30px';
+  postButton.style.display = 'none';
 })
 
 //Text are for post

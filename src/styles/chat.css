@@ -4,7 +4,13 @@ div#chat {
     right: 0;
     top:11vh;
     overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
     display: block;
+}
+
+.row{
+    width: 96%;
 }
 
 div#chat::-webkit-scrollbar {
@@ -33,6 +39,7 @@ textarea#chat_msg {
     div.chats {
         height: 65vh;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     div#chat {
@@ -42,8 +49,6 @@ textarea#chat_msg {
     }
 
 }
-
-
 
 div.chat_dropdown {
     cursor: pointer;

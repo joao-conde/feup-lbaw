@@ -3,6 +3,10 @@ div#fellowmusicians {
   font-size: 0.8em;
 }
 
+#postbutton {
+  display: none;
+}
+
 div#mybands button{
   font-size: 0.8em;
 }
@@ -24,6 +28,10 @@ textarea#new_post_ta, textarea#new_comment_ta{
   font-size: 0.8em;
   outline: none;
   box-shadow: none;
+}
+
+#btns {
+  height: 100%;
 }
 
 @media(min-width: 768px) {
