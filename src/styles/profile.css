@@ -1,108 +1,59 @@
-.edit-icon{
-    cursor: pointer; 
+img.profile_type {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
-.user-post-img {
-    object-fit: cover;
-    width: 50px;
-    height: 50px;
+div#skills_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-
-.post-img {
-    width: 100%;
+div#profile_card {
+    width: 202px;
 }
 
+img.profile_image {
 
-#floatingmenu {
-    position: fixed;
-    top: 10vh;
-    z-index: 1000;
-}
-
-div#right ul {
-    padding-left: 10px;
-    list-style-type: none;
-}
-
-textarea{
-    resize: none;
-    color: black;
-    font-size: 0.8em;
-    outline: none;
-    box-shadow: none;
-  }
-
-@media(min-width: 768px) {
-
-   
-    
-    div#right {
-        position: fixed;
-        height: 100%;
-        right: 0;
-        overflow-y: scroll;
-    }
-
-    div#right ul {
-        overflow: scroll;
-        height: 200px;
-    }
-
-    div#right ul a {
-        align-items: center;
-        flex-direction: row !important;
-        margin-bottom: 1em;
-    }
-
-    div#right small {
-        font-size: 1.1em;
-    }
-
-    div#right img {
-        margin-right: 1em;
-    }
-
-    div#main {
-        width: 94%;
-        margin-top: 10vh;
-    }
-
-    div#posts {
-        display: block;
-    }
+    width: 250px;
+    height: auto;
+    border-radius:4%;
 
 }
 
-@media(max-width: 767px) {
+div#bios ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
 
-    div#right ul {
-        padding-left: 1px;
-        display: flex;
-        flex-wrap: wrap ;
-        align-items: center;
-        justify-content: center;
-    }
+div#bios li {
+    margin-right: 15px;
+    text-decoration: underline;
+}
 
-    div#right ul > li {
-        margin: 1em;
-    }
+div#profile_pic_div {
+    text-align: center;
+}
 
-    div#right ul a {
-        align-items: center;
-    }
+@media(max-width: 991px) {
 
-    div.post {
+    div.jumbotron {
         border-radius: 0;
     }
 
-    div#new_post {
-        border-radius: 0;
+    div#username{
+
+        text-align: center;
+
+    }
+
+    div#profile_pic_div {
+        justify-content: center !important;
+        text-align: center;
     }
 
 }
-
-
-
-
 

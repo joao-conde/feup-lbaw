@@ -1,23 +1,93 @@
 <?php  include_once('templates/header.php'); ?>
 
-<link rel="stylesheet" href="styles/profile_jp.css">
-<script defer src="scripts/feed.js"></script>
-
+<link rel="stylesheet" href="styles/profile.css">
+<link rel="stylesheet" href="styles/feed.css">
+<script defer src="scripts/profile.js"></script>
 
 <div class="main_content container-fluid p-0 p-md-2">
 
-    <div class="row no-gutters">
+	<div id="floatingmenu" class="row d-md-none m-0 bg-primary text-white w-100 border-top border-secondary py-2">
+        <div class="col">
+            <input type="checkbox" id="toggleleft">
+            <i class="align-middle fas fa-bars" id="ham"></i>
+            <div class="d-md-none jumbotron jumbotron-fluid d-flex py-1 border rounded border-dark" id="leftmenu">
+
+                <ul>
+                    <li class="display-5 text-primary">My Bands
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="images/system/dummy_profile.svg" class="profile_img_chat">
+                                    <p class="text-secondary">Cold Play</p>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="images/system/dummy_profile.svg" class="profile_img_chat">
+                                    <p class="text-secondary">Pearl Jam</p>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr>
+                    <li class="display-5 text-primary">My Fellow Musicians
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="images/system/dummy_profile.svg" class="profile_img_chat">
+                                    <p class="text-secondary">Eric Clapton</p>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="images/system/dummy_profile.svg" class="profile_img_chat">
+                                    <p class="text-secondary">Eddie Vedder</p>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="images/system/dummy_profile.svg" class="profile_img_chat">
+                                    <p class="text-secondary">Jeff Ament</p>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr>
+                    <li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
+                    <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
+                    <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="homeButton" class="col-auto">
+            <i class="fas fa-home text-white"></i>
+        </div>
+
+        <div id="chatButton" class="col-auto">
+            <i class="fas fa-comments"></i>
+        </div>
+
+    </div>
+
+
+	<div class="row no-gutters">
 
         <div id="profile_area" class="col-12 col-md-7 col-lg-9">
             <div class="jumbotron p-3 mb-1">
 
                 <div id="username" class="row px-3 justify-content-center">
                     <div class="col-auto align-self-center">
-                            <img src="images/system/band-icon.svg" class="profile_type">
+                        <img src="images/system/band-icon.svg" class="profile_type">
                     </div>
 
                     <div class="col-11 align-self-center">
-                        
+
                         <h3 class="d-inline-block">Future Islands</h3>
                     </div>
                 </div>
@@ -39,7 +109,7 @@
                                 at tincidunt. In ligula nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec
                                 arcu mauris. Nullam quis condimentum libero. Duis maximus lorem tincidunt commodo molestie.
                                 Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum commodo. Aliquam
-                                in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+                            in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
                         </div>
 
                         <hr class="mt-0">
@@ -48,7 +118,7 @@
                             <div class="col-12">
                                 <div id="skills_list">
                                     <p class="mr-2">Rating
-                                        
+
                                         <i class="fas fa-star mt-1 text-primary"></i>
                                         <i class="fas fa-star mt-1 text-primary"></i>
                                         <i class="fas fa-star mt-1 text-primary"></i>
@@ -92,23 +162,17 @@
 
                 <div id="navprofile" class="row justify-content-center border-top">
 
-                        <nav class="navbar navbar-expand navbar-light bg-light">
+                    <nav class="navbar navbar-expand navbar-light bg-light">
 
-                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav">
-                                    <a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="#">Members</a>
-                                    <a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
-                                </div>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="#">Members</a>
+                                <a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
                             </div>
-                        </nav>
+                        </div>
+                    </nav>
 
-                    </div>
-
-            </div>
-
-            <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-4 col-lg-3" style="overflow-x: hidden">
-
-                <?php include('chat.html')?>
+                </div>
 
             </div>
 
@@ -116,7 +180,7 @@
 
     </div>
 
-    <div class="row no-gutters">
+	<div class="row no-gutters">
         <div class="col-3 d-none d-lg-block">
 
             <div class="jumbotron p-3 mr-2">
@@ -146,12 +210,11 @@
 
             <div id="posts">
 
-                <div class="jumbotron p-3 post mb-2">
+                <div class="jumbotron p-3 post mb-2" id="newpost">
                     <div class="row">
-                        <img src="images/system/dummy_profile.svg" class="col-2 mt-1 profile_img_chat p-0 border-0">
-                        <textarea placeholder="New post..." class="col-4 col-md-7 mt-1 text-primary form-control-sm border border-secondary mr-0"
-                            rows="1" id="new_post_ta" style="height: 30px;"></textarea>
-                        <div class="btn-group col-2" role="group">
+                        <img src="images/system/dummy_profile.svg" class="col-1 col-sm-2 mt-1 mr-2 mr-md-0 profile_img_chat p-0 border-0">
+                        <textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
+                        <div class="btn-group col-1 col-sm-2 col-md-1 col-lg-2" id="btns" role="group">
                             <button type="button" class="btn btn-light">
                                 <i class="far fa-image"></i>
                             </button>
@@ -162,6 +225,10 @@
                                 <i class="fas fa-music"></i>
                             </button>
                         </div>
+                    </div>
+                    <div class="row justify-content-end mr-3" id="postbutton">
+                        <div class="col-10"></div>
+                        <input type="submit" value="post" class="btn btn-primary btn-sm col-2 pull-right justify-content-end">
                     </div>
                 </div>
 
@@ -263,7 +330,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -364,7 +431,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -465,7 +532,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -566,7 +633,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -667,7 +734,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -768,7 +835,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -869,7 +936,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -970,7 +1037,7 @@
 
                     <form class="form-inline row justify-content-between px-3 pt-2">
                         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                            rows="2" id="new_comment_ta"></textarea>
+                        rows="2" id="new_comment_ta"></textarea>
                         <input type="submit" value="comment" class="btn btn-primary btn-sm">
                     </form>
 
@@ -983,15 +1050,17 @@
 
     </div>
 
+	
+	<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
+
+		<?php include('chat.html')?>
+
+
+	</div>
+</div>
 
 
 
+</body>
 
-
-
-
-
-
-    </body>
-
-    </html>
+</html>

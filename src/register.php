@@ -2,15 +2,15 @@
 
 <link rel="stylesheet" type="text/css" href="styles/forms.css"> 
 
-<div id="register" class="container-fluid">
+<div id="register" class="container-fluid main_form">
         <video autoplay muted loop id="myVideo">
             <source src="images/668357526.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
         </div>
-        <div class="row justify-content-center mt-5">
+        <div class="row justify-content-center p-0 mx-0">
             <div class="col-sm-4">
-                <div class="jumbotron text-center bg-primary">
+                <div class="jumbotron text-center bg-primary py-5">
                     <h2 class="">Register</h2>
                     <form action="#">
                         <div class="row justify-content-center">

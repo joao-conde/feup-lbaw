@@ -1,1080 +1,1079 @@
 <?php  include_once('templates/header.php'); ?>
 
 <link rel="stylesheet" href="styles/profile.css">
-<script defer src="scripts/feed.js"></script>
-
-<div class="profile-page container-fluid">
-
-    <div id="floatingmenu" class="row d-md-none my-0 bg-primary text-white w-100 border-top border-secondary py-2">
-        <div class="col">
-            <!-- <input type="checkbox" id="toggleleft"> -->
-            <!-- <i class="align-middle fas fa-bars" id="ham"></i> -->
-            <div class="d-md-none jumbotron jumbotron-fluid bg-primary d-flex py-1 m-0" id="leftmenu">
-
-                <!-- <ul>
-              <li class="display-5 text-secondary">My Bands
-                <ul>
-                  <li>
-                    <a href="#" class="text-success">
-                      <img src="images/system/dummy_profile.svg" class="profile_img_chat">
-                      <p>Cold Play</p>
-    
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="text-success">
-                      <img src="images/system/dummy_profile.svg" class="profile_img_chat">
-                      <p>Pearl Jam</p>
-    
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="display-5 text-secondary">My Fellow Musicians
-                <ul>
-                  <li>
-                    <a href="#" class="text-success">
-                      <img src="images/system/dummy_profile.svg" class="profile_img_chat">
-                      <p>Eric Clapton</p>
-    
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="text-success">
-                      <img src="images/system/dummy_profile.svg" class="profile_img_chat">
-                      <p>Eddie Vedder</p>
-    
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="text-success">
-                      <img src="images/system/dummy_profile.svg" class="profile_img_chat">
-                      <p>Jeff Ament</p>
-    
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul> -->
-            </div>
-        </div>
+<link rel="stylesheet" href="styles/feed.css">
+<script defer src="scripts/profile.js"></script>
+
+<div class="main_content container-fluid p-0 p-md-2">
+
+	<div id="floatingmenu" class="row d-md-none m-0 bg-primary text-white w-100 border-top border-secondary py-2">
+		<div class="col">
+			<input type="checkbox" id="toggleleft">
+			<i class="align-middle fas fa-bars" id="ham"></i>
+			<div class="d-md-none jumbotron jumbotron-fluid d-flex py-1 border rounded border-dark" id="leftmenu">
+
+				<ul>
+					<li class="display-5 text-primary">My Bands
+						<ul>
+							<li>
+								<a href="#">
+									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
+									<p class="text-secondary">Cold Play</p>
+
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
+									<p class="text-secondary">Pearl Jam</p>
+
+								</a>
+							</li>
+						</ul>
+					</li>
+					<hr>
+					<li class="display-5 text-primary">My Fellow Musicians
+						<ul>
+							<li>
+								<a href="#">
+									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
+									<p class="text-secondary">Eric Clapton</p>
+
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
+									<p class="text-secondary">Eddie Vedder</p>
+
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
+									<p class="text-secondary">Jeff Ament</p>
+
+								</a>
+							</li>
+						</ul>
+					</li>
+					<hr>
+					<li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
+					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
+					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="homeButton" class="col-auto">
+			<i class="fas fa-home text-white"></i>
+		</div>
+
+		<div id="chatButton" class="col-auto">
+			<i class="fas fa-comments"></i>
+		</div>
+
+	</div>
+
+	<div class="row no-gutters">
+
+		<div id="profile_area" class="col-12 col-md-7 col-lg-9">
+			<div class="jumbotron p-3 mb-1">
+
+				<div id="username" class="row px-3 justify-content-center">
+					<div class="col-auto align-self-center">
+						<img src="images/system/musician-icon.svg" class="profile_type">
+					</div>
+
+					<div class="col-11 align-self-center">
+
+						<h3 class="d-inline-block">Leonardo Teixeira Vasconcelos</h3>
+					</div>
+				</div>
+
+				<div id="profile_pic_div" class="row">
+
+					<div class="col-auto">
+
+						<img id="profile_pic" class="profile_image d-block my-3" src="images/users/example-user.jpg" alt="Profile Image">
+						<button class="btn btn-success">Follow</button>
+
+
+					</div>
+
+					<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
+
+						<div class="row p-2">
+							<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit
+								at tincidunt. In ligula nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec
+								arcu mauris. Nullam quis condimentum libero. Duis maximus lorem tincidunt commodo molestie.
+								Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum commodo. Aliquam
+							in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+						</div>
+
+						<hr class="mt-0">
+
+						<div id="rating" class="row">
+							<div class="col-12">
+								<div id="skills_list">
+									<p class="mr-2">Drums
+
+										<i class="far fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<small class="mt-1 text-info">4.2</small>
+									</p>
+									<p class="mr-2">Guitar
+
+										<i class="far fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<small class="mt-1 text-info">4.2</small>
+									</p>
+									<p class="mr-2">Piano
+
+										<i class="far fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<i class="fas fa-star mt-1 text-primary"></i>
+										<small class="mt-1 text-info">4.2</small>
+									</p>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div id="bios" class="row p-0 justify-content-center">
+							<ul>
+								<li>
+									<small>Lives in
+										<i>Porto, Portugal</i>
+									</small>
+								</li>
+								<li>
+									<small>Born on
+										<i>6/9/1985, at Amarante</i>
+									</small>
+								</li>
+							</ul>
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+				<div id="navprofile" class="row justify-content-center border-top">
+
+					<nav class="navbar navbar-expand navbar-light bg-light">
+
+						<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+							<div class="navbar-nav">
+								<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Bands</a>
+								<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Following</a>
+								<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
+							</div>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="row no-gutters">
+		<div class="col-3 d-none d-lg-block">
+
+			<div class="jumbotron p-3 mr-2">
+				<p class="align-middle">Bands</p>
+				<a class="d-block" href="#">
+					<img class="profile_img_feed" src="images/system/dummy_profile.svg">
+					<small class="text-primary">Compota de Pérola</small>
+				</a>
+				<a class="d-block" href="#">
+					<img class="profile_img_feed" src="images/system/dummy_profile.svg">
+					<small class="text-primary">Ilha do Futuro</small>
+				</a>
+				<a class="d-block" href="#">
+					<img class="profile_img_feed" src="images/system/dummy_profile.svg">
+					<small class="text-primary">Casa da Praia</small>
+				</a>
+				<a class="d-block" href="#">
+					<img class="profile_img_feed" src="images/system/dummy_profile.svg">
+					<small class="text-primary">Toca Frio</small>
+				</a>
+				<a class=" d-block" href="#">
+					<small>
+						<p class="text-secondary mt-2">See all</p>
+					</small>
+				</a>
+
+			</div>
+
+		</div>
+
+		<div class="col-12 col-md-7 col-lg-6">
+
+			<div id="posts">
+
+				<div class="jumbotron p-3 post mb-2" id="newpost">
+					<div class="row">
+						<img src="images/system/dummy_profile.svg" class="col-1 col-sm-2 mt-1 mr-2 mr-md-0 profile_img_chat p-0 border-0">
+						<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
+						<div class="btn-group col-1 col-sm-2 col-md-1 col-lg-2" id="btns" role="group">
+							<button type="button" class="btn btn-light">
+								<i class="far fa-image"></i>
+							</button>
+							<button type="button" class="btn btn-light">
+								<i class="fas fa-film"></i>
+							</button>
+							<button type="button" class="btn btn-light">
+								<i class="fas fa-music"></i>
+							</button>
+						</div>
+					</div>
+					<div class="row justify-content-end mr-3" id="postbutton">
+						<div class="col-10"></div>
+						<input type="submit" value="post" class="btn btn-primary btn-sm col-2 pull-right justify-content-end">
+					</div>
+				</div>
+
+				<div class="row p-2 m-0 bg-primary d-block d-md-none">
+					<h6 class="col-auto m-0 text-success">My activity</h6>
+				</div>
+
+				<div class="jumbotron p-3 post mb-2">
+
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
+
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
+
+					</div>
+
+					<div class="row justify-content-start">
+
+						<div class="col align-self-center text-justify">
+
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
+
+						</div>
+
+					</div>
+
+					<hr>
+
+					<div class="row comment mb-1">
+
+						<div class="col align-self-center">
+
+							<div class="row">
+
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
+
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="row comment mb-1">
+
+						<div class="col align-self-center">
+
+							<div class="row">
+
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
+
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
+
+
+				</div>
+
+				<div class="jumbotron p-3 post mb-2">
+
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
+
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
+
+					</div>
+
+					<div class="row justify-content-start">
+
+						<div class="col align-self-center text-justify">
+
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
+
+						</div>
+
+					</div>
+
+					<hr>
+
+					<div class="row comment mb-1">
+
+						<div class="col align-self-center">
+
+							<div class="row">
+
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
+
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="row comment mb-1">
+
+						<div class="col align-self-center">
+
+							<div class="row">
+
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
+
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
+
+
+				</div>
+
+				<div class="jumbotron p-3 post mb-2">
+
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
+
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
+
+					</div>
+
+					<div class="row justify-content-start">
+
+						<div class="col align-self-center text-justify">
 
-        <div id="homeButton" class="col-auto">
-            <i class="fas fa-home"></i>
-        </div>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
+
+						</div>
+
+					</div>
 
-        <div id="chatButton" class="col-auto">
-            <i class="fas fa-comments"></i>
-        </div>
+					<hr>
 
+					<div class="row comment mb-1">
 
-    </div>
+						<div class="col align-self-center">
 
-    <div id="main" class="row justify-content-center">
+							<div class="row">
 
-        <div class="col-9">
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-            <div class="row justify-content-center">
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
 
-                <div class="jumbotron">
-                    <div id="left" class="">
-                        <div class="row p-2 m-0 bg-primary d-block d-md-none">
-                            <h6 class="col-auto m-0 text-success">Me</h6>
-                        </div>
-                        <div class="jumbotron rounded-0 profile-card p-3">
+					</div>
 
-                            <div class="row">
+					<div class="row comment mb-1">
 
-                                <div class="col-5 col-md-12 mb-md-2 align-self-center">
+						<div class="col align-self-center">
 
-                                    <div class="row justify-content-between">
-                                        <h6>Leonardo Teixeira</h6>
-                                        <div class="container col align-self-center m-0 text-right">
-                                            <!-- <button type="button" class="btn btn-sm btn-success float-right">Follow</button> -->
-                                            <!--button type="button" class="btn btn-sm btn-danger float-right">Unfollow</button-->
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </div>
-                                    </div>
-                                    <img id="profile_pic" class="card-img-top mt-2" src="images/users/example-user.jpg" alt="Card image">
+							<div class="row">
 
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
 
-                                <div class="col-7 col-md-12 align-self-center">
 
-                                    <div id="skills_list" class="card-body p-0 small">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                        <p class="list-group-item-text my-1">Drums
 
-                                            <small class="mt-1 ml-1 float-right text-info">4.2</small>
-                                            <i class="far fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
+				</div>
 
+				<div class="jumbotron p-3 post mb-2">
 
-                                        </p>
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
 
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
 
+					</div>
 
+					<div class="row justify-content-start">
 
-                                        <p class="list-group-item-text my-1">Guitar
+						<div class="col align-self-center text-justify">
 
-                                            <small class="mt-1 ml-1 float-right text-info">3.1</small>
-                                            <i class="far fa-star mt-1 float-right text-info"></i>
-                                            <i class="far fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
 
-                                        </p>
+						</div>
 
+					</div>
 
+					<hr>
 
+					<div class="row comment mb-1">
 
-                                        <p class="list-group-item-text my-1">Piano
+						<div class="col align-self-center">
 
-                                            <small class="mt-1 ml-1 float-right text-info">2.9</small>
-                                            <i class="far fa-star mt-1 float-right text-info"></i>
-                                            <i class="far fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
-                                            <i class="fas fa-star mt-1 float-right text-info"></i>
+							<div class="row">
 
-                                        </p>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
+						</div>
 
+					</div>
 
+					<div class="row comment mb-1">
 
-                                    </div>
+						<div class="col align-self-center">
 
+							<div class="row">
 
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                            <hr>
-                            <a class="mr-1 d-block" href="#">
-                                <img class="profile_img_feed" src="images/system/dummy_profile.svg">
-                                <small class="text-primary">Pearl Jam</small>
-                            </a>
-                            <a class="mr-1 d-block" href="#">
-                                <img class="profile_img_feed" src="images/system/dummy_profile.svg">
-                                <small class="text-primary">Future Islands</small>
-                            </a>
-                            <a class="mr-1 d-block" href="#">
-                                <img class="profile_img_feed" src="images/system/dummy_profile.svg">
-                                <small class="text-primary">Beach House</small>
-                            </a>
-                            <a class="mr-1 d-block" href="#">
-                                <small>
-                                    <p class="text-secondary mt-2">See all</p>
-                                </small>
-                            </a>
+					</div>
 
-                            <hr>
 
-                            <div class="links p-1">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                <small>
 
-                                    <a href="#">
-                                        <p class="text-secondary align-middle mb-1">Followers</p>
-                                    </a>
-                                    <a href="#">
-                                        <p class="text-secondary align-middle mb-1">Following
-                                            <small>(users)</small>
-                                        </p>
-                                    </a>
-                                    <a href="#">
-                                        <p class="text-secondary align-middle mb-1">Following
-                                            <small>(bands)</small>
-                                        </p>
-                                    </a>
+				</div>
 
-                                </small>
-                            </div>
+				<div class="jumbotron p-3 post mb-2">
 
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
 
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
 
-                        </div>
+					</div>
 
+					<div class="row justify-content-start">
 
+						<div class="col align-self-center text-justify">
 
-                    </div>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
 
-                </div>
+						</div>
 
-            </div>
+					</div>
 
-            <div class="row justify-content-center">
+					<hr>
 
-                <div class="col-12">
+					<div class="row comment mb-1">
 
-                    <div id="posts" class="container col-12 col-md-6 mt-3 p-0 order-3">
+						<div class="col align-self-center">
 
-                        <div class="jumbotron p-3 post mb-2">
-                            <div class="row">
-                                <img src="images/system/dummy_profile.svg" class="col-2 mt-1 profile_img_chat p-0 border-0">
-                                <textarea placeholder="New post..." class="col-4 col-md-7 mt-1 text-primary form-control-sm border border-secondary mr-0"
-                                    rows="1" id="new_post_ta" style="height: 30px;"></textarea>
-                                <div class="btn-group col-2" role="group">
-                                    <button type="button" class="btn btn-light">
-                                        <i class="far fa-image"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-light">
-                                        <i class="fas fa-film"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-light">
-                                        <i class="fas fa-music"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+							<div class="row">
 
-                        <div class="row p-2 m-0 bg-primary d-block d-md-none">
-                            <h6 class="col-auto m-0 text-success">My activity</h6>
-                        </div>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                        <div class="jumbotron p-3 post mb-2">
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
+						</div>
 
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
+					</div>
 
-                            </div>
+					<div class="row comment mb-1">
 
-                            <div class="row justify-content-start">
+						<div class="col align-self-center">
 
-                                <div class="col align-self-center text-justify">
+							<div class="row">
 
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                            <hr>
+					</div>
 
-                            <div class="row comment mb-1">
 
-                                <div class="col align-self-center">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                    <div class="row">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+				</div>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+				<div class="jumbotron p-3 post mb-2">
 
-                                </div>
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
 
-                            </div>
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
 
-                            <div class="row comment mb-1">
+					</div>
 
-                                <div class="col align-self-center">
+					<div class="row justify-content-start">
 
-                                    <div class="row">
+						<div class="col align-self-center text-justify">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+						</div>
 
-                                </div>
+					</div>
 
-                            </div>
+					<hr>
 
+					<div class="row comment mb-1">
 
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
+						<div class="col align-self-center">
 
+							<div class="row">
 
-                        </div>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                        <div class="jumbotron p-3 post mb-2">
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
+						</div>
 
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
+					</div>
 
-                            </div>
+					<div class="row comment mb-1">
 
-                            <div class="row justify-content-start">
+						<div class="col align-self-center">
 
-                                <div class="col align-self-center text-justify">
+							<div class="row">
 
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                            <hr>
+					</div>
 
-                            <div class="row comment mb-1">
 
-                                <div class="col align-self-center">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                    <div class="row">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+				</div>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+				<div class="jumbotron p-3 post mb-2">
 
-                                </div>
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
 
-                            </div>
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
 
-                            <div class="row comment mb-1">
+					</div>
 
-                                <div class="col align-self-center">
+					<div class="row justify-content-start">
 
-                                    <div class="row">
+						<div class="col align-self-center text-justify">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+						</div>
 
-                                </div>
+					</div>
 
-                            </div>
+					<hr>
 
+					<div class="row comment mb-1">
 
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
+						<div class="col align-self-center">
 
+							<div class="row">
 
-                        </div>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                        <div class="jumbotron p-3 post mb-2">
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
+						</div>
 
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
+					</div>
 
-                            </div>
+					<div class="row comment mb-1">
 
-                            <div class="row justify-content-start">
+						<div class="col align-self-center">
 
-                                <div class="col align-self-center text-justify">
+							<div class="row">
 
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                            <hr>
+					</div>
 
-                            <div class="row comment mb-1">
 
-                                <div class="col align-self-center">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                    <div class="row">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+				</div>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+				<div class="jumbotron p-3 post mb-2">
 
-                                </div>
+					<div class="row mb-3 justify-content-between">
+						<div class="col">
+							<img src="images/system/dummy_profile.svg" class="profile mr-2">
+							<a class="text-secondary align-middle" href="#">João Pedro</a>
+						</div>
 
-                            </div>
+						<div class="col-4 text-right">
+							<small>
+								<i class="text-secondary">1/3/2018 10:33</i>
+							</small>
+						</div>
 
-                            <div class="row comment mb-1">
+					</div>
 
-                                <div class="col align-self-center">
+					<div class="row justify-content-start">
 
-                                    <div class="row">
+						<div class="col align-self-center text-justify">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							</small>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
+						</div>
 
-                                </div>
+					</div>
 
-                            </div>
+					<hr>
 
+					<div class="row comment mb-1">
 
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
+						<div class="col align-self-center">
 
+							<div class="row">
 
-                        </div>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                        <div class="jumbotron p-3 post mb-2">
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
+						</div>
 
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
+					</div>
 
-                            </div>
+					<div class="row comment mb-1">
 
-                            <div class="row justify-content-start">
+						<div class="col align-self-center">
 
-                                <div class="col align-self-center text-justify">
+							<div class="row">
 
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
+								<div class="col-auto comment_author">
+									<img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
+									<small>
+										<a class="text-secondary align-middle" href="#">Leo</a>
+									</small>
+								</div>
 
-                                </div>
+								<div class="col">
+									<small class="comment_text">
+										<small>
+											<sup>
+												<i class="fas fa-quote-right"></i>
+											</sup>
+											<i>Nice</i>
+										</small>
+									</small>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                            <hr>
+					</div>
 
-                            <div class="row comment mb-1">
 
-                                <div class="col align-self-center">
+					<form class="form-inline row justify-content-between px-3 pt-2">
+						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
+						rows="2" id="new_comment_ta"></textarea>
+						<input type="submit" value="comment" class="btn btn-primary btn-sm">
+					</form>
 
-                                    <div class="row">
 
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
+				</div>
 
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
 
-                                </div>
 
-                            </div>
+			</div>
+		</div>
+	</div>
+	<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
 
-                            <div class="row comment mb-1">
+		<?php include('chat.html')?>
 
-                                <div class="col align-self-center">
 
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
-
-
-                        </div>
-
-                        <div class="jumbotron p-3 post mb-2">
-
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
-
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
-
-                            </div>
-
-                            <div class="row justify-content-start">
-
-                                <div class="col align-self-center text-justify">
-
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
-
-
-                        </div>
-
-                        <div class="jumbotron p-3 post mb-2">
-
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
-
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
-
-                            </div>
-
-                            <div class="row justify-content-start">
-
-                                <div class="col align-self-center text-justify">
-
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
-
-
-                        </div>
-
-                        <div class="jumbotron p-3 post mb-2">
-
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
-
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
-
-                            </div>
-
-                            <div class="row justify-content-start">
-
-                                <div class="col align-self-center text-justify">
-
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
-
-
-                        </div>
-
-                        <div class="jumbotron p-3 post mb-2">
-
-                            <div class="row mb-3 justify-content-between">
-                                <div class="col">
-                                    <img src="images/system/dummy_profile.svg" class="profile mr-2">
-                                    <a class="text-secondary align-middle" href="#">João Pedro</a>
-                                </div>
-
-                                <div class="col-4 text-right">
-                                    <small>
-                                        <i class="text-secondary">1/3/2018 10:33</i>
-                                    </small>
-                                </div>
-
-                            </div>
-
-                            <div class="row justify-content-start">
-
-                                <div class="col align-self-center text-justify">
-
-                                    <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis
-                                        lacus venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis
-                                        pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula,
-                                        vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio
-                                        vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu ad litora torquent
-                                        per conubia nostra, per inceptos himenaeos.
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row comment mb-1">
-
-                                <div class="col align-self-center">
-
-                                    <div class="row">
-
-                                        <div class="col-auto comment_author">
-                                            <img src="images/system/dummy_profile.svg" class=" profile_img_message mr-2">
-                                            <small>
-                                                <a class="text-secondary align-middle" href="#">Leo</a>
-                                            </small>
-                                        </div>
-
-                                        <div class="col">
-                                            <small class="comment_text">
-                                                <small>
-                                                    <sup>
-                                                        <i class="fas fa-quote-right"></i>
-                                                    </sup>
-                                                    <i>Nice</i>
-                                                </small>
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <form class="form-inline row justify-content-between px-3 pt-2">
-                                <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-                                    rows="2" id="new_comment_ta"></textarea>
-                                <input type="submit" value="comment" class="btn btn-primary btn-sm">
-                            </form>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-    </div>
-
-
-    <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3" style="overflow-x: hidden">
-
-        <?php include('chat.html')?>
-
-    </div>
+	</div>
 </div>
 
-</div>
+
 
 </body>
 

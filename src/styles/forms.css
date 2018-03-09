@@ -3,6 +3,11 @@ body {
 	background-size:cover;
 }
 
+.main_form {
+	margin-top: 15vh;
+}
+
+
 #myVideo {
 	position: fixed;
 	left: 0;

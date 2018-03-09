@@ -2,33 +2,19 @@
 
 //Text are for post
 
-let textarea = document.querySelector('#new_post_ta');
-let postButton = document.querySelector('#postbutton');
-
-textarea.addEventListener('focus',function(){
-  textarea.style.height = '150px';
-  postButton.style.display = 'flex';
-})
-
-textarea.style.transition = "height 0.5s";
-
-textarea.addEventListener('focusout',function(){
-  textarea.style.height = '30px';
-  postButton.style.display = 'none';
-})
-
-//Text are for post
-
 //Animation to switch chat
 
 let chat = document.querySelector('#chat');
 let feed = document.querySelector('#posts');
+let prof = document.querySelector('#profile_area');
 
 let chatButton = document.querySelector('#chatButton');
 let feedButton = document.querySelector('#homeButton');
 
 chat.style.transition = "all 0.5s";
 feed.style.transition = "all 0.5s";
+prof.style.transition = "all 0.5s";
+
 
 chatButton.addEventListener('click', function() {
 
@@ -37,9 +23,10 @@ chatButton.addEventListener('click', function() {
 
   chat.style.display = "block";
   feed.style.display = "none";
+  prof.style.display = "none";
 
 
-  console.log(chat.style);
+  console.log(chat);
 
 })
 
@@ -50,8 +37,9 @@ feedButton.addEventListener('click', function(){
 
   chat.style.display = "none";
   feed.style.display = "block";
+  prof.style.display = "block";
 
-  console.log(feed.style.height);
+  //console.log(feed.style.height);
 
 })
 
@@ -60,7 +48,7 @@ window.addEventListener('resize', function(){
   if(window.innerWidth >= 768) {
     chat.style.display = "block";
     feed.style.display = "block";
-
+    prof.style.display = "block";
   }
 
   else {

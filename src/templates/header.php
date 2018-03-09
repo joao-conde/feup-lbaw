@@ -31,7 +31,7 @@
                         <div class="col-8 align-self-center pl-2 pr-0">
 
                             <h1 class="h4">Music Box</h1>
-                            <p class="m-0 display-6">For musicians</p>
+                            <!-- <p class="m-0 display-6">For musicians</p> -->
 
                         </div>
 

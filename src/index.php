@@ -8,7 +8,7 @@
 		</video>
 	</div>
 
-	<div class="container-fluid">
+	<div class="container-fluid main_form">
 		<div class="row justify-content-center mt-5">
 			<div class="col-sm-4">
 				<div class="jumbotron text-center bg-primary">

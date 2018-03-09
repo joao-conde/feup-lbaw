@@ -2,6 +2,10 @@ div.main_content {
     margin-top: 10vh;
 }
 
+.main_nav {
+    margin-top: 15vh;
+}
+
 img.profile_img_feed,
 img.profile_img_message {
     width: 25px;
@@ -108,6 +112,10 @@ div#searchbarHeader > div.row {
     div#logo p {
         margin: 0;
         font-size: 0.8em;
+    }
+
+    div.main_content {
+        margin-top: 15vh;
     }
 }
 

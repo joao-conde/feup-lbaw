@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <body>
 
-	<div class="container">
+	<div class="container main_nav">
 
 		<nav class="navbar navbar-expand bg-primary navbar-light p-0 mt-3">
 			<ul class="navbar-nav mx-auto">
