@@ -10,7 +10,7 @@
 			<div class="d-md-none jumbotron jumbotron-fluid d-flex py-1 border rounded border-dark" id="leftmenu">
 
 				<ul>
-					<li class="display-5 text-primary">My Bands
+					<li class="display-5 text-success">My Bands
 						<ul>
 							<li>
 								<a href="#">
@@ -28,8 +28,7 @@
 							</li>
 						</ul>
 					</li>
-					<hr>
-					<li class="display-5 text-primary">My Fellow Musicians
+					<li class="display-5 text-success">My Fellow Musicians
 						<ul>
 							<li>
 								<a href="#">
@@ -54,10 +53,6 @@
 							</li>
 						</ul>
 					</li>
-					<hr>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
 				</ul>
 			</div>
 		</div>
@@ -81,9 +76,9 @@
 
 		</div>
 
-		<div id="posts" class="col-12 col-md-6 p-0 mt-2">
+				<div id="posts" class="col-12 col-md-6 p-0 mt-2">
 
-			<h1 class="text-primary">Following <small>(bands)</small></h1>
+			<h1 class="text-primary">Following <small>(users)</small></h1>
 
 			<div class="jumbotron p-3 mb-2 justify-content-center d-flex">
 
@@ -93,34 +88,16 @@
 				  	<img src="images/system/dummy_profile.svg" class="profile">
 				  	<ul class="list-group col-10 align-self-center">
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Pearl Jam</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  		</div>
+				  			<div class="row">
+								<span class="list-group-item-text col-7">Danny Soares</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Seattle, USA</span></small>
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Rock</span></small>
-				  		</li>
-				  	</ul>
-				  </li>
-
-				  <li class="list-group-item d-flex">
-				  	<img src="images/system/dummy_profile.svg" class="profile">
-				  	<ul class="list-group col-10 align-self-center">
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Future Islands</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  			</div>
-				  		</li>
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Greenville, USA</span></small>
-				  		</li>
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Rock</span></small>
+				  			<small><span class="list-group-item-text">Guitarist</span></small>
 				  		</li>
 				  	</ul>
 				  </li>
@@ -129,34 +106,16 @@
 				  	<img src="images/system/dummy_profile.svg" class="profile">
 				  	<ul class="list-group col-10 align-self-center">
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Beach House</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  			</div>
+				  			<div class="row">
+								<span class="list-group-item-text col-7">Leo Teixeira</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Maryland, USA</span></small>
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Pop, Rock</span></small>
-				  		</li>
-				  	</ul>
-				  </li>
-
-				  <li class="list-group-item d-flex">
-				  	<img src="images/system/dummy_profile.svg" class="profile">
-				  	<ul class="list-group col-10 align-self-center">
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Pearl Jam</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  			</div>
-				  		</li>
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Seattle, USA</span></small>
-				  		</li>
-				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Rock</span></small>
+				  			<small><span class="list-group-item-text">Drummer</span></small>
 				  		</li>
 				  	</ul>
 				  </li>
@@ -165,16 +124,16 @@
 				  	<img src="images/system/dummy_profile.svg" class="profile">
 				  	<ul class="list-group col-10 align-self-center">
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Future Islands</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  			</div>
+				  			<div class="row">
+								<span class="list-group-item-text col-7">João Conde</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Greenville, USA</span></small>
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Rock</span></small>
+				  			<small><span class="list-group-item-text">Vocalist</span></small>
 				  		</li>
 				  	</ul>
 				  </li>
@@ -183,16 +142,88 @@
 				  	<img src="images/system/dummy_profile.svg" class="profile">
 				  	<ul class="list-group col-10 align-self-center">
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  		<div class="row">
-				  			<span class="list-group-item-text col-7">Beach House</span>
-				  			<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
-				  			</div>
+				  			<div class="row">
+								<span class="list-group-item-text col-7">João Furriel</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Maryland, USA</span></small>
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
 				  		</li>
 				  		<li class="list-group-item border-0 py-0 my-0">
-				  			<small><span class="list-group-item-text">Pop, Rock</span></small>
+				  			<small><span class="list-group-item-text">Bassist</span></small>
+				  		</li>
+				  	</ul>
+				  </li>
+
+				  <li class="list-group-item d-flex">
+				  	<img src="images/system/dummy_profile.svg" class="profile">
+				  	<ul class="list-group col-10 align-self-center">
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<div class="row">
+								<span class="list-group-item-text col-7">Some Doe</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Guitarist</span></small>
+				  		</li>
+				  	</ul>
+				  </li>
+
+				  <li class="list-group-item d-flex">
+				  	<img src="images/system/dummy_profile.svg" class="profile">
+				  	<ul class="list-group col-10 align-self-center">
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<div class="row">
+								<span class="list-group-item-text col-7">Another Doe</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Drummer</span></small>
+				  		</li>
+				  	</ul>
+				  </li>
+
+				  <li class="list-group-item d-flex">
+				  	<img src="images/system/dummy_profile.svg" class="profile">
+				  	<ul class="list-group col-10 align-self-center">
+				  		<li class="list-group-item border-0 py-0 my-0">
+							<div class="row">
+								<span class="list-group-item-text col-7">Jane Doe</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Vocalist</span></small>
+				  		</li>
+				  	</ul>
+				  </li>
+
+				  <li class="list-group-item d-flex">
+				  	<img src="images/system/dummy_profile.svg" class="profile">
+				  	<ul class="list-group col-10 align-self-center">
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<div class="row">
+								<span class="list-group-item-text col-7">John Doe</span>
+				  				<button type="button" class="btn btn-sm btn-danger col-5 align-self-center">Unfollow</button>
+							</div>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Porto, Portugal</span></small>
+				  		</li>
+				  		<li class="list-group-item border-0 py-0 my-0">
+				  			<small><span class="list-group-item-text">Bassist</span></small>
 				  		</li>
 				  	</ul>
 				  </li>
