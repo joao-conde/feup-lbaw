@@ -92,6 +92,22 @@
 					<td class="col-1">2</td>
 					<td class="col-2"><i class="fas fa-times text-danger"></i><i class="fas fa-exclamation-triangle text-warning ml-1"></i><i class="fas fa-ban text-danger ml-1"></i></td>
 				</tr>
+				<tr class="row table-light text-center" style="border-width: 3px !important;">
+					<td class="col-2">Lol Doe</td>
+					<td class="col-4">Link to reported content</td>
+					<td class="col-2">25/01/2018</td>
+					<td class="col-1">0</td>
+					<td class="col-1">4</td>
+					<td class="col-2"><i class="fas fa-times text-danger"></i><i class="fas fa-exclamation-triangle text-warning ml-1"></i><i class="fas fa-ban text-danger ml-1"></i></td>
+				</tr>
+				<tr class="row table-light text-center" style="border-width: 3px !important;">
+					<td class="col-2">João Doe</td>
+					<td class="col-4">Link to reported content</td>
+					<td class="col-2">25/01/2018</td>
+					<td class="col-1">0</td>
+					<td class="col-1">4</td>
+					<td class="col-2"><i class="fas fa-times text-danger"></i><i class="fas fa-exclamation-triangle text-warning ml-1"></i><i class="fas fa-ban text-danger ml-1"></i></td>
+				</tr>
 				
 			</tbody>
 		</table>
