@@ -1,3 +1,7 @@
+div.main_content {
+    margin-top: 10vh;
+}
+
 img.profile_img_feed,
 img.profile_img_message {
     width: 25px;

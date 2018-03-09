@@ -1,12 +1,6 @@
-.profile-page{
-    position: relative;
-}
-
-
 .edit-icon{
     cursor: pointer; 
 }
-
 
 .user-post-img {
     object-fit: cover;
@@ -24,7 +18,7 @@
     position: fixed;
     top: 10vh;
     z-index: 1000;
-  }
+}
 
 div#right ul {
     padding-left: 10px;
@@ -41,12 +35,7 @@ textarea{
 
 @media(min-width: 768px) {
 
-    div#left {
-        position: fixed;
-        height: 90vh;
-        left: 0;
-        overflow-y: scroll;
-    }
+   
     
     div#right {
         position: fixed;
