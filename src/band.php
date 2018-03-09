@@ -78,7 +78,7 @@
 
 	<div class="row no-gutters">
 
-        <div id="profile_area" class="col-12 col-md-7 col-lg-9">
+        <div id="profile_area" class="col-12 col-md-9 col-lg-9">
             <div class="jumbotron p-3 mb-1">
 
                 <div id="username" class="row px-3 justify-content-center">
@@ -206,7 +206,7 @@
 
         </div>
 
-        <div class="col-12 col-md-7 col-lg-6">
+        <div class="col-12 col-md-9 col-lg-6">
 
             <div id="posts">
 
