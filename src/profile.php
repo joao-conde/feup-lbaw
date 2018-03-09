@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="styles/profile.css">
 <link rel="stylesheet" href="styles/feed.css">
-<script defer src="scripts/profile.js"></script>
+<script defer src="scripts/feed.js"></script>
 
 <div class="main_content container-fluid p-0 p-md-2">
 
