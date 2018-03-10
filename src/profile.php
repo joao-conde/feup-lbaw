@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="styles/profile.css">
 <link rel="stylesheet" href="styles/feed.css">
-<script defer src="scripts/profile.js"></script>
+<script defer src="scripts/feed.js"></script>
 
 <div class="main_content container-fluid p-0 p-md-2">
 
@@ -27,6 +27,11 @@
 									<img src="images/system/dummy_profile.svg" class="profile_img_chat">
 									<p class="text-secondary">Pearl Jam</p>
 
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<p class="text-primary">Create Band</p>
 								</a>
 							</li>
 						</ul>
@@ -58,9 +63,26 @@
 						</ul>
 					</li>
 					<hr>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
-					<li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
+					<li>
+						<a href="#">
+							<p class="text-secondary align-middle mb-1">Followers</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<p class="text-secondary align-middle mb-1">Following
+								<small>(users)</small>
+							</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<p class="text-secondary align-middle mb-1">Following
+								<small>(bands)</small>
+							</p>
+						</a>
+					</li>
+
 				</ul>
 			</div>
 		</div>
@@ -104,11 +126,10 @@
 					<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 						<div class="row p-2">
-							<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit
-								at tincidunt. In ligula nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec
-								arcu mauris. Nullam quis condimentum libero. Duis maximus lorem tincidunt commodo molestie.
-								Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum commodo. Aliquam
-							in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+							<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit at tincidunt. In ligula
+								nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec arcu mauris. Nullam quis condimentum libero. Duis
+								maximus lorem tincidunt commodo molestie. Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum
+								commodo. Aliquam in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
 						</div>
 
 						<hr class="mt-0">
@@ -212,11 +233,21 @@
 					<img class="profile_img_feed" src="images/system/dummy_profile.svg">
 					<small class="text-primary">Toca Frio</small>
 				</a>
-				<a class=" d-block" href="#">
-					<small>
-						<p class="text-secondary mt-2">See all</p>
-					</small>
-				</a>
+				<div class="d-flex flex-row m-0">
+
+					<a class="mr-1 d-block mr-2" href="#">
+						<small>
+							<p class="text-secondary mt-2 mb-0">See all</p>
+						</small>
+
+					</a>
+					<a class="mr-1 d-block" href="#">
+						<small>
+							<p class="text-secondary mt-2 mb-0">Create Band</p>
+						</small>
+					</a>
+
+				</div>
 
 			</div>
 
@@ -229,7 +260,8 @@
 				<div class="jumbotron p-3 post mb-2" id="newpost">
 					<div class="row">
 						<img src="images/system/dummy_profile.svg" class="col-1 col-sm-2 mt-1 mr-2 mr-md-0 profile_img_chat p-0 border-0">
-						<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
+						<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0"
+						 rows="1" id="new_post_ta" style="height: 30px;"></textarea>
 						<div class="btn-group col-1 col-sm-2 col-md-1 col-lg-2" id="btns" role="group">
 							<button type="button" class="btn btn-light">
 								<i class="far fa-image"></i>
@@ -272,11 +304,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -346,7 +377,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -373,11 +404,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -447,7 +477,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -474,11 +504,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -548,7 +577,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -575,11 +604,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -649,7 +677,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -676,11 +704,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -750,7 +777,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -777,11 +804,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -851,7 +877,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -878,11 +904,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -952,7 +977,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 
@@ -979,11 +1004,10 @@
 
 						<div class="col align-self-center text-justify">
 
-							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
-								venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
-								bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
-								sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
-								aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+							<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
+								quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
+								augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+								hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 							</small>
 
 						</div>
@@ -1053,7 +1077,7 @@
 
 					<form class="form-inline row justify-content-between px-3 pt-2">
 						<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-						rows="2" id="new_comment_ta"></textarea>
+						 rows="2" id="new_comment_ta"></textarea>
 						<input type="submit" value="comment" class="btn btn-primary btn-sm">
 					</form>
 

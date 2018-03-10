@@ -26,6 +26,11 @@
 
                 </a>
               </li>
+              <li>
+                <a href="#">
+                  <p class="text-primary">Create Band</p>
+                </a>
+              </li>
             </ul>
           </li>
           <hr>
@@ -55,6 +60,7 @@
             </ul>
           </li>
           <hr>
+  
           <li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
           <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
           <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
