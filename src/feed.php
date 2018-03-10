@@ -124,11 +124,7 @@
 
           <div class="col align-self-center text-justify">
 
-            <small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis
-              hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui
-              ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque
-              nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class aptent taciti sociosqu
-              ad litora torquent per conubia nostra, per inceptos himenaeos.
+            <small>This is my first post using MusicBox! Follow me to checkout my work!
             </small>
 
           </div>
