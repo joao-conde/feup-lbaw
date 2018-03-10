@@ -1,3 +1,11 @@
+div.main_content {
+    margin-top: 10vh;
+}
+
+.main_nav {
+    margin-top: 15vh;
+}
+
 img.profile_img_feed,
 img.profile_img_message {
     width: 25px;
@@ -105,8 +113,15 @@ div#searchbarHeader > div.row {
         margin: 0;
         font-size: 0.8em;
     }
+
+    div.main_content {
+        margin-top: 15vh;
+    }
 }
 
 #header {
     min-height: 10vh;
+    top:0;
+    position: fixed;
+    z-index: 10000;
 }
