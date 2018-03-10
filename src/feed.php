@@ -193,7 +193,7 @@
 
 
         <form class="form-inline row justify-content-between px-3 pt-2">
-          <textarea placeholder="New comment..." class="col text-primary form-control-sm border border-secondary"
+          <textarea placeholder="New comment..." class="col text-primary form-control-sm border mr-2 border-secondary"
           rows="1" id="new_comment_ta"></textarea>
           <input type="submit" value="comment" class="btn btn-primary btn-sm col-auto">
         </form>
