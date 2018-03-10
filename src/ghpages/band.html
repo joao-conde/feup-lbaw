@@ -14,7 +14,7 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<link rel="stylesheet" href="styles/profile.css">
 	<link rel="stylesheet" href="styles/feed.css">
-	<script defer src="scripts/feed.js"></script>
+	<script defer src="scripts/profile.js"></script>
 	<script>
 		$(document).ready(function () {
 			$('[data-toggle="tooltip"]').tooltip();
@@ -180,6 +180,7 @@
 		</div>
 	</div>
 
+
 	<div class="main_content container-fluid p-0 p-md-2">
 
 		<div id="floatingmenu" class="row d-md-none m-0 bg-primary text-white w-100 border-top border-secondary py-2">
@@ -205,11 +206,7 @@
 
 									</a>
 								</li>
-								<li>
-									<a href="#">
-										<p class="text-primary">Create Band</p>
-									</a>
-								</li>
+
 							</ul>
 						</li>
 						<hr>
@@ -239,26 +236,9 @@
 							</ul>
 						</li>
 						<hr>
-						<li>
-							<a href="#">
-								<p class="text-secondary align-middle mb-1">Followers</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<p class="text-secondary align-middle mb-1">Following
-									<small>(users)</small>
-								</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<p class="text-secondary align-middle mb-1">Following
-									<small>(bands)</small>
-								</p>
-							</a>
-						</li>
-
+						<li><a href="followers.html"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
+						<li><a href="following_users.html"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
+						<li><a href="following_bands.html"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
 					</ul>
 				</div>
 			</div>
@@ -273,6 +253,7 @@
 
 		</div>
 
+
 		<div class="row no-gutters">
 
 			<div id="profile_area" class="col-12 col-md-9 col-lg-9">
@@ -280,12 +261,12 @@
 
 					<div id="username" class="row px-3 justify-content-center">
 						<div class="col-auto align-self-center">
-							<img src="images/system/musician-icon.svg" class="profile_type">
+							<img src="images/system/band-icon.svg" class="profile_type">
 						</div>
 
 						<div class="col-11 align-self-center">
 
-							<h3 class="d-inline-block">Leonardo Teixeira Vasconcelos</h3>
+							<h3 class="d-inline-block">Future Islands</h3>
 						</div>
 					</div>
 
@@ -302,10 +283,11 @@
 						<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 							<div class="row p-2">
-								<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit at tincidunt. In ligula
-									nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec arcu mauris. Nullam quis condimentum libero. Duis
-									maximus lorem tincidunt commodo molestie. Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum
-								commodo. Aliquam in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+								<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit
+									at tincidunt. In ligula nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec
+									arcu mauris. Nullam quis condimentum libero. Duis maximus lorem tincidunt commodo molestie.
+									Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum commodo. Aliquam
+								in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
 							</div>
 
 							<hr class="mt-0">
@@ -313,33 +295,22 @@
 							<div id="rating" class="row">
 								<div class="col-12">
 									<div id="skills_list">
-										<p class="mr-2">Drums
+										<p class="mr-2">Rating
 
+											<i class="fas fa-star mt-1 text-primary"></i>
+											<i class="fas fa-star mt-1 text-primary"></i>
+											<i class="fas fa-star mt-1 text-primary"></i>
+											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
 											<small class="mt-1 text-info">4.2</small>
 										</p>
-										<p class="mr-2">Guitar
 
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<small class="mt-1 text-info">4.2</small>
-										</p>
-										<p class="mr-2">Piano
-
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<small class="mt-1 text-info">4.2</small>
-										</p>
+										<p class="mr-1"><i>Rock</i></p>
+										<p class="mr-1"><i>Synthpop</i></p> 
+										<p class="mr-1"><i>Alternative Rock</i></p> 
+										<p class="mr-1"><i>Indie Pop</i></p>
+										<p class="mr-1"><i>Indie Rock</i></p>
+										
 
 									</div>
 
@@ -349,13 +320,13 @@
 							<div id="bios" class="row p-0 justify-content-center">
 								<ul>
 									<li>
-										<small>Lives in
+										<small>From
 											<i>Porto, Portugal</i>
 										</small>
 									</li>
 									<li>
-										<small>Born on
-											<i>6/9/1985, at Amarante</i>
+										<small>Founded on
+											<i>1985</i>
 										</small>
 									</li>
 								</ul>
@@ -373,9 +344,8 @@
 
 							<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 								<div class="navbar-nav">
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Bands</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Following</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
+									<a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="#">Members</a>
+									<a class="nav-item col-6 nav-link btn btn-secondary text-white mr-2" href="followers.html">Followers</a>
 								</div>
 							</div>
 						</nav>
@@ -392,38 +362,23 @@
 			<div class="col-3 d-none d-lg-block">
 
 				<div class="jumbotron p-3 mr-2">
-					<p class="align-middle">Bands</p>
+					<p class="align-middle">Members</p>
 					<a class="d-block" href="#">
 						<img class="profile_img_feed" src="images/system/dummy_profile.svg">
-						<small class="text-primary">Compota de Pérola</small>
+						<small class="text-primary">Gerrit Welmers</small>
 					</a>
 					<a class="d-block" href="#">
 						<img class="profile_img_feed" src="images/system/dummy_profile.svg">
-						<small class="text-primary">Ilha do Futuro</small>
+						<small class="text-primary">William Cashion</small>
 					</a>
 					<a class="d-block" href="#">
 						<img class="profile_img_feed" src="images/system/dummy_profile.svg">
-						<small class="text-primary">Casa da Praia</small>
+						<small class="text-primary">Samuel Herring</small>
 					</a>
 					<a class="d-block" href="#">
 						<img class="profile_img_feed" src="images/system/dummy_profile.svg">
-						<small class="text-primary">Toca Frio</small>
+						<small class="text-primary">Michael Lowry</small>
 					</a>
-					<div class="d-flex flex-row m-0">
-
-						<a class="mr-1 d-block mr-2" href="#">
-							<small>
-								<p class="text-secondary mt-2 mb-0">See all</p>
-							</small>
-
-						</a>
-						<a class="mr-1 d-block" href="#">
-							<small>
-								<p class="text-secondary mt-2 mb-0">Create Band</p>
-							</small>
-						</a>
-
-					</div>
 
 				</div>
 
@@ -436,8 +391,7 @@
 					<div class="jumbotron p-3 post mb-2" id="newpost">
 						<div class="row">
 							<img src="images/system/dummy_profile.svg" class="col-1 col-sm-2 mt-1 mr-2 mr-md-0 profile_img_chat p-0 border-0">
-							<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0"
-							rows="1" id="new_post_ta" style="height: 30px;"></textarea>
+							<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0" rows="1" id="new_post_ta" style="height: 30px;"></textarea>
 							<div class="btn-group col-1 col-sm-2 col-md-1 col-lg-2" id="btns" role="group">
 								<button type="button" class="btn btn-light">
 									<i class="far fa-image"></i>
@@ -480,10 +434,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -580,10 +535,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -680,10 +636,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -780,10 +737,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -880,10 +838,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -980,10 +939,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -1080,10 +1040,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -1180,10 +1141,11 @@
 
 							<div class="col align-self-center text-justify">
 
-								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-									quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-									augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
-									hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+								<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus
+									venenatis hendrerit quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce
+									bibendum, dui ac dapibus venenatis, lacus augue vehicula ligula, vel venenatis turpis risus
+									sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis hendrerit arcu. Class
+									aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 								</small>
 
 							</div>
@@ -1259,12 +1221,14 @@
 
 
 					</div>
-
-
 
 				</div>
+
 			</div>
+
 		</div>
+
+
 		<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
 
 			<form class="form-inline mt-2 ml-0 pl-2 pr-4 row justify-content-center">
