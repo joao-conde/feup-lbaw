@@ -1,23 +1,28 @@
-div#chat {
-  position: fixed;
-  height: 90vh;
-  right: 0;
-  overflow-y: scroll;
+div#mybands,
+div#fellowmusicians {
+  font-size: 0.8em;
+}
+
+#postbutton {
+  display: none;
+}
+
+div#mybands button{
+  font-size: 0.8em;
 }
 
 div#leftfeedmenu {
   position: fixed;
   height: 100%;
   left: 0;
-  overflow-y: scroll;
+  top:10vh;
 }
 
-div.chats {
-  height: 30vh;
-  overflow-y: scroll;
+div#main {
+  margin-top: 11vh;
 }
 
-textarea#chat_msg, textarea#new_post_ta, textarea#new_comment_ta{
+textarea#new_post_ta, textarea#new_comment_ta{
   resize: none;
   color: black;
   font-size: 0.8em;
@@ -25,7 +30,33 @@ textarea#chat_msg, textarea#new_post_ta, textarea#new_comment_ta{
   box-shadow: none;
 }
 
+#btns {
+  height: 100%;
+}
+
+@media(min-width: 768px) {
+  div#main {
+    width: 94%;
+  }
+
+  div#posts {
+    display: block;
+  }
+
+
+}
+
 @media(max-width:767px) {
+
+  div#main {
+    margin-top: 16vh;
+  }
+
+  #floatingmenu {
+    position: fixed;
+    top: 10vh;
+    z-index: 1000;
+  }
 
   input#toggleleft {
     opacity: 0;
@@ -84,16 +115,16 @@ textarea#chat_msg, textarea#new_post_ta, textarea#new_comment_ta{
     border-radius: 0;
   }
 
-  div.chats {
-    height: 65vh;
-    overflow-y: scroll;
-  }
-
   div#new_post {
     border-radius: 0;
   }
 
-  /* div#chat {
-    position: static;
-  } */
+  
+
 }
+
+  body::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+
