@@ -41,7 +41,7 @@ ALTER TABLE ONLY city
 /*****************************************************/
 
 CREATE TABLE mb_user (
-    
+
     id SERIAL NOT NULL,
     username TEXT NOT NULL,
     password TEXT NOT NULL,
@@ -94,7 +94,7 @@ ALTER TABLE ONLY admin
 
 
 CREATE TABLE band (
-    
+
     id SERIAL NOT NULL,
     name char(50) NOT NULL,
     creationDate DATE,
@@ -119,7 +119,7 @@ ALTER TABLE ONLY band
 /*****************************************************/
 
 CREATE TABLE content (
-    
+
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
     date TIMESTAMP DEFAULT now()
@@ -134,7 +134,7 @@ ALTER TABLE ONLY content
 /*****************************************************/
 
 CREATE TABLE post (
-    
+
     id SERIAL NOT NULL,
     private BOOLEAN NOT NULL DEFAULT FALSE,
     contentId INTEGER NOT NULL,
@@ -160,7 +160,7 @@ ALTER TABLE ONLY post
 /*****************************************************/
 
 CREATE TABLE message (
-    
+
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
     senderId INTEGER,
@@ -189,7 +189,7 @@ ALTER TABLE ONLY message
 /*****************************************************/
 
 CREATE TABLE comment (
-    
+
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
     commenterId INTEGER,
@@ -214,7 +214,7 @@ ALTER TABLE ONLY comment
 /*****************************************************/
 
 CREATE TABLE genre (
-    
+
     id SERIAL NOT NULL,
     name TEXT NOT NULL,
     creatingAdminId INTEGER
@@ -234,7 +234,7 @@ ALTER TABLE ONLY genre
 /*****************************************************/
 
 CREATE TABLE skill (
-    
+
     id SERIAL NOT NULL,
     name TEXT NOT NULL,
     creatingAdminId INTEGER
@@ -255,7 +255,7 @@ ALTER TABLE ONLY skill
 /*****************************************************/
 
 CREATE TABLE report (
-    
+
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
     date TIMESTAMP DEFAULT now(),
@@ -285,7 +285,7 @@ ALTER TABLE ONLY report
 /*****************************************************/
 
 CREATE TABLE ban (
-    
+
     id SERIAL NOT NULL,
     reason TEXT NOT NULL,
     banDate TIMESTAMP DEFAULT now(),
@@ -305,11 +305,11 @@ ALTER TABLE ONLY ban
 /*****************************************************/
 
 CREATE TABLE user_skill (
-    
+
     userId INTEGER NOT NULL,
     skillId INTEGER NOT NULL,
     level INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY user_skill
@@ -330,11 +330,11 @@ ALTER TABLE ONLY user_skill
 /*****************************************************/
 
 CREATE TABLE user_follower (
-    
+
     id SERIAL NOT NULL,
     followingUserId INTEGER NOT NULL,
     followedUserId INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY user_follower
@@ -354,11 +354,11 @@ ALTER TABLE ONLY user_follower
 /*****************************************************/
 
 CREATE TABLE user_rating (
-    
+
     ratingUserid INTEGER NOT NULL,
     ratedUserId INTEGER NOT NULL,
     rate INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY user_rating
@@ -378,11 +378,11 @@ ALTER TABLE ONLY user_rating
 /*****************************************************/
 
 CREATE TABLE user_warning (
-    
+
     id SERIAL NOT NULL,
     adminId INTEGER NOT NULL,
     userId INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY user_warning
@@ -400,7 +400,7 @@ ALTER TABLE ONLY user_warning
 /*****************************************************/
 
 CREATE TABLE band_genre (
-    
+
     bandId INTEGER NOT NULL,
     genreId INTEGER NOT NULL
 );
@@ -420,7 +420,7 @@ ALTER TABLE ONLY band_genre
 /*****************************************************/
 
 CREATE TABLE band_membership (
-    
+
     bandId INTEGER NOT NULL,
     userId INTEGER NOT NULL,
     isOwner BOOLEAN NOT NULL,
@@ -443,11 +443,11 @@ ALTER TABLE ONLY band_membership
 /*****************************************************/
 
 CREATE TABLE band_rating (
-    
+
     ratingUserid INTEGER NOT NULL,
     ratedBandId INTEGER NOT NULL,
     rate INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY band_rating
@@ -468,11 +468,11 @@ ALTER TABLE ONLY band_rating
 /*****************************************************/
 
 CREATE TABLE band_warning (
-    
+
     id SERIAL NOT NULL,
     adminId INTEGER NOT NULL,
     bandId INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY band_warning
@@ -489,11 +489,11 @@ ALTER TABLE ONLY band_warning
 /*****************************************************/
 
 CREATE TABLE band_follower (
-    
+
     id SERIAL NOT NULL,
     userId INTEGER NOT NULL,
     bandId INTEGER NOT NULL
-    
+
 );
 
 ALTER TABLE ONLY band_follower
@@ -515,14 +515,14 @@ ALTER TABLE ONLY band_follower
 CREATE TYPE BAND_APPLICATION_STATUS AS ENUM ('canceled', 'pending', 'accepted', 'rejected');
 
 CREATE TABLE band_application (
-    
+
     id SERIAL NOT NULL,
     userId INTEGER NOT NULL,
     bandId INTEGER NOT NULL,
     date TIMESTAMP DEFAULT now(),
     lastStatusDate DATE,
     status BAND_APPLICATION_STATUS DEFAULT 'pending'
-    
+
 );
 
 ALTER TABLE ONLY band_application
@@ -541,14 +541,14 @@ ALTER TABLE ONLY band_application
 CREATE TYPE BAND_INVITATION_STATUS AS ENUM ('canceled', 'pending', 'accepted', 'rejected');
 
 CREATE TABLE band_invitation(
-    
+
     id SERIAL NOT NULL,
     userId INTEGER NOT NULL,
     bandId INTEGER NOT NULL,
     date TIMESTAMP DEFAULT now(),
     lastStatusDate DATE,
     status BAND_INVITATION_STATUS DEFAULT 'pending'
-    
+
 );
 
 ALTER TABLE ONLY band_invitation
@@ -567,12 +567,12 @@ ALTER TABLE ONLY band_invitation
 /*****************************************************/
 
 CREATE TYPE NOTIFICATION_TYPE AS ENUM (
-    'user_follower', 'band_follower', 'message', 'comment', 'band_application', 
-    'band_invitation', 'user_warning', 'band_warning', 'band_invitation_accepted', 
+    'user_follower', 'band_follower', 'message', 'comment', 'band_application',
+    'band_invitation', 'user_warning', 'band_warning', 'band_invitation_accepted',
     'band_invitation_rejected', 'band_application_accepted', 'band_application_rejected');
 
 CREATE TABLE notification_trigger (
-    
+
     id SERIAL NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT now(),
     type NOTIFICATION_TYPE,
@@ -612,3 +612,23 @@ ALTER TABLE ONLY notification_trigger
 
 ALTER TABLE ONLY notification_trigger
     ADD CONSTRAINT notification_trigger_origin_band_warning_fkey FOREIGN KEY (originBandWarning) REFERENCES band_warning(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+/*****************************************************/
+/*************** User Notification *******************/
+/*****************************************************/
+
+CREATE TABLE user_notification (
+
+    notification_trigger_id INTEGER NOT NULL,
+    userId INTEGER NOT NULL
+);
+
+ALTER TABLE ONLY user_notification
+    ADD CONSTRAINT user_notification_pkey PRIMARY KEY (notification_trigger_id, userId);
+
+ALTER TABLE ONLY user_notification
+    ADD CONSTRAINT user_notification_notification_trigger_fkey FOREIGN KEY (notification_trigger_id) REFERENCES notification_trigger(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY user_notification
+    ADD CONSTRAINT user_notification_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
