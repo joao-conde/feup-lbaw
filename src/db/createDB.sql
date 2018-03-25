@@ -1,13 +1,39 @@
-\c postgres;
-
-DROP DATABASE IF EXISTS lbaw1712;
-CREATE DATABASE lbaw1712;
-
 \c lbaw1712;
+
+DROP TABLE IF EXISTS country CASCADE;
+DROP TABLE IF EXISTS city CASCADE;
+DROP TABLE IF EXISTS mb_user CASCADE;
+DROP TABLE IF EXISTS band CASCADE;
+DROP TABLE IF EXISTS content CASCADE;
+DROP TABLE IF EXISTS post CASCADE;
+DROP TABLE IF EXISTS message CASCADE;
+DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS genre CASCADE;
+DROP TABLE IF EXISTS skill CASCADE;
+DROP TABLE IF EXISTS report CASCADE;
+DROP TABLE IF EXISTS ban CASCADE;
+DROP TABLE IF EXISTS user_skill CASCADE;
+DROP TABLE IF EXISTS user_follower CASCADE;
+DROP TABLE IF EXISTS user_rating CASCADE;
+DROP TABLE IF EXISTS user_warning CASCADE;
+DROP TABLE IF EXISTS band_genre CASCADE;
+DROP TABLE IF EXISTS band_membership CASCADE;
+DROP TABLE IF EXISTS band_rating CASCADE;
+DROP TABLE IF EXISTS band_warning CASCADE;
+DROP TABLE IF EXISTS band_follower CASCADE;
+DROP TABLE IF EXISTS band_application CASCADE;
+DROP TABLE IF EXISTS band_invitation CASCADE;
+DROP TABLE IF EXISTS notification_trigger CASCADE;
+DROP TABLE IF EXISTS user_notification CASCADE;
+
+DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
+DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
+DROP TYPE IF EXISTS NOTIFICATION_TYPE;
 
 /*****************************************************/
 /****************** Country **************************/
 /*****************************************************/
+
 
 CREATE TABLE country (
     id SERIAL NOT NULL,
@@ -21,6 +47,8 @@ ALTER TABLE ONLY country
 /*****************************************************/
 /****************** City *****************************/
 /*****************************************************/
+
+
 
 CREATE TABLE city (
     id SERIAL NOT NULL,
@@ -40,6 +68,8 @@ ALTER TABLE ONLY city
 /***************** User ******************************/
 /*****************************************************/
 
+
+
 CREATE TABLE mb_user (
 
     id SERIAL NOT NULL,
@@ -51,7 +81,8 @@ CREATE TABLE mb_user (
     deactivationDate DATE,
     warns INTEGER DEFAULT 0,
     location INTEGER,
-    rating REAL
+    rating REAL,
+    admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 ALTER TABLE ONLY mb_user
@@ -71,26 +102,9 @@ ALTER TABLE ONLY mb_user
 
 
 /*****************************************************/
-/***************** Admin *****************************/
-/*****************************************************/
-
-CREATE TABLE admin(
-
-    id SERIAL NOT NULL,
-    userId INTEGER
-
-);
-
-ALTER TABLE ONLY admin
-    ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY admin
-    ADD CONSTRAINT user_id_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
-
-
-/*****************************************************/
 /***************** Band ******************************/
 /*****************************************************/
+
 
 
 CREATE TABLE band (
@@ -99,7 +113,8 @@ CREATE TABLE band (
     name char(50) NOT NULL,
     creationDate DATE,
     ceaseDate DATE,
-    location INTEGER
+    location INTEGER,
+    isActive BOOLEAN DEFAULT TRUE
 );
 
 ALTER TABLE ONLY band
@@ -118,11 +133,14 @@ ALTER TABLE ONLY band
 /***************** Content ***************************/
 /*****************************************************/
 
+
 CREATE TABLE content (
 
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
-    date TIMESTAMP DEFAULT now()
+    date TIMESTAMP DEFAULT now(),
+    isActive BOOLEAN DEFAULT TRUE
+
 );
 
 ALTER TABLE ONLY content
@@ -132,6 +150,7 @@ ALTER TABLE ONLY content
 /*****************************************************/
 /***************** Post ******************************/
 /*****************************************************/
+
 
 CREATE TABLE post (
 
@@ -158,6 +177,7 @@ ALTER TABLE ONLY post
 /*****************************************************/
 /***************** Message ***************************/
 /*****************************************************/
+
 
 CREATE TABLE message (
 
@@ -188,6 +208,7 @@ ALTER TABLE ONLY message
 /***************** Comment ***************************/
 /*****************************************************/
 
+
 CREATE TABLE comment (
 
     id SERIAL NOT NULL,
@@ -213,11 +234,15 @@ ALTER TABLE ONLY comment
 /***************** Genre *****************************/
 /*****************************************************/
 
+
+
 CREATE TABLE genre (
 
     id SERIAL NOT NULL,
     name TEXT NOT NULL,
-    creatingAdminId INTEGER
+    creatingAdminId INTEGER,
+    isActive BOOLEAN DEFAULT TRUE
+
 );
 
 ALTER TABLE ONLY genre
@@ -227,7 +252,7 @@ ALTER TABLE ONLY genre
     ADD CONSTRAINT genre_name_unique UNIQUE (name);
 
 ALTER TABLE ONLY genre
-    ADD CONSTRAINT genre_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES admin(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT genre_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 /*****************************************************/
 /***************** Skill *****************************/
@@ -237,7 +262,8 @@ CREATE TABLE skill (
 
     id SERIAL NOT NULL,
     name TEXT NOT NULL,
-    creatingAdminId INTEGER
+    creatingAdminId INTEGER,
+    isActive BOOLEAN DEFAULT TRUE
 );
 
 ALTER TABLE ONLY skill
@@ -247,12 +273,14 @@ ALTER TABLE ONLY skill
     ADD CONSTRAINT skill_name_unique UNIQUE (name);
 
 ALTER TABLE ONLY skill
-    ADD CONSTRAINT skill_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES admin(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT skill_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 /*****************************************************/
 /***************** Report ****************************/
 /*****************************************************/
+
+
 
 CREATE TABLE report (
 
@@ -284,31 +312,44 @@ ALTER TABLE ONLY report
 /******************* Ban *****************************/
 /*****************************************************/
 
+
+
 CREATE TABLE ban (
 
     id SERIAL NOT NULL,
     reason TEXT NOT NULL,
     banDate TIMESTAMP DEFAULT now(),
     ceaseDate TIMESTAMP,
-    adminId INTEGER
+    adminId INTEGER,
+    userId INTEGER,
+    bandId INTEGER
 );
 
 ALTER TABLE ONLY ban
     ADD CONSTRAINT ban_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY ban
-    ADD CONSTRAINT admin_id_fkey FOREIGN KEY (adminId) REFERENCES admin(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT admin_id_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+
+ALTER TABLE ONLY ban
+    ADD CONSTRAINT band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+ALTER TABLE ONLY ban
+    ADD CONSTRAINT user_id_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
 /*****************************************************/
 /******************* User Skill **********************/
 /*****************************************************/
 
+
+
 CREATE TABLE user_skill (
 
     userId INTEGER NOT NULL,
     skillId INTEGER NOT NULL,
-    level INTEGER NOT NULL
+    level INTEGER NOT NULL,
+    isActive BOOLEAN DEFAULT TRUE
 
 );
 
@@ -329,11 +370,14 @@ ALTER TABLE ONLY user_skill
 /******************* User Follower *******************/
 /*****************************************************/
 
+
+
 CREATE TABLE user_follower (
 
     id SERIAL NOT NULL,
     followingUserId INTEGER NOT NULL,
-    followedUserId INTEGER NOT NULL
+    followedUserId INTEGER NOT NULL,
+    isActive BOOLEAN DEFAULT TRUE
 
 );
 
@@ -352,6 +396,8 @@ ALTER TABLE ONLY user_follower
 /*****************************************************/
 /******************* User Rating *********************/
 /*****************************************************/
+
+
 
 CREATE TABLE user_rating (
 
@@ -377,6 +423,8 @@ ALTER TABLE ONLY user_rating
 /******************* User Warning ********************/
 /*****************************************************/
 
+
+
 CREATE TABLE user_warning (
 
     id SERIAL NOT NULL,
@@ -389,7 +437,7 @@ ALTER TABLE ONLY user_warning
     ADD CONSTRAINT user_warning_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY user_warning
-    ADD CONSTRAINT user_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES admin(id) ON UPDATE CASCADE;
+    ADD CONSTRAINT user_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY user_warning
     ADD CONSTRAINT user_warning_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
@@ -399,10 +447,13 @@ ALTER TABLE ONLY user_warning
 /******************* Band Genre **********************/
 /*****************************************************/
 
+
+
 CREATE TABLE band_genre (
 
     bandId INTEGER NOT NULL,
-    genreId INTEGER NOT NULL
+    genreId INTEGER NOT NULL,
+    isActive BOOLEAN DEFAULT TRUE
 );
 
 ALTER TABLE ONLY band_genre
@@ -419,8 +470,10 @@ ALTER TABLE ONLY band_genre
 /******************* Band Membership *****************/
 /*****************************************************/
 
+
 CREATE TABLE band_membership (
 
+    id SERIAL NOT NULL,
     bandId INTEGER NOT NULL,
     userId INTEGER NOT NULL,
     isOwner BOOLEAN NOT NULL,
@@ -429,7 +482,7 @@ CREATE TABLE band_membership (
 );
 
 ALTER TABLE ONLY band_membership
-    ADD CONSTRAINT band_membership_pkey PRIMARY KEY (bandId,userId);
+    ADD CONSTRAINT band_membership_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY band_membership
     ADD CONSTRAINT band_membership_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
@@ -439,8 +492,9 @@ ALTER TABLE ONLY band_membership
 
 
 /*****************************************************/
-/******************* User Rating *********************/
+/******************* Band Rating *********************/
 /*****************************************************/
+
 
 CREATE TABLE band_rating (
 
@@ -467,6 +521,7 @@ ALTER TABLE ONLY band_rating
 /******************* Band Warning ********************/
 /*****************************************************/
 
+
 CREATE TABLE band_warning (
 
     id SERIAL NOT NULL,
@@ -479,7 +534,7 @@ ALTER TABLE ONLY band_warning
     ADD CONSTRAINT band_warning_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY band_warning
-    ADD CONSTRAINT band_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES admin(id) ON UPDATE CASCADE;
+    ADD CONSTRAINT band_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY band_warning
     ADD CONSTRAINT band_warning_userId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
@@ -488,11 +543,14 @@ ALTER TABLE ONLY band_warning
 /******************* Band Follower *******************/
 /*****************************************************/
 
+
+
 CREATE TABLE band_follower (
 
     id SERIAL NOT NULL,
     userId INTEGER NOT NULL,
-    bandId INTEGER NOT NULL
+    bandId INTEGER NOT NULL,
+    isActive BOOLEAN DEFAULT TRUE
 
 );
 
@@ -511,6 +569,8 @@ ALTER TABLE ONLY band_follower
 /*****************************************************/
 /******************* Band Application ****************/
 /*****************************************************/
+
+
 
 CREATE TYPE BAND_APPLICATION_STATUS AS ENUM ('canceled', 'pending', 'accepted', 'rejected');
 
@@ -537,6 +597,8 @@ ALTER TABLE ONLY band_application
 /*****************************************************/
 /******************* Band Invitation *****************/
 /*****************************************************/
+
+
 
 CREATE TYPE BAND_INVITATION_STATUS AS ENUM ('canceled', 'pending', 'accepted', 'rejected');
 
@@ -565,6 +627,8 @@ ALTER TABLE ONLY band_invitation
 /*****************************************************/
 /************ Notification Trigger *******************/
 /*****************************************************/
+
+
 
 CREATE TYPE NOTIFICATION_TYPE AS ENUM (
     'user_follower', 'band_follower', 'message', 'comment', 'band_application',
@@ -617,6 +681,8 @@ ALTER TABLE ONLY notification_trigger
 /*****************************************************/
 /*************** User Notification *******************/
 /*****************************************************/
+
+
 
 CREATE TABLE user_notification (
 
