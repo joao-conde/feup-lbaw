@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS skill CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
 DROP TABLE IF EXISTS ban CASCADE;
+DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
+DROP FUNCTION  IF EXISTS check_xor_user_band();
 DROP TABLE IF EXISTS user_skill CASCADE;
 DROP TABLE IF EXISTS user_follower CASCADE;
 DROP TABLE IF EXISTS user_rating CASCADE;
@@ -23,6 +25,10 @@ DROP TABLE IF EXISTS band_warning CASCADE;
 DROP TABLE IF EXISTS band_follower CASCADE;
 DROP TABLE IF EXISTS band_application CASCADE;
 DROP TABLE IF EXISTS band_invitation CASCADE;
+
+
+DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
+DROP FUNCTION  IF EXISTS check_xor_notification_origin();
 DROP TABLE IF EXISTS notification_trigger CASCADE;
 DROP TABLE IF EXISTS user_notification CASCADE;
 
@@ -111,7 +117,7 @@ CREATE TABLE band (
 
     id SERIAL NOT NULL,
     name char(50) NOT NULL,
-    creationDate DATE,
+    creationDate DATE DEFAULT now(),
     ceaseDate DATE,
     location INTEGER,
     isActive BOOLEAN DEFAULT TRUE
@@ -336,6 +342,28 @@ ALTER TABLE ONLY ban
 
 ALTER TABLE ONLY ban
     ADD CONSTRAINT user_id_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+
+
+CREATE FUNCTION check_xor_user_band() RETURNS trigger AS $check_xor_user_band$
+    BEGIN
+        --Check if both user and ban are empty--
+        IF NEW.userId IS NULL AND NEW.bandId IS NULL THEN
+            RAISE EXCEPTION 'userId and bandId cannot be both null';
+        END IF;
+
+        --Check if both are not null
+        IF NEW.userId IS NOT NULL AND NEW.bandId IS NOT NULL THEN
+            RAISE EXCEPTION 'userId and bandId cannot be both not null (%,%)', NEW.userId, New.bandId;
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_xor_user_band$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_xor_user_band BEFORE INSERT OR UPDATE ON ban
+    FOR EACH ROW EXECUTE PROCEDURE check_xor_user_band();
+
 
 
 /*****************************************************/
@@ -677,6 +705,63 @@ ALTER TABLE ONLY notification_trigger
 ALTER TABLE ONLY notification_trigger
     ADD CONSTRAINT notification_trigger_origin_band_warning_fkey FOREIGN KEY (originBandWarning) REFERENCES band_warning(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+
+CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_notification_origin$
+    BEGIN
+        --Check if has at least one origin--
+        IF NEW.originUserFollower IS NULL AND NEW.originBandFollower IS NULL AND NEW.originMessage  IS NULL AND NEW.originComment IS NULL AND NEW.originBandApplication IS NULL AND NEW.originBandInvitation IS NULL AND NEW.originUserWarning IS NULL AND NEW.originBandWarning IS NULL THEN
+            RAISE EXCEPTION 'one origin is needed';
+        END IF;
+
+        --Check if both are not null
+        IF NEW.originUserFollower IS NOT NULL AND NEW.originBandFollower IS NOT NULL AND NEW.originMessage  IS NOT NULL AND NEW.originComment IS NOT NULL AND NEW.originBandApplication IS NOT NULL AND NEW.originBandInvitation IS NOT NULL AND NEW.originUserWarning IS NOT NULL AND NEW.originBandWarning IS NOT NULL THEN
+            RAISE EXCEPTION 'error: more than one origin';
+        END IF;
+
+        --Check for correct type and origin
+        IF NEW.TYPE = 'user_follower' AND NEW.originUserFollower IS NULL THEN
+            RAISE EXCEPTION 'type user follower without originUserFollowerId';
+        END IF;
+
+        IF NEW.TYPE = 'band_follower' AND NEW.originBandFollower IS NULL THEN
+            RAISE EXCEPTION 'type band follower without bandFollowerId';
+        END IF;
+
+        IF NEW.TYPE = 'message' AND NEW.originMessage IS NULL THEN
+            RAISE EXCEPTION 'type message without originMessageId';
+        END IF;
+
+        IF NEW.TYPE = 'comment' AND NEW.originComment IS NULL THEN
+            RAISE EXCEPTION 'type comment without originCommentId';
+        END IF;
+
+        IF NEW.TYPE = 'band_application' AND NEW.originBandApplication IS NULL THEN
+            RAISE EXCEPTION 'type band application without originBandApplicationId';
+        END IF;
+
+        IF NEW.TYPE = 'band_invitation' AND NEW.originBandInvitation IS NULL THEN
+            RAISE EXCEPTION 'type band invitation without band invitation Id';
+        END IF;
+
+        IF NEW.TYPE = 'user_warning' AND NEW.originUserWarning IS NULL THEN
+            RAISE EXCEPTION 'type user warning without origin user warning id';
+        END IF;
+
+        IF NEW.TYPE = 'band_warning' AND NEW.originBandWarning IS NULL THEN
+            RAISE EXCEPTION 'type band warning without originMessageId';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_xor_notification_origin$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_xor_notification_origin BEFORE INSERT OR UPDATE ON notification_trigger
+    FOR EACH ROW EXECUTE PROCEDURE check_xor_notification_origin();
+
+'user_follower', 'band_follower', 'message', 'comment', 'band_application',
+    'band_invitation', 'user_warning', 'band_warning', 'band_invitation_accepted',
+    'band_invitation_rejected', 'band_application_accepted', 'band_application_rejected');
 
 /*****************************************************/
 /*************** User Notification *******************/
