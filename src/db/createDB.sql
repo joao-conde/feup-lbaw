@@ -1,10 +1,13 @@
 \c lbaw1712;
+DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
 
 DROP TABLE IF EXISTS user_notification CASCADE;
 DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
 DROP FUNCTION  IF EXISTS check_xor_notification_origin();
 DROP TABLE IF EXISTS notification_trigger CASCADE;
 DROP TYPE IF EXISTS NOTIFICATION_TYPE;
+
 DROP TABLE IF EXISTS band_invitation CASCADE;
 DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
 DROP TABLE IF EXISTS band_application CASCADE;
@@ -16,34 +19,53 @@ DROP TABLE IF EXISTS band_warning CASCADE;
 DROP TABLE IF EXISTS band_rating CASCADE;
 DROP TABLE IF EXISTS band_membership CASCADE;
 DROP TABLE IF EXISTS band_genre CASCADE;
+
 DROP TRIGGER IF EXISTS check_is_admin_user_warning ON user_warning;
 DROP FUNCTION  IF EXISTS check_is_admin_user_warning();
 DROP TABLE IF EXISTS user_warning CASCADE;
 DROP TABLE IF EXISTS user_rating CASCADE;
+-- DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
+-- DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
 DROP TABLE IF EXISTS user_follower CASCADE;
 DROP TABLE IF EXISTS user_skill CASCADE;
 DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
 DROP FUNCTION  IF EXISTS check_xor_user_band();
+
 DROP TRIGGER IF EXISTS check_is_admin_ban ON ban;
 DROP FUNCTION  IF EXISTS check_is_admin_ban();
 DROP TABLE IF EXISTS ban CASCADE;
+
 DROP TRIGGER IF EXISTS check_xor_report_type ON report;
 DROP FUNCTION  IF EXISTS check_xor_report_type();
 DROP TABLE IF EXISTS report CASCADE;
 DROP TYPE IF EXISTS REPORT_TYPE;
+
 DROP TRIGGER IF EXISTS check_is_admin_skill ON skill;
 DROP FUNCTION  IF EXISTS check_is_admin_skill();
 DROP TABLE IF EXISTS skill CASCADE;
+
 DROP TRIGGER IF EXISTS check_is_admin_genre ON genre;
 DROP FUNCTION  IF EXISTS check_is_admin_genre();
 DROP TABLE IF EXISTS genre CASCADE;
+
 DROP TABLE IF EXISTS comment CASCADE;
+
+DROP TRIGGER IF EXISTS check_xor_message_destination ON message;
+DROP FUNCTION  IF EXISTS check_xor_message_destination();
+DROP TRIGGER IF EXISTS check_band_message ON message;
+DROP FUNCTION  IF EXISTS check_band_message();
+DROP FUNCTION IF EXISTS check_user_belongs_to_band(userId Integer, bandId Integer);
 DROP TABLE IF EXISTS message CASCADE;
+
+DROP TRIGGER IF EXISTS check_band_post ON post;
+DROP FUNCTION  IF EXISTS check_band_post();
 DROP TABLE IF EXISTS post CASCADE;
+
 DROP TABLE IF EXISTS content CASCADE;
 DROP TABLE IF EXISTS band CASCADE;
 DROP FUNCTION  IF EXISTS is_admin(userId INTEGER);
 DROP TABLE IF EXISTS mb_user CASCADE;
+
 DROP TABLE IF EXISTS city CASCADE;
 DROP TABLE IF EXISTS country CASCADE;
 
@@ -203,6 +225,29 @@ ALTER TABLE ONLY post
     ADD CONSTRAINT post_band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 
+CREATE FUNCTION check_band_post() RETURNS trigger AS $check_band_post$
+    BEGIN
+       
+        IF NEW.bandId IS NOT NULL THEN
+
+            IF check_user_belongs_to_band(New.posterId, New.bandId) = FALSE THEN
+
+                RAISE EXCEPTION 'this user does not belong to the band, post not inserted';
+
+            END IF;
+
+        END IF;
+
+    
+        RETURN NEW;
+
+    END;
+    
+$check_band_post$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_band_post BEFORE INSERT OR UPDATE ON post
+    FOR EACH ROW EXECUTE PROCEDURE check_band_post();
+
 /*****************************************************/
 /***************** Message ***************************/
 /*****************************************************/
@@ -231,6 +276,66 @@ ALTER TABLE ONLY message
 
 ALTER TABLE ONLY message
     ADD CONSTRAINT message_band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+
+CREATE FUNCTION check_user_belongs_to_band(userIdToCheck Integer, bandIdToCheck Integer) RETURNS BOOLEAN AS $$
+    
+    DECLARE result BOOLEAN;
+
+    BEGIN
+       
+        SELECT EXISTS (SELECT band.id FROM band JOIN band_membership ON band.id = band_membership.bandId WHERE band.id = bandIdToCheck AND band_membership.userId = userIdToCheck) INTO result;
+        
+        RETURN result;
+
+    END;
+
+$$ LANGUAGE plpgsql;
+
+
+CREATE FUNCTION check_band_message() RETURNS trigger AS $check_band_message$
+    BEGIN
+       
+        IF NEW.bandId IS NOT NULL THEN
+
+            IF check_user_belongs_to_band(New.senderId, New.bandId) = FALSE THEN
+
+                RAISE EXCEPTION 'this user does not belong to the band';
+
+            END IF;
+
+        END IF;
+
+    
+        RETURN NEW;
+
+    END;
+
+$check_band_message$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_band_message BEFORE INSERT OR UPDATE ON message
+    FOR EACH ROW EXECUTE PROCEDURE check_band_message();
+
+
+CREATE FUNCTION check_xor_message_destination() RETURNS trigger AS $check_xor_message_destination$
+    BEGIN
+        
+        IF NEW.receiverId IS NULL AND NEW.bandId IS NULL THEN
+            RAISE EXCEPTION 'receiverId and bandId cannot be both null';
+        END IF;
+
+        IF NEW.receiverId IS NOT NULL AND NEW.bandId IS NOT NULL THEN
+            RAISE EXCEPTION 'receiverId and bandId cannot be both not null (%,%)', NEW.receiverId, New.bandId;
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_xor_message_destination$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_xor_message_destination BEFORE INSERT OR UPDATE ON message
+    FOR EACH ROW EXECUTE PROCEDURE check_xor_message_destination();
+
 
 
 /*****************************************************/
@@ -517,6 +622,21 @@ ALTER TABLE ONLY user_follower
 ALTER TABLE ONLY user_follower
     ADD CONSTRAINT followedUserId_fkey FOREIGN KEY (followedUserId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
+
+CREATE FUNCTION insert_notification_trigger_user_follower() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originUserFollower) VALUES('user_follower',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_user_follower AFTER INSERT ON user_follower
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_user_follower();
+
+
 /*****************************************************/
 /******************* User Rating *********************/
 /*****************************************************/
@@ -614,7 +734,7 @@ CREATE TABLE band_membership (
     bandId INTEGER NOT NULL,
     userId INTEGER NOT NULL,
     isOwner BOOLEAN NOT NULL,
-    initialDate DATE,
+    initialDate DATE DEFAULT now(),
     ceaseDate DATE
 );
 
@@ -792,7 +912,7 @@ CREATE TABLE notification_trigger (
 
     id SERIAL NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT now(),
-    type NOTIFICATION_TYPE,
+    type NOTIFICATION_TYPE NOT NULL,
     originUserFollower INTEGER,
     originBandFollower INTEGER,
     originMessage INTEGER,
@@ -833,15 +953,6 @@ ALTER TABLE ONLY notification_trigger
 
 CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_notification_origin$
     BEGIN
-        --Check if has at least one origin--
-        IF NEW.originUserFollower IS NULL AND NEW.originBandFollower IS NULL AND NEW.originMessage  IS NULL AND NEW.originComment IS NULL AND NEW.originBandApplication IS NULL AND NEW.originBandInvitation IS NULL AND NEW.originUserWarning IS NULL AND NEW.originBandWarning IS NULL THEN
-            RAISE EXCEPTION 'one origin is needed';
-        END IF;
-
-        --Check if both are not null
-        IF NEW.originUserFollower IS NOT NULL AND NEW.originBandFollower IS NOT NULL AND NEW.originMessage  IS NOT NULL AND NEW.originComment IS NOT NULL AND NEW.originBandApplication IS NOT NULL AND NEW.originBandInvitation IS NOT NULL AND NEW.originUserWarning IS NOT NULL AND NEW.originBandWarning IS NOT NULL THEN
-            RAISE EXCEPTION 'error: more than one origin';
-        END IF;
 
         --Check for correct type and origin
         IF NEW.type = 'user_follower' AND NEW.originUserFollower IS NULL THEN
@@ -872,8 +983,24 @@ CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_no
             RAISE EXCEPTION 'type user warning without origin user warning id';
         END IF;
 
-        IF NEW.type = 'band_warning' AND NEW.originBandWarning IS NULL THEN
-            RAISE EXCEPTION 'type band warning without originMessageId';
+        IF NEW.TYPE = 'band_warning' AND NEW.originBandWarning IS NULL THEN
+            RAISE EXCEPTION 'type band warning without band warning Id';
+        END IF;
+
+        IF NEW.TYPE = 'band_invitation_accepted' AND NEW.originBandInvitation IS NULL THEN
+            RAISE EXCEPTION 'type band invitation accepted without band inivitation Id';
+        END IF;
+
+         IF NEW.TYPE = 'band_invitation_rejected' AND NEW.originBandInvitation IS NULL THEN
+            RAISE EXCEPTION 'type band invitation rejected without band inivitation Id';
+        END IF;
+
+        IF NEW.TYPE = 'band_application_accepted' AND NEW.originBandApplication IS NULL THEN
+            RAISE EXCEPTION 'type band application accepted without band application Id';
+        END IF;
+
+        IF NEW.TYPE = 'band_application_rejected' AND NEW.originBandApplication IS NULL THEN
+            RAISE EXCEPTION 'type band application accepted without band application Id';
         END IF;
 
         RETURN NEW;
@@ -892,15 +1019,17 @@ CREATE TRIGGER check_xor_notification_origin BEFORE INSERT OR UPDATE ON notifica
 
 CREATE TABLE user_notification (
 
-    notification_trigger_id INTEGER NOT NULL,
-    userId INTEGER NOT NULL
+    notificationTriggerId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
+    visualizedDate DATE,
+    text TEXT
 );
 
 ALTER TABLE ONLY user_notification
-    ADD CONSTRAINT user_notification_pkey PRIMARY KEY (notification_trigger_id, userId);
+    ADD CONSTRAINT user_notification_pkey PRIMARY KEY (notificationTriggerId, userId);
 
 ALTER TABLE ONLY user_notification
-    ADD CONSTRAINT user_notification_notification_trigger_fkey FOREIGN KEY (notification_trigger_id) REFERENCES notification_trigger(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT user_notification_notification_trigger_fkey FOREIGN KEY (notificationTriggerId) REFERENCES notification_trigger(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY user_notification
     ADD CONSTRAINT user_notification_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
