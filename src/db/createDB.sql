@@ -1,40 +1,52 @@
 \c lbaw1712;
 
-DROP TABLE IF EXISTS country CASCADE;
-DROP TABLE IF EXISTS city CASCADE;
-DROP TABLE IF EXISTS mb_user CASCADE;
-DROP TABLE IF EXISTS band CASCADE;
-DROP TABLE IF EXISTS content CASCADE;
-DROP TABLE IF EXISTS post CASCADE;
-DROP TABLE IF EXISTS message CASCADE;
-DROP TABLE IF EXISTS comment CASCADE;
-DROP TABLE IF EXISTS genre CASCADE;
-DROP TABLE IF EXISTS skill CASCADE;
-DROP TABLE IF EXISTS report CASCADE;
-DROP TABLE IF EXISTS ban CASCADE;
-DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
-DROP FUNCTION  IF EXISTS check_xor_user_band();
-DROP TABLE IF EXISTS user_skill CASCADE;
-DROP TABLE IF EXISTS user_follower CASCADE;
-DROP TABLE IF EXISTS user_rating CASCADE;
-DROP TABLE IF EXISTS user_warning CASCADE;
-DROP TABLE IF EXISTS band_genre CASCADE;
-DROP TABLE IF EXISTS band_membership CASCADE;
-DROP TABLE IF EXISTS band_rating CASCADE;
-DROP TABLE IF EXISTS band_warning CASCADE;
-DROP TABLE IF EXISTS band_follower CASCADE;
-DROP TABLE IF EXISTS band_application CASCADE;
-DROP TABLE IF EXISTS band_invitation CASCADE;
-
-
+DROP TABLE IF EXISTS user_notification CASCADE;
 DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
 DROP FUNCTION  IF EXISTS check_xor_notification_origin();
 DROP TABLE IF EXISTS notification_trigger CASCADE;
-DROP TABLE IF EXISTS user_notification CASCADE;
-
-DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
-DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
 DROP TYPE IF EXISTS NOTIFICATION_TYPE;
+DROP TABLE IF EXISTS band_invitation CASCADE;
+DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
+DROP TABLE IF EXISTS band_application CASCADE;
+DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
+DROP TABLE IF EXISTS band_follower CASCADE;
+DROP TRIGGER IF EXISTS check_is_admin_band_warning ON band_warning;
+DROP FUNCTION  IF EXISTS check_is_admin_band_warning();
+DROP TABLE IF EXISTS band_warning CASCADE;
+DROP TABLE IF EXISTS band_rating CASCADE;
+DROP TABLE IF EXISTS band_membership CASCADE;
+DROP TABLE IF EXISTS band_genre CASCADE;
+DROP TRIGGER IF EXISTS check_is_admin_user_warning ON user_warning;
+DROP FUNCTION  IF EXISTS check_is_admin_user_warning();
+DROP TABLE IF EXISTS user_warning CASCADE;
+DROP TABLE IF EXISTS user_rating CASCADE;
+DROP TABLE IF EXISTS user_follower CASCADE;
+DROP TABLE IF EXISTS user_skill CASCADE;
+DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
+DROP FUNCTION  IF EXISTS check_xor_user_band();
+DROP TRIGGER IF EXISTS check_is_admin_ban ON ban;
+DROP FUNCTION  IF EXISTS check_is_admin_ban();
+DROP TABLE IF EXISTS ban CASCADE;
+DROP TRIGGER IF EXISTS check_xor_report_type ON report;
+DROP FUNCTION  IF EXISTS check_xor_report_type();
+DROP TABLE IF EXISTS report CASCADE;
+DROP TYPE IF EXISTS REPORT_TYPE;
+DROP TRIGGER IF EXISTS check_is_admin_skill ON skill;
+DROP FUNCTION  IF EXISTS check_is_admin_skill();
+DROP TABLE IF EXISTS skill CASCADE;
+DROP TRIGGER IF EXISTS check_is_admin_genre ON genre;
+DROP FUNCTION  IF EXISTS check_is_admin_genre();
+DROP TABLE IF EXISTS genre CASCADE;
+DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS message CASCADE;
+DROP TABLE IF EXISTS post CASCADE;
+DROP TABLE IF EXISTS content CASCADE;
+DROP TABLE IF EXISTS band CASCADE;
+DROP FUNCTION  IF EXISTS is_admin(userId INTEGER);
+DROP TABLE IF EXISTS mb_user CASCADE;
+DROP TABLE IF EXISTS city CASCADE;
+DROP TABLE IF EXISTS country CASCADE;
+
 
 /*****************************************************/
 /****************** Country **************************/
@@ -106,6 +118,17 @@ ALTER TABLE ONLY mb_user
 ALTER TABLE ONLY mb_user
     ADD CONSTRAINT mb_user_rating_domain CHECK ((rating <= 5.0) AND (rating >= 0.0));
 
+
+CREATE FUNCTION is_admin (userId INTEGER)
+RETURNS BOOLEAN AS $$
+DECLARE
+    isAdmin BOOLEAN;
+BEGIN
+   SELECT mb_user.admin INTO isAdmin FROM mb_user WHERE mb_user.id = userId;
+
+   RETURN isAdmin;
+END;
+$$ LANGUAGE plpgsql;
 
 /*****************************************************/
 /***************** Band ******************************/
@@ -260,6 +283,22 @@ ALTER TABLE ONLY genre
 ALTER TABLE ONLY genre
     ADD CONSTRAINT genre_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
+CREATE FUNCTION check_is_admin_genre() RETURNS trigger AS $check_is_admin_genre$
+    BEGIN
+        --Check if user is an admin--
+        IF NOT is_admin(NEW.creatingAdminId) THEN
+            RAISE EXCEPTION 'User is not an Admin';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_is_admin_genre$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_is_admin_genre BEFORE INSERT OR UPDATE ON genre
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_genre();
+
+
 /*****************************************************/
 /***************** Skill *****************************/
 /*****************************************************/
@@ -281,18 +320,34 @@ ALTER TABLE ONLY skill
 ALTER TABLE ONLY skill
     ADD CONSTRAINT skill_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
+CREATE FUNCTION check_is_admin_skill() RETURNS trigger AS $check_is_admin_skill$
+    BEGIN
+        --Check if user is an admin--
+        IF NOT is_admin(NEW.creatingAdminId) THEN
+            RAISE EXCEPTION 'User is not an Admin';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_is_admin_skill$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_is_admin_skill BEFORE INSERT OR UPDATE ON skill
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_skill();
 
 /*****************************************************/
 /***************** Report ****************************/
 /*****************************************************/
 
 
+CREATE TYPE REPORT_TYPE AS ENUM ('user_report', 'band_report', 'content_report');
 
 CREATE TABLE report (
 
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
     date TIMESTAMP DEFAULT now(),
+    reportType REPORT_TYPE NOT NULL,
     reportedContentId INTEGER,
     reportedUserId INTEGER,
     reportedBandId INTEGER,
@@ -313,6 +368,33 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY report
     ADD CONSTRAINT reporter_user_id_fkey FOREIGN KEY (reporterUserId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+
+
+CREATE FUNCTION check_xor_report_type() RETURNS trigger AS $check_xor_report_type$
+    BEGIN
+        --Check for correct type
+        IF NEW.reportType = 'user_report' AND NEW.reportedUserId IS NULL THEN
+            RAISE EXCEPTION 'type user_report without reportedUserId';
+        END IF;
+
+        IF NEW.reportType = 'band_report' AND NEW.reportedBandId IS NULL THEN
+            RAISE EXCEPTION 'type user_report without reportedBandId';
+        END IF;
+
+        IF NEW.reportType = 'content_report' AND NEW.reporterUserId IS NULL THEN
+            RAISE EXCEPTION 'type user_report without reporterUserId';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_xor_report_type$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_xor_report_type BEFORE INSERT OR UPDATE ON report
+    FOR EACH ROW EXECUTE PROCEDURE check_xor_report_type();
+
+    
+
 
 /*****************************************************/
 /******************* Ban *****************************/
@@ -343,6 +425,20 @@ ALTER TABLE ONLY ban
 ALTER TABLE ONLY ban
     ADD CONSTRAINT user_id_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
+CREATE FUNCTION check_is_admin_ban() RETURNS trigger AS $check_is_admin_ban$
+    BEGIN
+        --Check if user is an admin--
+        IF NOT is_admin(NEW.adminId) THEN
+            RAISE EXCEPTION 'User is not an Admin';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_is_admin_ban$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_is_admin_ban BEFORE INSERT OR UPDATE ON ban
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_ban();
 
 CREATE FUNCTION check_xor_user_band() RETURNS trigger AS $check_xor_user_band$
     BEGIN
@@ -470,6 +566,20 @@ ALTER TABLE ONLY user_warning
 ALTER TABLE ONLY user_warning
     ADD CONSTRAINT user_warning_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
+CREATE FUNCTION check_is_admin_user_warning() RETURNS trigger AS $check_is_admin_user_warning$
+    BEGIN
+        --Check if user is an admin--
+        IF NOT is_admin(NEW.adminId) THEN
+            RAISE EXCEPTION 'User is not an Admin';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_is_admin_user_warning$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_is_admin_user_warning BEFORE INSERT OR UPDATE ON user_warning
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_user_warning();
 
 /*****************************************************/
 /******************* Band Genre **********************/
@@ -492,7 +602,6 @@ ALTER TABLE ONLY band_genre
 
 ALTER TABLE ONLY band_genre
     ADD CONSTRAINT band_genre_genreId_fkey FOREIGN KEY (genreId) REFERENCES genre(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
 
 /*****************************************************/
 /******************* Band Membership *****************/
@@ -566,6 +675,22 @@ ALTER TABLE ONLY band_warning
 
 ALTER TABLE ONLY band_warning
     ADD CONSTRAINT band_warning_userId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+CREATE FUNCTION check_is_admin_band_warning() RETURNS trigger AS $check_is_admin_band_warning$
+    BEGIN
+        --Check if user is an admin--
+        IF NOT is_admin(NEW.adminId) THEN
+            RAISE EXCEPTION 'User is not an Admin';
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_is_admin_band_warning$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_is_admin_band_warning BEFORE INSERT OR UPDATE ON band_warning
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_band_warning();
+
 
 /*****************************************************/
 /******************* Band Follower *******************/
@@ -719,35 +844,35 @@ CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_no
         END IF;
 
         --Check for correct type and origin
-        IF NEW.TYPE = 'user_follower' AND NEW.originUserFollower IS NULL THEN
+        IF NEW.type = 'user_follower' AND NEW.originUserFollower IS NULL THEN
             RAISE EXCEPTION 'type user follower without originUserFollowerId';
         END IF;
 
-        IF NEW.TYPE = 'band_follower' AND NEW.originBandFollower IS NULL THEN
+        IF NEW.type = 'band_follower' AND NEW.originBandFollower IS NULL THEN
             RAISE EXCEPTION 'type band follower without bandFollowerId';
         END IF;
 
-        IF NEW.TYPE = 'message' AND NEW.originMessage IS NULL THEN
+        IF NEW.type = 'message' AND NEW.originMessage IS NULL THEN
             RAISE EXCEPTION 'type message without originMessageId';
         END IF;
 
-        IF NEW.TYPE = 'comment' AND NEW.originComment IS NULL THEN
+        IF NEW.type = 'comment' AND NEW.originComment IS NULL THEN
             RAISE EXCEPTION 'type comment without originCommentId';
         END IF;
 
-        IF NEW.TYPE = 'band_application' AND NEW.originBandApplication IS NULL THEN
+        IF NEW.type = 'band_application' AND NEW.originBandApplication IS NULL THEN
             RAISE EXCEPTION 'type band application without originBandApplicationId';
         END IF;
 
-        IF NEW.TYPE = 'band_invitation' AND NEW.originBandInvitation IS NULL THEN
+        IF NEW.type = 'band_invitation' AND NEW.originBandInvitation IS NULL THEN
             RAISE EXCEPTION 'type band invitation without band invitation Id';
         END IF;
 
-        IF NEW.TYPE = 'user_warning' AND NEW.originUserWarning IS NULL THEN
+        IF NEW.type = 'user_warning' AND NEW.originUserWarning IS NULL THEN
             RAISE EXCEPTION 'type user warning without origin user warning id';
         END IF;
 
-        IF NEW.TYPE = 'band_warning' AND NEW.originBandWarning IS NULL THEN
+        IF NEW.type = 'band_warning' AND NEW.originBandWarning IS NULL THEN
             RAISE EXCEPTION 'type band warning without originMessageId';
         END IF;
 
@@ -758,10 +883,6 @@ $check_xor_notification_origin$ LANGUAGE plpgsql;
 
 CREATE TRIGGER check_xor_notification_origin BEFORE INSERT OR UPDATE ON notification_trigger
     FOR EACH ROW EXECUTE PROCEDURE check_xor_notification_origin();
-
-'user_follower', 'band_follower', 'message', 'comment', 'band_application',
-    'band_invitation', 'user_warning', 'band_warning', 'band_invitation_accepted',
-    'band_invitation_rejected', 'band_application_accepted', 'band_application_rejected');
 
 /*****************************************************/
 /*************** User Notification *******************/
