@@ -141,7 +141,7 @@ ALTER TABLE ONLY city
 ALTER TABLE ONLY city
     ADD CONSTRAINT city_country_id_fkey FOREIGN KEY (countryId) REFERENCES country(id) ON UPDATE CASCADE;
 
-\i db/insertLocations.sql;
+-- \i db/insertLocations.sql;
 
 /*****************************************************/
 /***************** User ******************************/
