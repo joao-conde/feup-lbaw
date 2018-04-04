@@ -65,12 +65,32 @@ INSERT INTO band_follower(userId,bandId) VALUES(3,1);
 INSERT INTO content(text) VALUES('comment to post 1');
 INSERT INTO comment(contentId, commenterId, postId) VALUES(2,1,2);
 
+INSERT INTO mb_user(username,password,name,bio,dateOfBirth,location,admin) 
+    VALUES('user_test_4','pwd','user_test_4', 'bio_test','01/01/1980',1,FALSE);
+
 INSERT INTO band_application(userId,bandId) VALUES(3,1);
+INSERT INTO band_application(userId,bandId) VALUES(2,1);
+INSERT INTO band_application(userId,bandId) VALUES(4,1);
 
 INSERT INTO band_invitation(userId,bandId) VALUES(3,1);
+INSERT INTO band_invitation(userId,bandId) VALUES(2,1);
+INSERT INTO band_invitation(userId,bandId) VALUES(4,1);
+
+
+
 
 INSERT INTO user_warning(adminId,userId) VALUES(1,3);
 
 INSERT INTO band_warning(adminId,bandId) VALUES(1,1);
+
+UPDATE band_application SET status = 'accepted' WHERE id = 1;
+UPDATE band_application SET status = 'rejected' WHERE id = 2;
+
+UPDATE band_invitation SET status = 'accepted' WHERE id = 1;
+UPDATE band_invitation SET status = 'rejected' WHERE id = 2;
+
+UPDATE band_application SET status = 'canceled' WHERE id = 3;
+UPDATE band_invitation SET status = 'canceled' WHERE id = 3;
+
 
 SELECT * FROM notification_trigger;

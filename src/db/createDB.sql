@@ -25,6 +25,19 @@ DROP FUNCTION  IF EXISTS insert_notification_trigger_user_warning();
 DROP TRIGGER IF EXISTS insert_notification_trigger_band_warning ON band_warning;
 DROP FUNCTION  IF EXISTS insert_notification_trigger_band_warning();
 
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation_rejected ON band_invitation;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_rejected();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation_accepted ON band_invitation;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_accepted();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_rejected ON band_application;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_rejected();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_accepted ON band_application;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_accepted();
+
+
 
 DROP TABLE IF EXISTS user_notification CASCADE;
 DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
@@ -977,6 +990,37 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER insert_notification_trigger_band_application AFTER INSERT ON band_application
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application();
 
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_accepted() RETURNS trigger AS $$
+    BEGIN
+       
+        IF NEW.status = 'accepted' THEN
+            INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application_accepted',New.id);
+        END IF;
+
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_application_accepted AFTER UPDATE ON band_application
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_accepted();
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_rejected() RETURNS trigger AS $$
+    BEGIN
+       
+        IF NEW.status = 'rejected' THEN
+            INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application_rejected',New.id);
+        END IF;
+
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_application_rejected AFTER UPDATE ON band_application
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_rejected();
 
 /*****************************************************/
 /******************* Band Invitation *****************/
@@ -1018,6 +1062,38 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_notification_trigger_band_invitation AFTER INSERT ON band_invitation
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation();
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_accepted() RETURNS trigger AS $$
+    BEGIN
+       
+        IF NEW.status = 'accepted' THEN
+            INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_accepted',New.id);
+        END IF;
+
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_invitation_accepted AFTER UPDATE ON band_invitation
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_accepted();
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_rejected() RETURNS trigger AS $$
+    BEGIN
+       
+        IF NEW.status = 'rejected' THEN
+            INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_rejected',New.id);
+        END IF;
+
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_invitation_rejected AFTER UPDATE ON band_invitation
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_rejected();
 
 /*****************************************************/
 /************ Notification Trigger *******************/
