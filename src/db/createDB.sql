@@ -234,7 +234,7 @@ CREATE TABLE post (
     id SERIAL NOT NULL,
     private BOOLEAN NOT NULL DEFAULT FALSE,
     contentId INTEGER NOT NULL,
-    posterId INTEGER,
+    posterId INTEGER NOT NULL,
     bandId INTEGER
 );
 
@@ -283,7 +283,7 @@ CREATE TABLE message (
 
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
-    senderId INTEGER,
+    senderId INTEGER NOT NULL,
     receiverId INTEGER,
     bandId INTEGER
 );
@@ -387,8 +387,8 @@ CREATE TABLE comment (
 
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
-    commenterId INTEGER,
-    postId INTEGER
+    commenterId INTEGER NOT NULL,
+    postId INTEGER NOT NULL
 );
 
 ALTER TABLE ONLY comment
@@ -1134,6 +1134,21 @@ CREATE TRIGGER check_xor_notification_origin BEFORE INSERT OR UPDATE ON notifica
     FOR EACH ROW EXECUTE PROCEDURE check_xor_notification_origin();
 
 
+CREATE OR REPLACE FUNCTION send_notification_to_band(notifBandId INTEGER, notifTriggerId INTEGER, notifText TEXT)
+RETURNS VOID AS $$
+    DECLARE
+        receiverId INTEGER;
+    BEGIN
+        FOR receiverId IN 
+            SELECT band_membership.userId
+            FROM band_membership 
+            WHERE band_membership.bandId = notifBandId 
+        LOOP
+            INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, receiverId, notifText);
+        END LOOP;
+    END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION insert_user_notifications_user_follower(notifTriggerId INTEGER, userFollowerId INTEGER)
 RETURNS VOID AS $$
     DECLARE
@@ -1155,26 +1170,81 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION insert_user_notifications_band_follower(notifTriggerId INTEGER, bandFollowerId INTEGER)
 RETURNS VOID AS $$
     DECLARE
-        receiverId INTEGER[];
         senderName TEXT;
         bandName TEXT;
         notifText TEXT;
+        declaredBandId INTEGER;
     BEGIN
 
-        SELECT band_membership.userId, band.name INTO receiverId, bandName
+        SELECT mb_user.name, band.name INTO senderName, bandName
         FROM band_follower 
-        JOIN band_membership ON band_follower.bandId = band_membership.bandId
-        JOIN band ON band.id = band_membership.bandId
-        WHERE band_follower.id = bandFollowerId;
-
-        SELECT mb_user.name INTO senderName
-        FROM band_follower JOIN mb_user
-        ON band_follower.userId = mb_user.id
+        JOIN mb_user ON band_follower.userId = mb_user.id
+        JOIN band ON band.id = band_follower.bandId
         WHERE band_follower.id = bandFollowerId;
 
         notifText := senderName || ' started to follow ' || bandName || '!';
+        
+        SELECT band_follower.bandId INTO declaredBandId FROM band_follower WHERE band_follower.id = bandFollowerId;
 
-        INSERT INTO user_notification(notificationTriggerId, bandId, text) VALUES(notifTriggerId, receiverId, notifText);
+        PERFORM send_notification_to_band(declaredBandId, notifTriggerId, notifText);
+
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_message(notifTriggerId INTEGER, messageId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vReceiverId INTEGER;
+        vBandId INTEGER;
+        vSenderId INTEGER;
+        vSenderName TEXT;
+        vNotifText TEXT;
+    BEGIN
+        SELECT message.receiverId, message.bandId, mb_user.name, content.text 
+        INTO vReceiverId, vBandId, vSenderName, vNotifText 
+        FROM message
+        JOIN mb_user ON mb_user.id = message.senderId
+        JOIN content ON content.id = message.contentId
+        WHERE message.id = messageId;
+
+        CASE
+            WHEN vReceiverId IS NOT NULL THEN
+                INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vReceiverId, vNotifText);
+            WHEN vBandId IS NOT NULL THEN
+                PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+            ELSE
+                RAISE EXCEPTION 'Receiver message invalid';
+        END CASE;
+
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_comment(notifTriggerId INTEGER, commentId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vPosterId INTEGER;
+        vBandId INTEGER;
+        vCommenterId INTEGER;
+        vCommenterName TEXT;
+        vNotifText TEXT;
+        vCommentText TEXT;
+    BEGIN
+        SELECT post.posterId, post.bandId, mb_user.name, content.text 
+        INTO vPosterId, vBandId, vCommenterName, vCommentText 
+        FROM comment
+        JOIN post ON post.id = comment.postId
+        JOIN mb_user ON mb_user.id = comment.commenterId
+        JOIN content ON content.id = comment.contentId
+        WHERE comment.id = commentId;
+
+        vNotifText := vCommenterName || ' commented your post: ' + vCommentText;
+        CASE
+            WHEN vBandId IS NOT NULL THEN
+                PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+            ELSE
+                INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vPosterId, vNotifText);
+        END CASE;
+
     END;
 $$ LANGUAGE plpgsql;
 
@@ -1186,6 +1256,10 @@ CREATE OR REPLACE FUNCTION trigger_user_notifications() RETURNS TRIGGER AS $$
                 PERFORM insert_user_notifications_user_follower(New.id, New.originUserFollower);
             WHEN 'band_follower' THEN
                 PERFORM insert_user_notifications_band_follower(New.id, New.originBandFollower);
+            WHEN 'message' THEN
+                PERFORM insert_user_notifications_message(New.id, New.originMessage);
+            WHEN 'comment' THEN
+                PERFORM insert_user_notifications_comment(New.id, New.originComment);
             ELSE
                 RAISE EXCEPTION 'Notification type invalid';
         END CASE;
