@@ -1011,6 +1011,70 @@ $check_xor_notification_origin$ LANGUAGE plpgsql;
 CREATE TRIGGER check_xor_notification_origin BEFORE INSERT OR UPDATE ON notification_trigger
     FOR EACH ROW EXECUTE PROCEDURE check_xor_notification_origin();
 
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_user_follower(notifTriggerId INTEGER, userFollowerId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        receiverId INTEGER;
+        senderName TEXT;
+        notifText TEXT;
+    BEGIN
+        SELECT followedUserId, mb_user.name INTO receiverId, senderName
+        FROM user_follower JOIN mb_user
+        ON mb_user.id = user_follower.followingUserId
+        WHERE user_follower.id = userFollowerId;
+
+        notifText := senderName || ' started to follow you!';
+
+        INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, receiverId, notifText);
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_band_follower(notifTriggerId INTEGER, bandFollowerId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        receiverId INTEGER[];
+        senderName TEXT;
+        bandName TEXT;
+        notifText TEXT;
+    BEGIN
+
+        SELECT band_membership.userId, band.name INTO receiverId, bandName
+        FROM band_follower 
+        JOIN band_membership ON band_follower.bandId = band_membership.bandId
+        JOIN band ON band.id = band_membership.bandId
+        WHERE band_follower.id = bandFollowerId;
+
+        SELECT mb_user.name INTO senderName
+        FROM band_follower JOIN mb_user
+        ON band_follower.userId = mb_user.id
+        WHERE band_follower.id = bandFollowerId;
+
+        notifText := senderName || ' started to follow ' || bandName || '!';
+
+        INSERT INTO user_notification(notificationTriggerId, bandId, text) VALUES(notifTriggerId, receiverId, notifText);
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION trigger_user_notifications() RETURNS TRIGGER AS $$
+    BEGIN
+        CASE New.type
+            WHEN 'user_follower' THEN
+                PERFORM insert_user_notifications_user_follower(New.id, New.originUserFollower);
+            WHEN 'band_follower' THEN
+                PERFORM insert_user_notifications_band_follower(New.id, New.originBandFollower);
+            ELSE
+                RAISE EXCEPTION 'Notification type invalid';
+        END CASE;
+
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_user_notifications AFTER INSERT ON notification_trigger
+    FOR EACH ROW EXECUTE PROCEDURE trigger_user_notifications();
+
 /*****************************************************/
 /*************** User Notification *******************/
 /*****************************************************/
