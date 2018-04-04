@@ -1,6 +1,30 @@
 \c lbaw1712;
+
+
 DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
 DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_message ON message;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_message();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_comment ON comment;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_comment();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_application ON band_application;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation ON band_invitation;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_user_warning ON user_warning;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_user_warning();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_warning ON band_warning;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_warning();
+
 
 DROP TABLE IF EXISTS user_notification CASCADE;
 DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
@@ -12,6 +36,8 @@ DROP TABLE IF EXISTS band_invitation CASCADE;
 DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
 DROP TABLE IF EXISTS band_application CASCADE;
 DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
+--DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
+--DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
 DROP TABLE IF EXISTS band_follower CASCADE;
 DROP TRIGGER IF EXISTS check_is_admin_band_warning ON band_warning;
 DROP FUNCTION  IF EXISTS check_is_admin_band_warning();
@@ -337,6 +363,20 @@ CREATE TRIGGER check_xor_message_destination BEFORE INSERT OR UPDATE ON message
     FOR EACH ROW EXECUTE PROCEDURE check_xor_message_destination();
 
 
+CREATE FUNCTION insert_notification_trigger_message() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originMessage) VALUES('message',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_message AFTER INSERT ON message
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_message();
+
+
 
 /*****************************************************/
 /***************** Comment ***************************/
@@ -363,6 +403,19 @@ ALTER TABLE ONLY comment
 ALTER TABLE ONLY comment
     ADD CONSTRAINT post_id_fkey FOREIGN KEY (postId) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_comment() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originComment) VALUES('comment',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_comment AFTER INSERT ON comment
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_comment();
 
 /*****************************************************/
 /***************** Genre *****************************/
@@ -701,6 +754,20 @@ $check_is_admin_user_warning$ LANGUAGE plpgsql;
 CREATE TRIGGER check_is_admin_user_warning BEFORE INSERT OR UPDATE ON user_warning
     FOR EACH ROW EXECUTE PROCEDURE check_is_admin_user_warning();
 
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_user_warning() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originUserWarning) VALUES('user_warning',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_user_warning AFTER INSERT ON user_warning
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_user_warning();
+
 /*****************************************************/
 /******************* Band Genre **********************/
 /*****************************************************/
@@ -812,6 +879,20 @@ CREATE TRIGGER check_is_admin_band_warning BEFORE INSERT OR UPDATE ON band_warni
     FOR EACH ROW EXECUTE PROCEDURE check_is_admin_band_warning();
 
 
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_warning() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originBandWarning) VALUES('band_warning',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_warning AFTER INSERT ON band_warning
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_warning();
+
+
 /*****************************************************/
 /******************* Band Follower *******************/
 /*****************************************************/
@@ -838,6 +919,21 @@ ALTER TABLE ONLY band_follower
 
 ALTER TABLE ONLY band_follower
     ADD CONSTRAINT followedBandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+
+CREATE FUNCTION insert_notification_trigger_band_follower() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originBandFollower) VALUES('band_follower',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_follower AFTER INSERT ON band_follower
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_follower();
+
 
 /*****************************************************/
 /******************* Band Application ****************/
@@ -867,6 +963,21 @@ ALTER TABLE ONLY band_application
 ALTER TABLE ONLY band_application
     ADD CONSTRAINT band_application_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
+
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application',New.id);
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_application AFTER INSERT ON band_application
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application();
+
+
 /*****************************************************/
 /******************* Band Invitation *****************/
 /*****************************************************/
@@ -895,7 +1006,18 @@ ALTER TABLE ONLY band_invitation
 ALTER TABLE ONLY band_invitation
     ADD CONSTRAINT band_invitation_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation() RETURNS trigger AS $$
+    BEGIN
+       
+        INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation',New.id);
+        RETURN NEW;
 
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_notification_trigger_band_invitation AFTER INSERT ON band_invitation
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation();
 
 /*****************************************************/
 /************ Notification Trigger *******************/

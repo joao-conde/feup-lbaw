@@ -45,7 +45,7 @@ INSERT INTO message(contentId,senderId,receiverId) VALUES(2,2,1); -- introduz me
 --TESTE BAND POST --
 
 INSERT INTO mb_user(username,password,name,bio,dateOfBirth,location,admin) 
-    VALUES('user_test_3','pwd','user_test_3', 'bio_test','01/01/1980',1,TRUE);
+    VALUES('user_test_3','pwd','user_test_3', 'bio_test','01/01/1980',1,FALSE);
 
 
 INSERT INTO content(text) VALUES('Post1');
@@ -55,4 +55,22 @@ INSERT INTO post(contentId,posterId,bandId) VALUES(3,2,1); -- TENTA ADICIONAR E 
 --TEST INSERT USER_FOLLOWER_NOTIFICATION_TRIGGER
 
 INSERT INTO user_follower(followingUserId, followedUserId) VALUES(1,2);
-SELECT type FROM notification_trigger;
+
+
+--TEST INSERT BAND_FOLLOWER_NOTIFICATION_TRIGGER
+
+INSERT INTO band_follower(userId,bandId) VALUES(3,1);
+
+
+INSERT INTO content(text) VALUES('comment to post 1');
+INSERT INTO comment(contentId, commenterId, postId) VALUES(2,1,2);
+
+INSERT INTO band_application(userId,bandId) VALUES(3,1);
+
+INSERT INTO band_invitation(userId,bandId) VALUES(3,1);
+
+INSERT INTO user_warning(adminId,userId) VALUES(1,3);
+
+INSERT INTO band_warning(adminId,bandId) VALUES(1,1);
+
+SELECT * FROM notification_trigger;
