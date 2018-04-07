@@ -538,7 +538,7 @@ CREATE TABLE user_skill (
 
     userId INTEGER NOT NULL,
     skillId INTEGER NOT NULL,
-    level INTEGER NOT NULL,
+    level INTEGER NOT NULL CHECK (level >= 0 AND level <=5),
     isActive BOOLEAN DEFAULT TRUE
 
 );
