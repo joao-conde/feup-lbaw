@@ -1,6 +1,6 @@
 /* povoar mb_user */
 
-insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('clembrick0', '8DHRt9N', 'Charla Lembrick', 'Optional fresh-thinking solution', '08/05/1994', null, 1, 1, 3.3, false);
+insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('clembrick0', '8DHRt9N', 'Charla Lembrick', 'Optional fresh-thinking solution', '08/05/1994', null, 1, 1, 3.3, true);
 insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('lpetrik1', '2t9szyKXf', 'Lockwood Petrik', 'Multi-tiered foreground support', '24/07/1956', null, 3, 1, 0.4, false);
 insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('ho2', 'w7hOGOAQzO4', 'Helaina O'' Kelleher', 'Pre-emptive fault-tolerant hardware', '27/09/1987', null, 1, 1, 3.6, true);
 insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('gdobel3', 'JHy887eX', 'Gregg Dobel', 'Cloned interactive productivity', '08/10/1961', null, 8, 1, 3.8, true);
@@ -124,7 +124,7 @@ insert into band (name, creationDate, ceaseDate, location, isActive) values ('Fi
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('Carolina Financial Corporation', '28/11/2017', null, 2, true);
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('Eagle Bancorp, Inc.', '23/08/1955', '04/02/1969', 2, false);
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('R.R. Donnelley & Sons Company', '13/01/2013', null, 2, true);
-insert into band (name, creationDate, ceaseDate, location, isActive) values ('WisdomTree Barclays Negative Duration U.S. Aggregate Bond Fund', '28/05/1959', null, 1, true);
+insert into band (name, creationDate, ceaseDate, location, isActive) values ('WisdomTree Barclays Aggregate Bond Fund', '28/05/1959', null, 1, true);
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('RGC Resources Inc.', '22/07/2003', null, 1, true);
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('First Citizens BancShares, Inc.', '26/01/1970', null, 2, true);
 insert into band (name, creationDate, ceaseDate, location, isActive) values ('Barclays PLC', '22/04/1991', '22/04/1962', 1, false);
@@ -200,34 +200,33 @@ insert into skill (name, creatingAdminId, isActive) values ('Keytar',1,true);
 
 /* ban */
 
-insert into ban (reason, ceaseDate, adminId, userId, bandId) values ('sed', '08/05/1981', 14, 49, 41);
-insert into ban (reason, ceaseDate, adminId, userId, bandId) values ('nulla', '19/07/1991', 21, 10, 13);
-insert into ban (reason, ceaseDate, adminId, userId, bandId) values ('convallis eget eleifend', '03/05/1981', 24, 90, 24);
-insert into ban (reason, ceaseDate, adminId, userId, bandId) values ('commodo vulputate justo', '06/03/2003', 81, 96, 31);
-insert into ban (reason, ceaseDate, adminId, userId, bandId) values ('vel est donec odio', '26/09/1988', 51, 2, 40);
+insert into ban (reason, ceaseDate, adminId, userId) values ('sed', '08/05/1981', 1, 49);
+insert into ban (reason, ceaseDate, adminId, userId) values ('nulla', '19/07/1991', 1, 10);
+insert into ban (reason, ceaseDate, adminId, userId) values ('convallis eget eleifend', '03/05/1981', 1, 90);
+insert into ban (reason, ceaseDate, adminId, bandId) values ('commodo vulputate justo', '06/03/2003', 1, 31);
+insert into ban (reason, ceaseDate, adminId, bandId) values ('vel est donec odio', '26/09/1988', 1, 40);
 
 /* user skill */
 
-insert into user_skill (userId, bandId, level) values (16, 3, 2);
-insert into user_skill (userId, bandId, level) values (74, 4, 1);
-insert into user_skill (userId, bandId, level) values (91, 3, 4);
-insert into user_skill (userId, bandId, level) values (43, 5, 5);
-insert into user_skill (userId, bandId, level) values (51, 3, 4);
-insert into user_skill (userId, bandId, level) values (56, 4, 1);
-insert into user_skill (userId, bandId, level) values (80, 4, 3);
-insert into user_skill (userId, bandId, level) values (91, 1, 4);
-insert into user_skill (userId, bandId, level) values (30, 2, 2);
-insert into user_skill (userId, bandId, level) values (18, 4, 1);
-insert into user_skill (userId, bandId, level) values (30, 4, 2);
-insert into user_skill (userId, bandId, level) values (23, 5, 1);
-insert into user_skill (userId, bandId, level) values (24, 2, 3);
-insert into user_skill (userId, bandId, level) values (71, 3, 1);
-insert into user_skill (userId, bandId, level) values (15, 2, 4);
-insert into user_skill (userId, bandId, level) values (56, 4, 3);
-insert into user_skill (userId, bandId, level) values (90, 4, 2);
-insert into user_skill (userId, bandId, level) values (85, 4, 3);
-insert into user_skill (userId, bandId, level) values (80, 1, 2);
-insert into user_skill (userId, bandId, level) values (29, 5, 4);
+insert into user_skill (userId, skillId, level) values (16, 3, 2);
+insert into user_skill (userId, skillId, level) values (74, 4, 1);
+insert into user_skill (userId, skillId, level) values (91, 3, 4);
+insert into user_skill (userId, skillId, level) values (43, 5, 5);
+insert into user_skill (userId, skillId, level) values (51, 3, 4);
+insert into user_skill (userId, skillId, level) values (56, 4, 1);
+insert into user_skill (userId, skillId, level) values (80, 4, 3);
+insert into user_skill (userId, skillId, level) values (91, 1, 4);
+insert into user_skill (userId, skillId, level) values (30, 2, 2);
+insert into user_skill (userId, skillId, level) values (18, 4, 1);
+insert into user_skill (userId, skillId, level) values (30, 4, 2);
+insert into user_skill (userId, skillId, level) values (23, 5, 1);
+insert into user_skill (userId, skillId, level) values (24, 2, 3);
+insert into user_skill (userId, skillId, level) values (71, 3, 1);
+insert into user_skill (userId, skillId, level) values (15, 2, 4);
+insert into user_skill (userId, skillId, level) values (90, 4, 2);
+insert into user_skill (userId, skillId, level) values (85, 4, 3);
+insert into user_skill (userId, skillId, level) values (80, 1, 2);
+insert into user_skill (userId, skillId, level) values (29, 5, 4);
 
 /* user follower */
 
@@ -268,16 +267,16 @@ insert into user_rating (ratingUserid, ratedUserId, rate) values (43, 35, 4);
 
 /* user warning */
 
-insert into user_warning (adminId, userId) values (47, 78);
-insert into user_warning (adminId, userId) values (68, 29);
-insert into user_warning (adminId, userId) values (90, 39);
-insert into user_warning (adminId, userId) values (8, 59);
-insert into user_warning (adminId, userId) values (13, 37);
-insert into user_warning (adminId, userId) values (57, 18);
-insert into user_warning (adminId, userId) values (43, 79);
-insert into user_warning (adminId, userId) values (68, 45);
-insert into user_warning (adminId, userId) values (69, 12);
-insert into user_warning (adminId, userId) values (31, 3);
+insert into warning (adminId, userId) values (47, 78);
+insert into warning (adminId, userId) values (1, 29);
+insert into warning (adminId, userId) values (1, 39);
+insert into warning (adminId, userId) values (8, 59);
+insert into warning (adminId, userId) values (13, 37);
+insert into warning (adminId, userId) values (1, 18);
+insert into warning (adminId, userId) values (1, 79);
+insert into warning (adminId, userId) values (1, 45);
+insert into warning (adminId, userId) values (69, 12);
+insert into warning (adminId, userId) values (31, 3);
 
 /* band genre */
 
@@ -320,16 +319,16 @@ insert into band_rating (ratingUserid, ratedBandId, rate) values (5, 38, 5);
 
 /* band warning */
 
-insert into band_warning (adminId, bandId) values (16, 45);
-insert into band_warning (adminId, bandId) values (7, 12);
-insert into band_warning (adminId, bandId) values (40, 33);
-insert into band_warning (adminId, bandId) values (8, 1);
-insert into band_warning (adminId, bandId) values (73, 44);
-insert into band_warning (adminId, bandId) values (87, 13);
-insert into band_warning (adminId, bandId) values (9, 36);
-insert into band_warning (adminId, bandId) values (25, 24);
-insert into band_warning (adminId, bandId) values (82, 47);
-insert into band_warning (adminId, bandId) values (42, 18);
+insert into warning (adminId, bandId) values (1, 45);
+insert into warning (adminId, bandId) values (1, 12);
+insert into warning (adminId, bandId) values (1, 33);
+insert into warning (adminId, bandId) values (8, 1);
+insert into warning (adminId, bandId) values (73, 44);
+insert into warning (adminId, bandId) values (1, 13);
+insert into warning (adminId, bandId) values (1, 36);
+insert into warning (adminId, bandId) values (25, 24);
+insert into warning (adminId, bandId) values (82, 47);
+insert into warning (adminId, bandId) values (1, 18);
 
 /* band follower */
 
