@@ -1,118 +1,13 @@
 \c lbaw1712;
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
 
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_message ON message;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_message();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_comment ON comment;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_comment();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_application ON band_application;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation ON band_invitation;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_user_warning ON user_warning;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_user_warning();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_warning ON band_warning;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_warning();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation_rejected ON band_invitation;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_rejected();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation_accepted ON band_invitation;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_accepted();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_rejected ON band_application;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_rejected();
-
-DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_accepted ON band_application;
-DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_accepted();
-
-
-
-DROP TABLE IF EXISTS user_notification CASCADE;
-DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
-DROP FUNCTION  IF EXISTS check_xor_notification_origin();
-DROP TABLE IF EXISTS notification_trigger CASCADE;
-DROP TYPE IF EXISTS NOTIFICATION_TYPE;
-
-DROP TABLE IF EXISTS band_invitation CASCADE;
-DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
-DROP TABLE IF EXISTS band_application CASCADE;
-DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
---DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
---DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
-DROP TABLE IF EXISTS band_follower CASCADE;
-DROP TRIGGER IF EXISTS check_is_admin_band_warning ON band_warning;
-DROP FUNCTION  IF EXISTS check_is_admin_band_warning();
-DROP TABLE IF EXISTS band_warning CASCADE;
-DROP TABLE IF EXISTS band_rating CASCADE;
-DROP TABLE IF EXISTS band_membership CASCADE;
-DROP TABLE IF EXISTS band_genre CASCADE;
-
-DROP TRIGGER IF EXISTS check_is_admin_user_warning ON user_warning;
-DROP FUNCTION  IF EXISTS check_is_admin_user_warning();
-DROP TABLE IF EXISTS user_warning CASCADE;
-DROP TABLE IF EXISTS user_rating CASCADE;
--- DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
--- DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
-DROP TABLE IF EXISTS user_follower CASCADE;
-DROP TABLE IF EXISTS user_skill CASCADE;
-DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
-DROP FUNCTION  IF EXISTS check_xor_user_band();
-
-DROP TRIGGER IF EXISTS check_is_admin_ban ON ban;
-DROP FUNCTION  IF EXISTS check_is_admin_ban();
-DROP TABLE IF EXISTS ban CASCADE;
-
-DROP TRIGGER IF EXISTS check_xor_report_type ON report;
-DROP FUNCTION  IF EXISTS check_xor_report_type();
-DROP TABLE IF EXISTS report CASCADE;
-DROP TYPE IF EXISTS REPORT_TYPE;
-
-DROP TRIGGER IF EXISTS check_is_admin_skill ON skill;
-DROP FUNCTION  IF EXISTS check_is_admin_skill();
-DROP TABLE IF EXISTS skill CASCADE;
-
-DROP TRIGGER IF EXISTS check_is_admin_genre ON genre;
-DROP FUNCTION  IF EXISTS check_is_admin_genre();
-DROP TABLE IF EXISTS genre CASCADE;
-
-DROP TABLE IF EXISTS comment CASCADE;
-
-DROP TRIGGER IF EXISTS check_xor_message_destination ON message;
-DROP FUNCTION  IF EXISTS check_xor_message_destination();
-DROP TRIGGER IF EXISTS check_band_message ON message;
-DROP FUNCTION  IF EXISTS check_band_message();
-DROP FUNCTION IF EXISTS check_user_belongs_to_band(userId Integer, bandId Integer);
-DROP TABLE IF EXISTS message CASCADE;
-
-DROP TRIGGER IF EXISTS check_band_post ON post;
-DROP FUNCTION  IF EXISTS check_band_post();
-DROP TABLE IF EXISTS post CASCADE;
-
-DROP TABLE IF EXISTS content CASCADE;
-DROP TABLE IF EXISTS band CASCADE;
-DROP FUNCTION  IF EXISTS is_admin(userId INTEGER);
-DROP TABLE IF EXISTS mb_user CASCADE;
-
-DROP TABLE IF EXISTS city CASCADE;
-DROP TABLE IF EXISTS country CASCADE;
-
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
 
 /*****************************************************/
 /****************** Country **************************/
 /*****************************************************/
-
 
 CREATE TABLE country (
     id SERIAL NOT NULL,
@@ -141,7 +36,7 @@ ALTER TABLE ONLY city
 ALTER TABLE ONLY city
     ADD CONSTRAINT city_country_id_fkey FOREIGN KEY (countryId) REFERENCES country(id) ON UPDATE CASCADE;
 
--- \i db/insertLocations.sql;
+\i db/insertLocations.sql;
 
 /*****************************************************/
 /***************** User ******************************/
@@ -180,7 +75,7 @@ ALTER TABLE ONLY mb_user
     ADD CONSTRAINT mb_user_rating_domain CHECK ((rating <= 5.0) AND (rating >= 0.0));
 
 
-CREATE FUNCTION is_admin (userId INTEGER)
+CREATE OR REPLACE FUNCTION is_admin (userId INTEGER)
 RETURNS BOOLEAN AS $$
 DECLARE
     isAdmin BOOLEAN;
@@ -264,7 +159,7 @@ ALTER TABLE ONLY post
     ADD CONSTRAINT post_band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 
-CREATE FUNCTION check_band_post() RETURNS trigger AS $check_band_post$
+CREATE OR REPLACE FUNCTION check_band_post() RETURNS trigger AS $check_band_post$
     BEGIN
        
         IF NEW.bandId IS NOT NULL THEN
@@ -317,7 +212,7 @@ ALTER TABLE ONLY message
     ADD CONSTRAINT message_band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 
-CREATE FUNCTION check_user_belongs_to_band(userIdToCheck Integer, bandIdToCheck Integer) RETURNS BOOLEAN AS $$
+CREATE OR REPLACE FUNCTION check_user_belongs_to_band(userIdToCheck Integer, bandIdToCheck Integer) RETURNS BOOLEAN AS $$
     
     DECLARE result BOOLEAN;
 
@@ -332,7 +227,7 @@ CREATE FUNCTION check_user_belongs_to_band(userIdToCheck Integer, bandIdToCheck 
 $$ LANGUAGE plpgsql;
 
 
-CREATE FUNCTION check_band_message() RETURNS trigger AS $check_band_message$
+CREATE OR REPLACE FUNCTION check_band_message() RETURNS trigger AS $check_band_message$
     BEGIN
        
         IF NEW.bandId IS NOT NULL THEN
@@ -356,7 +251,7 @@ CREATE TRIGGER check_band_message BEFORE INSERT OR UPDATE ON message
     FOR EACH ROW EXECUTE PROCEDURE check_band_message();
 
 
-CREATE FUNCTION check_xor_message_destination() RETURNS trigger AS $check_xor_message_destination$
+CREATE OR REPLACE FUNCTION check_xor_message_destination() RETURNS trigger AS $check_xor_message_destination$
     BEGIN
         
         IF NEW.receiverId IS NULL AND NEW.bandId IS NULL THEN
@@ -376,7 +271,7 @@ CREATE TRIGGER check_xor_message_destination BEFORE INSERT OR UPDATE ON message
     FOR EACH ROW EXECUTE PROCEDURE check_xor_message_destination();
 
 
-CREATE FUNCTION insert_notification_trigger_message() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_message() RETURNS trigger AS $$
     BEGIN
        
         INSERT INTO notification_trigger(type,originMessage) VALUES('message',New.id);
@@ -454,7 +349,7 @@ ALTER TABLE ONLY genre
 ALTER TABLE ONLY genre
     ADD CONSTRAINT genre_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
-CREATE FUNCTION check_is_admin_genre() RETURNS trigger AS $check_is_admin_genre$
+CREATE OR REPLACE FUNCTION check_is_admin_genre() RETURNS trigger AS $check_is_admin_genre$
     BEGIN
         --Check if user is an admin--
         IF NOT is_admin(NEW.creatingAdminId) THEN
@@ -491,7 +386,7 @@ ALTER TABLE ONLY skill
 ALTER TABLE ONLY skill
     ADD CONSTRAINT skill_creatingAdmin_id_fkey FOREIGN KEY (creatingAdminId) REFERENCES mb_user(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
-CREATE FUNCTION check_is_admin_skill() RETURNS trigger AS $check_is_admin_skill$
+CREATE OR REPLACE FUNCTION check_is_admin_skill() RETURNS trigger AS $check_is_admin_skill$
     BEGIN
         --Check if user is an admin--
         IF NOT is_admin(NEW.creatingAdminId) THEN
@@ -541,7 +436,7 @@ ALTER TABLE ONLY report
     ADD CONSTRAINT reporter_user_id_fkey FOREIGN KEY (reporterUserId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
-CREATE FUNCTION check_xor_report_type() RETURNS trigger AS $check_xor_report_type$
+CREATE OR REPLACE FUNCTION check_xor_report_type() RETURNS trigger AS $check_xor_report_type$
     BEGIN
         --Check for correct type
         IF NEW.reportType = 'user_report' AND NEW.reportedUserId IS NULL THEN
@@ -596,7 +491,7 @@ ALTER TABLE ONLY ban
 ALTER TABLE ONLY ban
     ADD CONSTRAINT user_id_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
-CREATE FUNCTION check_is_admin_ban() RETURNS trigger AS $check_is_admin_ban$
+CREATE OR REPLACE FUNCTION check_is_admin_ban() RETURNS trigger AS $check_is_admin_ban$
     BEGIN
         --Check if user is an admin--
         IF NOT is_admin(NEW.adminId) THEN
@@ -611,7 +506,7 @@ $check_is_admin_ban$ LANGUAGE plpgsql;
 CREATE TRIGGER check_is_admin_ban BEFORE INSERT OR UPDATE ON ban
     FOR EACH ROW EXECUTE PROCEDURE check_is_admin_ban();
 
-CREATE FUNCTION check_xor_user_band() RETURNS trigger AS $check_xor_user_band$
+CREATE OR REPLACE FUNCTION check_xor_user_band() RETURNS trigger AS $check_xor_user_band$
     BEGIN
         --Check if both user and ban are empty--
         IF NEW.userId IS NULL AND NEW.bandId IS NULL THEN
@@ -689,7 +584,7 @@ ALTER TABLE ONLY user_follower
     ADD CONSTRAINT followedUserId_fkey FOREIGN KEY (followedUserId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
-CREATE FUNCTION insert_notification_trigger_user_follower() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_user_follower() RETURNS trigger AS $$
     BEGIN
        
         INSERT INTO notification_trigger(type,originUserFollower) VALUES('user_follower',New.id);
@@ -729,30 +624,35 @@ ALTER TABLE ONLY user_rating
 ALTER TABLE ONLY user_rating
     ADD CONSTRAINT user_rating_rate_domain CHECK ((rate <= 5) AND (rate >= 1));
 
+
 /*****************************************************/
-/******************* User Warning ********************/
+/******************* Warning *************************/
 /*****************************************************/
 
 
-
-CREATE TABLE user_warning (
+CREATE TABLE warning (
 
     id SERIAL NOT NULL,
     adminId INTEGER NOT NULL,
-    userId INTEGER NOT NULL
+    userId INTEGER,
+    bandId INTEGER,
+    reason TEXT DEFAULT 'You have been reported frequently. Please, reconsider your behavior in this platform or we will need to banish you.'
 
 );
 
-ALTER TABLE ONLY user_warning
-    ADD CONSTRAINT user_warning_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY warning
+    ADD CONSTRAINT warning_pkey PRIMARY KEY (id);
 
-ALTER TABLE ONLY user_warning
-    ADD CONSTRAINT user_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+ALTER TABLE ONLY warning
+    ADD CONSTRAINT warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY user_warning
-    ADD CONSTRAINT user_warning_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+ALTER TABLE ONLY warning
+    ADD CONSTRAINT warning_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
-CREATE FUNCTION check_is_admin_user_warning() RETURNS trigger AS $check_is_admin_user_warning$
+ALTER TABLE ONLY warning
+    ADD CONSTRAINT warning_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+CREATE OR REPLACE FUNCTION check_is_admin_warning() RETURNS trigger AS $check_is_admin_warning$
     BEGIN
         --Check if user is an admin--
         IF NOT is_admin(NEW.adminId) THEN
@@ -762,24 +662,44 @@ CREATE FUNCTION check_is_admin_user_warning() RETURNS trigger AS $check_is_admin
         RETURN NEW;
 
     END;
-$check_is_admin_user_warning$ LANGUAGE plpgsql;
+$check_is_admin_warning$ LANGUAGE plpgsql;
 
-CREATE TRIGGER check_is_admin_user_warning BEFORE INSERT OR UPDATE ON user_warning
-    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_user_warning();
+CREATE TRIGGER check_is_admin_warning BEFORE INSERT OR UPDATE ON warning
+    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_warning();
 
 
-CREATE OR REPLACE FUNCTION insert_notification_trigger_user_warning() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_warning() RETURNS trigger AS $$
     BEGIN
        
-        INSERT INTO notification_trigger(type,originUserWarning) VALUES('user_warning',New.id);
+        INSERT INTO notification_trigger(type,originWarning) VALUES('warning',New.id);
         RETURN NEW;
 
     END;
     
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_notification_trigger_user_warning AFTER INSERT ON user_warning
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_user_warning();
+CREATE TRIGGER insert_notification_trigger_warning AFTER INSERT ON warning
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_warning();
+
+CREATE OR REPLACE FUNCTION check_xor_warning_destination() RETURNS trigger AS $check_xor_warning_destination$
+    BEGIN
+        --Check if both user and band are empty--
+        IF NEW.userId IS NULL AND NEW.bandId IS NULL THEN
+            RAISE EXCEPTION 'userId and bandId cannot be both null';
+        END IF;
+
+        --Check if both are not null
+        IF NEW.userId IS NOT NULL AND NEW.bandId IS NOT NULL THEN
+            RAISE EXCEPTION 'userId and bandId cannot be both not null (%,%)', NEW.userId, New.bandId;
+        END IF;
+
+        RETURN NEW;
+
+    END;
+$check_xor_warning_destination$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_xor_warning_destination BEFORE INSERT OR UPDATE ON warning
+    FOR EACH ROW EXECUTE PROCEDURE check_xor_warning_destination();
 
 /*****************************************************/
 /******************* Band Genre **********************/
@@ -854,56 +774,6 @@ ALTER TABLE ONLY band_rating
     ADD CONSTRAINT band_rating_rate_domain CHECK ((rate <= 5) AND (rate >= 1));
 
 
-/*****************************************************/
-/******************* Band Warning ********************/
-/*****************************************************/
-
-
-CREATE TABLE band_warning (
-
-    id SERIAL NOT NULL,
-    adminId INTEGER NOT NULL,
-    bandId INTEGER NOT NULL
-
-);
-
-ALTER TABLE ONLY band_warning
-    ADD CONSTRAINT band_warning_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY band_warning
-    ADD CONSTRAINT band_warning_adminId_fkey FOREIGN KEY (adminId) REFERENCES mb_user(id) ON UPDATE CASCADE;
-
-ALTER TABLE ONLY band_warning
-    ADD CONSTRAINT band_warning_userId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
-
-CREATE FUNCTION check_is_admin_band_warning() RETURNS trigger AS $check_is_admin_band_warning$
-    BEGIN
-        --Check if user is an admin--
-        IF NOT is_admin(NEW.adminId) THEN
-            RAISE EXCEPTION 'User is not an Admin';
-        END IF;
-
-        RETURN NEW;
-
-    END;
-$check_is_admin_band_warning$ LANGUAGE plpgsql;
-
-CREATE TRIGGER check_is_admin_band_warning BEFORE INSERT OR UPDATE ON band_warning
-    FOR EACH ROW EXECUTE PROCEDURE check_is_admin_band_warning();
-
-
-CREATE OR REPLACE FUNCTION insert_notification_trigger_band_warning() RETURNS trigger AS $$
-    BEGIN
-       
-        INSERT INTO notification_trigger(type,originBandWarning) VALUES('band_warning',New.id);
-        RETURN NEW;
-
-    END;
-    
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER insert_notification_trigger_band_warning AFTER INSERT ON band_warning
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_warning();
 
 
 /*****************************************************/
@@ -934,7 +804,7 @@ ALTER TABLE ONLY band_follower
     ADD CONSTRAINT followedBandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 
-CREATE FUNCTION insert_notification_trigger_band_follower() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_follower() RETURNS trigger AS $$
     BEGIN
        
         INSERT INTO notification_trigger(type,originBandFollower) VALUES('band_follower',New.id);
@@ -990,11 +860,15 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER insert_notification_trigger_band_application AFTER INSERT ON band_application
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application();
 
-CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_accepted() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_updated() RETURNS trigger AS $$
     BEGIN
        
+        IF NEW.status = 'accepted' OR NEW.status = 'rejected' THEN
+            INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application_updated',New.id);
+        END IF;
+
         IF NEW.status = 'accepted' THEN
-            INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application_accepted',New.id);
+            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
         END IF;
 
         RETURN NEW;
@@ -1003,24 +877,8 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_accepted
     
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_notification_trigger_band_application_accepted AFTER UPDATE ON band_application
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_accepted();
-
-CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_rejected() RETURNS trigger AS $$
-    BEGIN
-       
-        IF NEW.status = 'rejected' THEN
-            INSERT INTO notification_trigger(type,originBandApplication) VALUES('band_application_rejected',New.id);
-        END IF;
-
-        RETURN NEW;
-
-    END;
-    
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER insert_notification_trigger_band_application_rejected AFTER UPDATE ON band_application
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_rejected();
+CREATE TRIGGER insert_notification_trigger_band_application_updated AFTER UPDATE ON band_application
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_updated();
 
 /*****************************************************/
 /******************* Band Invitation *****************/
@@ -1063,11 +921,14 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER insert_notification_trigger_band_invitation AFTER INSERT ON band_invitation
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation();
 
-CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_accepted() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_updated() RETURNS trigger AS $$
     BEGIN
        
+        IF NEW.status = 'accepted' OR NEW.status = 'rejected' THEN
+            INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_updated',New.id);
+        END IF;
         IF NEW.status = 'accepted' THEN
-            INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_accepted',New.id);
+            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
         END IF;
 
         RETURN NEW;
@@ -1076,24 +937,9 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_accepted(
     
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_notification_trigger_band_invitation_accepted AFTER UPDATE ON band_invitation
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_accepted();
 
-CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_rejected() RETURNS trigger AS $$
-    BEGIN
-       
-        IF NEW.status = 'rejected' THEN
-            INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_rejected',New.id);
-        END IF;
-
-        RETURN NEW;
-
-    END;
-    
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER insert_notification_trigger_band_invitation_rejected AFTER UPDATE ON band_invitation
-    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_rejected();
+CREATE TRIGGER insert_notification_trigger_band_invitation_updated AFTER UPDATE ON band_invitation
+    FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_updated();
 
 /*****************************************************/
 /************ Notification Trigger *******************/
@@ -1103,8 +949,7 @@ CREATE TRIGGER insert_notification_trigger_band_invitation_rejected AFTER UPDATE
 
 CREATE TYPE NOTIFICATION_TYPE AS ENUM (
     'user_follower', 'band_follower', 'message', 'comment', 'band_application',
-    'band_invitation', 'user_warning', 'band_warning', 'band_invitation_accepted',
-    'band_invitation_rejected', 'band_application_accepted', 'band_application_rejected');
+    'band_invitation', 'warning', 'band_invitation_updated', 'band_application_updated');
 
 CREATE TABLE notification_trigger (
 
@@ -1117,8 +962,7 @@ CREATE TABLE notification_trigger (
     originComment INTEGER,
     originBandApplication INTEGER,
     originBandInvitation INTEGER,
-    originUserWarning INTEGER,
-    originBandWarning INTEGER
+    originWarning INTEGER
 );
 
 ALTER TABLE ONLY notification_trigger
@@ -1143,13 +987,10 @@ ALTER TABLE ONLY notification_trigger
     ADD CONSTRAINT notification_trigger_origin_band_invitation_fkey FOREIGN KEY (originBandInvitation) REFERENCES band_invitation(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY notification_trigger
-    ADD CONSTRAINT notification_trigger_origin_user_warning_fkey FOREIGN KEY (originUserWarning) REFERENCES user_warning(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY notification_trigger
-    ADD CONSTRAINT notification_trigger_origin_band_warning_fkey FOREIGN KEY (originBandWarning) REFERENCES band_warning(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT notification_trigger_origin_warning_fkey FOREIGN KEY (originWarning) REFERENCES warning(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
-CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_notification_origin$
+CREATE OR REPLACE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_notification_origin$
     BEGIN
 
         --Check for correct type and origin
@@ -1173,32 +1014,20 @@ CREATE FUNCTION check_xor_notification_origin() RETURNS trigger AS $check_xor_no
             RAISE EXCEPTION 'type band application without originBandApplicationId';
         END IF;
 
+        IF NEW.TYPE = 'band_application_updated' AND NEW.originBandApplication IS NULL THEN
+            RAISE EXCEPTION 'type band application updated without band application Id';
+        END IF;
+
         IF NEW.type = 'band_invitation' AND NEW.originBandInvitation IS NULL THEN
             RAISE EXCEPTION 'type band invitation without band invitation Id';
         END IF;
 
-        IF NEW.type = 'user_warning' AND NEW.originUserWarning IS NULL THEN
-            RAISE EXCEPTION 'type user warning without origin user warning id';
+        IF NEW.TYPE = 'band_invitation_updated' AND NEW.originBandInvitation IS NULL THEN
+            RAISE EXCEPTION 'type band invitation updated without band inivitation Id';
         END IF;
 
-        IF NEW.TYPE = 'band_warning' AND NEW.originBandWarning IS NULL THEN
-            RAISE EXCEPTION 'type band warning without band warning Id';
-        END IF;
-
-        IF NEW.TYPE = 'band_invitation_accepted' AND NEW.originBandInvitation IS NULL THEN
-            RAISE EXCEPTION 'type band invitation accepted without band inivitation Id';
-        END IF;
-
-         IF NEW.TYPE = 'band_invitation_rejected' AND NEW.originBandInvitation IS NULL THEN
-            RAISE EXCEPTION 'type band invitation rejected without band inivitation Id';
-        END IF;
-
-        IF NEW.TYPE = 'band_application_accepted' AND NEW.originBandApplication IS NULL THEN
-            RAISE EXCEPTION 'type band application accepted without band application Id';
-        END IF;
-
-        IF NEW.TYPE = 'band_application_rejected' AND NEW.originBandApplication IS NULL THEN
-            RAISE EXCEPTION 'type band application accepted without band application Id';
+        IF NEW.type = 'warning' AND NEW.originWarning IS NULL THEN
+            RAISE EXCEPTION 'type warning without origin warning id';
         END IF;
 
         RETURN NEW;
@@ -1228,41 +1057,39 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION insert_user_notifications_user_follower(notifTriggerId INTEGER, userFollowerId INTEGER)
 RETURNS VOID AS $$
     DECLARE
-        receiverId INTEGER;
-        senderName TEXT;
-        notifText TEXT;
+        vReceiverId INTEGER;
+        vSenderName TEXT;
+        vNotifText TEXT;
     BEGIN
-        SELECT followedUserId, mb_user.name INTO receiverId, senderName
+        SELECT followedUserId, mb_user.name INTO vReceiverId, vSenderName
         FROM user_follower JOIN mb_user
         ON mb_user.id = user_follower.followingUserId
         WHERE user_follower.id = userFollowerId;
 
-        notifText := senderName || ' started to follow you!';
+        vNotifText := vSenderName || ' started to follow you!';
 
-        INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, receiverId, notifText);
+        INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vReceiverId, vNotifText);
     END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION insert_user_notifications_band_follower(notifTriggerId INTEGER, bandFollowerId INTEGER)
 RETURNS VOID AS $$
     DECLARE
-        senderName TEXT;
-        bandName TEXT;
-        notifText TEXT;
-        declaredBandId INTEGER;
+        vSenderName TEXT;
+        vBandName TEXT;
+        vNotifText TEXT;
+        vBandId INTEGER;
     BEGIN
 
-        SELECT mb_user.name, band.name INTO senderName, bandName
+        SELECT mb_user.name, band.name, band_follower.bandId INTO vSenderName, vBandName, vBandId
         FROM band_follower 
         JOIN mb_user ON band_follower.userId = mb_user.id
         JOIN band ON band.id = band_follower.bandId
         WHERE band_follower.id = bandFollowerId;
 
-        notifText := senderName || ' started to follow ' || bandName || '!';
-        
-        SELECT band_follower.bandId INTO declaredBandId FROM band_follower WHERE band_follower.id = bandFollowerId;
+        vNotifText := vSenderName || ' started to follow ' || vBandName || '!';
 
-        PERFORM send_notification_to_band(declaredBandId, notifTriggerId, notifText);
+        PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
 
     END;
 $$ LANGUAGE plpgsql;
@@ -1313,12 +1140,124 @@ RETURNS VOID AS $$
         JOIN content ON content.id = comment.contentId
         WHERE comment.id = commentId;
 
-        vNotifText := vCommenterName || ' commented your post: ' + vCommentText;
+        vNotifText := vCommenterName || ' commented your post: ' || vCommentText;
         CASE
             WHEN vBandId IS NOT NULL THEN
                 PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
             ELSE
                 INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vPosterId, vNotifText);
+        END CASE;
+
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_band_application(notifTriggerId INTEGER, bandApplicationId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vSenderName TEXT;
+        vBandName TEXT;
+        vNotifText TEXT;
+        vBandId INTEGER;
+    BEGIN
+
+        SELECT band_application.bandId, mb_user.name, band.name INTO vBandId, vSenderName, vBandName
+        FROM band_application 
+        JOIN mb_user ON band_application.userId = mb_user.id
+        JOIN band ON band.id = band_application.bandId
+        WHERE band_application.id = bandApplicationId;
+
+        vNotifText := vSenderName || ' applied to ' || vBandName || '!';
+        
+        PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_band_application_updated(notifTriggerId INTEGER, bandApplicationId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vReceiverId INTEGER;
+        vBandName TEXT;
+        vNotifText TEXT;
+        vBandId INTEGER;
+        vStatus BAND_APPLICATION_STATUS;
+
+    BEGIN
+
+        SELECT band_application.status, band_application.bandId, band_application.userId, band.name
+        INTO vStatus, vBandId, vReceiverId, vBandName
+        FROM band_application
+        JOIN band ON band.id = band_application.bandId
+        WHERE band_application.id = bandApplicationId;
+
+        vNotifText := vBandName || ' ' || vStatus || ' your apply to join the band!';
+    
+        INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vReceiverId, vNotifText);
+
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_band_invitation(notifTriggerId INTEGER, bandInvitationId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vReceiverId INTEGER;
+        vBandName TEXT;
+        vNotifText TEXT;
+    BEGIN
+        SELECT userId, band.name INTO vReceiverId, vBandName
+        FROM band_invitation JOIN band
+        ON band.id = band_invitation.bandId
+        WHERE band_invitation.id = bandInvitationId;
+
+        vNotifText := vBandName || ' invited you to join the band!';
+
+        INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vReceiverId, vNotifText);
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_band_invitation_updated(notifTriggerId INTEGER, bandInvitationId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vSenderName TEXT;
+        vBandName TEXT;
+        vNotifText TEXT;
+        vBandId INTEGER;
+        vStatus BAND_INVITATION_STATUS;
+    BEGIN
+
+        SELECT band_invitation.status, band_invitation.bandId, mb_user.name, band.name INTO vStatus, vBandId, vSenderName, vBandName
+        FROM band_invitation 
+        JOIN mb_user ON band_invitation.userId = mb_user.id
+        JOIN band ON band.id = band_invitation.bandId
+        WHERE band_invitation.id = bandInvitationId;
+
+        vNotifText := vSenderName || ' ' || vStatus || ' your invitation to join ' || vBandName || '!';
+        
+        PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION insert_user_notifications_warning(notifTriggerId INTEGER, warningId INTEGER)
+RETURNS VOID AS $$
+    DECLARE
+        vUserId INTEGER;
+        vBandId INTEGER;
+        vNotifText TEXT;
+        vReasonText TEXT;
+    BEGIN
+        SELECT warning.userId, warning.bandId, warning.reason 
+        INTO vUserId, vBandId, vReasonText 
+        FROM warning
+        WHERE warning.id = warningId;
+
+        vNotifText := 'Warning: ' || vReasonText;
+        CASE
+            WHEN vBandId IS NOT NULL THEN
+                PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+            ELSE
+                INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vUserId, vNotifText);
         END CASE;
 
     END;
@@ -1336,6 +1275,16 @@ CREATE OR REPLACE FUNCTION trigger_user_notifications() RETURNS TRIGGER AS $$
                 PERFORM insert_user_notifications_message(New.id, New.originMessage);
             WHEN 'comment' THEN
                 PERFORM insert_user_notifications_comment(New.id, New.originComment);
+            WHEN 'band_application' THEN
+                PERFORM insert_user_notifications_band_application(New.id, New.originBandApplication);
+            WHEN 'band_application_updated' THEN
+                PERFORM insert_user_notifications_band_application_updated(New.id, New.originBandApplication);
+            WHEN 'band_invitation' THEN
+                PERFORM insert_user_notifications_band_invitation(New.id, New.originBandInvitation);
+            WHEN 'band_invitation_updated' THEN
+                PERFORM insert_user_notifications_band_invitation_updated(New.id, New.originBandInvitation);
+            WHEN 'warning' THEN
+                PERFORM insert_user_notifications_warning(New.id, New.originWarning);
             ELSE
                 RAISE EXCEPTION 'Notification type invalid';
         END CASE;
