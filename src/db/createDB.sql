@@ -1,9 +1,106 @@
 \c lbaw1712;
-DROP SCHEMA public CASCADE;
-CREATE SCHEMA public;
+-- DROP SCHEMA public CASCADE;
+-- CREATE SCHEMA public;
 
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO public;
+-- GRANT ALL ON SCHEMA public TO postgres;
+-- GRANT ALL ON SCHEMA public TO public;
+
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_message ON message;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_message();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_comment ON comment;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_comment();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_application ON band_application;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation ON band_invitation;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_warning ON warning;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_warning();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_invitation_updated ON band_invitation;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_updated();
+
+DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_updated ON band_application;
+DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_updated();
+
+
+
+DROP TABLE IF EXISTS user_notification CASCADE;
+DROP TRIGGER IF EXISTS check_xor_notification_origin ON notification_trigger;
+DROP FUNCTION  IF EXISTS check_xor_notification_origin();
+DROP TABLE IF EXISTS notification_trigger CASCADE;
+DROP TYPE IF EXISTS NOTIFICATION_TYPE;
+
+DROP TABLE IF EXISTS band_invitation CASCADE;
+DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
+DROP TABLE IF EXISTS band_application CASCADE;
+DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
+--DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
+--DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
+DROP TABLE IF EXISTS band_follower CASCADE;
+DROP TABLE IF EXISTS band_rating CASCADE;
+DROP TABLE IF EXISTS band_membership CASCADE;
+DROP TABLE IF EXISTS band_genre CASCADE;
+
+DROP TRIGGER IF EXISTS check_is_admin_warning ON warning;
+DROP FUNCTION  IF EXISTS check_is_admin_warning();
+DROP TABLE IF EXISTS warning CASCADE;
+DROP TABLE IF EXISTS user_rating CASCADE;
+-- DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
+-- DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
+DROP TABLE IF EXISTS user_follower CASCADE;
+DROP TABLE IF EXISTS user_skill CASCADE;
+DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
+DROP FUNCTION  IF EXISTS check_xor_user_band();
+
+DROP TRIGGER IF EXISTS check_is_admin_ban ON ban;
+DROP FUNCTION  IF EXISTS check_is_admin_ban();
+DROP TABLE IF EXISTS ban CASCADE;
+
+DROP TRIGGER IF EXISTS check_xor_report_type ON report;
+DROP FUNCTION  IF EXISTS check_xor_report_type();
+DROP TABLE IF EXISTS report CASCADE;
+DROP TYPE IF EXISTS REPORT_TYPE;
+
+DROP TRIGGER IF EXISTS check_is_admin_skill ON skill;
+DROP FUNCTION  IF EXISTS check_is_admin_skill();
+DROP TABLE IF EXISTS skill CASCADE;
+
+DROP TRIGGER IF EXISTS check_is_admin_genre ON genre;
+DROP FUNCTION  IF EXISTS check_is_admin_genre();
+DROP TABLE IF EXISTS genre CASCADE;
+
+DROP TABLE IF EXISTS comment CASCADE;
+
+DROP TRIGGER IF EXISTS check_xor_message_destination ON message;
+DROP FUNCTION  IF EXISTS check_xor_message_destination();
+DROP TRIGGER IF EXISTS check_band_message ON message;
+DROP FUNCTION  IF EXISTS check_band_message();
+DROP FUNCTION IF EXISTS check_user_belongs_to_band(userId Integer, bandId Integer);
+DROP TABLE IF EXISTS message CASCADE;
+
+DROP TRIGGER IF EXISTS check_band_post ON post;
+DROP FUNCTION  IF EXISTS check_band_post();
+DROP TABLE IF EXISTS post CASCADE;
+
+DROP TABLE IF EXISTS content CASCADE;
+DROP TABLE IF EXISTS band CASCADE;
+DROP FUNCTION  IF EXISTS is_admin(userId INTEGER);
+DROP TABLE IF EXISTS mb_user CASCADE;
+
+DROP TABLE IF EXISTS city CASCADE;
+DROP TABLE IF EXISTS country CASCADE;
+
 
 /*****************************************************/
 /****************** Country **************************/
