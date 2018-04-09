@@ -1,10 +1,4 @@
 \c lbaw1712;
--- DROP SCHEMA public CASCADE;
--- CREATE SCHEMA public;
-
--- GRANT ALL ON SCHEMA public TO postgres;
--- GRANT ALL ON SCHEMA public TO public;
-
 
 DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
 DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
@@ -733,7 +727,8 @@ CREATE TABLE warning (
     adminId INTEGER NOT NULL,
     userId INTEGER,
     bandId INTEGER,
-    reason TEXT DEFAULT 'You have been reported frequently. Please, reconsider your behavior in this platform or we will need to banish you.'
+    reason TEXT DEFAULT 'You have been reported.',
+    reportId INTEGER
 
 );
 
@@ -748,6 +743,9 @@ ALTER TABLE ONLY warning
 
 ALTER TABLE ONLY warning
     ADD CONSTRAINT warning_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+ALTER TABLE ONLY warning
+    ADD CONSTRAINT warning_report_fkey FOREIGN KEY (reportId) REFERENCES report(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE OR REPLACE FUNCTION check_is_admin_warning() RETURNS trigger AS $check_is_admin_warning$
     BEGIN
