@@ -1,0 +1,127 @@
+div.main_content {
+    margin-top: 10vh;
+}
+
+.main_nav {
+    margin-top: 15vh;
+}
+
+img.profile_img_feed,
+img.profile_img_message {
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+    border: 1px solid white;
+}
+
+img.profile_img_chat {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid white;
+}
+
+img.profile_img_chat_window {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+
+div.online,
+div.offline {
+    margin-bottom: 5px;
+}
+
+div.online img {
+    border: 2px solid #56e25a;
+}
+
+div.offline img {
+    border: 2px solid red;
+}
+
+div#messagesList {
+    width: 250px;
+    overflow: hidden;
+}
+
+div#messagesList .sender::after{
+    content: ":";
+}
+div#notificationsList .time,
+div#messagesList .time{
+    font-size: 0.6em !important;
+}
+body {
+    background:url(../images/system/test.jpg) no-repeat center center fixed;
+    background-size:cover;
+}
+
+img.logo {
+    width: 60px;
+    height: auto;
+}
+
+img.profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 22.5px;
+    border: 1px solid white;
+}
+
+img.search {
+    width: 20px;
+    height: auto;
+}
+
+nav.navbar li.active {
+    text-decoration: underline;
+}
+
+@media(min-width: 992px) {
+
+    form#searchbarForm {
+        width: 100%;
+    }
+
+}
+
+div#navBar > div.row,
+div#searchbarHeader > div.row {
+    justify-content: center !important;
+    padding: 0 0 0 1em;
+}
+
+@media(max-width: 767px) {
+
+    img.logo {
+        width: 40px;
+        height: auto;
+    }
+
+    img.profile {
+        width: 40px;
+        height: auto;
+    }
+
+    div#logo h1 {
+        margin: 0;
+    }
+
+    div#logo p {
+        margin: 0;
+        font-size: 0.8em;
+    }
+
+    div.main_content {
+        margin-top: 15vh;
+    }
+}
+
+#header {
+    min-height: 10vh;
+    top:0;
+    position: fixed;
+    z-index: 10000;
+}
