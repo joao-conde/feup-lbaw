@@ -13,9 +13,7 @@
 
     <title>{{ config('app.name', 'MusicBox') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
+    </head>
 <body>
     <header id="header" class="container-fluid bg-primary text-white">
         <!-- <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
