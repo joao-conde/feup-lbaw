@@ -34,7 +34,7 @@
         <div class="row justify-content-end">
 
             @if(false) <!-- if user is logged in -->
-                @include('partials.fixednavbar')
+                @include('layouts.header.fixednavbar')
             @endif
 
         </div>
@@ -46,7 +46,7 @@
         <div class="row">
 
             @if(false) <!-- if user is logged in -->
-                @include('partials.searchbar')
+                @include('layouts.header.searchbar')
             @endif
 
         </div>
@@ -58,7 +58,7 @@
 
         <div class="row">
 
-             @include('partials.navbar')
+             @include('layouts.header.navbar')
 
         </div>
 
