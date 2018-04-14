@@ -77,13 +77,14 @@
 @endsection --}}
 
 @section('content')
-<link rel="stylesheet" type="text/css" href="styles/forms.css">
 
-<!-- <div id="register" class="container-fluid main_form">
+<link href="{{ asset('css/forms.css') }}" rel="stylesheet">
+
+<div id="register" class="container-fluid main_form">
 	<video autoplay muted loop id="myVideo">
 		<source src="images/668357526.mp4" type="video/mp4"> Your browser does not support HTML5 video.
 	</video>
-</div> -->
+</div>
 <div class="row justify-content-center p-0 mx-0">
 	<div class="col-sm-4">
 		<div class="jumbotron text-center bg-primary py-5">

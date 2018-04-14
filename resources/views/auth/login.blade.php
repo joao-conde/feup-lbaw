@@ -70,13 +70,14 @@
 
 @section('content')
 
-<link href="styles/forms.css" rel="stylesheet">
-{{-- <div class="container text-center m-0 mt-1">
+<link href="{{ asset('css/forms.css') }}" rel="stylesheet">
+
+<div class="container text-center m-0 mt-1">
     <video autoplay muted loop id="myVideo">
         <source src="images/668357526.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
     </video>
-</div> --}}
+</div>
 
 <div class="container-fluid main_form">
     <div class="row justify-content-center mt-5">
