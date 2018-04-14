@@ -65,7 +65,7 @@
                         <label class="form-check-label">
                             <input class="form-check-input" type="checkbox" name="remember"> Remember me
                         </label>
-                    </div>		    	 --}}
+                    </div>               --}}
                     <button type="submit" class="btn btn-secondary m-4">Login</button>
                     {{-- <a href="./feed_jp.php" class="btn btn-secondary m-4">Login</a> --}}
                 </form>
