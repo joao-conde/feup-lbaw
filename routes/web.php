@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/about', 'PagesController@about');
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
@@ -36,3 +38,4 @@ Route::post('register', 'Auth\RegisterController@register');
 
 
 Auth::routes();
+

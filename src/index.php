@@ -32,7 +32,7 @@
 							</label>
 						</div>		    	
 						<!--button type="submit" class="btn btn-secondary m-4">Login</button-->
-						<a href="./feed_jp.php" class="btn btn-secondary m-4">Login</a>
+						<a href="./feed.php" class="btn btn-secondary m-4">Login</a>
 					</form>
 					<div class="row justify-content-center">
 						<p class="text-secondary">Do not have account? Register <a href="./register.php"> Here</a>!</p>
