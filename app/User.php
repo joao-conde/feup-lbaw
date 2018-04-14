@@ -38,4 +38,12 @@ class User extends Authenticatable
      public function cards() {
       return $this->hasMany('App\Card');
     }
+
+    /**
+     * The skills of the user
+     */
+     public function skills() {
+        return $this->hasMany('App\Skill');
+     }
+
 }
