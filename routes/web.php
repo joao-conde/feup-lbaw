@@ -35,4 +35,4 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
-Auth::routes();
+// Auth::routes();
