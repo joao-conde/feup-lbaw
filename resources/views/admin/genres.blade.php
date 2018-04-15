@@ -1,4 +1,4 @@
-@extends('layouts.admin.admin_app')
+@extends('admin.admin_app')
 
 @section('title', 'Genres')
 
@@ -56,7 +56,7 @@
 @endsection
 
 {{-- 
-@extends('layouts.admin.admin_app')
+@extends('admin.admin_app')
 @section('content')
 
 <div class="container  main_nav">

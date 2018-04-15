@@ -7,10 +7,6 @@ use App\Genre;
 
 class GenresController extends Controller
 {
-    public function adminGenres(){
-    	return view('layouts.admin.genres');
-    }
-
     /**
      * Shows the genre for a given id.
      *
@@ -23,7 +19,7 @@ class GenresController extends Controller
 
       //$this->authorize('show', $genre);
 
-      return view('layouts.admin.genres', ['genre' => $genre]);
+      return view('admin.genres', ['genre' => $genre]);
     }
 
     /**
@@ -39,7 +35,7 @@ class GenresController extends Controller
 
       $genres = Genre::all();
 
-      return view('layouts.admin.genres', ['genres' => $genres]);
+      return view('admin.genres', ['genres' => $genres]);
     }
 
     /**

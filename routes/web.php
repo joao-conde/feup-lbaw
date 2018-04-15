@@ -15,6 +15,11 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+// FEED
+Route::get('/users/{id}/posts', 'FeedController@getPosts');
+
+// SEARCH
+Route::get('/search', 'FeedController@search');
 
 // STATIC
 Route::get('/about', 'PagesController@about');

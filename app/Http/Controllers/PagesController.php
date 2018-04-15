@@ -15,22 +15,22 @@ class PagesController extends Controller
     }
 
     public function adminUsers(){
-    	return view('layouts.admin.users');
+    	return view('admin.users');
     }
 
     public function adminReportedUsers(){
-    	return view('layouts.admin.user_reports');
+    	return view('admin.user_reports');
     }
 
     public function adminReportedBands(){
-    	return view('layouts.admin.band_reports');
+    	return view('admin.band_reports');
     }
 
     public function adminGenres(){
-    	return view('layouts.admin.genres');
+    	return view('admin.genres');
     }
 
     public function adminSkills(){
-    	return view('layouts.admin.skills');
+    	return view('admin.skills');
     }
 }
