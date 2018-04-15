@@ -144,7 +144,8 @@ CREATE TABLE mb_user (
     warns INTEGER DEFAULT 0,
     location INTEGER,
     rating REAL,
-    admin BOOLEAN NOT NULL DEFAULT FALSE
+    admin BOOLEAN NOT NULL DEFAULT FALSE,
+    remember_token TEXT
 );
 
 ALTER TABLE ONLY mb_user

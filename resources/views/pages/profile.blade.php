@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="{{ asset('css/profile.css')}}">
 <link rel="stylesheet" href="{{ asset('css/feed.css')}}">
 <script defer src="{{ asset('js/feed.js')}}"></script>
+<script defer src= "{{ asset('js/followUser.js') }}"></script>
+
 
 <div class="main_content container-fluid p-0 p-md-2">
 
@@ -123,17 +125,23 @@
 
 						<img id="profile_pic" class="profile_image d-block my-3" src="{{ asset('images/users/example-user.jpg') }}" alt="Profile Image">
                         
-                        @if(  $user->id > 0) 
-                        
-                        <button class="btn btn-success"> Follow  {{Auth::user()}}  </button>
+                        @if(  $user->id != Auth::user()->id) 
+
+                            <span id="user_id" class="d-none"> {{$user->id}} </span>
+
+                            @if( $isFollowing)
+
+                                <button id="follow_unfollow" class="btn btn-danger unfollow"> Unfollow </button>
+                            
+                            @else
+
+                                
+                                <button id="follow_unfollow" class="btn btn-success follow"> Follow </button>
+
+                            @endif
 
                         @endif
                             
-                            
-                            
-                        
-
-
 					</div>
 
 					<div class="col-12 col-lg-7 p-3 align-self-start text-justify">

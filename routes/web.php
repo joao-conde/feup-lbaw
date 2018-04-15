@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/about', 'PagesController@about');
+Route::get('/faq', 'PagesController@faq');
+
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
@@ -26,14 +30,15 @@ Route::put('api/cards/{card_id}/', 'ItemController@create');
 Route::post('api/item/{id}', 'ItemController@update');
 Route::delete('api/item/{id}', 'ItemController@delete');
 
+Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
+Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
+
 // Authentication
-
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('login', 'Auth\LoginController@login')->name('do_login');
+Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
+Route::post('register', 'Auth\RegisterController@register')->name('do_register');
 
 // Auth::routes();
 
