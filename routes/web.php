@@ -15,8 +15,17 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+
+// STATIC
 Route::get('/about', 'PagesController@about');
 Route::get('/faq', 'PagesController@faq');
+
+// ADMIN
+Route::get('/reported_users', 'PagesController@adminReportedUsers');
+Route::get('/reported_bands', 'PagesController@adminReportedBands');
+Route::get('/users', 'PagesController@adminUsers');
+Route::get('/genres', 'GenresController@list');
+Route::get('/skills', 'PagesController@adminSkills');
 
 
 // Cards
@@ -24,6 +33,9 @@ Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
 // API
+Route::post('api/genres', 'GenresController@create');
+Route::delete('api/genres/{genre_id}', 'GenresController@delete');
+
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');
