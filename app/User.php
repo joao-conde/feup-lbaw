@@ -33,6 +33,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $attributes = [
+        'admin' => true,
+    ];
+
     /**
      * The cards this user owns.
      */
