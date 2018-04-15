@@ -18,6 +18,8 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <link href="{{ asset('css/about.css') }}" rel="stylesheet">
 
+  <script src= "{{ asset('js/utils.js') }}" defer></script>
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

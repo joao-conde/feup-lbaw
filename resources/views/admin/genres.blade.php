@@ -4,7 +4,7 @@
 
 @section('content')
 
-{{-- <script defer src="{{ asset('js/genres.js') }}"></script> --}}
+<script defer src="{{ asset('js/genres.js') }}"></script>
 
 <div class="container  main_nav">
 
@@ -35,18 +35,12 @@
 			<ul class="list-group" id="genres_list">
 				@each('partials.genre', $genres, 'genre')		
 				<li class="list-group-item">
-					<!--form class="new_genre" action="/api/genres">
+					<form class="new_genre">
 						<div class="form-group">
 							<input type="text" class="border border-top-0 border-left-0 border-right-0 border-primary text-center" id="new_genre" placeholder="Add new genre" name="genre">
 						</div>	    	
-						<button type="submit" class="btn btn-primary m-3">Add Genre</button>
-					</form-->
-					{!! Form::open(['action' => 'GenresController@create', 'method' => 'POST']) !!}
-					<div class="form-group">
-						<input type="text" class="border border-top-0 border-left-0 border-right-0 border-primary text-center" id="new_genre" placeholder="Add new genre" name="genre">
-					</div>	    	
-					{{ Form::submit('Add Genre', ['class' => 'btn btn-primary m-3'])}}
-					{!! Form::close() !!}
+						<button id="add_button" type="submit" class="btn btn-primary m-3">Add Genre</button>
+					</form>
 				</li>
 			</ul>
 		</div>
