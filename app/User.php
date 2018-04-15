@@ -15,12 +15,12 @@ class User extends Authenticatable
     public $timestamps  = false;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'username', 'password',
+    protected $guarded = [
+        'deactivationDate', 'warns', 'rating', 'admin',       
     ];
 
     /**
@@ -37,5 +37,9 @@ class User extends Authenticatable
      */
      public function cards() {
       return $this->hasMany('App\Card');
+    }
+
+    public function bands(){
+        return $this->hasMany('App\Band');
     }
 }

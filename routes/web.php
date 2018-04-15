@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/about', 'PagesController@about');
-Route::get('/faq', 'PagesController@faq');
+Route::get('/faqs', 'PagesController@faq');
 
 
 // Cards
@@ -36,5 +36,10 @@ Route::post('login', 'Auth\LoginController@login')->name('do_login');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
+
+// Bands
+Route::get('band/{bandID}', 'BandController@show')->name('band_page');
+Route::get('bands/create_band', 'BandController@create')->name('create_band');
+Route::post('api/bands/create_band', 'BandController@store')->name('do_create_band');
 
 // Auth::routes();
