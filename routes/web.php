@@ -16,14 +16,15 @@ Route::get('/', function () {
 });
 
 // FEED
-Route::get('/users/{id}/posts', 'FeedController@getPosts');
+// Route::get('/users/{id}/posts', 'FeedController@getPosts');
+Route::get('/feed', 'FeedController@getPosts')->name('feed');
 
 // SEARCH
 Route::get('/search', 'FeedController@search');
 
 // STATIC
 Route::get('/about', 'PagesController@about');
-Route::get('/faq', 'PagesController@faq');
+Route::get('/faqs', 'PagesController@faq');
 
 // ADMIN
 Route::get('/reported_users', 'PagesController@adminReportedUsers');
@@ -56,8 +57,12 @@ Route::post('login', 'Auth\LoginController@login')->name('do_login');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
-
 // Auth::routes();
+
+// Bands
+Route::get('band/{bandID}', 'BandController@show')->name('band_page');
+Route::get('bands/create_band', 'BandController@create')->name('create_band');
+Route::post('api/bands/create_band', 'BandController@store')->name('do_create_band');
 
 //Profile
 

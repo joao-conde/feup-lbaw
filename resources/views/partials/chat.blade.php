@@ -3,8 +3,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-
-<link rel="stylesheet" href=" {{ asset('css/chat.css') }}">
+<link href="{{ asset('css/chat.css') }}" rel="stylesheet">
 
 
 <form class="form-inline mt-2 ml-0 pl-2 pr-4 row justify-content-center">
@@ -104,7 +103,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg1" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -195,7 +194,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg2" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -286,7 +285,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg3" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -377,7 +376,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg4" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -475,7 +474,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg5" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -567,7 +566,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg6" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>
@@ -656,7 +655,7 @@
     <div class="container">
         <form class="row form-inline">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg" cols="25" rows="1"></textarea>
+            <textarea class="col form-control mr-1" name="Chat message" id="chat_msg7" cols="25" rows="1"></textarea>
             <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
                 <i class="fas fa-arrow-right"></i>
             </button>

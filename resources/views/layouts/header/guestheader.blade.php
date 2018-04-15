@@ -2,7 +2,7 @@
 
     <a class="navbar-item" href="{{ url('/login') }}">Login</a>
     <a class="navbar-item" href="{{ url('/register') }}">Register</a>
-    <a class="navbar-item" href="#{{-- url('/faqs') --}}">FAQ</a>
-    <a class="navbar-item" href="#{{-- url('/about') --}}">About</a>
+    <a class="navbar-item" href="{{ url('/faqs') }}">FAQ</a>
+    <a class="navbar-item" href="{{ url('/about') }}">About</a>
 
 </div>
