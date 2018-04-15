@@ -47,6 +47,9 @@ Route::put('api/cards/{card_id}/', 'ItemController@create');
 Route::post('api/item/{id}', 'ItemController@update');
 Route::delete('api/item/{id}', 'ItemController@delete');
 
+Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
+Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('do_login');
@@ -55,3 +58,7 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
 
 // Auth::routes();
+
+//Profile
+
+Route::get('users/{id}', 'ProfilePageController@show');
