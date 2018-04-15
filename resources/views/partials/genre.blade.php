@@ -1,0 +1,1 @@
+<li class="list-group-item">{{ $genre->name }}</li>

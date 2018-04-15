@@ -22,7 +22,11 @@
 
 				<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 					<div class="card-body bg-white">
-						Head to the login page and click "Here" on "Do not have account? Register Here!".
+						Head to the 
+						<a href="/">login</a>
+						 page and click "Here" on "Do not have account? Register Here!". Or just click 
+						<a href="/register">here</a>
+						  to jump to the register page.
 					</div>
 				</div>
 			</div>
