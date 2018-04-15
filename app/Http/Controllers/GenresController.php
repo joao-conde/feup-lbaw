@@ -7,20 +7,6 @@ use App\Genre;
 
 class GenresController extends Controller
 {
-    /**
-     * Shows the genre for a given id.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-      $genre = Genre::find($id);
-
-      //$this->authorize('show', $genre);
-
-      return view('admin.genres', ['genre' => $genre]);
-    }
 
     /**
      * Shows all genres.
@@ -29,7 +15,7 @@ class GenresController extends Controller
      */
     public function list()
     {
-      //if (!Auth::check()) return redirect('/');
+      if (!Auth::check()) return redirect('/');
 
       //$this->authorize('list', Genre::class);
 
@@ -48,13 +34,13 @@ class GenresController extends Controller
 
       $genre = new Genre();
 
-      $this->authorize('create', $genre);
+      //$this->authorize('create', $genre);
 
       $genre->name = $request->input('name');
       $genre->creatingadminid = Auth::user()->id;
       $genre->save();
 
-      return $genre;
+      return reponse('',200);
     }
 
     public function delete(Request $request, $id)
