@@ -32,12 +32,16 @@ Route::get('/reported_users', 'PagesController@adminReportedUsers');
 Route::get('/reported_bands', 'PagesController@adminReportedBands');
 Route::get('/users', 'PagesController@adminUsers');
 Route::get('/genres', 'GenresController@list');
-Route::get('/skills', 'PagesController@adminSkills');
+Route::get('/skills', 'SkillsController@list');
 
 
 // API
 Route::post('api/genres', 'GenresController@create');
 Route::delete('api/genres/{genre_id}', 'GenresController@delete');
+Route::post('api/skills', 'SkillsController@create');
+Route::put('api/skills/{skill_id}', 'SkillsController@delete');
+
+
 
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
