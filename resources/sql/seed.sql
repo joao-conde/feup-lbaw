@@ -188,7 +188,9 @@ CREATE TABLE band (
     creationDate DATE DEFAULT now(),
     ceaseDate DATE,
     location INTEGER,
-    isActive BOOLEAN DEFAULT TRUE
+    isActive BOOLEAN DEFAULT TRUE,
+    bio TEXT
+
 );
 
 ALTER TABLE ONLY band
@@ -1411,3 +1413,28 @@ ALTER TABLE ONLY user_notification
 
 ALTER TABLE ONLY user_notification
     ADD CONSTRAINT user_notification_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+
+
+create index user_post on post using hash(posterId);
+
+create index user_username on mb_user using hash(username);
+
+create index band_name on band using hash(name);
+
+create index message_sender on message using hash(senderId);
+
+create index message_receiver on message using hash(receiverId);
+
+create index report_content on report using hash(reportedContentId);
+
+create index report_date on report using hash(date);
+
+create index search_band on band using gist((
+	setweight(to_tsvector('english', name), 'A') ||
+	setweight(to_tsvector('english', bio), 'B')
+));
+
+CREATE INDEX search_user ON mb_user USING GIST ((
+	setweight(to_tsvector('english', name), 'A') ||
+	setweight(to_tsvector('english', bio), 'B')
+));

@@ -1,25 +1,22 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.logged_user')
 
-<link href="{{ asset('css/feed.css') }}" rel="stylesheet">
-<link href="{{ asset('css/forms.css') }}" rel="stylesheet">
-<script defer src="{{ asset('js/followers.js') }}"></script>
+@section('leftmenumobile')
+    <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
+    <script defer src="{{ asset('js/followers.js') }}"></script>
 
-<div class="container-fluid">
     @include('partials.leftmenumobile')
 
+@endsection
 
-  <div id="main" class="row justify-content-center">
+@section('logged_content')
 
-    <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
+    @include('partials.leftfeedmenu')
 
-      @include('partials.leftfeedmenu')
 
-    </div>
+    <div id="create_band_area" class="col-12 col-md-6 p-0 mt-2">
 
-    <div id="posts" class="col-12 col-md-6 p-0 mt-2">
-
-      <div class="jumbotron text-center bg-primary mt-4">
+        <div class="jumbotron text-center bg-primary mt-4">
             <h2 class="">New Band</h2>
             <form method="POST" action="{{ route('do_create_band') }}">
                 {{ csrf_field() }}
@@ -50,12 +47,4 @@
 
     </div>
 
-    <div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
-
-        @include('partials.chat')
-    </div>
-
-  </div>
-
-</div>
 @endsection
