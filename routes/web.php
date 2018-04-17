@@ -37,7 +37,7 @@ Route::get('/skills', 'SkillsController@list');
 
 // API
 Route::post('api/genres', 'GenresController@create');
-Route::delete('api/genres/{genre_id}', 'GenresController@delete');
+Route::put('api/genres/{genre_id}', 'GenresController@delete');
 Route::post('api/skills', 'SkillsController@create');
 Route::put('api/skills/{skill_id}', 'SkillsController@delete');
 

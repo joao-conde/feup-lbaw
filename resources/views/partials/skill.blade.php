@@ -1,5 +1,5 @@
 <style>
-	i {
+	.clickable {
 		cursor: pointer;
 	}
 </style>
@@ -10,7 +10,7 @@
 		<span class="col-3"></span>
 		<span class="col-6">{{ $skill->name }}</span> 
 		<div class="col-3 clickable">
-			<i class="far fa-trash-alt align-self-center"></i>
+			<i class="far fa-times-circle"></i>
 		</div>
 	</div>
 </li>
