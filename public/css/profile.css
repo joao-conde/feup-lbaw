@@ -4,6 +4,15 @@ img.profile_type {
     border-radius: 50%;
 }
 
+#edit_name_button,
+#confirm_edit_name_button,
+#cancel_edit_name_button,
+#edit_bio_button,
+#confirm_edit_bio_button,
+#cancel_edit_bio_button{
+    cursor: pointer;
+}
+
 div#skills_list {
     display: flex;
     flex-wrap: wrap;
@@ -56,4 +65,6 @@ div#profile_pic_div {
     }
 
 }
+
+
 

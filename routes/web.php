@@ -48,6 +48,8 @@ Route::put('api/cards/{card_id}/', 'ItemController@create');
 Route::post('api/item/{id}', 'ItemController@update');
 Route::delete('api/item/{id}', 'ItemController@delete');
 
+Route::put('api/users/{id}', 'ProfilePageController@editUser');
+
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
 
@@ -66,4 +68,6 @@ Route::post('api/bands/create_band', 'BandController@store')->name('do_create_ba
 
 //Profile
 
-Route::get('users/{id}', 'ProfilePageController@show');
+Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
+
+

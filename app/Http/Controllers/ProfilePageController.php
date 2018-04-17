@@ -95,8 +95,25 @@ class ProfilePageController extends Controller
         }
 
         else
-            return response('',200);
+            return response('',500);
 
     }
+
+    public function editUser(Request $request) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $user = User::find($request->id);
+
+        if($request->__isset('name')) $user->name = $request->name;
+        if($request->__isset('bio')) $user->bio = $request->bio;
+
+        $user->save();
+
+        return response($request->id,200);
+
+    }
+
+
 
 }

@@ -3,6 +3,9 @@ const POST = "post";
 const PUT = "put";
 const DELETE = "delete";
 
+const JSON_ENCODE = "application/json";
+const URL_ENCODE = "application/x-www-form-urlencoded";
+
 const ERROR_CODE_GOOD = "00000";
 
 function changeActiveTab(index) {
@@ -54,11 +57,15 @@ function encodeForAjax(data) {
     }).join('&');  
 }
 
-function sendAsyncAjaxRequest(request, api, type, receiveListener, data) {
+function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, data) {
+
+    if(encoding == URL_ENCODE) 
+        data = encodeForAjax(data);
+
 
     if(type == GET) {
 
-        request.open(type, (api + (data != undefined) ? '' : '?' + encodeForAjax(data)),true);
+        request.open(type, (api + (data != undefined) ? '' : '?' + data),true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
         request.send();
 
@@ -68,10 +75,10 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, data) {
 
         request.open(type, api, true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        
+        request.setRequestHeader('Content-Type', encoding);
+
         if(data != undefined)
-            request.send(encodeForAjax(data));
+            request.send(data);
 
         else
             request.send();

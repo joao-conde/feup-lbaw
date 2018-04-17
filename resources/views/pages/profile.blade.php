@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ asset('css/feed.css')}}">
 <script defer src="{{ asset('js/feed.js')}}"></script>
 <script defer src= "{{ asset('js/followUser.js') }}"></script>
-
+<script defer src= "{{ asset('js/editProfile.js') }}"></script>
 
 <div class="main_content container-fluid p-0 p-md-2">
 
@@ -115,7 +115,15 @@
 
 					<div class="col-11 align-self-center">
 
-						<h3 class="d-inline-block">{{$user->name}}</h3>
+						<h3 id="h3userName"class="d-inline-block align-middle">{{$user->name}}</h3>
+						@if(  $user->id == Auth::user()->id)
+							<span id="edit_name_button"><i id="edit_icon" class="fas fa-pencil-alt"></i></span>
+							<span id="confirm_edit_name_button" class="d-none"><i id="confirm_icon" class="fas fa-check text-success"></i></span>
+							<span id="cancel_edit_name_button" class="d-none"><i class="fas fa-times text-danger"></i></span>
+							
+
+
+						@endif
 					</div>
 				</div>
 
@@ -147,10 +155,21 @@
 					<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 						<div class="row p-2">
-							<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit at tincidunt. In ligula
-								nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec arcu mauris. Nullam quis condimentum libero. Duis
-								maximus lorem tincidunt commodo molestie. Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum
-								commodo. Aliquam in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+
+							<div class="col">
+
+									<p id="bioParagraph" class="text-primary d-inline">{{  $user->bio }}
+										</p>
+			
+										@if(  $user->id == Auth::user()->id)
+										
+											<span id="edit_bio_button"><i id="edit_icon" class="fas fa-pencil-alt"></i></span>
+											<span id="confirm_edit_bio_button" class="d-none"><i id="confirm_icon" class="fas fa-check text-success"></i></span>
+											<span id="cancel_edit_bio_button" class="d-none"><i class="fas fa-times text-danger"></i></span>
+										
+									@endif
+
+							</div>
 						</div>
 
 						<hr class="mt-0">
