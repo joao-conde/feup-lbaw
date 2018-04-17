@@ -29,16 +29,32 @@ function createButtonListener(event){
 		data = {
 			skill:	skill_name.value
 		};
+		let skills = document.querySelectorAll('.skill_name');
+		for(var i = 0; i < skills.length; i++){
+			if(skills[i].innerHTML == skill_name.value){
+				window.alert('That skill already exists!');
+				skill_name.value = '';
+				return 0;
+			}
+		}
 		let requestData = encodeForAjax(data);
-		sendAsyncAjaxRequest(request,api,method,handleCreateAPIResponse.bind(skill_name,request,"skill"),data);
+		sendAsyncAjaxRequest(request,api,method,handleCreateAPIResponse.bind(skill_name,request,"skill"),URL_ENCODE,data);
 	}
 	else if(this == "genre"){
 		let api = '/api/genres';
 		data = {
 			genre:	genre_name.value
 		};
+		let genres = document.querySelectorAll('.genre_name');
+		for(var i = 0; i < genres.length; i++){
+			if(genres[i].innerHTML == genre_name.value){
+				window.alert('That genre already exists!');
+				genre_name.value = '';
+				return 0;
+			}
+		}
 		let requestData = encodeForAjax(data);
-		sendAsyncAjaxRequest(request,api,method,handleCreateAPIResponse.bind(genre_name,request,"genre"),data);
+		sendAsyncAjaxRequest(request,api,method,handleCreateAPIResponse.bind(genre_name,request,"genre"),URL_ENCODE,data);
 	}
 
 }
@@ -105,7 +121,7 @@ addLinesListeners();
 function addLinesListeners(){
 	if(skill_lines.length > 0){
 		for(let line in skill_lines){
-			if(line == skill_lines.length)
+			if(!isNaN(skill_lines[line]))
 				break;
 
 			let dbutton = skill_lines[line].querySelector('.clickable');
@@ -115,9 +131,9 @@ function addLinesListeners(){
 
 	if(genre_lines.length > 0){
 		for(let genre in genre_lines){
-			if(genre == genre_lines.length)
+			if(!isNaN(genre_lines[genre]))
 				break;
-
+			
 			let dbutton = genre_lines[genre].querySelector('.clickable');
 			dbutton.addEventListener('click', deleteButtonListener.bind(genre_lines[genre],"genre"));
 		}
@@ -144,7 +160,7 @@ function deleteButtonListener(type, event){
 
 	let requestData = encodeForAjax(data);
 
-	sendAsyncAjaxRequest(request,api,method,handleDeleteAPIResponse.bind(this,request),data);
+	sendAsyncAjaxRequest(request,api,method,handleDeleteAPIResponse.bind(this,request),URL_ENCODE,data);
 
 }
 
