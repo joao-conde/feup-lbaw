@@ -20,7 +20,8 @@ Route::get('/', function () {
 Route::get('/feed', 'FeedController@getPosts')->name('feed');
 
 // SEARCH
-Route::get('/search', 'FeedController@search');
+Route::get('/search', 'PagesController@search')->name('search');
+Route::post('/do_search', 'PagesController@do_search')->name('do_search');
 
 // STATIC
 Route::get('/about', 'PagesController@about');
@@ -34,10 +35,6 @@ Route::get('/genres', 'GenresController@list');
 Route::get('/skills', 'SkillsController@list');
 
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
-
 // API
 Route::post('api/genres', 'GenresController@create');
 Route::put('api/genres/{genre_id}', 'GenresController@delete');
@@ -45,12 +42,6 @@ Route::post('api/skills', 'SkillsController@create');
 Route::put('api/skills/{skill_id}', 'SkillsController@delete');
 
 
-
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
 
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
@@ -66,8 +57,8 @@ Route::post('register', 'Auth\RegisterController@register')->name('do_register')
 // Bands
 Route::get('band/{bandID}', 'BandController@show')->name('band_page');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
-Route::post('api/bands/create_band', 'BandController@store')->name('do_create_band');
+Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
 
 //Profile
 
-Route::get('users/{id}', 'ProfilePageController@show');
+Route::get('users/{id}', 'ProfilePageController@show')->name('profile');

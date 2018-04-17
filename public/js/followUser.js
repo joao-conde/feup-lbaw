@@ -1,52 +1,54 @@
 'use strict';
 
-let followButton = document.querySelector('div#profile_pic_div #follow_unfollow');
-let userToFollowId = document.querySelector('div#profile_pic_div #user_id');
+let followButtons = document.querySelectorAll('.follow_unfollow');
 
-if(followButton != undefined) {
+console.log(followButtons);
 
-    followButton.addEventListener('click',startStopFollowingEventListener.bind(followButton));
+for(let i in followButtons){
+
+    followButtons[i].addEventListener('click',startStopFollowingEventListener.bind(followButtons[i]));
 
 }
 
+
 function startStopFollowingEventListener() {
+
+    let userToFollowId = this.querySelector('span.userId').innerHTML;
 
     let request = new XMLHttpRequest();
     let method = PUT;
-    let api = '/api/user_followers/' + parseInt(userToFollowId.innerHTML);
+    let api = '/api/user_followers/' + parseInt(userToFollowId);
     let follow = true;
 
 
     if(checkIfHasClass(this,'unfollow')) {
-        method = DELETE;  
+        method = DELETE;
         follow = false;
     }
-              
-
-    sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(follow,request));
 
 
+    sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request));
 
 }
 
-function handleAPIResponse(request) {
+function handleAPIResponse(follow, request) {
 
     if(request.status == 200) {
 
-        if(this == true) {
+        if(follow == true) {
 
-            followButton.classList.remove('btn-success','follow');
-            followButton.classList.add('btn-danger','unfollow');
-            followButton.innerHTML = 'Unfollow'; 
-    
+            this.classList.remove('btn-success','follow');
+            this.classList.add('btn-danger','unfollow');
+            this.querySelector('span.btn_follow_label').innerHTML = 'Unfollow';
+
         }
-    
+
         else {
-    
-            followButton.classList.remove('btn-danger','unfollow'); 
-            followButton.classList.add('btn-success','follow');
-            followButton.innerHTML = "Follow";
-            
+
+            this.classList.remove('btn-danger','unfollow');
+            this.classList.add('btn-success','follow');
+            this.querySelector('span.btn_follow_label').innerHTML = "Follow";
+
         }
 
     }

@@ -1,4 +1,5 @@
-<a class="mr-1 d-block" href="profile.html">
+<div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
+  <a class="mr-1 d-block" href="{{route('profile', Auth::user()->id)}}">
     <img class="profile mr-2" src="{{ asset('images/system/dummy_profile.svg') }}">
     <span class="text-secondary align-middle">My Profile</span>
   </a>
@@ -54,3 +55,5 @@
   <a href="followers.html"><p class="text-secondary align-middle mb-1">Followers</p></a>
   <a href="following_users.html"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a>
   <a href="following_bands.html"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a>
+</div>
+
