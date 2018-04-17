@@ -28,10 +28,10 @@
 						<h3 id="h3userName" class="d-inline-block align-middle mr-2">{{$user->name}}</h3>
 						@if( $user->id == Auth::user()->id)
 							<span id="edit_name_button">
-								<i id="edit_icon" class="fas fa-pencil-alt"></i>
+								<i class="fas fa-pencil-alt"></i>
 							</span>
 							<span id="confirm_edit_name_button" class="d-none">
-								<i id="confirm_icon" class="fas fa-check text-success"></i>
+								<i class="fas fa-check text-success"></i>
 							</span>
 							<span id="cancel_edit_name_button" class="d-none">
 								<i class="fas fa-times text-danger"></i>
@@ -44,11 +44,17 @@
 
 				<div class="col-auto">
 
-					<img id="profile_pic" class="profile_image d-block my-3" src="{{ asset('images/users/example-user.jpg') }}" alt="Profile Image">
+					<img id="profile_pic" class="profile_image d-block my-3" src="{{ asset('images/system/dummy_profile.svg') }}" alt="Profile Image">
 					
 					@if($user->id != Auth::user()->id) 
 
 						@include('partials.followbutton', ['isFollowing' => $isFollowing, 'userToFollowId' => $user->id])
+
+					@else
+						<span id="edit_picture_button">
+							<input id="inputPicture" type="file" class="d-none">
+							<button id="buttonPicture" class="btn btn-primary">Change Picture</button>
+						</span>
 
 					@endif
 						
@@ -57,13 +63,11 @@
 				<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 					<div class="row p-2">
-						<p id="bioParagraph" class="text-primary d-inline mr-2">
-							{{ $user->bio }}
-						</p>
+						<div class="col">
+						<p id="bioParagraph" class="text-primary d-inline mr-2">{{$user->bio}}</p>
 						@if( $user->id == Auth::user()->id)
-
 							<span id="edit_bio_button">
-								<i id="edit_icon" class="fas fa-pencil-alt"></i>
+								<i class="fas fa-pencil-alt"></i>
 							</span>
 							<span id="confirm_edit_bio_button" class="d-none">
 								<i id="confirm_icon" class="fas fa-check text-success"></i>
@@ -71,7 +75,7 @@
 							<span id="cancel_edit_bio_button" class="d-none">
 								<i class="fas fa-times text-danger"></i>
 							</span>
-
+						</div>
 						@endif
 					</div>
 
