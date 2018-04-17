@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="styles/feed.css">
 <script defer src="scripts/feed.js"></script>
 
-<div class="main_content container-fluid p-0 p-md-2">
+<div class="main_content container-fluid">
 
 	<div id="floatingmenu" class="row d-md-none m-0 bg-primary text-white w-100 border-top border-secondary py-2">
 		<div class="col">
@@ -1089,6 +1089,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
 
 		<?php include('chat.html')?>

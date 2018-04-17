@@ -37,13 +37,6 @@ class User extends Authenticatable
         'admin' => true,
     ];
 
-    /**
-     * The cards this user owns.
-     */
-     public function cards() {
-      return $this->hasMany('App\Card');
-    }
-
     public function bands(){
         return $this->belongsToMany('App\Band');
     }

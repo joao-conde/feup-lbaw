@@ -12,7 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
-    <script src= "{{ asset('js/utils.js') }}" defer></script>
+    <script defer src= "{{ asset('js/utils.js') }}"></script>
+    <script defer src= "{{ asset('js/followUser.js') }}"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -22,7 +23,9 @@
     </head>
 <body>
     <header id="header" class="container-fluid bg-primary text-white">
-        <span id="user_id_span" class="d-none">{{Auth::user()->id}}</span>
+        @if(Auth::check())
+          <span id="user_id_span" class="d-none">{{Auth::user()->id}}</span>
+        @endif
         <!-- <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
           @if (Auth::check())
           <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
