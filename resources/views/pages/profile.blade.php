@@ -1,4 +1,4 @@
-@extends('layouts.logged_user')
+@extends('layouts.profile_layout')
 
 @section('leftmenumobile')
 
@@ -12,9 +12,9 @@
 @section('logged_content')
 
 
-<div class="row no-gutters">
+<div class="no-gutters">
 
-	<div id="profile_area" class="col-12 col-md-9 col-lg-9">
+	<div id="profile_area" class="col-12 col-md-9">
 		<div class="jumbotron p-3 mb-1">
 
 			<div id="username" class="row px-3 justify-content-center">
@@ -24,8 +24,19 @@
 
 				<div class="col-11 align-self-center">
 
-					<h3 class="d-inline-block">{{$user->name}}</h3>
-				</div>
+						<h3 id="h3userName" class="d-inline-block align-middle mr-2">{{$user->name}}</h3>
+						@if( $user->id == Auth::user()->id)
+							<span id="edit_name_button">
+								<i id="edit_icon" class="fas fa-pencil-alt"></i>
+							</span>
+							<span id="confirm_edit_name_button" class="d-none">
+								<i id="confirm_icon" class="fas fa-check text-success"></i>
+							</span>
+							<span id="cancel_edit_name_button" class="d-none">
+								<i class="fas fa-times text-danger"></i>
+							</span>	
+						@endif
+					</div>
 			</div>
 
 			<div id="profile_pic_div" class="row">
@@ -45,10 +56,22 @@
 				<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 					<div class="row p-2">
-						<p class="text-primary">Lorem ipsunibus ligula. Duis in ipsum nec sem imperdiet tristique. Cras gravida gravida velit at tincidunt. In ligula
-							nisi, tincidunt eget pellentesque vel, sagittis eget sem. Sed nec arcu mauris. Nullam quis condimentum libero. Duis
-							maximus lorem tincidunt commodo molestie. Quisque et sapien dui. In ac felis felis. Etiam auctor arcu ut justo interdum
-							commodo. Aliquam in ipsum molestie elit eleifend fringilla quis eget ante. Praesent in velit leo.</p>
+						<p id="bioParagraph" class="text-primary d-inline mr-2">
+							{{ $user->bio }}
+						</p>
+						@if( $user->id == Auth::user()->id)
+
+							<span id="edit_bio_button">
+								<i id="edit_icon" class="fas fa-pencil-alt"></i>
+							</span>
+							<span id="confirm_edit_bio_button" class="d-none">
+								<i id="confirm_icon" class="fas fa-check text-success"></i>
+							</span>
+							<span id="cancel_edit_bio_button" class="d-none">
+								<i class="fas fa-times text-danger"></i>
+							</span>
+
+						@endif
 					</div>
 
 					<hr class="mt-0">

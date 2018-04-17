@@ -12,7 +12,7 @@
                 <a class="dropdown-item p-2" href="#">
                     
                         <small class=" time mr-1">16:32</small>
-                        <img class="profile_img_message mr-1" src="images/system/dummy_profile.svg">
+                        <img class="profile_img_message mr-1" src="{{asset('images/system/dummy_profile.svg')}}">
                         <small class="sender"><i>Mike</i></small>
                         <small class="message">Band meeting today</small>
                     
@@ -20,7 +20,7 @@
                 <a class="dropdown-item p-2" href="#">
                     
                         <small class=" time mr-1">10:01</small>
-                        <img class="profile_img_message mr-1" src="images/system/dummy_profile.svg">
+                        <img class="profile_img_message mr-1" src="{{asset('images/system/dummy_profile.svg')}}">
                         <small class="sender"><i>Anne</i></small>
                         <small class="message">Check this song</small>
                     

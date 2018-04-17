@@ -23,6 +23,8 @@
     </head>
 <body>
     <header id="header" class="container-fluid bg-primary text-white">
+        <span id="user_id_span" class="d-none">{{Auth::user()->id}}</span>
+
         <!-- <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
           @if (Auth::check())
           <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>

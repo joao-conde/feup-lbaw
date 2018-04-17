@@ -1,6 +1,6 @@
 <div id="mobileToggle2" class="col-auto align-self-center d-md-none p-0" data-toggle="collapse" data-target="#searchbar">
 
-    <img class="search" src="images/system/search_icon.svg">
+    <img class="search" src="{{asset('images/system/search_icon.svg')}}">
 
 </div>
 
