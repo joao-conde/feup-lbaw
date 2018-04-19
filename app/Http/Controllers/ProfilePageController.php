@@ -128,10 +128,9 @@ class ProfilePageController extends Controller
         if($request->hasFile('picture')) {
 
             $picture = $request->file('picture');
-            $original = imagecreatefromjpeg($picture);
+            $profileSize = Image::make($picture)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($picture)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
 
-            $profileSize = Image::make($original)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
-            $iconSize = Image::make($original)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
 
             
             Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
