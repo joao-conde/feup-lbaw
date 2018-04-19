@@ -71,4 +71,16 @@ class GenresController extends Controller
       return response('',200);
     }
 
+    public function edit(Request $request, $id){
+      $genre = Genre::find($id)  ;
+
+      $genre->name = $request->input('name');
+      $genre->creatingadminid = Auth::user()->id;
+      $genre->isactive = 'true';
+
+      $genre->save();
+
+      return response('',200);
+    }
+
   }
