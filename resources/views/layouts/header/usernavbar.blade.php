@@ -48,7 +48,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile',[Auth::user()->id])}}">My Profile</a>
-                <a class="dropdown-item" href="admin_user_reports.php">Admin Page</a>
+            <a class="dropdown-item" href="\reported_users">Admin Page</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="{{ route('do_logout') }}">Logout</a>
             </div>

@@ -21,7 +21,7 @@
                     <div class="row justify-content-center">
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
                             <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                            <input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0" id="usrnm" placeholder="Enter username" name="username">
+                            <input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="usrnm" placeholder="Enter username" name="username">
                             @if ($errors->has('username'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('username') }}</strong>
@@ -32,7 +32,7 @@
                     <div class="row justify-content-center">
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
                             <i class="fas fa-lock mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                            <input type="password" class="border border-top-0 border-bottom-0 border-left-0 border-right-0" id="pwd" placeholder="Enter password" name="password">
+                            <input type="password" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="pwd" placeholder="Enter password" name="password">
                             @if ($errors->has('password'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('password') }}</strong>

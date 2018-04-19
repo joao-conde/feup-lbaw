@@ -5,8 +5,12 @@
             <div class="row">
             <a href="{{route('profile', [$result->id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
 
-                @include('partials.followbutton', ['isFollowing' => $result->isfollowing, 'userToFollowId' => $result->id])
 
+            @if($result->id != Auth::user()->id)
+            
+            @include('partials.followbutton', ['isFollowing' => $result->isfollowing, 'userToFollowId' => $result->id])
+
+            @endif
             </div>
         </li>
         <li class="list-group-item border-0 py-0 my-0">
