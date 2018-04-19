@@ -37,13 +37,16 @@ Route::get('/skills', 'SkillsController@list');
 
 // API
 Route::post('api/genres', 'GenresController@create');
-Route::put('api/genres/{genre_id}', 'GenresController@delete');
+Route::delete('api/genres/{genre_id}', 'GenresController@delete');
+Route::put('api/genres/{genre_id}', 'GenresController@edit');
 Route::post('api/skills', 'SkillsController@create');
-Route::put('api/skills/{skill_id}', 'SkillsController@delete');
+Route::delete('api/skills/{skill_id}', 'SkillsController@delete');
+Route::put('api/skills/{skill_id}', 'SkillsController@edit');
 
 
 
 Route::put('api/users/{id}', 'ProfilePageController@editUser');
+Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
 
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');

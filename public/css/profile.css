@@ -27,7 +27,7 @@ div#profile_card {
 img.profile_image {
 
     width: 250px;
-    height: auto;
+    height: 250px;
     border-radius:4%;
 
 }

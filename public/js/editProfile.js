@@ -1,12 +1,70 @@
-let FIELDS = {
+//Lock VS Unlock
 
-    NAME: 1,
-    BIO: 2
+let editFields = document.querySelectorAll('.edit_field');
+let lockLocked = document.querySelector('span#lock_locked');
+let lockOpened = document.querySelector('span#lock_opened');
+
+lockLocked.addEventListener('click',open);
+lockOpened.addEventListener('click',lock);
+
+function toggleEdits(show) {
+
+    for(let i = 0; i < editFields.length; i++) {
+
+        if(editFields[i].tagName == 'SPAN') {
+
+            !show ? editFields[i].classList.add('d-none') : editFields[i].classList.remove('d-none')
+
+        }
+
+        else if(editFields[i].tagName == 'BUTTON') {
+
+            editFields[i].disabled = !show ?  true : false;
+
+        }
+
+    }
 
 }
 
+function lock() {
+
+    console.log('locking');
+
+    toggleEdits(false);
+
+    lockLocked.classList.remove('d-none');
+    lockOpened.classList.add('d-none');
+
+
+}
+
+function open() {
+
+    toggleEdits(true);
+
+    lockOpened.classList.remove('d-none');
+    lockLocked.classList.add('d-none');
+
+
+}
+
+toggleEdits(false);
+
+
+
+
+
+
+
+
+
+
+
+
 
 let userId = document.querySelector('span#user_id_span').innerHTML;
+let api = '/api/users/' + userId;
 
 let editNameButton = document.querySelector('span#edit_name_button');
 let confirmNameButton = document.querySelector('span#confirm_edit_name_button');
@@ -29,73 +87,14 @@ let bioTextArea = document.createElement('textarea');
 
 if (editNameButton != null) {
 
-    editNameButton.addEventListener('click', toggleProfileField.bind(this, true, usernameh3, nameInput, parent, editNameButton, cancelNameButton, confirmNameButton, FIELDS.NAME));
-    cancelNameButton.addEventListener('click', toggleProfileField.bind(this, false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, FIELDS.NAME, undefined));
+    editNameButton.addEventListener('click', toggleProfileField.bind(this, true, usernameh3, nameInput, parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField));
+    cancelNameButton.addEventListener('click', toggleProfileField.bind(this, false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined));
     confirmNameButton.addEventListener('click', confirmEditName);
 
-    editBioButton.addEventListener('click', toggleProfileField.bind(this, true, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, FIELDS.BIO));
-    cancelBioButton.addEventListener('click', toggleProfileField.bind(this, false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, FIELDS.BIO, undefined));
+    editBioButton.addEventListener('click', toggleProfileField.bind(this, true, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField));
+    cancelBioButton.addEventListener('click', toggleProfileField.bind(this, false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined));
     confirmBioButton.addEventListener('click', confirmEditBio);
 
-
-}
-
-/**
- * toggle buttons to edit name
- * showEdit: boolean: true to show edit input, false to hide, undefined to cancel 
- * newValue: new value for the field, if undefined, keeps the old value
- */
-
-function toggleProfileField(showEdit, fixedElement, editElement, parentElement, editButton, cancelButton, confirmButton, field, newValue) {
-
-    if (showEdit == true) {
-
-        let oldValue = fixedElement.innerHTML;
-        editButton.classList.add('d-none');
-        confirmButton.classList.remove('d-none');
-        cancelButton.classList.remove('d-none');
-        parentElement.replaceChild(editElement, fixedElement);
-        editElement.value = oldValue;
-
-        switch(field) {
-
-            case FIELDS.NAME:
-                window.addEventListener('keyup', keyUpAuxNameField);
-                break;
-
-            case FIELDS.BIO:
-                window.addEventListener('keyup', keyUpAuxBioField);
-                break;
-
-        } 
-
-    }
-
-    else {
-
-        console.log(cancelButton);
-
-        editButton.classList.remove('d-none');
-        confirmButton.classList.add('d-none');
-        cancelButton.classList.add('d-none');
-
-        if (newValue != undefined)
-            fixedElement.innerHTML = newValue;
-        parentElement.replaceChild(fixedElement, editElement);
-
-        switch(field) {
-
-            case FIELDS.NAME:
-                window.removeEventListener('keyup', keyUpAuxNameField);
-                break;
-
-            case FIELDS.BIO:
-                window.removeEventListener('keyup', keyUpAuxBioField);
-                break;
-
-        } 
-
-    }
 
 }
 
@@ -108,13 +107,13 @@ function keyUpAuxNameField(event) {
     }
     else if (event.keyCode == 27) {
 
-        toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, FIELDS.NAME, undefined);
+        toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined);
       
     }
 
 }
 
-function keyUpAuxBioField() {
+function keyUpAuxBioField(event) {
 
 
     if (event.keyCode == 13) {
@@ -123,26 +122,19 @@ function keyUpAuxBioField() {
     }
     else if (event.keyCode == 27) {
 
-        toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, FIELDS.BIO, undefined);
+        toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined);
       
     }
 
-
-
-
-
-
 }
-
 
 function confirmEditName() {
 
     let data = {
-        name: nameInput.value
+        name: nameInput.value.trim()
     }
 
     let request = new XMLHttpRequest;
-    let api = '/api/users/' + userId;
 
     sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'name', data.name), JSON_ENCODE, JSON.stringify(data));
 
@@ -151,11 +143,10 @@ function confirmEditName() {
 function confirmEditBio() {
 
     let data = {
-        bio: bioTextArea.value
+        bio: bioTextArea.value.trim()
     }
 
     let request = new XMLHttpRequest;
-    let api = '/api/users/' + userId;
 
     sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'bio', data.bio), JSON_ENCODE, JSON.stringify(data));
 
@@ -166,11 +157,70 @@ function updateProfile(key, value) {
     if (this.status == 200) {
 
         if(key == 'name')
-            toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, FIELDS.NAME, value);
+            toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, value);
         else if(key == 'bio')
-            toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, FIELDS.BIO, value);
+            toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, value);
 
     }
 
 }
+
+
+/**
+ * Change picture
+ */
+
+
+let inputPicture = document.querySelector('input#inputPicture');
+let buttonPicture = document.querySelector('button#buttonPicture');
+let profilePicture = document.querySelector('img#profile_pic');
+let iconPicture = document.querySelector('img#icon_profile_image');
+
+buttonPicture.addEventListener('click',selectPicture);
+inputPicture.addEventListener('change',sendPicture);
+
+
+function selectPicture() {
+
+    inputPicture.click();
+    
+}
+
+function sendPicture(e) {
+
+    let files = inputPicture.files;
+
+    if(!files.length > 0)
+        return;
+
+    let file = files[0];
+
+    if(file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'image/png'){
+        
+        
+        let request = new XMLHttpRequest();
+
+        let form = new FormData();
+        form.append('picture',file);
+
+        console.log(form.getAll('picture'));
+
+        sendAsyncAjaxRequest(request,api,POST,handleUpdatePicture.bind(request,file),undefined,form);
+        
+    }
+
+}
+
+function handleUpdatePicture(file) {
+
+    if(this.status == 200) {
+
+        profilePicture.src = URL.createObjectURL(file);
+        iconPicture.src = URL.createObjectURL(file);
+
+    }
+        
+
+}
+
 

@@ -75,7 +75,9 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
 
         request.open(type, api, true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', encoding);
+
+        if(encoding != undefined)
+            request.setRequestHeader('Content-Type', encoding);
 
         if(data != undefined)
             request.send(data);
@@ -104,5 +106,37 @@ function addLeadingZero(number) {
 function checkIfHasClass(element, className) {
 
     return element.classList.contains(className);
+
+}
+
+function toggleProfileField(showEdit, fixedElement, editElement, parentElement, editButton, cancelButton, confirmButton, keysHandler, newValue) {
+
+    if (showEdit == true) {
+
+        let oldValue = fixedElement.innerHTML;
+        editButton.classList.add('d-none');
+        confirmButton.classList.remove('d-none');
+        cancelButton.classList.remove('d-none');
+        parentElement.replaceChild(editElement, fixedElement);
+        editElement.value = oldValue;
+        window.addEventListener('keyup', keysHandler);
+
+        console.log(oldValue);
+
+    }
+
+    else {
+
+        editButton.classList.remove('d-none');
+        confirmButton.classList.add('d-none');
+        cancelButton.classList.add('d-none');
+
+        if (newValue != undefined)
+            fixedElement.innerHTML = newValue;
+        parentElement.replaceChild(fixedElement, editElement);
+
+        window.removeEventListener('keyup', keysHandler); 
+
+    }
 
 }

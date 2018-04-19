@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FeedController extends Controller
 {
-
-    
     public function getPosts(){
         if (!Auth::check()) return redirect('/login');
 
