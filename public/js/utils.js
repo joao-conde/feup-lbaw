@@ -75,7 +75,9 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
 
         request.open(type, api, true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', encoding);
+
+        if(encoding != undefined)
+            request.setRequestHeader('Content-Type', encoding);
 
         if(data != undefined)
             request.send(data);

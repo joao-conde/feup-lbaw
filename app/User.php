@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -75,6 +76,35 @@ class User extends Authenticatable
                   WHERE user_follower.followedUserId = ?';
 
         return DB::select($query, [$this->id]);
+
+    }
+
+    public function pathToProfilePicture() {
+
+        return 'public/user_pics/'.$this->username.'/'.$this->username.'_profile.png';
+
+    } 
+    public function pathToIconPicture() {
+
+        return 'public/user_pics/'.$this->username.'/'.$this->username.'_icon.png';
+
+    }
+
+    public function getProfilePicturePath() {
+
+        if(Storage::disk('local')->exists($this->pathToProfilePicture())) 
+            return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_profile.png');
+        else
+            return url('images/system/dummy_profile.svg');
+
+    }
+
+    public function getIconPicturePath() {
+
+        if(Storage::disk('local')->exists($this->pathToIconPicture())) 
+            return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_icon.png');
+        else
+            return asset('images/system/dummy_profile.svg');
 
     }
 

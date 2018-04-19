@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 
 use App\User;
 
 class ProfilePageController extends Controller
+
 {
+
+    const PICTURE_PROFILE_SIZE = 500;
+    const PICTURE_ICON_SIZE = 90;
     
     public function show($id) {
 
@@ -110,7 +117,32 @@ class ProfilePageController extends Controller
 
         $user->save();
 
-        return response($request->id,200);
+        return response('',200);
+
+    }
+
+    public function editUserPicture(Request $request) {
+
+        $user = User::find($request->id);
+
+        if($request->hasFile('picture')) {
+
+            $picture = $request->file('picture');
+            $original = imagecreatefromjpeg($picture);
+
+            $profileSize = Image::make($original)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($original)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
+
+            
+            Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
+            Storage::put($user->pathToIconPicture(), $iconSize->__toString());
+
+            return response('',200);
+
+        }
+
+        return response('',500);
+
 
     }
 

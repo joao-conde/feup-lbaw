@@ -44,6 +44,7 @@ Route::put('api/skills/{skill_id}', 'SkillsController@delete');
 
 
 Route::put('api/users/{id}', 'ProfilePageController@editUser');
+Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
 
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');

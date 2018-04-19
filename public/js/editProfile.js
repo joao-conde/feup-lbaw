@@ -1,4 +1,70 @@
+//Lock VS Unlock
+
+let editFields = document.querySelectorAll('.edit_field');
+let lockLocked = document.querySelector('span#lock_locked');
+let lockOpened = document.querySelector('span#lock_opened');
+
+lockLocked.addEventListener('click',open);
+lockOpened.addEventListener('click',lock);
+
+function toggleEdits(show) {
+
+    for(let i = 0; i < editFields.length; i++) {
+
+        if(editFields[i].tagName == 'SPAN') {
+
+            !show ? editFields[i].classList.add('d-none') : editFields[i].classList.remove('d-none')
+
+        }
+
+        else if(editFields[i].tagName == 'BUTTON') {
+
+            editFields[i].disabled = !show ?  true : false;
+
+        }
+
+    }
+
+}
+
+function lock() {
+
+    console.log('locking');
+
+    toggleEdits(false);
+
+    lockLocked.classList.remove('d-none');
+    lockOpened.classList.add('d-none');
+
+
+}
+
+function open() {
+
+    toggleEdits(true);
+
+    lockOpened.classList.remove('d-none');
+    lockLocked.classList.add('d-none');
+
+
+}
+
+toggleEdits(false);
+
+
+
+
+
+
+
+
+
+
+
+
+
 let userId = document.querySelector('span#user_id_span').innerHTML;
+let api = '/api/users/' + userId;
 
 let editNameButton = document.querySelector('span#edit_name_button');
 let confirmNameButton = document.querySelector('span#confirm_edit_name_button');
@@ -69,7 +135,6 @@ function confirmEditName() {
     }
 
     let request = new XMLHttpRequest;
-    let api = '/api/users/' + userId;
 
     sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'name', data.name), JSON_ENCODE, JSON.stringify(data));
 
@@ -82,7 +147,6 @@ function confirmEditBio() {
     }
 
     let request = new XMLHttpRequest;
-    let api = '/api/users/' + userId;
 
     sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'bio', data.bio), JSON_ENCODE, JSON.stringify(data));
 
@@ -109,12 +173,53 @@ function updateProfile(key, value) {
 
 let inputPicture = document.querySelector('input#inputPicture');
 let buttonPicture = document.querySelector('button#buttonPicture');
+let profilePicture = document.querySelector('img#profile_pic');
+let iconPicture = document.querySelector('img#icon_profile_image');
 
 buttonPicture.addEventListener('click',selectPicture);
+inputPicture.addEventListener('change',sendPicture);
+
 
 function selectPicture() {
 
     inputPicture.click();
+    
+}
+
+function sendPicture(e) {
+
+    let files = inputPicture.files;
+
+    if(!files.length > 0)
+        return;
+
+    let file = files[0];
+
+    if(file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'image/png'){
+        
+        
+        let request = new XMLHttpRequest();
+
+        let form = new FormData();
+        form.append('picture',file);
+
+        console.log(form.getAll('picture'));
+
+        sendAsyncAjaxRequest(request,api,POST,handleUpdatePicture.bind(request,file),undefined,form);
+        
+    }
+
+}
+
+function handleUpdatePicture(file) {
+
+    if(this.status == 200) {
+
+        profilePicture.src = URL.createObjectURL(file);
+        iconPicture.src = URL.createObjectURL(file);
+
+    }
+        
 
 }
 
