@@ -1,16 +1,9 @@
-@extends('layouts.profile_layout')
-
-@section('leftmenumobile')
+@extends('layouts.profile_layout') @section('leftmenumobile')
 
 <link rel="stylesheet" href="{{ asset('css/profile.css')}}">
 <link rel="stylesheet" href="{{ asset('css/feed.css')}}">
 <script defer src="{{ asset('js/feed.js')}}"></script>
-<script defer src="{{ asset('js/editProfile.js')}}"></script>
-
-@include('partials.leftmenumobile')
-@endsection
-
-@section('logged_content')
+<script defer src="{{ asset('js/editProfile.js')}}"></script> @include('partials.leftmenumobile') @endsection @section('logged_content')
 
 
 <div class="no-gutters">
@@ -24,29 +17,55 @@
 
 				<div class="col-10 align-self-center">
 
-						<h3 id="h3userName" class="d-inline-block align-middle mr-2">{{$user->name}}</h3>
-						@if( $user->id == Auth::user()->id)
-							<span id="edit_name_button" class="edit_field">
-								<i class="fas fa-pencil-alt"></i>
-							</span>
-							<span id="confirm_edit_name_button" class="d-none">
-								<i class="fas fa-check text-success"></i>
-							</span>
-							<span id="cancel_edit_name_button" class="d-none">
-								<i class="fas fa-times text-danger"></i>
-							</span>	
-						@endif
+					<h3 id="h3userName" class="d-inline-block align-middle mr-2">{{$user->name}}</h3>
+					@if( $user->id == Auth::user()->id)
+					<span id="edit_name_button" class="edit_field d-none">
+						<i class="fas fa-pencil-alt"></i>
+					</span>
+					<span id="confirm_edit_name_button" class="d-none">
+						<i class="fas fa-check text-success"></i>
+					</span>
+					<span id="cancel_edit_name_button" class="d-none">
+						<i class="fas fa-times text-danger"></i>
+					</span>
+					@endif
 				</div>
 
 				@if( $user->id == Auth::user()->id)
-					<div class="col-auto align-self-center">
-						<span id="lock_locked" class="clickable">
-							<i class="fas fa-lock text-danger"></i>
-						</span>
-						<span id="lock_opened" class="d-none clickable">
-							<i class="fas fa-lock-open text-primary"></i>
-						</span>
+				<div class="col-auto align-self-center">
+					<span id="lock_locked" class="clickable" data-toggle="modal" data-target="#modalPassword">
+						<i class="fas fa-lock text-danger"></i>
+					</span>
+					<span id="lock_opened" class="d-none clickable">
+						<i class="fas fa-lock-open text-primary"></i>
+					</span>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content" id="modal-content">
+							<div class="modal-header" id="modal_header">
+								<h5 class="modal-title" id="modalLongTitle">Please Enter Password</h5>
+								<button type="button" id="close_button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="d-none pt-2" id="modal-msg">
+								<p class="text-danger pl-3">Wrong Password, please try again.</p>
+							</div>
+							<div class="d-none pt-2" id="modal-msg-empty">
+								<p class="text-danger pl-3">Password can't be empty.</p>
+							</div>
+							<div class="modal-body">
+								<label for="verify_password">Password</label>
+								<input type="password" id="verify_password">
+							</div>
+							<div class="modal-footer">
+								<button id="submit_password" type="button" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
 					</div>
+				</div>
 				@endif
 			</div>
 
@@ -54,29 +73,24 @@
 
 				<div class="col-auto">
 
-				<img id="profile_pic" class="profile_image d-block my-3" src="{{$user->getProfilePicturePath()}}" alt="Profile Image">
-					
-					@if($user->id != Auth::user()->id) 
-
-						@include('partials.followbutton', ['isFollowing' => $isFollowing, 'userToFollowId' => $user->id])
-
-					@else
-						<span id="edit_picture_button">
-							<input id="inputPicture" name="picture" type="file" class="d-none">
-							<button id="buttonPicture" class="btn btn-primary edit_field">Change Picture</button>
-						</span>
+					<img id="profile_pic" class="profile_image d-block my-3" src="{{$user->getProfilePicturePath()}}" alt="Profile Image"> @if($user->id != Auth::user()->id) @include('partials.followbutton', ['isFollowing' => $isFollowing, 'userToFollowId'
+					=> $user->id]) @else
+					<span id="edit_picture_button">
+						<input id="inputPicture" name="picture" type="file" class="d-none">
+						<button id="buttonPicture" class="btn btn-primary edit_field d-none">Change Picture</button>
+					</span>
 
 					@endif
-						
+
 				</div>
 
 				<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
 
 					<div class="row p-2">
 						<div class="col">
-						<p id="bioParagraph" class="text-primary d-inline mr-2">{{$user->bio}}</p>
-						@if( $user->id == Auth::user()->id)
-							<span id="edit_bio_button" class="edit_field">
+							<p id="bioParagraph" class="text-primary d-inline mr-2">{{$user->bio}}</p>
+							@if( $user->id == Auth::user()->id)
+							<span id="edit_bio_button" class="edit_field d-none">
 								<i class="fas fa-pencil-alt"></i>
 							</span>
 							<span id="confirm_edit_bio_button" class="d-none">
@@ -85,7 +99,7 @@
 							<span id="cancel_edit_bio_button" class="d-none">
 								<i class="fas fa-times text-danger"></i>
 							</span>
-						@endif
+							@endif
 						</div>
 					</div>
 
@@ -163,7 +177,7 @@
 
 			</div>
 
-			
+
 
 		</div>
 
@@ -220,7 +234,7 @@
 				<div class="row">
 					<img src="{{ asset('images/system/dummy_profile.svg') }}" class="col-1 col-sm-2 mt-1 mr-2 mr-md-0 profile_img_chat p-0 border-0">
 					<textarea placeholder="New post..." class="col-6 col-sm-7 col-md-5 col-lg-6 mt-1 text-primary form-control-sm border border-secondary mr-0"
-					rows="1" id="new_post_ta" style="height: 30px;"></textarea>
+					 rows="1" id="new_post_ta" style="height: 30px;"></textarea>
 					<div class="btn-group col-1 col-sm-2 col-md-1 col-lg-2" id="btns" role="group">
 						<button type="button" class="btn btn-light">
 							<i class="far fa-image"></i>
@@ -263,9 +277,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -336,7 +350,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -363,9 +377,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -436,7 +450,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -463,9 +477,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -536,7 +550,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -563,9 +577,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -636,7 +650,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -663,9 +677,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -736,7 +750,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -763,9 +777,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -836,7 +850,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -863,9 +877,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -936,7 +950,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -963,9 +977,9 @@
 
 					<div class="col align-self-center text-justify">
 
-						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit
-							quis sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus
-							augue vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
+						<small>Phasellus blandit lectus lectus, at sagittis orci tincidunt vitae. Vivamus id quam quis lacus venenatis hendrerit quis
+							sed quam. Praesent sodales elit ac elit convallis pulvinar. Fusce bibendum, dui ac dapibus venenatis, lacus augue
+							vehicula ligula, vel venenatis turpis risus sed lectus. Quisque nunc purus, pellentesque vel odio vitae, facilisis
 							hendrerit arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 						</small>
 
@@ -1036,7 +1050,7 @@
 
 				<form class="form-inline row justify-content-between px-3 pt-2">
 					<textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-					rows="2" id="new_comment_ta"></textarea>
+					 rows="2" id="new_comment_ta"></textarea>
 					<input type="submit" value="comment" class="btn btn-primary btn-sm">
 				</form>
 
@@ -1048,7 +1062,7 @@
 		</div>
 	</div>
 </div>
-	
-	
+
+
 
 @endsection

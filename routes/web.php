@@ -68,4 +68,5 @@ Route::post('bands/do_create_band', 'BandController@store')->name('do_create_ban
 
 Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
 
-
+//validate password
+Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
