@@ -16,7 +16,7 @@
 		<div class="no-gutters">
 		
 			<div id="profile_area" class="col-12 col-md-9">
-				<div class="jumbotron p-3 mb-1">
+				<div class="jumbotron p-4 mb-1">
 					<div id="username" class="row px-3 justify-content-center">
 						<div class="col-auto align-self-center">
 							<img src="{{asset('images/system/musician-icon.svg')}}" class="profile_type">
@@ -91,7 +91,7 @@
 		
 						</div>
 		
-						<div class="col-12 col-lg-7 p-3 align-self-start text-justify">
+						<div class="col-12 col-lg-8 p-3 align-self-start text-justify">
 		
 							<div class="row p-2">
 								<div class="col">
@@ -117,30 +117,28 @@
 									<div id="skills_list">
 										<p class="mr-2">Drums
 		
+											
+											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<small class="mt-1 text-info">4.2</small>
+											<i class="far fa-star mt-1 text-primary"></i>
+											<i class="far fa-star mt-1 text-primary"></i>
+											<i class="far fa-star mt-1 text-primary"></i>
 										</p>
 										<p class="mr-2">Guitar
 		
-											<i class="far fa-star mt-1 text-primary"></i>
 											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="fas fa-star mt-1 text-primary"></i>
-											<small class="mt-1 text-info">4.2</small>
+											<i class="fas fa-star mt-1 text-primary"></i>
 										</p>
 										<p class="mr-2">Piano
 		
+											<i class="fas fa-star mt-1 text-primary"></i>
+											<i class="fas fa-star mt-1 text-primary"></i>
 											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<small class="mt-1 text-info">4.2</small>
+											<i class="far fa-star mt-1 text-primary"></i>
+											<i class="far fa-star mt-1 text-primary"></i>
 										</p>
 		
 									</div>
