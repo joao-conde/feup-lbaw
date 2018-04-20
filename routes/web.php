@@ -28,11 +28,11 @@ Route::get('/about', 'PagesController@about');
 Route::get('/faqs', 'PagesController@faq');
 
 // ADMIN
-Route::get('/reported_users', 'PagesController@adminReportedUsers');
-Route::get('/reported_bands', 'PagesController@adminReportedBands');
-Route::get('/users', 'PagesController@adminUsers');
-Route::get('/genres', 'GenresController@list');
-Route::get('/skills', 'SkillsController@list');
+Route::get('/reported_users', 'PagesController@adminReportedUsers')->middleware('admin');;
+Route::get('/reported_bands', 'PagesController@adminReportedBands')->middleware('admin');;
+Route::get('/users', 'UserController@listUserPermissions')->middleware('admin');;
+Route::get('/genres', 'GenresController@list')->middleware('admin');;
+Route::get('/skills', 'SkillsController@list')->middleware('admin');;
 
 
 // API
@@ -67,5 +67,8 @@ Route::post('bands/do_create_band', 'BandController@store')->name('do_create_ban
 //Profile
 
 Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
+
+
+Route::get('/403', 'ErrorPagesController@error403');
 
 

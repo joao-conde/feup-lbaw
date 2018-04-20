@@ -1,29 +1,10 @@
-@extends('admin.admin_app')
+@extends('layouts.app')
 @section('content')
 
 <div class="container main_nav">
 
-	<nav class="navbar navbar-expand bg-primary navbar-light p-0 mt-3">
-		<ul class="navbar-nav mx-auto">
-			<li class="nav-item">
-				<a class="nav-link text-success" href="/users">Users</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-success" href="/reported_users">User reports</a>
-			</li>
-			<li class="nav-item active">
-				<a class="nav-link text-success" href="/reported_bands">Band reports</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-success" href="/genres">Genres</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-success" href="/skills">Skills</a>
-			</li>
-		</ul>
-	</nav>
+		@include('admin.navbar', ['active' => 'band_reports'])
 
-	<hr>
 
 	<table class="table">
 		<thead>

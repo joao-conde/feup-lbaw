@@ -2,7 +2,7 @@
     <img src="images/system/dummy_profile.svg" class="profile">
     <ul class="list-group col-10 align-self-center">
         <li class="list-group-item border-0 py-0 my-0">
-            <div class="row">
+            <div class="row justify-content-between">
             <a href="{{route('profile', [$result->id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
 
 
@@ -13,10 +13,14 @@
             @endif
             </div>
         </li>
-        <li class="list-group-item border-0 py-0 my-0">
-            <small>
-                <span class="list-group-item-text">{{$result->city.', '.$result->country.'.'}}</span>
-            </small>
-        </li>
+        @if($result->city != '')
+        
+            <li class="list-group-item border-0 py-0 my-0">
+                <small>
+                    <span class="list-group-item-text">{{$result->city.', '.$result->country.'.'}}</span>
+                </small>
+            </li>
+        @endif
+
     </ul>
 </li>

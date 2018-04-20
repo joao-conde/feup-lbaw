@@ -1,28 +1,9 @@
 'use strict';
 
-//Text are for post
-
-let textarea = document.querySelector('#new_post_ta');
-let postButton = document.querySelector('#postbutton');
-
-textarea.addEventListener('focus',function(){
-  textarea.style.height = '150px';
-  postButton.style.display = 'flex';
-})
-
-textarea.style.transition = "height 0.5s";
-
-textarea.addEventListener('focusout',function(){
-  textarea.style.height = '30px';
-  postButton.style.display = 'none';
-})
-
-//Text are for post
-
 //Animation to switch chat
 
 let chat = document.querySelector('#chat');
-let feed = document.querySelector('#posts');
+let feed = document.querySelector('.toggleContent');
 
 let chatButton = document.querySelector('#chatButton');
 let feedButton = document.querySelector('#homeButton');
@@ -61,11 +42,6 @@ window.addEventListener('resize', function(){
     chat.style.display = "block";
     feed.style.display = "block";
 
-  }
-
-  else {
-    // chat.style.display = "none";
-    // feed.style.display = "block";
   }
 
 });

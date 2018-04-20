@@ -142,7 +142,7 @@
 
         <div class="col-12 col-md-9 col-lg-6">
 
-            <div id="posts">
+            <div id="posts" class="toggleContent">
 
                 <div class="jumbotron p-3 post mb-2" id="newpost">
                     <div class="row">

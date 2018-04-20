@@ -4,7 +4,7 @@
 
 	@section('leftmenumobile')
 	<link href="{{ asset('css/feed.css') }}" rel="stylesheet">
-	<script src="{{ asset('js/feed.js') }}" defer> </script> 
+	<script defer src="{{ asset('js/toggleChat.js')}}"></script>
 
 	@include('partials.leftmenumobile')
 
@@ -15,7 +15,7 @@
 @include('partials.leftfeedmenu')
 
 
-<div id="search_results" class="col-12 col-md-6 p-0 mt-2">
+<div id="search_results" class="col-12 col-md-6 p-0 mt-2 toggleContent">
 
 
 	<div class="jumbotron p-3 mb-2 justify-content-center d-flex">

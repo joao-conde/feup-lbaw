@@ -18,9 +18,9 @@ class PagesController extends Controller
     	return view('pages.faq.page');
     }
 
-    public function adminUsers(){
-    	return view('admin.users');
-    }
+    // public function adminUsers(){
+    // 	return view('admin.users');
+    // }
 
     public function adminReportedUsers(){
     	return view('admin.user_reports');
