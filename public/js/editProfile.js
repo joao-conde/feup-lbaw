@@ -24,17 +24,7 @@ function toggleEdits(show) {
 
     for(let i = 0; i < editFields.length; i++) {
 
-        if(editFields[i].tagName == 'SPAN') {
-
-            !show ? editFields[i].hide() : editFields[i].show();
-
-        }
-
-        else if(editFields[i].tagName == 'BUTTON') {
-
-            editFields[i].disabled = !show ?  true : false;
-
-        }
+        !show ? editFields[i].hide() : editFields[i].show();
 
     }
 

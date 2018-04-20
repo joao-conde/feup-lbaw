@@ -41,7 +41,7 @@
 					</span>
 				</div>
 				<!-- Modal -->
-				<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal fade" id="modalPassword"  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content" id="modal-content">
 							<div class="modal-header" id="modal_header">
@@ -58,7 +58,7 @@
 							</div>
 							<div class="modal-body">
 								<label for="verify_password">Password</label>
-								<input type="password" id="verify_password">
+								<input type="password" id="verify_password" autofocus>
 							</div>
 							<div class="modal-footer">
 								<button id="submit_password" type="button" class="btn btn-primary">Submit</button>
