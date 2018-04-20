@@ -17,8 +17,10 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	 crossorigin="anonymous"></script>
 
-	<script defer src="{{ asset('js/utils.js') }}"></script>
 	<script defer src="{{ asset('js/followUser.js') }}"></script>
+	<script defer src="{{ asset('js/utils.js') }}"></script>
+	<link href="{{ asset('css/utils.css') }}" rel="stylesheet">
+
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
