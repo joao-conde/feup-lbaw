@@ -1,27 +1,30 @@
-//Lock VS Unlock
+/**
+ *   Lock && Unlock
+ */ 
 
 let editFields = document.querySelectorAll('.edit_field');
 let lockLocked = document.querySelector('span#lock_locked');
 let lockOpened = document.querySelector('span#lock_opened');
 
-lockLocked.addEventListener('click',open);
+let submitPasswordButton = document.querySelector('button#submit_password');
+let passwordField = document.querySelector('input#verify_password');
+
+let wrongPwd = document.querySelector('div#modal-msg');
+let emptyPwd = document.querySelector('div#modal-msg-empty');
+
+let closeModalBtn = document.querySelector('button#close_button');
+
+lockLocked.addEventListener('click',openModalHandler);
+submitPasswordButton.addEventListener('click',verifyPassword);
+closeModalBtn.addEventListener('click',closeModalHandler);
 lockOpened.addEventListener('click',lock);
+
 
 function toggleEdits(show) {
 
     for(let i = 0; i < editFields.length; i++) {
 
-        if(editFields[i].tagName == 'SPAN') {
-
-            !show ? editFields[i].classList.add('d-none') : editFields[i].classList.remove('d-none')
-
-        }
-
-        else if(editFields[i].tagName == 'BUTTON') {
-
-            editFields[i].disabled = !show ?  true : false;
-
-        }
+        !show ? editFields[i].selfHide() : editFields[i].selfShow();
 
     }
 
@@ -29,12 +32,10 @@ function toggleEdits(show) {
 
 function lock() {
 
-    console.log('locking');
-
     toggleEdits(false);
 
-    lockLocked.classList.remove('d-none');
-    lockOpened.classList.add('d-none');
+    lockLocked.selfShow();
+    lockOpened.selfHide();
 
 
 }
@@ -43,23 +44,100 @@ function open() {
 
     toggleEdits(true);
 
-    lockOpened.classList.remove('d-none');
-    lockLocked.classList.add('d-none');
-
+    lockOpened.selfShow()
+    lockLocked.selfHide();
 
 }
 
-toggleEdits(false);
+function verifyPassword() {
+
+    let data = {
+        pwd: passwordField.value
+    }
+
+    if(data.pwd == '') {
+        showEmptyError();
+        return;
+    }
+        
+
+    let api = '/api/users/' + userId + '/verify_pwd';
+
+    let requestPasswordVerification = new XMLHttpRequest();
+    sendAsyncAjaxRequest(requestPasswordVerification,api,POST,passwordValidationHandler,JSON_ENCODE,JSON.stringify(data));
+
+
+}   
+
+function passwordValidationHandler() {
+
+    if(this.status == 200) {
+
+        closeModalBtn.click();
+        wrongPwd.selfHide();
+        passwordField.value = '';
+
+        open();
+
+    }
+
+    else {
+
+        showWrongPwdError();
+        passwordField.value = '';
+        
+    }
+
+}
+
+function cleanModalErrorMessages() {
+
+    wrongPwd.selfHide();
+    emptyPwd.selfHide();
+    passwordField.value='';
+    
+}
+
+function closeModalHandler() {
+    window.removeEventListener('keyup',confirmVerifyPasswordKeyListener);
+}
+
+function openModalHandler() {
+    window.addEventListener('keyup',confirmVerifyPasswordKeyListener);
+    cleanModalErrorMessages();
+}
+
+function showEmptyError() {
+    emptyPwd.selfShow();
+    wrongPwd.selfHide();
+}
+
+function showWrongPwdError() {
+    emptyPwd.selfHide();
+    wrongPwd.selfShow();
+}
+
+function confirmVerifyPasswordKeyListener(event) {
+
+    if (event.keyCode == 13) {
+
+        verifyPassword();
+
+        
+    }
+    else if (event.keyCode == 27) {
+
+        closeModalBtn.click();        
+
+    }
+
+}
 
 
 
-
-
-
-
-
-
-
+/**
+ * Profile edition
+ */
 
 
 
@@ -202,8 +280,6 @@ function sendPicture(e) {
 
         let form = new FormData();
         form.append('picture',file);
-
-        console.log(form.getAll('picture'));
 
         sendAsyncAjaxRequest(request,api,POST,handleUpdatePicture.bind(request,file),undefined,form);
         

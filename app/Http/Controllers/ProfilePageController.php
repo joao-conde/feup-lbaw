@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 
 use App\User;
@@ -145,6 +146,25 @@ class ProfilePageController extends Controller
 
     }
 
+    public function validatePassword(Request $request) {
 
+        if (!Auth::check()) return response('No user logged',500);
+
+        if($request->__isset('pwd')) {
+
+            if (Hash::check($request->pwd, Auth::user()->password)) {
+
+                return response('',200);
+
+            }
+
+            else {
+                return response('Not authorized',403);
+            }
+            
+        }
+
+        return response('No password detected',500);
+    }
 
 }

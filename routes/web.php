@@ -72,3 +72,5 @@ Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
 Route::get('/403', 'ErrorPagesController@error403');
 
 
+//validate password
+Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');

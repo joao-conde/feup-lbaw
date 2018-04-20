@@ -140,3 +140,18 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
     }
 
 }
+
+
+Element.prototype.selfShow = function() {
+
+    if(checkIfHasClass(this,'d-none'))
+        this.classList.remove('d-none');
+
+}
+
+Element.prototype.selfHide = function() {
+
+    if(!checkIfHasClass(this,'d-none'))
+        this.classList.add('d-none');
+
+}
