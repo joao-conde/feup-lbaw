@@ -745,7 +745,7 @@ CREATE TABLE warning (
     adminId INTEGER NOT NULL,
     userId INTEGER,
     bandId INTEGER,
-    reason TEXT DEFAULT 'You have been reported.',
+    reason TEXT DEFAULT 'You have been often reported. Please consider your behavior.',
     contentId INTEGER
 
 );
@@ -1236,17 +1236,18 @@ RETURNS VOID AS $$
     DECLARE
         vReceiverId INTEGER;
         vBandId INTEGER;
-        -- vSenderId INTEGER;
         vSenderName TEXT;
         vNotifText TEXT;
+        vMessageText TEXT;
     BEGIN
         SELECT message.receiverId, message.bandId, mb_user.name, content.text 
-        INTO vReceiverId, vBandId, vSenderName, vNotifText 
+        INTO vReceiverId, vBandId, vSenderName, vMessageText 
         FROM message
         JOIN content ON content.id = message.contentId
         JOIN mb_user ON mb_user.id = content.creatorId
-        
         WHERE message.id = messageId;
+
+        vNotifText := vSenderName || ': "' || vMessageText || '"';
 
         CASE
             WHEN vReceiverId IS NOT NULL THEN
@@ -1265,7 +1266,6 @@ RETURNS VOID AS $$
     DECLARE
         vPosterId INTEGER;
         vBandId INTEGER;
-        vCommenterId INTEGER;
         vCommenterName TEXT;
         vNotifText TEXT;
         vCommentText TEXT;
