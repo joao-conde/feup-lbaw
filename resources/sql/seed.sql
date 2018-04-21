@@ -26,6 +26,13 @@ DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_updated();
 DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_updated ON band_application;
 DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_updated();
 
+DROP TRIGGER IF EXISTS update_last_satus_date_trigger_band_application ON band_application;
+DROP TRIGGER IF EXISTS update_last_satus_date_trigger_band_invitation ON band_invitation;
+DROP FUNCTION  IF EXISTS update_last_satus_date_trigger();
+
+
+
+
 
 
 DROP TABLE IF EXISTS user_notification CASCADE;
@@ -101,7 +108,7 @@ DROP TABLE IF EXISTS country CASCADE;
 
 CREATE TABLE country (
     id SERIAL NOT NULL,
-    name TEXT NOT NULL
+    name TEXT NOT NULL UNIQUE
 );
 
 ALTER TABLE ONLY country
@@ -215,12 +222,16 @@ CREATE TABLE content (
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
     date TIMESTAMP DEFAULT now(),
+    contentCreatorId INTEGER NOT NULL,
     isActive BOOLEAN DEFAULT TRUE
 
 );
 
 ALTER TABLE ONLY content
     ADD CONSTRAINT content_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT content_creator_id_fkey FOREIGN KEY (contentCreatorId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
 /*****************************************************/
@@ -233,7 +244,6 @@ CREATE TABLE post (
     id SERIAL NOT NULL,
     private BOOLEAN NOT NULL DEFAULT FALSE,
     contentId INTEGER NOT NULL,
-    posterId INTEGER NOT NULL,
     bandId INTEGER
 );
 
@@ -244,18 +254,22 @@ ALTER TABLE ONLY post
     ADD CONSTRAINT post_content_id_fkey FOREIGN KEY (contentId) REFERENCES content(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY post
-    ADD CONSTRAINT poster_id_fkey FOREIGN KEY (posterId) REFERENCES mb_user(id) ON UPDATE CASCADE;
-
-ALTER TABLE ONLY post
     ADD CONSTRAINT post_band_id_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 
 CREATE OR REPLACE FUNCTION check_band_post() RETURNS trigger AS $check_band_post$
+
+    DECLARE vPosterId INTEGER;
+
     BEGIN
        
         IF NEW.bandId IS NOT NULL THEN
 
-            IF check_user_belongs_to_band(New.posterId, New.bandId) = FALSE THEN
+            SELECT contentCreatorId INTO vPosterId
+            FROM content
+            WHERE id = New.contentId;
+
+            IF check_user_belongs_to_band(vPosterId, New.bandId) = FALSE THEN
 
                 RAISE EXCEPTION 'this user does not belong to the band, post not inserted';
 
@@ -282,7 +296,6 @@ CREATE TABLE message (
 
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
-    senderId INTEGER NOT NULL,
     receiverId INTEGER,
     bandId INTEGER
 );
@@ -292,9 +305,6 @@ ALTER TABLE ONLY message
 
 ALTER TABLE ONLY message
     ADD CONSTRAINT message_content_id_fkey FOREIGN KEY (contentId) REFERENCES content(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY message
-    ADD CONSTRAINT message_sender_id_fkey FOREIGN KEY (senderId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY message
     ADD CONSTRAINT message_receiver_id_fkey FOREIGN KEY (receiverId) REFERENCES mb_user(id) ON UPDATE CASCADE;
@@ -309,7 +319,12 @@ CREATE OR REPLACE FUNCTION check_user_belongs_to_band(userIdToCheck Integer, ban
 
     BEGIN
        
-        SELECT EXISTS (SELECT band.id FROM band JOIN band_membership ON band.id = band_membership.bandId WHERE band.id = bandIdToCheck AND band_membership.userId = userIdToCheck) INTO result;
+        SELECT EXISTS (
+            SELECT band.id FROM band 
+            JOIN band_membership ON band.id = band_membership.bandId 
+            WHERE band.id = bandIdToCheck 
+            AND band_membership.userId = userIdToCheck
+            AND band_membership.ceaseDate IS NULL) INTO result;
         
         RETURN result;
 
@@ -319,11 +334,18 @@ $$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION check_band_message() RETURNS trigger AS $check_band_message$
+    
+    DECLARE vSenderId INTEGER;
+    
     BEGIN
        
         IF NEW.bandId IS NOT NULL THEN
 
-            IF check_user_belongs_to_band(New.senderId, New.bandId) = FALSE THEN
+            SELECT contentCreatorId INTO vSenderId
+            FROM content
+            WHERE id = New.contentId; 
+
+            IF check_user_belongs_to_band(vSenderId, New.bandId) = FALSE THEN
 
                 RAISE EXCEPTION 'this user does not belong to the band';
 
@@ -386,7 +408,6 @@ CREATE TABLE comment (
 
     id SERIAL NOT NULL,
     contentId INTEGER NOT NULL,
-    commenterId INTEGER NOT NULL,
     postId INTEGER NOT NULL
 );
 
@@ -395,9 +416,6 @@ ALTER TABLE ONLY comment
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT comment_content_id_fkey FOREIGN KEY (contentId) REFERENCES content(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY comment
-    ADD CONSTRAINT commenter_id_fkey FOREIGN KEY (commenterId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT post_id_fkey FOREIGN KEY (postId) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE;
@@ -728,7 +746,7 @@ CREATE TABLE warning (
     userId INTEGER,
     bandId INTEGER,
     reason TEXT DEFAULT 'You have been reported.',
-    reportId INTEGER
+    contentId INTEGER
 
 );
 
@@ -745,7 +763,7 @@ ALTER TABLE ONLY warning
     ADD CONSTRAINT warning_bandId_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY warning
-    ADD CONSTRAINT warning_report_fkey FOREIGN KEY (reportId) REFERENCES report(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT warning_content_fkey FOREIGN KEY (contentId) REFERENCES content(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE OR REPLACE FUNCTION check_is_admin_warning() RETURNS trigger AS $check_is_admin_warning$
     BEGIN
@@ -927,7 +945,7 @@ CREATE TABLE band_application (
     userId INTEGER NOT NULL,
     bandId INTEGER NOT NULL,
     date TIMESTAMP DEFAULT now(),
-    lastStatusDate DATE,
+    lastStatusDate TIMESTAMP DEFAULT now(),
     status BAND_APPLICATION_STATUS DEFAULT 'pending'
 
 );
@@ -956,6 +974,7 @@ CREATE TRIGGER insert_notification_trigger_band_application AFTER INSERT ON band
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application();
 
 CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_updated() RETURNS trigger AS $$
+    
     BEGIN
        
         IF NEW.status = 'accepted' OR NEW.status = 'rejected' THEN
@@ -966,6 +985,8 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_updated(
             INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
         END IF;
 
+        NEW.lastStatusDate = now();
+
         RETURN NEW;
 
     END;
@@ -974,6 +995,23 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_notification_trigger_band_application_updated AFTER UPDATE ON band_application
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_updated();
+
+
+CREATE OR REPLACE FUNCTION update_last_satus_date_trigger() RETURNS trigger AS $$
+    
+    BEGIN
+       
+        NEW.lastStatusDate = now();
+        RETURN NEW;
+
+    END;
+    
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_last_satus_date_trigger_band_application BEFORE UPDATE ON band_application
+    FOR EACH ROW EXECUTE PROCEDURE update_last_satus_date_trigger();
+
+
 
 /*****************************************************/
 /******************* Band Invitation *****************/
@@ -989,7 +1027,7 @@ CREATE TABLE band_invitation(
     userId INTEGER NOT NULL,
     bandId INTEGER NOT NULL,
     date TIMESTAMP DEFAULT now(),
-    lastStatusDate DATE,
+    lastStatusDate TIMESTAMP DEFAULT now(),
     status BAND_INVITATION_STATUS DEFAULT 'pending'
 
 );
@@ -1025,6 +1063,7 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_updated()
         IF NEW.status = 'accepted' THEN
             INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
         END IF;
+            UPDATE band_invitation SET lastStatusDate = now();
 
         RETURN NEW;
 
@@ -1035,6 +1074,9 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_notification_trigger_band_invitation_updated AFTER UPDATE ON band_invitation
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_updated();
+
+CREATE TRIGGER update_last_satus_date_trigger_band_invitation BEFORE UPDATE ON band_invitation
+    FOR EACH ROW EXECUTE PROCEDURE update_last_satus_date_trigger();
 
 /*****************************************************/
 /************ Notification Trigger *******************/
@@ -1194,15 +1236,16 @@ RETURNS VOID AS $$
     DECLARE
         vReceiverId INTEGER;
         vBandId INTEGER;
-        vSenderId INTEGER;
+        -- vSenderId INTEGER;
         vSenderName TEXT;
         vNotifText TEXT;
     BEGIN
         SELECT message.receiverId, message.bandId, mb_user.name, content.text 
         INTO vReceiverId, vBandId, vSenderName, vNotifText 
         FROM message
-        JOIN mb_user ON mb_user.id = message.senderId
         JOIN content ON content.id = message.contentId
+        JOIN mb_user ON mb_user.id = content.contentCreatorId
+        
         WHERE message.id = messageId;
 
         CASE
@@ -1227,12 +1270,12 @@ RETURNS VOID AS $$
         vNotifText TEXT;
         vCommentText TEXT;
     BEGIN
-        SELECT post.posterId, post.bandId, mb_user.name, content.text 
+        SELECT content.contentCreatorId, post.bandId, mb_user.name, content.text 
         INTO vPosterId, vBandId, vCommenterName, vCommentText 
         FROM comment
         JOIN post ON post.id = comment.postId
-        JOIN mb_user ON mb_user.id = comment.commenterId
         JOIN content ON content.id = comment.contentId
+        JOIN mb_user ON mb_user.id = content.contentCreatorId
         WHERE comment.id = commentId;
 
         vNotifText := vCommenterName || ' commented your post: ' || vCommentText;
@@ -1415,13 +1458,15 @@ ALTER TABLE ONLY user_notification
     ADD CONSTRAINT user_notification_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
-create index user_post on post using hash(posterId);
+create index content_creator on content using hash(contentCreatorId);
+
+create index post_content on post using hash(contentId);
+create index message_content on message using hash(contentId);
+create index comment_content on comment using hash(contentId);
 
 create index user_username on mb_user using hash(username);
 
-create index band_name on band using hash(name);
-
-create index message_sender on message using hash(senderId);
+--create index band_name on band using hash(name);
 
 create index message_receiver on message using hash(receiverId);
 
