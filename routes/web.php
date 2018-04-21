@@ -43,6 +43,8 @@ Route::post('api/skills', 'SkillsController@create');
 Route::delete('api/skills/{skill_id}', 'SkillsController@delete');
 Route::put('api/skills/{skill_id}', 'SkillsController@edit');
 
+Route::put('/admin_api/users/{id}','UserController@permissions');
+
 
 
 Route::put('api/users/{id}', 'ProfilePageController@editUser');

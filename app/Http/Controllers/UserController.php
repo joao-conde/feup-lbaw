@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -16,7 +16,25 @@ class UserController extends Controller
      */
     public function listUserPermissions()
     {       
-        return view('admin.users');
+        //$users = DB::table('mb_user')->paginate(10);
+        $users = User::paginate(10);
+        
+        return view('admin.users', ['users' => $users]);
+    }
+
+    public function permissions(Request $request){
+        //$user = User::where('username', $request->input('username'));
+
+        $user = User::find($request->input('id'));
+
+        if($user->admin)
+            $user->admin = 'false';
+        else
+            $user->admin = 'true';
+
+        $user->save();
+
+        return response('',200);
     }
 
     /**
