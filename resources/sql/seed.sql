@@ -1483,6 +1483,3 @@ CREATE INDEX search_user ON mb_user USING GIST ((
 	setweight(to_tsvector('english', name), 'A') ||
 	setweight(to_tsvector('english', bio), 'B')
 ));
-
-
-

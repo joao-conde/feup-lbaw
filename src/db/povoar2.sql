@@ -61,6 +61,9 @@ insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivatio
 
 ALTER SEQUENCE mb_user_id_seq RESTART WITH 31;
 
+insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('trintaeum', 'zXizewgg', 'Caryl Kubicka', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
+
+
 --Bands
 
 
@@ -231,6 +234,14 @@ insert into report(id,text,reportType, reportedContentId, reportedUserId, report
             values(12,'This post has explicit content','content_report',9,NULL,NULL,12);
 insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
             values(13,'This message is very bad','content_report',32,NULL,NULL,12);
+insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
+            values(14,'This post is very bad','content_report',3,NULL,NULL,26);
+insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
+            values(15,'This post is very bad','content_report',3,NULL,NULL,22);
+insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
+            values(16,'This post is very bad','content_report',1,NULL,NULL,23);
+insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
+            values(17,'This band is very bad','band_report',NULL,NULL,4,23);
 
 ALTER SEQUENCE report_id_seq RESTART WITH 14;
 

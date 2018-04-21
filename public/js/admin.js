@@ -32,7 +32,7 @@ function handleToggleAPIResponse(request) {
 
 	if(request.status == 200) {
 		let perms = this.querySelector('.toggleInput');
-		if(perms.hasAttribute('checked'))
+		if(perms.checked)
 			perms.checked = false;
 		else
 			perms.checked = true;
