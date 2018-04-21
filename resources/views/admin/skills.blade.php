@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="container col-10 col-sm-5 text-center">
 			<ul class="list-group" id="skills_list">
-				<li class="list-group-item font-weight-bold"><h4>Active</h4></li>
+				<li class="list-group-item"><h4 class="font-weight-bold">Skills</h4></li>
 				@each('partials.skill', $skills, 'skill')
 				<li class="list-group-item">
 					<form class="new_skill">
