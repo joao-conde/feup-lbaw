@@ -1440,13 +1440,4 @@ CREATE INDEX search_user ON mb_user USING GIST ((
 ));
 
 
-CREATE OR REPLACE FUNCTION createPost (userId INTEGER, )
-RETURNS BOOLEAN AS $$
-DECLARE
-    isAdmin BOOLEAN;
-BEGIN
-   SELECT mb_user.admin INTO isAdmin FROM mb_user WHERE mb_user.id = userId;
 
-   RETURN isAdmin;
-END;
-$$ LANGUAGE plpgsql;
