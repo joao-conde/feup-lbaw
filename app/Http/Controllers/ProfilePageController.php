@@ -46,7 +46,7 @@ class ProfilePageController extends Controller
 
     public function startFollowing($userToFollowId) {
 
-        if (!Auth::check()) return redirect('/login');
+        if (!Auth::check()) return response('No user logged',500);
 
         $verifyQuery = 'SELECT * FROM user_follower 
                         JOIN mb_user as users ON users.id = user_follower.followedUserId
@@ -74,13 +74,13 @@ class ProfilePageController extends Controller
         }
 
         else
-            return response('',500);
+            return response(count($alreadyExists),500);
 
     }
 
     public function stopFollowing($userToFollowId) {
 
-        if (!Auth::check()) return redirect('/login');
+        if (!Auth::check()) return response('No user logged',500);
 
         $verifyQuery = 'SELECT * FROM user_follower 
                         JOIN mb_user as users ON users.id = user_follower.followedUserId

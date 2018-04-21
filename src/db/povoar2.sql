@@ -59,6 +59,8 @@ insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivatio
 insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values (29,'omenat2p', 'vLAM3NViG', 'Obed Menat', 'Grass-roots cohesive leverage', '05-09-1986', null, 6, 2, 4.9, false);
 insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values (30,'ckubicka2q', 'zXizewgg', 'Caryl Kubicka', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
 
+ALTER SEQUENCE mb_user_id_seq RESTART WITH 31;
+
 --Bands
 
 
@@ -69,8 +71,9 @@ insert into band (id,name, creationDate, ceaseDate, location, isActive) values (
 insert into band (id,name, creationDate, ceaseDate, location, isActive) values (5,'Thermon Group Holdings, Inc.', '16-08-1983', '16-11-1987', 1, true);
 insert into band (id,name, creationDate, ceaseDate, location, isActive) values (6,'Blackrock Corporate High Yield Fund, Inc.', '02-10-1976', null, 1, true);
 
---Bands membership
+ALTER SEQUENCE band_id_seq RESTART WITH 7;
 
+--Bands membership
 
 insert into band_membership (bandId, userId, isOwner, initialDate, ceaseDate) values (1, 5, true, '25/12/2017', null);
 insert into band_membership (bandId, userId, isOwner, initialDate, ceaseDate) values (1, 6, false, '25/12/2017', null);
@@ -132,6 +135,8 @@ insert into post(id,private,contentId,bandId) values(13,false,13,NULL);
 insert into post(id,private,contentId,bandId) values(14,false,14,NULL);
 insert into post(id,private,contentId,bandId) values(15,false,15,NULL);
 
+ALTER SEQUENCE post_id_seq RESTART WITH 16;
+
 --Comments
 
 
@@ -160,6 +165,8 @@ insert into comment(id,contentId,postId) values(9,24,4);
 insert into comment(id,contentId,postId) values(10,25,5);
 insert into comment(id,contentId,postId) values(11,26,13);
 insert into comment(id,contentId,postId) values(12,27,13);
+
+ALTER SEQUENCE comment_id_seq RESTART WITH 13;
 
 
 --Messages
@@ -190,6 +197,9 @@ insert into message(id,contentId,receiverId,bandId) values(9,36,13,NULL);
 insert into message(id,contentId,receiverId,bandId) values(10,37,10,NULL);
 insert into message(id,contentId,receiverId,bandId) values(11,38,7,NULL);
 insert into message(id,contentId,receiverId,bandId) values(12,39,14,NULL);
+
+ALTER SEQUENCE message_id_seq RESTART WITH 13;
+ALTER SEQUENCE content_id_seq RESTART WITH 40;
 
 --DO NOT FORGET TO CREATE AT LEAST ONE ADMIN USER WITH ID 1
 
@@ -222,6 +232,8 @@ insert into report(id,text,reportType, reportedContentId, reportedUserId, report
 insert into report(id,text,reportType, reportedContentId, reportedUserId, reportedBandId, reporterUserId)
             values(13,'This message is very bad','content_report',32,NULL,NULL,12);
 
+ALTER SEQUENCE report_id_seq RESTART WITH 14;
+
 
 --Warnings
 
@@ -232,6 +244,7 @@ insert into warning(id,adminId,userId,bandId,contentId) values(4,1,10,NULL,33);
 insert into warning(id,adminId,userId,bandId,contentId) values(5,1,NULL,4,9);
 insert into warning(id,adminId,userId,bandId,contentId) values(6,1,NULL,2,32);
 
+ALTER SEQUENCE warning_id_seq RESTART WITH 7;
 
 
 --Bans
@@ -239,6 +252,8 @@ insert into warning(id,adminId,userId,bandId,contentId) values(6,1,NULL,2,32);
 insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(1,'Bad behaviour',NULL,1,7,NULL,'17/01/2018');
 insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(2,'Bad behaviour',NULL,1,NULL,1,'21/03/2018');
 insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(3,'Bad behaviour','21/4/2018',1,NULL,4,'01/01/2018');
+
+ALTER SEQUENCE ban_id_seq RESTART WITH 4;
 
 --Genres
 
@@ -254,6 +269,8 @@ insert into genre (id,name, creatingAdminId, isActive) values (9,'Rock',1,true);
 insert into genre (id,name, creatingAdminId, isActive) values (10,'Blues',1,true);
 insert into genre (id,name, creatingAdminId, isActive) values (11,'Folk',1,true);
 insert into genre (id,name, creatingAdminId, isActive) values (12,'Pop',1,true);
+
+ALTER SEQUENCE genre_id_seq RESTART WITH 13;
 
 --Skills
 
@@ -284,8 +301,7 @@ insert into skill (id,name, creatingAdminId, isActive) values (24,'Cello',1,true
 insert into skill (id,name, creatingAdminId, isActive) values (25,'Synthesizer',1,true);
 insert into skill (id,name, creatingAdminId, isActive) values (26,'Keytar',1,true);
 
-
-
+ALTER SEQUENCE skill_id_seq RESTART WITH 27;
 
 --User skills
 
@@ -359,6 +375,8 @@ insert into user_follower(id,followingUserId,followedUserId,isActive) values(27,
 insert into user_follower(id,followingUserId,followedUserId,isActive) values(28,9,6,true);
 insert into user_follower(id,followingUserId,followedUserId,isActive) values(29,7,16,true);
 insert into user_follower(id,followingUserId,followedUserId,isActive) values(30,5,16,true);
+
+ALTER SEQUENCE user_follower_id_seq RESTART WITH 31;
 
 
 --User ratings
@@ -439,6 +457,8 @@ insert into band_follower(id,userId,bandId,isActive) values(11,16,2,true);
 insert into band_follower(id,userId,bandId,isActive) values(12,16,3,true);
 insert into band_follower(id,userId,bandId,isActive) values(13,16,6,true);
 
+ALTER SEQUENCE band_follower_id_seq RESTART WITH 14;
+
 
 --Band applications
 
@@ -453,6 +473,8 @@ insert into band_application(id,userId,bandId,date,lastStatusDate,status) values
 insert into band_application(id,userId,bandId,date,lastStatusDate,status) values(9,20,4,'13/12/2017',now(),'accepted');
 insert into band_application(id,userId,bandId,date,lastStatusDate,status) values(10,20,3,now(),now(),'pending');
 
+ALTER SEQUENCE band_application_id_seq RESTART WITH 11;
+
 --Band invitations
 
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(1,22,1,now(),now(),'pending');
@@ -465,3 +487,5 @@ insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(8,27,6,'13/12/2017',now(),'rejected');
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(9,29,4,'13/12/2017',now(),'accepted');
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(10,30,3,now(),now(),'pending');
+
+ALTER SEQUENCE band_invitation_id_seq RESTART WITH 11;
