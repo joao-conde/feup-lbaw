@@ -1,3 +1,6 @@
+<link href="{{ asset('css/about.css') }}" rel="stylesheet">
+
+
 <nav class="navbar navbar-expand bg-primary navbar-light p-0 mt-3">
     <ul class="navbar-nav mx-auto">
         <li class="nav-item <?php if($active == 'users') echo "active"; ?>">
