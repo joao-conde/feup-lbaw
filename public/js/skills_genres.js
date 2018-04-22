@@ -27,7 +27,7 @@ function createButtonListener(event){
 	let data;
 
 	if(this == "skill"){
-		let api = '/api/skills';
+		let api = '/admin_api/skills';
 		data = {
 			skill:	new_skill_name.value
 		};
@@ -43,7 +43,7 @@ function createButtonListener(event){
 		sendAsyncAjaxRequest(request,api,method,handleCreateAPIResponse.bind(new_skill_name,request,"skill"),URL_ENCODE,data);
 	}
 	else if(this == "genre"){
-		let api = '/api/genres';
+		let api = '/admin_api/genres';
 		data = {
 			genre:	new_genre_name.value
 		};
@@ -170,7 +170,7 @@ function confirmEdit(name,nameInput,type,id,parent, edit_button, cancel_edit_but
     }
 
     let request = new XMLHttpRequest();
-    let api = '/api/' + type + 's/' + id;
+    let api = '/admin_api/' + type + 's/' + id;
 
     if(type == "skill")
     	sendAsyncAjaxRequest(request, api, PUT, handleEditAPIResponse.bind(request,name,nameInput,parent, edit_button, cancel_edit_button, confirm_edit_button,nameInput.value.trim()), URL_ENCODE, data);
@@ -253,9 +253,9 @@ function deleteButtonListener(type, event){
 	let api;
 
 	if(type == "skill")
-		api = '/api/skills/' + id.innerHTML;
+		api = '/admin_api/skills/' + id.innerHTML;
 	else if(type == "genre")
-		api = '/api/genres/' + id.innerHTML;
+		api = '/admin_api/genres/' + id.innerHTML;
 
 	let data = {
 		id: id.innerHTML
