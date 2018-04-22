@@ -17,7 +17,8 @@ class UserController extends Controller
     public function listUserPermissions()
     {       
         //$users = DB::table('mb_user')->paginate(10);
-        $users = User::paginate(10);
+        $users = User::orderBy('admin','DESC')->orderBy('name','ASC');
+        $users = $users->paginate(10);
         
         return view('admin.users', ['users' => $users]);
     }
