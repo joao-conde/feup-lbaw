@@ -8,7 +8,8 @@ function createToggleListeners(){
 		if(!isNaN(userLines[idx]))
 			break;
 
-		userLines[idx].addEventListener('click',toggleListener.bind(userLines[idx]));
+		let toggle = userLines[idx].querySelector('.switch');
+		toggle.addEventListener('click',toggleListener.bind(userLines[idx]));
 	}
 }
 

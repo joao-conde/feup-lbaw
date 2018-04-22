@@ -36,13 +36,12 @@ Route::get('/skills', 'SkillsController@list')->middleware('admin');;
 
 
 // API
-Route::post('api/genres', 'GenresController@create');
-Route::delete('api/genres/{genre_id}', 'GenresController@delete');
-Route::put('api/genres/{genre_id}', 'GenresController@edit');
-Route::post('api/skills', 'SkillsController@create');
-Route::delete('api/skills/{skill_id}', 'SkillsController@delete');
-Route::put('api/skills/{skill_id}', 'SkillsController@edit');
-
+Route::post('/admin_api/genres', 'GenresController@create');
+Route::delete('/admin_api/genres/{genre_id}', 'GenresController@delete');
+Route::put('/admin_api/genres/{genre_id}', 'GenresController@edit');
+Route::post('/admin_api/skills', 'SkillsController@create');
+Route::delete('/admin_api/skills/{skill_id}', 'SkillsController@delete');
+Route::put('/admin_api/skills/{skill_id}', 'SkillsController@edit');
 Route::put('/admin_api/users/{id}','UserController@permissions');
 
 
