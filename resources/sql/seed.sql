@@ -222,7 +222,7 @@ CREATE TABLE content (
     id SERIAL NOT NULL,
     text TEXT NOT NULL,
     date TIMESTAMP DEFAULT now(),
-    contentCreatorId INTEGER NOT NULL,
+    creatorId INTEGER NOT NULL,
     isActive BOOLEAN DEFAULT TRUE
 
 );
@@ -231,7 +231,7 @@ ALTER TABLE ONLY content
     ADD CONSTRAINT content_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY content
-    ADD CONSTRAINT content_creator_id_fkey FOREIGN KEY (contentCreatorId) REFERENCES mb_user(id) ON UPDATE CASCADE;
+    ADD CONSTRAINT creator_id_fkey FOREIGN KEY (creatorId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
 /*****************************************************/
@@ -265,7 +265,7 @@ CREATE OR REPLACE FUNCTION check_band_post() RETURNS trigger AS $check_band_post
        
         IF NEW.bandId IS NOT NULL THEN
 
-            SELECT contentCreatorId INTO vPosterId
+            SELECT creatorId INTO vPosterId
             FROM content
             WHERE id = New.contentId;
 
@@ -341,7 +341,7 @@ CREATE OR REPLACE FUNCTION check_band_message() RETURNS trigger AS $check_band_m
        
         IF NEW.bandId IS NOT NULL THEN
 
-            SELECT contentCreatorId INTO vSenderId
+            SELECT creatorId INTO vSenderId
             FROM content
             WHERE id = New.contentId; 
 
@@ -745,7 +745,7 @@ CREATE TABLE warning (
     adminId INTEGER NOT NULL,
     userId INTEGER,
     bandId INTEGER,
-    reason TEXT DEFAULT 'You have been reported.',
+    reason TEXT DEFAULT 'You have been often reported. Please consider your behavior.',
     contentId INTEGER
 
 );
@@ -1236,17 +1236,18 @@ RETURNS VOID AS $$
     DECLARE
         vReceiverId INTEGER;
         vBandId INTEGER;
-        -- vSenderId INTEGER;
         vSenderName TEXT;
         vNotifText TEXT;
+        vMessageText TEXT;
     BEGIN
         SELECT message.receiverId, message.bandId, mb_user.name, content.text 
-        INTO vReceiverId, vBandId, vSenderName, vNotifText 
+        INTO vReceiverId, vBandId, vSenderName, vMessageText 
         FROM message
         JOIN content ON content.id = message.contentId
-        JOIN mb_user ON mb_user.id = content.contentCreatorId
-        
+        JOIN mb_user ON mb_user.id = content.creatorId
         WHERE message.id = messageId;
+
+        vNotifText := vSenderName || ': "' || vMessageText || '"';
 
         CASE
             WHEN vReceiverId IS NOT NULL THEN
@@ -1265,17 +1266,16 @@ RETURNS VOID AS $$
     DECLARE
         vPosterId INTEGER;
         vBandId INTEGER;
-        vCommenterId INTEGER;
         vCommenterName TEXT;
         vNotifText TEXT;
         vCommentText TEXT;
     BEGIN
-        SELECT content.contentCreatorId, post.bandId, mb_user.name, content.text 
+        SELECT content.creatorId, post.bandId, mb_user.name, content.text 
         INTO vPosterId, vBandId, vCommenterName, vCommentText 
         FROM comment
         JOIN post ON post.id = comment.postId
         JOIN content ON content.id = comment.contentId
-        JOIN mb_user ON mb_user.id = content.contentCreatorId
+        JOIN mb_user ON mb_user.id = content.creatorId
         WHERE comment.id = commentId;
 
         vNotifText := vCommenterName || ' commented your post: ' || vCommentText;
@@ -1458,7 +1458,7 @@ ALTER TABLE ONLY user_notification
     ADD CONSTRAINT user_notification_userId_fkey FOREIGN KEY (userId) REFERENCES mb_user(id) ON UPDATE CASCADE;
 
 
-create index content_creator on content using hash(contentCreatorId);
+create index content_creator on content using hash(creatorId);
 
 create index post_content on post using hash(contentId);
 create index message_content on message using hash(contentId);
@@ -1483,15 +1483,3 @@ CREATE INDEX search_user ON mb_user USING GIST ((
 	setweight(to_tsvector('english', name), 'A') ||
 	setweight(to_tsvector('english', bio), 'B')
 ));
-
-
-CREATE OR REPLACE FUNCTION createPost (userId INTEGER, )
-RETURNS BOOLEAN AS $$
-DECLARE
-    isAdmin BOOLEAN;
-BEGIN
-   SELECT mb_user.admin INTO isAdmin FROM mb_user WHERE mb_user.id = userId;
-
-   RETURN isAdmin;
-END;
-$$ LANGUAGE plpgsql;
