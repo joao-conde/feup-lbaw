@@ -120,6 +120,7 @@ insert into content(id,creatorId,text) values(12,7,'Barnett broke through back i
 insert into content(id,creatorId,text) values(13,9,'A host of independent music festivals have committed to cutting down on plastic waste.The Association of Independent Festivals (AIF) have teamed up with over 60 festivals for its new ‘Drastic On Plastic’ campaign.');
 insert into content(id,creatorId,text) values(14,10,'Last month, the French star announced that she’ll make her live return in the US this October – with shows scheduled for Los Angeles and New York. In November, two gigs will take place at London’s Eventim Apollo.');
 insert into content(id,creatorId,text) values(15,11,'Check them out below Green Day frontman Billie Joe Armstrong’s new band The Longshot have surprise released their debut album along with a music video for the title track, ‘Love Is For Losers’. Check them out below. While Green Day are currently taking some down time off the back of 2016’s acclaimed ‘Revolution Radio‘ and last year’s greatest hits compilation ‘God’s Favourite Band‘, Armstrong has gone back to his DIY punk roots for his new band. After teasing fans before dropping the first three tracks from the band before performing their first ever live show together at the weekend,  now The Longshot’s full length LP is here. Read more at http://www.nme.com/news/music/billie-joe-armstrongs-new-band-longshot-release-video-full-album-love-losers-2298033#SdTfcoBtb1ppcj4d.99');
+insert into content(id,creatorId,text) values(16,6,'But if you let me be there, again.');
 
 
 insert into post(id,private,contentId,bandId) values(1,false,1,NULL);
@@ -137,37 +138,38 @@ insert into post(id,private,contentId,bandId) values(12,false,12,NULL);
 insert into post(id,private,contentId,bandId) values(13,false,13,NULL);
 insert into post(id,private,contentId,bandId) values(14,false,14,NULL);
 insert into post(id,private,contentId,bandId) values(15,false,15,NULL);
+insert into post(id,private,contentId,bandId) values(16,false,16,NULL);
 
-ALTER SEQUENCE post_id_seq RESTART WITH 16;
+ALTER SEQUENCE post_id_seq RESTART WITH 17;
 
 --Comments
 
 
-insert into content(id, creatorId,text) values(16,8,'Nice Post');
-insert into content(id, creatorId,text) values(17,10,'Indeed');
-insert into content(id, creatorId,text) values(18,16,'Where is this band from?');
-insert into content(id, creatorId,text) values(19,12,'They are from Portugal!');
-insert into content(id, creatorId,text) values(20,7,'I like!');
-insert into content(id, creatorId,text) values(21,10,'Me too');
-insert into content(id, creatorId,text) values(22,7,'Well done!');
-insert into content(id, creatorId,text) values(23,11,'Very nice post!');
-insert into content(id, creatorId,text) values(24,8,'Don´t like this!');
-insert into content(id, creatorId,text) values(25,10,'I like it');
-insert into content(id, creatorId,text) values(26,9,'What is this?');
-insert into content(id, creatorId,text) values(27,14,'What a nice surprise!');
+insert into content(id, creatorId,text) values(17,8,'Nice Post');
+insert into content(id, creatorId,text) values(18,10,'Indeed');
+insert into content(id, creatorId,text) values(19,16,'Where is this band from?');
+insert into content(id, creatorId,text) values(20,12,'They are from Portugal!');
+insert into content(id, creatorId,text) values(21,7,'I like!');
+insert into content(id, creatorId,text) values(22,10,'Me too');
+insert into content(id, creatorId,text) values(23,7,'Well done!');
+insert into content(id, creatorId,text) values(24,11,'Very nice post!');
+insert into content(id, creatorId,text) values(25,8,'Don´t like this!');
+insert into content(id, creatorId,text) values(26,10,'I like it');
+insert into content(id, creatorId,text) values(27,9,'What is this?');
+insert into content(id, creatorId,text) values(28,14,'What a nice surprise!');
 
-insert into comment(id,contentId,postId) values(1,16,1);
-insert into comment(id,contentId,postId) values(2,17,1);
-insert into comment(id,contentId,postId) values(3,18,2);
-insert into comment(id,contentId,postId) values(4,19,2);
-insert into comment(id,contentId,postId) values(5,20,3);
-insert into comment(id,contentId,postId) values(6,21,3);
-insert into comment(id,contentId,postId) values(7,22,4);
-insert into comment(id,contentId,postId) values(8,23,4);
-insert into comment(id,contentId,postId) values(9,24,4);
-insert into comment(id,contentId,postId) values(10,25,5);
-insert into comment(id,contentId,postId) values(11,26,13);
-insert into comment(id,contentId,postId) values(12,27,13);
+insert into comment(id,contentId,postId) values(1,17,1);
+insert into comment(id,contentId,postId) values(2,18,1);
+insert into comment(id,contentId,postId) values(3,19,2);
+insert into comment(id,contentId,postId) values(4,20,2);
+insert into comment(id,contentId,postId) values(5,21,3);
+insert into comment(id,contentId,postId) values(6,22,3);
+insert into comment(id,contentId,postId) values(7,23,4);
+insert into comment(id,contentId,postId) values(8,24,4);
+insert into comment(id,contentId,postId) values(9,25,4);
+insert into comment(id,contentId,postId) values(10,26,5);
+insert into comment(id,contentId,postId) values(11,27,13);
+insert into comment(id,contentId,postId) values(12,28,13);
 
 ALTER SEQUENCE comment_id_seq RESTART WITH 13;
 
@@ -175,31 +177,31 @@ ALTER SEQUENCE comment_id_seq RESTART WITH 13;
 --Messages
 
 
-insert into content(id,creatorId,text) values(28,6,'Hello');
-insert into content(id,creatorId,text) values(29,7,'Hello');
-insert into content(id,creatorId,text) values(30,5,'I need you to play tonight!');
-insert into content(id,creatorId,text) values(31,9,'Yes');
-insert into content(id,creatorId,text) values(32,10,'Tonight I can´t');
-insert into content(id,creatorId,text) values(33,10,'Hello!');
-insert into content(id,creatorId,text) values(34,12,'Let´s meet on Wednesday');
-insert into content(id,creatorId,text) values(35,13,'Ok!');
-insert into content(id,creatorId,text) values(36,11,'Not me!');
-insert into content(id,creatorId,text) values(37,7,'Ok my friend');
-insert into content(id,creatorId,text) values(38,10,'This site is awesome');
-insert into content(id,creatorId,text) values(39,12,'Can you share the song?');
+insert into content(id,creatorId,text) values(29,6,'Hello');
+insert into content(id,creatorId,text) values(30,7,'Hello');
+insert into content(id,creatorId,text) values(31,5,'I need you to play tonight!');
+insert into content(id,creatorId,text) values(32,9,'Yes');
+insert into content(id,creatorId,text) values(33,10,'Tonight I can´t');
+insert into content(id,creatorId,text) values(34,10,'Hello!');
+insert into content(id,creatorId,text) values(35,12,'Let´s meet on Wednesday');
+insert into content(id,creatorId,text) values(36,13,'Ok!');
+insert into content(id,creatorId,text) values(37,11,'Not me!');
+insert into content(id,creatorId,text) values(38,7,'Ok my friend');
+insert into content(id,creatorId,text) values(39,10,'This site is awesome');
+insert into content(id,creatorId,text) values(40,12,'Can you share the song?');
 
-insert into message(id,contentId,receiverId,bandId) values(1,28,7,NULL);
-insert into message(id,contentId,receiverId,bandId) values(2,29,10,NULL);
-insert into message(id,contentId,receiverId,bandId) values(3,30,NULL,2);
-insert into message(id,contentId,receiverId,bandId) values(4,31,NULL,2);
-insert into message(id,contentId,receiverId,bandId) values(5,32,NULL,2);
-insert into message(id,contentId,receiverId,bandId) values(6,33,12,NULL);
-insert into message(id,contentId,receiverId,bandId) values(7,34,10,NULL);
-insert into message(id,contentId,receiverId,bandId) values(8,35,11,NULL);
-insert into message(id,contentId,receiverId,bandId) values(9,36,13,NULL);
-insert into message(id,contentId,receiverId,bandId) values(10,37,10,NULL);
-insert into message(id,contentId,receiverId,bandId) values(11,38,7,NULL);
-insert into message(id,contentId,receiverId,bandId) values(12,39,14,NULL);
+insert into message(id,contentId,receiverId,bandId) values(1,29,7,NULL);
+insert into message(id,contentId,receiverId,bandId) values(2,30,10,NULL);
+insert into message(id,contentId,receiverId,bandId) values(3,31,NULL,2);
+insert into message(id,contentId,receiverId,bandId) values(4,32,NULL,2);
+insert into message(id,contentId,receiverId,bandId) values(5,33,NULL,2);
+insert into message(id,contentId,receiverId,bandId) values(6,34,12,NULL);
+insert into message(id,contentId,receiverId,bandId) values(7,35,10,NULL);
+insert into message(id,contentId,receiverId,bandId) values(8,36,11,NULL);
+insert into message(id,contentId,receiverId,bandId) values(9,37,13,NULL);
+insert into message(id,contentId,receiverId,bandId) values(10,38,10,NULL);
+insert into message(id,contentId,receiverId,bandId) values(11,39,7,NULL);
+insert into message(id,contentId,receiverId,bandId) values(12,40,14,NULL);
 
 ALTER SEQUENCE message_id_seq RESTART WITH 13;
 ALTER SEQUENCE content_id_seq RESTART WITH 40;
@@ -467,6 +469,7 @@ insert into band_follower(id,userId,bandId,isActive) values(10,16,1,true);
 insert into band_follower(id,userId,bandId,isActive) values(11,16,2,true);
 insert into band_follower(id,userId,bandId,isActive) values(12,16,3,true);
 insert into band_follower(id,userId,bandId,isActive) values(13,16,6,true);
+insert into band_follower(id,userId,bandId,isActive) values(14,12,1,true);
 
 ALTER SEQUENCE band_follower_id_seq RESTART WITH 14;
 
