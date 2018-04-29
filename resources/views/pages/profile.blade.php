@@ -29,6 +29,9 @@
 							<span id="edit_name_button" class="edit_field d-none">
 								<i class="fas fa-pencil-alt"></i>
 							</span>
+							<span class="edit_field d-none text-secondary" id="edit_name_aid">
+								<small>Edit Name</small>
+							</span>
 							<span id="confirm_edit_name_button" class="d-none">
 								<i class="fas fa-check text-success"></i>
 							</span>
@@ -100,8 +103,11 @@
 									<span id="edit_bio_button" class="edit_field d-none">
 										<i class="fas fa-pencil-alt"></i>
 									</span>
+									<span class="edit_field d-none text-secondary" id="edit_bio_aid">
+										<small>Edit Bio</small>
+									</span>
 									<span id="confirm_edit_bio_button" class="d-none">
-										<i id="confirm_icon" class="fas fa-check text-success"></i>
+										<i class="fas fa-check text-success"></i>
 									</span>
 									<span id="cancel_edit_bio_button" class="d-none">
 										<i class="fas fa-times text-danger"></i>
@@ -153,9 +159,29 @@
 											<i>Porto, Portugal</i>
 										</small>
 									</li>
-									<li>
-										<small>Born on
-											<i>6/9/1985</i>
+									<li id="date_parent">
+
+										@if(Auth::user()->dateofbirth)
+											<small id="date_field">Born on
+												<i>{{Auth::user()->dateofbirth}}</i>
+											</small>
+										@endif
+
+										@if( $user->id == Auth::user()->id)
+											<input type="date" class="d-none" id="date_input">
+											<span id="edit_date_button" class="edit_field d-none clickable">
+												<i class="fas fa-pencil-alt"></i>
+											</span>
+											<span class="edit_field d-none text-secondary" id="edit_date_aid">
+												<small>Edit Birthdate</small>
+											</span>
+											<span id="confirm_edit_date_button" class="d-none clickable">
+												<i class="fas fa-check text-success"></i>
+											</span>
+											<span id="cancel_edit_date_button" class="d-none clickable">
+												<i class="fas fa-times text-danger"></i>
+											</span>
+										@endif
 										</small>
 									</li>
 								</ul>

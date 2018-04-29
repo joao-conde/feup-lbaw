@@ -114,9 +114,13 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
     if (showEdit == true) {
 
         let oldValue = fixedElement.innerHTML;
-        editButton.classList.add('d-none');
-        confirmButton.classList.remove('d-none');
-        cancelButton.classList.remove('d-none');
+        editButton.selfHide();
+        confirmButton.selfShow();
+        cancelButton.selfShow();
+
+        fixedElement.selfHide();
+        editElement.selfShow();
+        
         parentElement.replaceChild(editElement, fixedElement);
         editElement.value = oldValue;
         window.addEventListener('keyup', keysHandler);
@@ -127,9 +131,12 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
 
     else {
 
-        editButton.classList.remove('d-none');
-        confirmButton.classList.add('d-none');
-        cancelButton.classList.add('d-none');
+        editButton.selfShow();
+        confirmButton.selfHide();
+        cancelButton.selfHide();
+
+        fixedElement.selfShow();
+        editElement.selfHide();
 
         if (newValue != undefined)
             fixedElement.innerHTML = newValue;
