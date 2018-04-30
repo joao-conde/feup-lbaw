@@ -38,7 +38,11 @@ div#bios ul {
     list-style: none;
 }
 
-div#bios li {
+div #bios li {
+    margin-right: 15px;
+}
+
+div#bios li > small {
     margin-right: 15px;
     text-decoration: underline;
 }
