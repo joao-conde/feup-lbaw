@@ -19,7 +19,6 @@ submitPasswordButton.addEventListener('click',verifyPassword);
 closeModalBtn.addEventListener('click',closeModalHandler);
 lockOpened.addEventListener('click',lock);
 
-
 function toggleEdits(show) {
 
     for(let i = 0; i < editFields.length; i++) {
@@ -134,7 +133,6 @@ function confirmVerifyPasswordKeyListener(event) {
 }
 
 
-
 /**
  * Profile edition
  */
@@ -154,6 +152,9 @@ let parent = usernameh3.parentElement;
 let nameInput = document.createElement('input');
 nameInput.setAttribute('type', 'text');
 
+let editNameAid = document.querySelector('#edit_name_aid');
+let editBioAid = document.querySelector('#edit_bio_aid');
+
 let editBioButton = document.querySelector('span#edit_bio_button');
 let confirmBioButton = document.querySelector('span#confirm_edit_bio_button');
 let cancelBioButton = document.querySelector('span#cancel_edit_bio_button');
@@ -163,15 +164,29 @@ let parentBio = bioPara.parentElement;
 
 let bioTextArea = document.createElement('textarea');
 
+let parentDateFields = document.querySelector('li#date_parent');
+let editDateButton = document.querySelector('span#edit_date_button');
+let confirmDateButton = document.querySelector('span#confirm_edit_date_button');
+let cancelDateButton = document.querySelector('span#cancel_edit_date_button');
+let editDateAid = document.querySelector('#edit_date_aid');
+
+let dateField = document.querySelector('small#date_field');
+let dateInput = document.querySelector('input#date_input');
+
+
 if (editNameButton != null) {
 
-    editNameButton.addEventListener('click', toggleProfileField.bind(this, true, usernameh3, nameInput, parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField));
-    cancelNameButton.addEventListener('click', toggleProfileField.bind(this, false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined));
+    editNameButton.addEventListener('click',editName);
+    cancelNameButton.addEventListener('click',cancelEditName);
     confirmNameButton.addEventListener('click', confirmEditName);
 
-    editBioButton.addEventListener('click', toggleProfileField.bind(this, true, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField));
-    cancelBioButton.addEventListener('click', toggleProfileField.bind(this, false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined));
+    editBioButton.addEventListener('click',editBio);
+    cancelBioButton.addEventListener('click',cancelEditBio);
     confirmBioButton.addEventListener('click', confirmEditBio);
+
+    // editDateButton.addEventListener('click',editField);
+    editDateButton.addEventListener('click',editField.bind(this,dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,editDateAid));
+    cancelDateButton.addEventListener('click',cancelEditBirthDate);
 
 
 }
@@ -185,8 +200,7 @@ function keyUpAuxNameField(event) {
     }
     else if (event.keyCode == 27) {
 
-        toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined);
-      
+        cancelEditName();
     }
 
 }
@@ -200,8 +214,21 @@ function keyUpAuxBioField(event) {
     }
     else if (event.keyCode == 27) {
 
-        toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined);
-      
+        cancelEditBio();
+    }
+
+}
+
+function keyUpAuxDateField(event) {
+
+
+    if (event.keyCode == 13) {
+
+        //confirmEditBio();
+    }
+    else if (event.keyCode == 27) {
+
+        //cancelEditBio();
     }
 
 }
@@ -218,6 +245,24 @@ function confirmEditName() {
 
 }
 
+function editName() {
+
+    toggleProfileField(true, usernameh3, nameInput, parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField);
+    editNameAid.selfHide();
+
+}
+
+function cancelEditName() {
+
+    toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined);
+    editNameAid.selfShow();
+}
+
+function acknowledgeEditName(value) {
+    toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, value);
+    editNameAid.selfShow();
+}
+
 function confirmEditBio() {
 
     let data = {
@@ -230,14 +275,55 @@ function confirmEditBio() {
 
 }
 
+function editBio() {
+
+    toggleProfileField(true, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField);
+    editBioAid.selfHide();
+
+}
+
+function cancelEditBio() {
+
+    toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined);
+    editBioAid.selfShow();
+
+}
+
+function acknowledgeEditBio(value) {
+    toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, value);
+    editBioAid.selfShow();
+}
+
+function editBirthDate() {
+
+    toggleProfileField(true, dateField, dateInput, parentDateFields, editDateButton, cancelDateButton, confirmDateButton, keyUpAuxDateField);
+    editDateAid.selfHide();
+}
+
+function cancelEditBirthDate() {
+    toggleProfileField(false, dateField, dateInput, parentDateFields, editDateButton, cancelDateButton, confirmDateButton, keyUpAuxDateField, undefined);
+    editBioAid.selfShow();
+}
+
+function editField(fixedField,editField,parentField,editButton,cancelButton,confirmButton,keysListener,aidElement,event) {
+
+    toggleProfileField(true, fixedField, editField, parentField, editButton, cancelButton, confirmButton, keysListener);
+    aidElement.selfHide();
+
+}
+
+
+
 function updateProfile(key, value) {
 
     if (this.status == 200) {
 
-        if(key == 'name')
-            toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, value);
-        else if(key == 'bio')
-            toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, value);
+        if(key == 'name') {
+            acknowledgeEditName(value);
+        }
+        else if(key == 'bio') {
+            acknowledgeEditBio(value);
+        }
 
     }
 

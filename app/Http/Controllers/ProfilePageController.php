@@ -126,7 +126,7 @@ class ProfilePageController extends Controller
 
         $user = User::find($request->id);
 
-        if($request->hasFile('picture')) {
+        //if($request->hasFile('picture')) {
 
             $picture = $request->file('picture');
             $profileSize = Image::make($picture)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
@@ -139,9 +139,9 @@ class ProfilePageController extends Controller
 
             return response('',200);
 
-        }
+        //}
 
-        return response('',500);
+        //return response('No picture',500);
 
 
     }
