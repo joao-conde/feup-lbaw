@@ -61,7 +61,7 @@ insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivatio
 
 ALTER SEQUENCE mb_user_id_seq RESTART WITH 31;
 
-insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('trintaeum', 'zXizewgg', 'Caryl Kubicka', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
+insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('trintaeum', 'zXizewgg', 'José Figueiras', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
 
 
 --Bands

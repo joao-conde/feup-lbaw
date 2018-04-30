@@ -108,6 +108,66 @@ class User extends Authenticatable
 
     }
 
+    public function getNotifications() {
+
+        $result = array();
+
+        DB::transaction(function () {
+
+            // DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
+
+            // $countQuery = "SELECT count(*)
+            //                 FROM user_notification
+            //                 JOIN notification_trigger
+            //                 ON user_notification.notificationTriggerId = notification_trigger.id
+            //                 AND notification_trigger.type != 'message'
+            //                 WHERE visualizedDate IS NULL
+            //                 AND userId = ?";
+
+            // $result['count'] = DB::select($countQuery, [$this->id]);
+            
+            $notificationsQuery = "SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
+                                    FROM user_notification
+                                    JOIN notification_trigger
+                                    ON user_notification.notificationTriggerId = notification_trigger.id
+                                    AND notification_trigger.type != 'message'
+                                    WHERE user_notification.userId = ?
+                                    ORDER BY notification_trigger.date DESC
+                                    LIMIT 7";
+
+            $result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+        });
+
+        // $result['test'] = $blockNo;
+
+        return $result;
+    }
+
+    public function getNotificationsBlock($blockNo = 0){
+
+        $notificationsQuery = "SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
+                                FROM user_notification
+                                JOIN notification_trigger
+                                ON user_notification.notificationTriggerId = notification_trigger.id
+                                AND notification_trigger.type != 'message'
+                                WHERE user_notification.userId = ?
+                                ORDER BY notification_trigger.date DESC
+                                LIMIT 7 OFFSET ?;";
+
+        $result['notifications'] = DB::select($notificationsQuery, [$this->id, $blockNo*7]);
+
+        return $result;
+
+        /*SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
+                                FROM user_notification
+                                JOIN notification_trigger
+                                ON user_notification.notificationTriggerId = notification_trigger.id
+                                AND notification_trigger.type != 'message'
+                                WHERE user_notification.userId = 10
+                                ORDER BY notification_trigger.date DESC
+                                LIMIT 7 OFFSET 0*/
+    }
+
     
 
 }

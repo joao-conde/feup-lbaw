@@ -3,7 +3,12 @@
     <ul class="navbar-nav">
 
         <li class="nav-item dropdown">
-            <a class="nav-link text-success pt-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="far fa-envelope"></i><span class="badge badge-secondary bg-primary text-warning">2</span></a>
+
+            {{ print_r(Auth::user()->getNotifications()) }}
+            <a class="nav-link text-success pt-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <i class="far fa-envelope"></i>
+                <span class="badge badge-secondary bg-primary text-warning">2</span>
+            </a>
             <div id="messagesList" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 
                 <h5 class=" dropdown-item text-center">Messages</h5>
