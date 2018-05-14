@@ -66,7 +66,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 ### Admin
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
-|US34      |Access reported content|high|0%-Danny|
+|US34      |Access reported content|high|50%-Danny|
 |US35      |Create music genre|high|100%|
 |US36      |Remove comments|high|0%|
 |US37      |Remove posts|high|0%|
