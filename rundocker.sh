@@ -1,0 +1,1 @@
+docker run -it -p 8000:80 -e DB_DATABASE=lbaw1712 -e DB_USERNAME=lbaw1712 -e DB_PASSWORD=ch34du51 therealdelay/lbaw1712
