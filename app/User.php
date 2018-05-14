@@ -6,6 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
+
+
+
 
 class User extends Authenticatable
 {
@@ -112,37 +117,41 @@ class User extends Authenticatable
 
         $result = array();
 
-        DB::transaction(function () {
+        $result = DB::transaction(function () {
+            $db_result = array();
 
-            // DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
+            DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
 
-            // $countQuery = "SELECT count(*)
-            //                 FROM user_notification
-            //                 JOIN notification_trigger
-            //                 ON user_notification.notificationTriggerId = notification_trigger.id
-            //                 AND notification_trigger.type != 'message'
-            //                 WHERE visualizedDate IS NULL
-            //                 AND userId = ?";
+            $countQuery = "SELECT count(*)
+                            FROM user_notification
+                            JOIN notification_trigger
+                            ON user_notification.notificationTriggerId = notification_trigger.id
+                            AND notification_trigger.type != 'message'
+                            WHERE visualizedDate IS NULL
+                            AND userId = ?";
 
-            // $result['count'] = DB::select($countQuery, [$this->id]);
+            $db_result['count'] = DB::select($countQuery, [$this->id])[0]->count;
             
-            $notificationsQuery = "SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
-                                    FROM user_notification
-                                    JOIN notification_trigger
-                                    ON user_notification.notificationTriggerId = notification_trigger.id
-                                    AND notification_trigger.type != 'message'
-                                    WHERE user_notification.userId = ?
-                                    ORDER BY notification_trigger.date DESC
-                                    LIMIT 7";
+            $notificationsQuery = $this->queryNotifications();
 
-            $result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+            $db_result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+
+            return $db_result;
         });
-
-        // $result['test'] = $blockNo;
 
         return $result;
     }
 
+    public function queryNotifications(){
+        return "SELECT user_notification.userId, user_notification.notificationTriggerId, user_notification.text, notification_trigger.date, notification_trigger.type
+                FROM user_notification
+                JOIN notification_trigger
+                ON user_notification.notificationTriggerId = notification_trigger.id
+                AND notification_trigger.type != 'message'
+                WHERE user_notification.userId = ?
+                ORDER BY notification_trigger.date DESC
+                LIMIT 7";
+    }
     public function getNotificationsBlock($blockNo = 0){
 
         $notificationsQuery = "SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
@@ -157,15 +166,6 @@ class User extends Authenticatable
         $result['notifications'] = DB::select($notificationsQuery, [$this->id, $blockNo*7]);
 
         return $result;
-
-        /*SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
-                                FROM user_notification
-                                JOIN notification_trigger
-                                ON user_notification.notificationTriggerId = notification_trigger.id
-                                AND notification_trigger.type != 'message'
-                                WHERE user_notification.userId = 10
-                                ORDER BY notification_trigger.date DESC
-                                LIMIT 7 OFFSET 0*/
     }
 
     

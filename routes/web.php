@@ -52,6 +52,8 @@ Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
 
+Route::put('/api/read_notifications','UserController@readNotifications')->name('read_notifications');
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('do_login');

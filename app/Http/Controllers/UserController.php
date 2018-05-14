@@ -38,6 +38,16 @@ class UserController extends Controller
         return response('',200);
     }
 
+    public function readNotifications(){
+
+        $userId = Auth::user()->id;
+
+        $updateQuery = "UPDATE user_notification SET visualizedDate = now() WHERE user_notification.id IN (".User::queryNotifications().")";
+
+        Log::info($updateQuery);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
