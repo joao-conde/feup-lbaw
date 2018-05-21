@@ -77,37 +77,28 @@ function buildPost(data){
   content.appendChild(content_div2);
   content_div2.appendChild(small_content);
 
-  header.classList.add("row");
-  header.classList.add("mb-3");
-  header.classList.add("justify-content-between");
 
-  content.classList.add("row");
-  content.classList.add("justify-content-start");
+  header.classList.add("row", "mb-3", "justify-content-between");
+  
+  content.classList.add("row", "justify-content-start");
 
-  content_div2.classList.add("col")
-  content_div2.classList.add("align-self-center");
-  content_div2.classList.add("text-justify");
+  content_div2.classList.add("col", "align-self-center", "text-justify")
 
-  small_content.innerHTML = data.content;
-
-  post.classList.add("jumbotron");
-  post.classList.add("p-3");
-  post.classList.add("post");
-  post.classList.add("mb-2"); 
+  
+  post.classList.add("jumbotron", "p-3", "post", "mb-2");
   
   id_div.classList.add("col");
   
-  img.classList.add("profile");
-  img.classList.add("mr-2");
+  img.classList.add("profile", "mr-2");
   img.src = "images/system/dummy_profile.svg";
   
-  link.classList.add("text-secondary");
-  link.classList.add("align-middle");
-  link.innerHTML = data.name;
+  link.classList.add("text-secondary", "align-middle");
+    
+  date_div.classList.add("col-4", "text-right");
   
-  date_div.classList.add("col-4");
-  date_div.classList.add("text-right");
-
   i.classList.add("text-secondary");
+
+  small_content.innerHTML = data.content;
+  link.innerHTML = data.name;
   i.innerHTML = data.date;
 }

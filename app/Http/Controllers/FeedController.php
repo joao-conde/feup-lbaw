@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use \Datetime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class FeedController extends Controller
 {
     public function getPosts(){
+
         if (!Auth::check()) return redirect('/login');
 
 
@@ -22,7 +23,8 @@ class FeedController extends Controller
 
         foreach($posts as $post){
             //TODO: PARSE DATE TO CORRECT FORMAT
-            $post->date = $post->date;
+            $dt = new DateTime($post->date);
+            $post->date = date("d/m/Y", $dt->getTimestamp());
         }
 
         return view('pages.feed', ['posts' => $posts]);
