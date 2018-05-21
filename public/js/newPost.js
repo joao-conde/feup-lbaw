@@ -15,8 +15,8 @@ postButton.addEventListener('click', function(){
   let request = new XMLHttpRequest();
   let method = POST;
 
-  //TODO: change to user ID
-  let api = '/api/users/{userID}/posts';
+  let userId = document.querySelector('span#user_id_span').innerHTML;
+  let api = '/api/users/' + userId + '/posts';
   
   let data = {
     private: false,
