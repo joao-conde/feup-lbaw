@@ -30,14 +30,6 @@ class PagesController extends Controller
     	return view('admin.band_reports');
     }
 
-    public function adminGenres(){
-    	return view('admin.genres');
-    }
-
-    public function adminSkills(){
-    	return view('admin.skills');
-    }
-
     public function do_search(Request $request){
         $text = $request->input('text');
 

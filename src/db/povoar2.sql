@@ -123,6 +123,7 @@ insert into content(id,creatorId,text) values(15,11,'Check them out below Green 
 insert into content(id,creatorId,text) values(16,6,'But if you let me be there, again.');
 
 
+
 insert into post(id,private,contentId,bandId) values(1,false,1,NULL);
 insert into post(id,private,contentId,bandId) values(2,true,2,1);
 insert into post(id,private,contentId,bandId) values(3,false,3,1);
@@ -139,6 +140,8 @@ insert into post(id,private,contentId,bandId) values(13,false,13,NULL);
 insert into post(id,private,contentId,bandId) values(14,false,14,NULL);
 insert into post(id,private,contentId,bandId) values(15,false,15,NULL);
 insert into post(id,private,contentId,bandId) values(16,false,16,NULL);
+
+
 
 ALTER SEQUENCE post_id_seq RESTART WITH 17;
 
@@ -503,3 +506,18 @@ insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(10,30,3,now(),now(),'pending');
 
 ALTER SEQUENCE band_invitation_id_seq RESTART WITH 11;
+
+
+
+
+--Testes do Conde
+
+insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values (32,'jotaque', '123456', 'Random name', 'Devolved optimal methodology', '12-11-1963', '31-10-2006', 1, 2, 5.0, false);
+
+insert into content(id,creatorId,text) values(100,32,'Test post1');
+insert into content(id,creatorId,text) values(101,32,'Test post2');
+insert into content(id,creatorId,text) values(102,32,'Test post3');
+
+insert into post(id,private,contentId,bandId) values(500,false,100,NULL);
+insert into post(id,private,contentId,bandId) values(501,false,101,NULL);
+insert into post(id,private,contentId,bandId) values(502,false,102,NULL);

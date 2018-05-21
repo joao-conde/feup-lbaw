@@ -80,11 +80,18 @@ class User extends Authenticatable
     }
 
      /**
+     * The reports of the user
+     */
+     public function reports() {
+        return $this->hasMany('App\Report');
+     }
+
+     /**
       * The users this user is following
       */
 
       public function followedUsers() {
-          //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
+        //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
 
         $query = 'SELECT * FROM user_follower 
                   JOIN mb_user as users ON users.id = user_follower.followedUserId
