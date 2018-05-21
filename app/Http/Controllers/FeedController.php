@@ -21,4 +21,20 @@ class FeedController extends Controller
         return view('pages.feed', ['posts' => $posts]);
     }
 
+    /**
+	 * Creates a new post.
+	 *
+	 * @return Post The post created.
+	 */
+	public function createPost(Request $request)
+	{
+
+        $post = new Post();
+        print_r($post);
+
+        $post->save();
+        return response($post->id, 230);
+	    
+	}
+
 }

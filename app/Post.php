@@ -12,20 +12,6 @@ class Post extends Model
     public $timestamps = false;
 
     public function insertUserPost($text, $creatorId, $private){
-        
-        /* "BEGIN TRANSACTION;
-            SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
-            
-            -- Insert content
-             INSERT INTO content (text, creatorId)
-              VALUES ($text, $creatorId);
-            
-            -- Insert post
-             INSERT INTO post (private, contentId)
-              VALUES ($private, currval('content_id_seq'));
-            
-            COMMIT;";*/
-
 
         DB::transaction(function(){
             DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
