@@ -42,10 +42,9 @@ class FeedController extends Controller
 
         DB::insert($insertContent, [$request->content, Auth::user()->id]);
         DB::insert($insertPost, [$request->private]);
-        
         DB::commit();
         
-        return response(json_encode(['name' => Auth::user()->name,'content' => $request->content]), 200);
+        return response(json_encode(['name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
 	}
 
 }
