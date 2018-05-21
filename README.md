@@ -73,7 +73,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US38      |Ban user|high|100%-Danny|
 |US39      |Ban band|high|100%-Danny|
 |US40      |Give/Take privileges|low|100%|
-|US41      |Notify user|low|0%|
+|US41      |Notify user|low|100%|
 |US42      |Notify band|low|0%|
 
 ### Band Member
