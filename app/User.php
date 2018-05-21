@@ -60,7 +60,7 @@ class User extends Authenticatable
       */
 
       public function followedUsers() {
-          //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
+        //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
 
         $query = 'SELECT * FROM user_follower 
                   JOIN mb_user as users ON users.id = user_follower.followedUserId
