@@ -49,6 +49,13 @@ class User extends Authenticatable
      }
 
      /**
+     * The reports of the user
+     */
+     public function reports() {
+        return $this->hasMany('App\Report');
+     }
+
+     /**
       * The users this user is following
       */
 
