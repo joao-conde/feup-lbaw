@@ -14,18 +14,16 @@ postButton.addEventListener('click', function(){
 
   let request = new XMLHttpRequest();
   let method = POST;
-  let api = '/api/users/{userId}/posts';
+  //TODO: change to user ID
+  let api = '/api/users/' + '20' + '/posts';
   
   let data = {
-    id:   25,
     private: false,
     content: textarea.value
   };
 
-  //console.log("wat");
-  let requestData = encodeForAjax(data);
-  sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(textarea, request, "post"), URL_ENCODE, data);
-  
+  sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(textarea, request, "post"), JSON_ENCODE,JSON.stringify(data));
+  postButton.style.display = 'none';
 })
 
 
@@ -34,11 +32,13 @@ textarea.addEventListener('focusout',function(){
 })
 
 
-function handleCreatePostAPIResponse(request, type){
+function handleCreatePostAPIResponse(response, type){
 
-  if(request.status != 200)
+  if(response.status != 200)
     return;
 
+
+  //TODO: create a post with info (request more info)
   let post_div = document.querySelector('#posts');
   let new_post = document.createElement('div');
   new_post.classList.add('post');
@@ -46,10 +46,10 @@ function handleCreatePostAPIResponse(request, type){
 
   let text = document.createElement('textarea');
   new_post.appendChild(text);
-  text.innerHTML = request.responseText;
 
-  console.log("HANDLE AJAX RESPONSE:" + request.responseText);
+  let data = JSON.parse(response.responseText);
+  
 
-  postButton.style.display = 'none';
+  new_post.innerHTML = data.content;
 }
 
