@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,20 +13,21 @@ class FeedController extends Controller
     public function getPosts(){
         if (!Auth::check()) return redirect('/login');
 
-        $query = 'SELECT * from content WHERE 
-                    content.creatorid=?;';
+
+        $query = 'SELECT * from mb_user, content, post WHERE content.creatorid=? 
+                    AND post.contentid=content.id AND mb_user.id=creatorid
+                    ORDER BY post.id DESC';
 
         $posts = DB::select($query, [Auth::user()->id]);
 
+        foreach($posts as $post){
+            //TODO: PARSE DATE TO CORRECT FORMAT
+            $post->date = $post->date;
+        }
 
         return view('pages.feed', ['posts' => $posts]);
     }
 
-    /**
-	 * Creates a new post.
-	 *
-	 * @return Post The post created.
-	 */
 	public function createPost(Request $request)
 	{    
         
@@ -44,7 +45,7 @@ class FeedController extends Controller
         
         DB::commit();
         
-        return response(json_encode(['content' => $request->content]), 200);
+        return response(json_encode(['name' => Auth::user()->name,'content' => $request->content]), 200);
 	}
 
 }

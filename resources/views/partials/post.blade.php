@@ -4,7 +4,7 @@
 
         <div class="col">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile mr-2">
-            <a class="text-secondary align-middle" href="#">{{$post->id}}</a>
+            <a class="text-secondary align-middle" href="#">{{$post->name}}</a>
         </div>
 
         <div class="col-4 text-right">
@@ -25,5 +25,34 @@
         </div>
 
     </div>
+
+    <div class="row comment mb-1">
+
+    <div class="col align-self-center">
+
+        <div class="row">
+
+            <div class="col-auto comment_author">
+                <img src="{{ asset('images/system/dummy_profile.svg') }}" class=" profile_img_message mr-2">
+                <small>
+                    <a class="text-secondary align-middle" href="#">Leo</a>
+                </small>
+            </div>
+
+            <div class="col">
+                <small class="comment_text">
+                    <small>
+                        <sup>
+                            <i class="fas fa-quote-right"></i>
+                        </sup>
+                        <i>Nice</i>
+                    </small>
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 </div>

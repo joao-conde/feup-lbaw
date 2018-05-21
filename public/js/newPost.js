@@ -37,19 +37,38 @@ function handleCreatePostAPIResponse(response, type){
   if(response.status != 200)
     return;
 
+  let data = JSON.parse(response.responseText);
+  console.log(data);
+  let posts_div = document.querySelector('#posts');
+
+  let post = document.createElement('div');
+  post.classList.add("jumbotron");
+  post.classList.add("p-3");
+  post.classList.add("post");
+  post.classList.add("mb-2"); 
+  
+  posts_div.appendChild(post);
 
   //TODO: create a post with info (request more info)
-  let post_div = document.querySelector('#posts');
-  let new_post = document.createElement('div');
-  new_post.classList.add('post');
-  post_div.appendChild(new_post);
 
-  let text = document.createElement('textarea');
-  new_post.appendChild(text);
+  let header = document.createElement('div');
+  header.classList.add("col");
 
-  let data = JSON.parse(response.responseText);
   
+  let img = document.createElement('img');
+  img.classList.add("profile");
+  img.classList.add("mr-2");
+  img.src = "images/system/dummy_profile.svg";
+  
+  let link = document.createElement("a");
+  link.classList.add("text-secondary");
+  link.classList.add("align-middle");
+  link.innerHTML = data.name;
+  
+  header.appendChild(img);
+  header.appendChild(link);
 
-  new_post.innerHTML = data.content;
+  post.appendChild(header);
+
 }
 
