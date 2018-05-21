@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Content extends Model
 {
-    protected $table = 'post';
+    protected $table = 'content';
 
     public $timestamps = false;
 
@@ -16,7 +16,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'private', 'contentid', 'bandid',
+        'text', 'date', 'creatorid', 'isactive',
     ];
 
     /**
@@ -25,5 +25,4 @@ class Post extends Model
      * @var array
      */
     protected $hidden = [];
-
 }

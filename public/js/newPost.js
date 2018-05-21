@@ -39,8 +39,10 @@ function handleCreatePostAPIResponse(request, type){
   if(request.status != 200)
     return;
 
+  let post_div = document.querySelector('#posts');
   let new_post = document.createElement('div');
   new_post.classList.add('post');
+  post_div.appendChild(new_post);
 
   let text = document.createElement('textarea');
   new_post.appendChild(text);
