@@ -2,6 +2,8 @@
  *   Lock && Unlock
  */ 
 
+let editMode = false;
+
 let editFields = document.querySelectorAll('.edit_field');
 let lockLocked = document.querySelector('span#lock_locked');
 let lockOpened = document.querySelector('span#lock_opened');
@@ -13,6 +15,8 @@ let wrongPwd = document.querySelector('div#modal-msg');
 let emptyPwd = document.querySelector('div#modal-msg-empty');
 
 let closeModalBtn = document.querySelector('button#close_button');
+
+let userSkillsStars = document.querySelectorAll('div.user_skill');
 
 lockLocked.addEventListener('click',openModalHandler);
 submitPasswordButton.addEventListener('click',verifyPassword);
@@ -27,10 +31,19 @@ function toggleEdits(show) {
 
     }
 
+    for(let i = 0; i < userSkillsStars.length; i++) {
+
+        if(editMode)
+            userSkillsStars[i].classList.add('clickable');
+        else
+            userSkillsStars[i].classList.remove('clickable');        
+    }
+
 }
 
 function lock() {
 
+    editMode = false;
     toggleEdits(false);
 
     lockLocked.selfShow();
@@ -41,6 +54,7 @@ function lock() {
 
 function open() {
 
+    editMode = true;
     toggleEdits(true);
 
     lockOpened.selfShow()
@@ -174,33 +188,38 @@ let dateField = document.querySelector('small#date_field');
 let dateInput = document.querySelector('input#date_input');
 
 
+let birthDateTimeStamp = convertDateToEpochSecs(dateInput.value);
+let birthDate = convertEpochSecsToDateString(birthDateTimeStamp);
+
+
 if (editNameButton != null) {
 
-    editNameButton.addEventListener('click',editName);
-    cancelNameButton.addEventListener('click',cancelEditName);
-    confirmNameButton.addEventListener('click', confirmEditName);
+    editNameButton.addEventListener('click',editField.bind(this,usernameh3,nameInput,parent,editNameButton,cancelNameButton,confirmNameButton,keyUpAuxNameField,editNameAid,undefined));
+    cancelNameButton.addEventListener('click',cancelEditField.bind(this,usernameh3,nameInput,parent,editNameButton,cancelNameButton,confirmNameButton,keyUpAuxNameField,editNameAid));
+    confirmNameButton.addEventListener('click',confirmEditField.bind(this,'name',nameInput));
 
-    editBioButton.addEventListener('click',editBio);
-    cancelBioButton.addEventListener('click',cancelEditBio);
-    confirmBioButton.addEventListener('click', confirmEditBio);
+    editBioButton.addEventListener('click',editField.bind(this,bioPara,bioTextArea,parentBio,editBioButton,cancelBioButton,confirmBioButton,keyUpAuxBioField,editBioAid,undefined));
+    cancelBioButton.addEventListener('click',cancelEditField.bind(this,bioPara,bioTextArea,parentBio,editBioButton,cancelBioButton,confirmBioButton,keyUpAuxBioField,editBioAid));
+    confirmBioButton.addEventListener('click', confirmEditField.bind(this,'bio',bioTextArea));
 
-    // editDateButton.addEventListener('click',editField);
-    editDateButton.addEventListener('click',editField.bind(this,dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,editDateAid));
-    cancelDateButton.addEventListener('click',cancelEditBirthDate);
-
+    
+    editDateButton.addEventListener('click',editField.bind(this,dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,editDateAid,birthDate));
+    cancelDateButton.addEventListener('click',cancelEditField.bind(this,dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,editDateAid));
+    confirmDateButton.addEventListener('click',confirmEditField.bind(this,'birthdate',dateInput));
 
 }
+
 
 function keyUpAuxNameField(event) {
 
 
     if (event.keyCode == 13) {
 
-        confirmEditName();
+        confirmEditField('name',nameInput);
     }
     else if (event.keyCode == 27) {
 
-        cancelEditName();
+        cancelEditField(usernameh3,nameInput,parent,editNameButton,cancelNameButton,confirmNameButton,keyUpAuxNameField,editNameAid);
     }
 
 }
@@ -210,11 +229,11 @@ function keyUpAuxBioField(event) {
 
     if (event.keyCode == 13) {
 
-        confirmEditBio();
+        confirmEditField('bio',bioTextArea);
     }
     else if (event.keyCode == 27) {
 
-        cancelEditBio();
+        cancelEditField(bioPara,bioTextArea,parentBio,editBioButton,cancelBioButton,confirmBioButton,keyUpAuxBioField,editBioAid);
     }
 
 }
@@ -224,105 +243,65 @@ function keyUpAuxDateField(event) {
 
     if (event.keyCode == 13) {
 
-        //confirmEditBio();
+        confirmEditField('birthdate',dateInput);
     }
     else if (event.keyCode == 27) {
 
-        //cancelEditBio();
+        cancelEditField(dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,editDateAid);
     }
 
 }
 
-function confirmEditName() {
+function editField(fixedField,editField,parentField,editButton,cancelButton,confirmButton,keysListener,aidElement,innerHTML, event) {
 
-    let data = {
-        name: nameInput.value.trim()
-    }
-
-    let request = new XMLHttpRequest;
-
-    sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'name', data.name), JSON_ENCODE, JSON.stringify(data));
-
-}
-
-function editName() {
-
-    toggleProfileField(true, usernameh3, nameInput, parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField);
-    editNameAid.selfHide();
-
-}
-
-function cancelEditName() {
-
-    toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, undefined);
-    editNameAid.selfShow();
-}
-
-function acknowledgeEditName(value) {
-    toggleProfileField(false, usernameh3, nameInput,parent, editNameButton, cancelNameButton, confirmNameButton, keyUpAuxNameField, value);
-    editNameAid.selfShow();
-}
-
-function confirmEditBio() {
-
-    let data = {
-        bio: bioTextArea.value.trim()
-    }
-
-    let request = new XMLHttpRequest;
-
-    sendAsyncAjaxRequest(request, api, PUT, updateProfile.bind(request, 'bio', data.bio), JSON_ENCODE, JSON.stringify(data));
-
-}
-
-function editBio() {
-
-    toggleProfileField(true, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField);
-    editBioAid.selfHide();
-
-}
-
-function cancelEditBio() {
-
-    toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, undefined);
-    editBioAid.selfShow();
-
-}
-
-function acknowledgeEditBio(value) {
-    toggleProfileField(false, bioPara, bioTextArea, parentBio, editBioButton, cancelBioButton, confirmBioButton, keyUpAuxBioField, value);
-    editBioAid.selfShow();
-}
-
-function editBirthDate() {
-
-    toggleProfileField(true, dateField, dateInput, parentDateFields, editDateButton, cancelDateButton, confirmDateButton, keyUpAuxDateField);
-    editDateAid.selfHide();
-}
-
-function cancelEditBirthDate() {
-    toggleProfileField(false, dateField, dateInput, parentDateFields, editDateButton, cancelDateButton, confirmDateButton, keyUpAuxDateField, undefined);
-    editBioAid.selfShow();
-}
-
-function editField(fixedField,editField,parentField,editButton,cancelButton,confirmButton,keysListener,aidElement,event) {
-
-    toggleProfileField(true, fixedField, editField, parentField, editButton, cancelButton, confirmButton, keysListener);
+    toggleProfileField(true, fixedField, editField, parentField, editButton, cancelButton, confirmButton, keysListener,undefined,innerHTML);
     aidElement.selfHide();
 
 }
 
+function cancelEditField(fixedField,editField,parentField, editButton, cancelButton, confirmButton, keysListener, aidElement,event) {
+
+    toggleProfileField(false, fixedField, editField, parentField, editButton, cancelButton, confirmButton, keysListener, undefined);
+    aidElement.selfShow();
 
 
-function updateProfile(key, value) {
+}
+
+function confirmEditField(key, editElement, event) {
+
+    let data = {}
+    data[key] = editElement.value.trim();
+
+    let request = new XMLHttpRequest();
+    sendAsyncAjaxRequest(request,api,PUT, updateProfile.bind(request, key, data[key]), JSON_ENCODE, JSON.stringify(data));
+
+}
+
+function acknowledgeEditField(fixedElement,editField,parentField,editButton,cancelButton,confirmButton,keyslistener, value,aidElement) {
+    toggleProfileField(false, fixedElement, editField, parentField, editButton, cancelButton, confirmButton, keyslistener, value);
+    aidElement.selfShow();
+}
+
+
+function updateProfile(key, value, event) {
 
     if (this.status == 200) {
 
         if(key == 'name') {
-            acknowledgeEditName(value);
+            acknowledgeEditField(usernameh3,nameInput,parent,editNameButton,cancelNameButton,confirmNameButton,keyUpAuxNameField, value, editNameAid);
         }
         else if(key == 'bio') {
-            acknowledgeEditBio(value);
+            acknowledgeEditField(bioPara,bioTextArea,parentBio,editBioButton,cancelBioButton,confirmBioButton,keyUpAuxBioField,value, editBioAid);
+        }
+
+        else if(key == 'birthdate') {
+
+            let newBirthDateTimeStamp = convertDateToEpochSecs(value);
+            let newBirthDate = convertEpochSecsToDateStringPT(newBirthDateTimeStamp);
+
+            let innerHTML = 'Born on ' + newBirthDate;
+
+            acknowledgeEditField(dateField,dateInput,parentDateFields,editDateButton,cancelDateButton,confirmDateButton,keyUpAuxDateField,innerHTML, editDateAid);
         }
 
     }
@@ -385,4 +364,401 @@ function handleUpdatePicture(file) {
 
 }
 
+
+/**
+ * Edit/remove/add skill
+ */
+
+let skills = document.querySelectorAll('div.user_skill');
+let skillList = document.querySelector('div#new_skill_dd');
+
+for(let i = 0; i < skills.length; i++) {
+
+    let skill = skills[i];
+    let fullStars = skill.querySelectorAll('.fullstar');
+    let emptyStars = skill.querySelectorAll('.emptystar');
+    let skillId = parseInt(skill.querySelector('small.user_skill_id').innerHTML);
+    let skillName = skill.querySelector('p.skillName').innerHTML;
+
+    let removeSkillButton = skill.querySelector('span.delete_skill_button');
+    removeSkillButton.addEventListener('click',confirmRemoveSkill.bind(this,skill,skillId,i,skillName));
+
+    skills[i].addEventListener('mouseout', paintStars.bind(this,skills[i],undefined));
+
+    for(let j = 0; j < 5; j++) {
+
+        fullStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,true));
+        emptyStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,true));
+        fullStars[j].addEventListener('click', skillConfirmEditClickListener.bind(skillId, skill));
+        emptyStars[j].addEventListener('click', skillConfirmEditClickListener.bind(skillId, skill));
+
+    }
+
+}
+
+
+function skillStarHoverListener(level,edit,event) {
+
+    if(!editMode)
+        return;
+
+    let target = event.target;
+    let elementType = event.target.tagName;
+
+    let skillElement;
+
+    if(elementType == 'SPAN') {
+        skillElement = target.parentElement;
+    }
+    else if(elementType == 'svg') {
+        skillElement = target.parentElement.parentElement;
+    }
+
+    else if(elementType == 'path') {
+        skillElement = target.parentElement.parentElement.parentElement;
+    }
+
+    if(edit)
+        paintStars(skillElement,level);
+    else
+        paintStarsNewSkill(skillElement,level);
+
+}
+
+function skillConfirmEditClickListener(skillElement,event) {
+
+    let skillId = this;
+
+    let fullStars = skillElement.querySelectorAll('.fullstar');
+    
+    let level;
+    
+    for(level = 0; level < fullStars.length; level++) {
+
+        if(checkIfHasClass(fullStars[level],'d-none'))
+            break;
+
+    }
+
+    let request = new XMLHttpRequest();
+    let api = '/api/user_skills/' + skillId;
+
+    let data = {
+        level : level
+    }
+
+    sendAsyncAjaxRequest(request,api,PUT,updateSkillAjaxRequestListener.bind(request,skillElement,level),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function updateSkillAjaxRequestListener(skillElement,level) {
+
+    let status = this.status;
+
+    skillElement.querySelector('.user_skill_level').innerHTML = level;
+    
+    if(status == 200)
+        paintStars(skillElement,level-1);
+
+
+}
+
+function paintStars(skillElement,level) {
+    
+    if(!editMode)
+        return;
+
+    let currentLevel;
+
+    if(level != undefined)
+        currentLevel = level;
+
+    else {
+        currentLevel = parseInt(skillElement.querySelector('.user_skill_level').innerHTML) - 1;
+    }
+
+
+    for(let i = 0; i < 5; i++) {
+
+        let paintStar = (i <= currentLevel);
+
+        let fullStar = skillElement.children[3*i + 1];
+        let emptyStar = skillElement.children[3*i + 2];
+
+
+        if(paintStar) {
+            fullStar.selfShow();
+            emptyStar.selfHide()
+        }
+        else {
+            fullStar.selfHide();
+            emptyStar.selfShow();
+        }
+
+    }
+}
+
+function confirmRemoveSkill(skillElement, skillId, childNo, skillName) {
+
+    let request = new XMLHttpRequest();
+    let api = '/api/user_skills/' + skillId;
+
+    sendAsyncAjaxRequest(request,api,DELETE,removeSkillAjaxRequestListener.bind(request,skillElement, childNo, skillId, skillName));
+
+}
+
+function removeSkillAjaxRequestListener(skillElement,childNo,skillId,skillName) {
+
+    if(this.status != 200)
+        return;
+
+    let parent = skillElement.parentElement;
+    
+    parent.removeChild(skillElement);
+
+    //insert in list of skills user do not have
+
+    let div1 = document.createElement('div');
+    div1.classList.add('row','justify-content-between', 'mb-2');
+    
+    let smallName = document.createElement('small');
+    smallName.classList.add('d-inline','px-3','col','align-self-center', 'skillName');
+    smallName.innerHTML = skillName;
+
+    let smallId = document.createElement('small');
+    smallId.classList.add('d-none','px-3','col','align-self-center', 'skillId');
+    smallId.innerHTML = skillId;
+
+    let div2 = document.createElement('div');
+    div2.classList.add('stars','d-inline','px-3');
+
+    for(let i = 0; i < 5; i++) {
+
+        let span1 = document.createElement('span');
+        span1.classList.add('mt-1', 'text-primary','fullstar','clickable','d-none','previouslyDeletedItem');
+
+        let elI1 = document.createElement('i');
+        elI1.classList.add('fas','fa-star');
+
+        let span2 = document.createElement('span');
+        span2.classList.add('mt-1', 'text-primary','emptystar','clickable','previouslyDeletedItem');
+
+        let elI2 = document.createElement('i');
+        elI2.classList.add('far','fa-star');
+
+        let span3 = document.createElement('span');
+        span3.classList.add('d-none','level');
+        span3.innerHTML = i;
+
+        span1.appendChild(elI1);
+        span2.appendChild(elI2);
+
+        div2.appendChild(span1);
+        div2.appendChild(span2);
+        div2.appendChild(span3);
+
+        span1.addEventListener('mouseover', paintStarsNewSkill.bind(this,div2,i));
+        span2.addEventListener('mouseover', paintStarsNewSkill.bind(this,div2,i));
+        span1.addEventListener('click', confirmAddSkill.bind(this,parseInt(smallId.innerHTML), i+1, skillName));
+        span2.addEventListener('click', confirmAddSkill.bind(this,parseInt(smallId.innerHTML), i+1), skillName);
+
+
+    }
+
+    div1.addEventListener('mouseout',eraseAllStarsNewSkill.bind(div2));
+    div1.appendChild(smallName);
+    div1.appendChild(smallId);
+    div1.appendChild(div2);
+
+    for(let i = 0; i < skillList.children.length; i++) {
+
+        let name = skillList.children[i].querySelector('small.skillName').innerHTML;
+
+        if(name > skillName) {
+
+            skillList.insertBefore(div1,skillList.children[i]);
+            break;
+        }
+            
+
+    }
+
+}
+
+for(let i = 0; i < skillList.children.length; i++) {
+
+    let skill = skillList.children[i];
+    
+    let fullStars = skill.querySelectorAll('.fullstar');
+    let emptyStars = skill.querySelectorAll('.emptystar');
+    let skillId = parseInt(skill.querySelector('small.skillId').innerHTML);
+    let skillName = skill.querySelector('small.skillName').innerHTML;
+
+    skill.addEventListener('mouseout',eraseAllStarsNewSkill.bind(skill));
+
+    for(let j = 0; j < 5; j++) {
+
+        fullStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
+        emptyStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
+        fullStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1,skillName));
+        emptyStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1, skillName));
+
+    }
+
+}
+
+function paintStarsNewSkill(skillElement,level) {
+
+    for(let i = 0; i < 5; i++) {
+
+        let paintStar = (i <= level);
+
+        let fullStar = skillElement.children[3*i];
+        let emptyStar = skillElement.children[3*i + 1];
+
+        if(paintStar) {
+            fullStar.selfShow();
+            emptyStar.selfHide()
+        }
+        else {
+            fullStar.selfHide();
+            emptyStar.selfShow();
+        }
+
+    }
+
+}
+
+function eraseAllStarsNewSkill() {
+
+    let fullStar = this.querySelectorAll('.fullstar');
+    let emptyStar = this.querySelectorAll('.emptystar');
+
+    for(let i = 0; i < fullStar.length; i++) {
+
+        fullStar[i].selfHide();
+        emptyStar[i].selfShow();
+
+    }
+
+}
+
+function confirmAddSkill(skillId, level, skillName) {
+
+    let request = new XMLHttpRequest();
+    let api = '/api/user_skills/' + skillId;
+
+    let data = {
+        level : level
+    }
+
+    sendAsyncAjaxRequest(request,api,PUT,addSkillAjaxRequestHandler.bind(request,skillId,level,skillName),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+
+function addSkillAjaxRequestHandler(skillId,level,skillName) {
+
+    if(this.status != 200)
+        return;
+
+
+    let divUserSkill = document.createElement('div');
+    divUserSkill.classList.add('user_skill');
+
+    let pSkillName = document.createElement('p');
+    pSkillName.classList.add('mr-2','have_it','d-inline', 'skillName');
+    pSkillName.innerHTML = skillName;
+
+    divUserSkill.appendChild(pSkillName);
+
+    divUserSkill.addEventListener('mouseout', paintStars.bind(this,divUserSkill,undefined));
+
+    for(let i = 0; i < 5; i++) {
+
+        let span1 = document.createElement('span');
+        span1.classList.add('mt-1','text-primary', 'fullstar');
+
+        let i1 = document.createElement('i');
+        i1.classList.add('fas','fa-star');
+
+        span1.appendChild(i1);
+
+        let span2 = document.createElement('span');
+        span2.classList.add('mt-1','text-primary', 'emptystar');
+
+        let i2 = document.createElement('i');
+        i2.classList.add('far','fa-star');
+
+        span2.appendChild(i2);
+
+        let span3 = document.createElement('span');
+        span3.classList.add('d-none','level');
+
+        if(i < level) 
+            span2.classList.add('d-none');
+        else
+            span1.classList.add('d-none');
+
+        divUserSkill.appendChild(span1);
+        divUserSkill.appendChild(span2);
+        divUserSkill.appendChild(span3);
+
+        span1.style.marginLeft = "2px";
+        span2.style.marginLeft = "2px";
+        span1.style.cursor = "pointer";
+        span2.style.cursor = "pointer";
+
+        span1.addEventListener('mouseover', skillStarHoverListener.bind(this,i,true));
+        span2.addEventListener('mouseover', skillStarHoverListener.bind(this,i,true));
+        span1.addEventListener('click', skillConfirmEditClickListener.bind(skillId, divUserSkill));
+        span2.addEventListener('click', skillConfirmEditClickListener.bind(skillId, divUserSkill));
+        
+
+    }
+
+    let smallSkillId = document.createElement('small');
+    smallSkillId.classList.add('d-none','user_skill_id');
+    smallSkillId.innerHTML = skillId;
+
+    let smallSkillLevel = document.createElement('small');
+    smallSkillLevel.classList.add('d-none','user_skill_level');
+    smallSkillLevel.innerHTML = level;
+
+    let spanDelete = document.createElement('span');
+    spanDelete.classList.add('edit_field', 'delete_skill_button');
+
+    let elementI = document.createElement('i');
+    elementI.classList.add('fas', 'fa-times', 'text-danger');
+
+    spanDelete.appendChild(elementI);
+    spanDelete.style.marginLeft = "2px";
+
+
+    divUserSkill.appendChild(smallSkillId);
+    divUserSkill.appendChild(smallSkillLevel);
+    divUserSkill.appendChild(spanDelete);
+
+    spanDelete.style.cursor = 'pointer';
+    
+    document.querySelector('div#skills_list').appendChild(divUserSkill);
+
+    spanDelete.addEventListener('click', confirmRemoveSkill.bind(this,divUserSkill, skillId, document.querySelector('div#skills_list').children.length-1,skillName));
+
+    for(let i = 0; i < skillList.children.length; i++) {
+
+        let small = skillList.children[i].querySelector('small.skillId');
+        let id = parseInt(small.innerHTML); 
+        if(id == skillId) {
+
+            skillList.removeChild(small.parentElement);
+
+        }
+
+    }
+
+    editFields = document.querySelectorAll('.edit_field');
+
+
+}
 

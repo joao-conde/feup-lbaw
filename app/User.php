@@ -45,8 +45,39 @@ class User extends Authenticatable
      * The skills of the user
      */
      public function skills() {
-        return $this->hasMany('App\Skill');
-     }
+        
+        $query = ' SELECT * FROM 
+        
+            (SELECT skills.id as skillId, skills.name as skill, user_skill.level as level, true as user_skill 
+            FROM user_skill 
+            JOIN skill as skills ON skills.id = user_skill.skillId
+            WHERE user_skill.userId = ? AND user_skill.isActive = true
+        
+            UNION ALL
+
+            SELECT skills.id as skillId, skills.name as skill, 0 as level, false as user_skill 
+            FROM skill as skills
+                WHERE (skills.id, ?) NOT IN (
+                SELECT skillId,userId 
+                FROM user_skill
+                )
+
+            UNION ALL
+
+            SELECT skills.id as skillId, skills.name as skill, user_skill.level as level, false as user_skill 
+            FROM user_skill 
+            JOIN skill as skills ON skills.id = user_skill.skillId
+            WHERE user_skill.userId = ? AND user_skill.isActive = false
+            
+            
+            ) AS result
+
+            ORDER BY result.skill ASC 
+
+        ';
+        return DB::select($query, [$this->id, $this->id, $this->id]);
+
+    }
 
      /**
      * The reports of the user
