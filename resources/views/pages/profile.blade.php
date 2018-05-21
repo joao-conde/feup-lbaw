@@ -119,38 +119,44 @@
 							<hr class="mt-0">
 		
 							<div id="rating" class="row">
-								<div class="col-12">
+								<div class="col-12 mb-3">
 									<div id="skills_list">
-										<p class="mr-2">Drums
-		
-											
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-										</p>
-										<p class="mr-2">Guitar
-		
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-										</p>
-										<p class="mr-2">Piano
-		
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="fas fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-											<i class="far fa-star mt-1 text-primary"></i>
-										</p>
+
+										@foreach($skills as $skill)
+
+											@if($skill->user_skill)
+												@include('partials.user_skill')
+											@endif
+
+										@endforeach
 		
 									</div>
-		
 								</div>
 							</div>
+
+							@if( $user->id == Auth::user()->id)
+
+								<div class="row justify-content-start m-2 d-none edit_field d-none">
+
+									<div class="btn-group">
+										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Add New Skill
+										</button>
+										<div id="new_skill_dd" class="dropdown-menu dropdown-menu-left col-12 p-3 bg-secondary">
+											@foreach($skills as $skill)
+
+												@if(!$skill->user_skill)
+													@include('partials.new_skill')
+												@endif
+
+											@endforeach
+											
+										</div>
+									</div>
+
+								</div>
+							
+							@endif
 		
 							<div id="bios" class="row p-0 justify-content-center">
 								<ul>
@@ -163,12 +169,12 @@
 
 										@if(Auth::user()->dateofbirth)
 											<small id="date_field">Born on
-												<i>{{Auth::user()->dateofbirth}}</i>
+												<i>{{ $dateOfBirthString }}</i>
 											</small>
 										@endif
 
 										@if( $user->id == Auth::user()->id)
-											<input type="date" class="d-none" id="date_input">
+											<input type="date" class="d-none" id="date_input" value="{{Auth::user()->dateofbirth}}">
 											<span id="edit_date_button" class="edit_field d-none clickable">
 												<i class="fas fa-pencil-alt"></i>
 											</span>

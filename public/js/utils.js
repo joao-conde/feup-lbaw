@@ -22,15 +22,26 @@ function changeActiveTab(index) {
         }
 }
 
-function convertDateToEpochSecs(dateString) {
+function convertDateToEpochSecs(dateString, format) {
     
     return new Date(dateString).getTime() / 1000;
 
 }
 
-function convertEpochSecsToDateString(seconds) {
+function convertEpochSecsToDateStringPT(seconds) {
     
     return new Date(seconds*1000).toLocaleDateString("pt-PT");
+    
+}
+
+function convertEpochSecsToDateString(seconds) {
+    
+    let date = new Date(seconds*1000);
+
+    let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+    let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+
+    return date.getFullYear() + '-' + month+ '-' + day;
     
 }
 
@@ -109,11 +120,14 @@ function checkIfHasClass(element, className) {
 
 }
 
-function toggleProfileField(showEdit, fixedElement, editElement, parentElement, editButton, cancelButton, confirmButton, keysHandler, newValue) {
+function toggleProfileField(showEdit, fixedElement, editElement, parentElement, editButton, cancelButton, confirmButton, keysHandler, newValue, innerHTML) {
 
     if (showEdit == true) {
 
-        let oldValue = fixedElement.innerHTML;
+        let oldValue = innerHTML != undefined ? innerHTML : fixedElement.innerHTML;
+
+        console.log("Old value: " + innerHTML);
+
         editButton.selfHide();
         confirmButton.selfShow();
         cancelButton.selfShow();
@@ -124,8 +138,6 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
         parentElement.replaceChild(editElement, fixedElement);
         editElement.value = oldValue;
         window.addEventListener('keyup', keysHandler);
-
-        console.log(oldValue);
 
     }
 

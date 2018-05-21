@@ -1,9 +1,3 @@
-<style>
-	.clickable {
-		cursor: pointer;
-	}
-</style>
-
 <li class="list-group-item skills">
 	<span class="d-none" id="skill_id">{{ $skill->id }}</span>
 	<div class="row">

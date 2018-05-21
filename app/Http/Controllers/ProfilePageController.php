@@ -26,6 +26,7 @@ class ProfilePageController extends Controller
 
         $user = User::find($id);
         $followedUsers = Auth::user()->followedUsers();
+        $skills = Auth::user()->skills();
 
         $isFollowing = false;
 
@@ -40,7 +41,10 @@ class ProfilePageController extends Controller
 
         }
 
-        return view('pages.profile', ['user' => $user, 'isFollowing' => $isFollowing]);
+        $timestamp = strtotime($user->dateofbirth); 
+        $dateOfBirthString = date('d/m/Y', $timestamp);
+
+        return view('pages.profile', ['user' => $user, 'isFollowing' => $isFollowing, 'dateOfBirthString' => $dateOfBirthString, 'skills' => $skills]);
 
     } 
 
@@ -115,6 +119,7 @@ class ProfilePageController extends Controller
 
         if($request->__isset('name')) $user->name = $request->name;
         if($request->__isset('bio')) $user->bio = $request->bio;
+        if($request->__isset('birthdate')) $user->dateofbirth = $request->birthdate;
 
         $user->save();
 
@@ -132,8 +137,6 @@ class ProfilePageController extends Controller
             $profileSize = Image::make($picture)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
             $iconSize = Image::make($picture)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
 
-
-            
             Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
             Storage::put($user->pathToIconPicture(), $iconSize->__toString());
 
@@ -165,6 +168,57 @@ class ProfilePageController extends Controller
         }
 
         return response('No password detected',500);
+    }
+
+    public function addSkill(Request $request, $skillId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        if(!$request->__isset('level'))
+            return response('',400);
+
+        $verifyQuery = 'SELECT * FROM user_skill
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        $updateQuery = 'UPDATE user_skill
+                        SET isActive = true,
+                            level = ?
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        $insertQuery = 'INSERT INTO user_skill(skillId, userId, level)
+                    VALUES (?,?,?)';
+
+        $alreadyExists = DB::select($verifyQuery, [$request->skillId, Auth::user()->id]);
+
+
+        if(count($alreadyExists) == 0) {
+            DB::insert($insertQuery, [$request->skillId,Auth::user()->id,$request->level]);
+            return response('',200);
+        }
+            
+
+        else if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [$request->level,$request->skillId, Auth::user()->id]);
+            return response('',200);
+        }
+
+        else
+            return response(count($alreadyExists),500);
+
+    }
+
+    public function deleteSkill(Request $request, $skillId) {
+
+        $updateQuery = 'UPDATE user_skill
+                        SET isActive = false
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        DB::update($updateQuery, [$request->skillId, Auth::user()->id]);
+
+        return response(200);
     }
 
 }
