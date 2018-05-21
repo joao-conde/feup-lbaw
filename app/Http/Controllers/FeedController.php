@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,13 +29,16 @@ class FeedController extends Controller
 	 */
 	public function createPost(Request $request)
 	{
-
         $post = new Post();
-        print_r($post);
-
-        $post->save();
-        return response($post->id, 230);
-	    
+        
+        $post->id = $request->input('id');
+        $post->private = $request->input('private');
+        
+        //$post->text = $request->input('post');
+        
+        //$post->save();
+        
+        return response($post->id, 200);
 	}
 
 }
