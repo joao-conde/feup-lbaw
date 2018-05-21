@@ -22,13 +22,13 @@ class FeedController extends Controller
         $posts = DB::select($query, [Auth::user()->id]);
 
         foreach($posts as $post){
-            //TODO: PARSE DATE TO CORRECT FORMAT
             $dt = new DateTime($post->date);
             $post->date = date("d/m/Y", $dt->getTimestamp());
         }
-
+        
         return view('pages.feed', ['posts' => $posts]);
     }
+
 
 	public function createPost(Request $request)
 	{    
