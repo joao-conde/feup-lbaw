@@ -158,12 +158,46 @@
 							
 							@endif
 		
-							<div id="bios" class="row p-0 justify-content-center">
+							<div id="bios" class="row p-0 mt-3 justify-content-center">
 								<ul>
 									<li>
-										<small>Lives in
-											<i>Porto, Portugal</i>
-										</small>
+										
+										<i id="user_location">
+											@if($location != '')
+											{{$location}}, {{$country}}
+											@endif
+											
+										</i>
+										@if( $user->id == Auth::user()->id)
+										
+										@if($location != '')
+											<span id="delete_location_button" class="d-none edit_field clickable">
+												<i class="fas fa-times text-danger"></i>
+											</span>
+										@endif
+										
+
+										
+										<div class="btn-group edit_field d-none">
+											<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Edit Location
+											</button>
+											<div id="edit_location_dd" class="dropdown-menu dropdown-menu-left col-12 p-3 bg-secondary">
+												@foreach($cities as $city)
+
+													@include('partials.location')
+
+												@endforeach
+												
+											</div>
+										</div>
+
+										
+										
+										@endif
+
+									
+										
 									</li>
 									<li id="date_parent">
 
