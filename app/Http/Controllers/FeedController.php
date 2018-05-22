@@ -45,8 +45,31 @@ class FeedController extends Controller
         DB::insert($insertContent, [$request->content, Auth::user()->id]);
         DB::insert($insertPost, [$request->private]);
         DB::commit();
+
+        $posts = DB::table('post')->get();
+        $postid = $posts[0]->id;
+
+        return response(json_encode(['postid'=>$postid, 'name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
+    }
+    
+    public function deletePost(Request $request){
+
+        $getContentId = "SELECT post.contentid FROM post WHERE post.id = ?";
+        $content = DB::select($getContentId, [$request->postid]);
+        $contentid = $content[0]->contentid;
         
-        return response(json_encode(['name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
-	}
+        DB::beginTransaction();
+        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+        
+        $deletePost = "DELETE FROM post WHERE post.id=?";
+        $deleteContent = "DELETE FROM content WHERE content.id=?";
+
+        DB::delete($deletePost, [$request->postid]);
+        DB::delete($deleteContent, [$contentid]);
+        
+        DB::commit();
+        
+        return response(json_encode(['postid'=>$request->postid]), 200);
+    }
 
 }

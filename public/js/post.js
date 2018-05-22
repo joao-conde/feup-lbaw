@@ -1,5 +1,7 @@
 'use strict';
 
+//Create Post
+
 let textarea = document.querySelector('#new_post_ta');
 let postButton = document.querySelector('#postbutton');
 
@@ -49,6 +51,14 @@ function buildPost(data){
   let posts_div = document.querySelector('#posts');
   let post = document.createElement('div');
   
+  let postid_div = document.createElement('div');
+  let post_buttons = document.createElement('div');
+  let span_delete = document.createElement('span');
+  let delete_i = document.createElement('i');
+  let span_edit = document.createElement('span');
+  let edit_i = document.createElement('i');
+
+
   let header = document.createElement('div');
   let id_div = document.createElement('div');
   let img = document.createElement('img');
@@ -61,9 +71,29 @@ function buildPost(data){
   let content_div2 = document.createElement('div');
   let small_content = document.createElement("small");
   
+  postid_div.classList.add("d-none");
+  postid_div.id = "postID";
+  postid_div.innerHTML = data.postid;
+  
+  span_delete.id = "delete_post_button";
+  span_edit.id = "edit_post_button";
+
+  delete_i.classList.add("fas", "fa-times", "text_danger");
+  edit_i.classList.add("fas",  "fa-pencil-alt");
+
+  span_delete.appendChild(delete_i);
+  span_edit.appendChild(edit_i);
+
+  post_buttons.appendChild(span_delete);
+  post_buttons.appendChild(span_edit);
+
+  post.appendChild(postid_div);
+  post.appendChild(post_buttons);
+
   posts_div.insertBefore(post, posts_div.children[1]);
   post.appendChild(header);
   post.appendChild(content);
+
 
   header.appendChild(id_div);
   header.appendChild(date_div);
@@ -101,4 +131,70 @@ function buildPost(data){
   small_content.innerHTML = data.content;
   link.innerHTML = data.name;
   i.innerHTML = data.date;
+
+  let postId = data.postid;
+
+  span_delete.addEventListener('click', function(){
+
+    let request = new XMLHttpRequest();
+    let method = DELETE;
+    let api = '/api/users/' + userId + '/posts/' + postId;
+    
+    let data = {
+      postid: postId
+    };
+  
+    sendAsyncAjaxRequest(request, api, method, handleDeletePostAPIResponse.bind(span_delete, request, "delete"), JSON_ENCODE, JSON.stringify(data));  
+  });
 }
+
+
+
+//Delete Post
+
+let posts = document.querySelectorAll('.post');
+let userId = document.querySelector('span#user_id_span').innerHTML;
+
+for(let i = 1; i < posts.length; i++){
+  
+  let deletePostBtn = posts[i].querySelector('#delete_post_button');
+  let postId = posts[i].querySelector('#postID').innerHTML;
+
+  deletePostBtn.addEventListener('click', function(){
+
+    let request = new XMLHttpRequest();
+    let method = DELETE;
+    let api = '/api/users/' + userId + '/posts/' + postId;
+    
+    let data = {
+      postid: postId
+    };
+  
+    sendAsyncAjaxRequest(request, api, method, handleDeletePostAPIResponse.bind(deletePostBtn, request, "delete"), JSON_ENCODE, JSON.stringify(data));  
+  });
+
+}
+
+function handleDeletePostAPIResponse(response){
+
+  if(response.status != 200)
+    return;
+
+  let data = JSON.parse(response.responseText);
+  let posts = document.querySelectorAll('.post');
+  let postidToDelete = data.postid;
+
+  for(let i = 1; i < posts.length; i++){
+    
+    let postId = posts[i].querySelector('#postID').innerHTML;
+    if(postId == postidToDelete){
+      posts[i].parentNode.removeChild(posts[i]);
+      console.log("REMOVED POST " + postId);
+      break;
+    }
+
+  }
+}
+
+
+

@@ -1,5 +1,18 @@
 <div class="jumbotron p-3 post mb-2">
 
+    <div class="d-none" id="postID">{{$post->id}}</div>
+
+    <div>
+        @if($post->creatorid == Auth::user()->id)
+        <span id="delete_post_button">
+            <i class="fas fa-times text-danger"></i>
+        </span>
+        <span id="edit_post_button">
+                <i class="fas fa-pencil-alt"></i>
+        </span>
+        @endif
+    </div>
+
     <div class="row mb-3 justify-content-between">
 
         <div class="col">
@@ -7,17 +20,15 @@
             <a class="text-secondary align-middle" href="#">{{$post->name}}</a>
         </div>
 
-        {{-- @if($user->id == Auth::user()->id) --}}
-        <span class="d-none edit_field delete_skill_button">
-            <i class="fas fa-times text-danger"></i>
-        </span>
-        {{-- @endif --}}
+        
         
         <div class="col-4 text-right">
             <small>
                 <i class="text-secondary">{{$post->date}}</i>
             </small>
         </div>
+
+        
 
     </div>
 

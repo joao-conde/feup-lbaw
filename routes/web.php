@@ -21,6 +21,7 @@ Route::get('/', function () {
 // Route::get('/users/{id}/posts', 'FeedController@getPosts');
 Route::get('/feed', 'FeedController@getPosts')->name('feed');
 Route::post('/api/users/{userId}/posts', 'FeedController@createPost');
+Route::delete('/api/users/{userId}/posts/{postId}', 'FeedController@deletePost');
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');
