@@ -18,10 +18,16 @@ let closeModalBtn = document.querySelector('button#close_button');
 
 let userSkillsStars = document.querySelectorAll('div.user_skill');
 
-lockLocked.addEventListener('click',openModalHandler);
-submitPasswordButton.addEventListener('click',verifyPassword);
-closeModalBtn.addEventListener('click',closeModalHandler);
-lockOpened.addEventListener('click',lock);
+if(lockLocked != null) {
+
+    lockLocked.addEventListener('click',openModalHandler);
+    submitPasswordButton.addEventListener('click',verifyPassword);
+    closeModalBtn.addEventListener('click',closeModalHandler);
+    lockOpened.addEventListener('click',lock);
+
+}
+
+
 
 function toggleEdits(show) {
 
@@ -187,9 +193,15 @@ let editDateAid = document.querySelector('#edit_date_aid');
 let dateField = document.querySelector('small#date_field');
 let dateInput = document.querySelector('input#date_input');
 
+let birthDateTimeStamp;
+let birthDate; 
 
-let birthDateTimeStamp = convertDateToEpochSecs(dateInput.value);
-let birthDate = convertEpochSecsToDateString(birthDateTimeStamp);
+if(dateInput != null) {
+
+    birthDateTimeStamp = convertDateToEpochSecs(dateInput.value);
+    birthDate = convertEpochSecsToDateString(birthDateTimeStamp);
+
+}
 
 
 if (editNameButton != null) {
@@ -319,8 +331,13 @@ let buttonPicture = document.querySelector('button#buttonPicture');
 let profilePicture = document.querySelector('img#profile_pic');
 let iconPicture = document.querySelector('img#icon_profile_image');
 
-buttonPicture.addEventListener('click',selectPicture);
-inputPicture.addEventListener('change',sendPicture);
+if(buttonPicture != null) {
+
+    buttonPicture.addEventListener('click',selectPicture);
+    inputPicture.addEventListener('change',sendPicture);
+
+}
+
 
 
 function selectPicture() {
@@ -381,7 +398,9 @@ for(let i = 0; i < skills.length; i++) {
     let skillName = skill.querySelector('p.skillName').innerHTML;
 
     let removeSkillButton = skill.querySelector('span.delete_skill_button');
-    removeSkillButton.addEventListener('click',confirmRemoveSkill.bind(this,skill,skillId,i,skillName));
+
+    if(removeSkillButton != null)
+        removeSkillButton.addEventListener('click',confirmRemoveSkill.bind(this,skill,skillId,i,skillName));
 
     skills[i].addEventListener('mouseout', paintStars.bind(this,skills[i],undefined));
 
@@ -585,27 +604,33 @@ function removeSkillAjaxRequestListener(skillElement,childNo,skillId,skillName) 
 
 }
 
-for(let i = 0; i < skillList.children.length; i++) {
+if(skillList != null) {
 
-    let skill = skillList.children[i];
+    for(let i = 0; i < skillList.children.length; i++) {
+
+        let skill = skillList.children[i];
+        
+        let fullStars = skill.querySelectorAll('.fullstar');
+        let emptyStars = skill.querySelectorAll('.emptystar');
+        let skillId = parseInt(skill.querySelector('small.skillId').innerHTML);
+        let skillName = skill.querySelector('small.skillName').innerHTML;
     
-    let fullStars = skill.querySelectorAll('.fullstar');
-    let emptyStars = skill.querySelectorAll('.emptystar');
-    let skillId = parseInt(skill.querySelector('small.skillId').innerHTML);
-    let skillName = skill.querySelector('small.skillName').innerHTML;
-
-    skill.addEventListener('mouseout',eraseAllStarsNewSkill.bind(skill));
-
-    for(let j = 0; j < 5; j++) {
-
-        fullStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
-        emptyStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
-        fullStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1,skillName));
-        emptyStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1, skillName));
-
+        skill.addEventListener('mouseout',eraseAllStarsNewSkill.bind(skill));
+    
+        for(let j = 0; j < 5; j++) {
+    
+            fullStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
+            emptyStars[j].addEventListener('mouseover', skillStarHoverListener.bind(this,j,false));
+            fullStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1,skillName));
+            emptyStars[j].addEventListener('click', confirmAddSkill.bind(this,skillId, j+1, skillName));
+    
+        }
+    
     }
 
 }
+
+
 
 function paintStarsNewSkill(skillElement,level) {
 
@@ -759,6 +784,88 @@ function addSkillAjaxRequestHandler(skillId,level,skillName) {
 
     editFields = document.querySelectorAll('.edit_field');
 
+
+}
+
+
+//user location
+
+let locationsDiv = document.querySelectorAll('div.location');
+
+for(let i = 0; i < locationsDiv.length; i++) {
+
+    let cityId = parseInt(locationsDiv[i].querySelector('.cityId').innerHTML);
+    let cityName = locationsDiv[i].querySelector('.cityName').innerHTML;
+    let countryName = locationsDiv[i].querySelector('.countryName').innerHTML;
+
+    locationsDiv[i].addEventListener('click',editLocation.bind(this,cityId,cityName,countryName));
+
+}
+
+function editLocation(cityId,cityName,countryName) {
+
+    let data = {locationId:cityId}
+    let request = new XMLHttpRequest();
+    sendAsyncAjaxRequest(request,api,PUT,editLocationAjaxRequestHandler.bind(request,cityName,countryName),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function editLocationAjaxRequestHandler(city,country) {
+
+    if(this.status != 200)
+        return;
+
+    let locationElement = document.querySelector('i#user_location');
+
+    locationElement.innerHTML = city + ', ' + country;
+
+    let deleteButton = document.querySelector('span#delete_location_button');
+
+    if(deleteButton != null) {
+        deleteButton.selfShow();
+        return;
+    }
+        
+
+    let spanElement = document.createElement('span');
+    spanElement.id = "delete_location_button";
+    spanElement.classList.add('edit_field', 'clickable');
+
+    let iconElement = document.createElement('i');
+    iconElement.classList.add('fas', 'fa-times', 'text-danger');
+
+    spanElement.appendChild(iconElement);
+    spanElement.addEventListener('click',deleteLocation);
+
+    locationElement.parentElement.insertBefore(spanElement,locationElement.nextSibling);
+
+}
+
+let deleteButton = document.querySelector('span#delete_location_button');
+
+if(deleteButton != null)
+    deleteButton.addEventListener('click',deleteLocation);
+
+function deleteLocation() {
+
+    let request = new XMLHttpRequest();
+
+    let deleteApi = api + '/location';
+
+    sendAsyncAjaxRequest(request,deleteApi,DELETE,deleteLocationAjaxRequestHandler);
+
+}
+
+function deleteLocationAjaxRequestHandler() {
+
+    if(this.status != 200)
+        return;
+    
+    let locationElement = document.querySelector('i#user_location');
+    let deleteButton = document.querySelector('span#delete_location_button');
+
+    locationElement.innerHTML = '';
+    deleteButton.selfHide();
 
 }
 

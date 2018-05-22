@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 use App\User;
+use App\City;
 
 class ProfilePageController extends Controller
 
@@ -26,7 +27,7 @@ class ProfilePageController extends Controller
 
         $user = User::find($id);
         $followedUsers = Auth::user()->followedUsers();
-        $skills = Auth::user()->skills();
+        $skills = $user->skills();
 
         $isFollowing = false;
 
@@ -44,7 +45,20 @@ class ProfilePageController extends Controller
         $timestamp = strtotime($user->dateofbirth); 
         $dateOfBirthString = date('d/m/Y', $timestamp);
 
-        return view('pages.profile', ['user' => $user, 'isFollowing' => $isFollowing, 'dateOfBirthString' => $dateOfBirthString, 'skills' => $skills]);
+        $cities = City::getAll();
+        $location = $user->locationCity();
+
+        if($location != '') {
+            $location = $location->name;
+            $country = $user->locationCountry()->name;
+        }
+
+        else {
+            $location = '';
+            $country = '';
+        }
+            
+        return view('pages.profile', ['country' => $country, 'location' => $location, 'cities' => $cities,'user' => $user, 'isFollowing' => $isFollowing, 'dateOfBirthString' => $dateOfBirthString, 'skills' => $skills]);
 
     } 
 
@@ -120,10 +134,11 @@ class ProfilePageController extends Controller
         if($request->__isset('name')) $user->name = $request->name;
         if($request->__isset('bio')) $user->bio = $request->bio;
         if($request->__isset('birthdate')) $user->dateofbirth = $request->birthdate;
+        if($request->__isset('locationId')) $user->location = $request->locationId;
 
         $user->save();
 
-        return response('',200);
+        return response(200);
 
     }
 
@@ -211,6 +226,8 @@ class ProfilePageController extends Controller
 
     public function deleteSkill(Request $request, $skillId) {
 
+        if (!Auth::check()) return response('No user logged',500);
+
         $updateQuery = 'UPDATE user_skill
                         SET isActive = false
                         WHERE user_skill.skillId = ?
@@ -219,6 +236,20 @@ class ProfilePageController extends Controller
         DB::update($updateQuery, [$request->skillId, Auth::user()->id]);
 
         return response(200);
+    }
+
+    public function deleteLocation() {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $delete = 'UPDATE mb_user
+                   SET location = NULL
+                   WHERE id = ?';
+
+        DB::update($delete, [Auth::user()->id]);
+
+        return response(200);
+
     }
 
 }

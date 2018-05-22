@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\City;
 
 class User extends Authenticatable
 {
@@ -35,7 +36,7 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
-        'admin' => true,
+        'admin' => true
     ];
 
     public function bands(){
@@ -143,6 +144,42 @@ class User extends Authenticatable
             return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_icon.png');
         else
             return asset('images/system/dummy_profile.svg');
+
+    }
+
+    public function city() {
+        return $this->belongsTo('App\City');
+    }
+
+    public function locationCity() {
+
+        $query = 'SELECT name,id FROM city 
+                  WHERE id = ?';
+
+        $location = DB::select($query, [$this->location]);
+
+        if(count($location) > 0)
+            return $location[0];
+        else
+            return '';
+
+    }
+
+    public function locationCountry() {
+
+        $location = $this->locationCity();
+
+        if($location == '')
+            return '';
+
+        $query = 'SELECT country.name,country.id FROM country 
+                  JOIN city ON country.id = city.countryid
+                  WHERE city.id = ?';
+
+        $country = DB::select($query, [$location->id]);
+
+        if(count($country) > 0)
+            return $country[0];
 
     }
 

@@ -2,7 +2,8 @@
     margin-left: 3px;
 }
 
-#new_skill_dd {
+#new_skill_dd,
+#edit_location_dd {
     min-width: 250px !important;
     height: 300px;
     overflow-y: scroll;

@@ -76,6 +76,10 @@ Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
 Route::put('api/user_skills/{skillId}','ProfilePageController@addSkill');
 Route::delete('api/user_skills/{skillId}','ProfilePageController@deleteSkill');
 
+//validate password
+Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
+Route::delete('api/users/{id}/location','ProfilePageController@deleteLocation');
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('do_login');
@@ -97,5 +101,5 @@ Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
 Route::get('/403', 'ErrorPagesController@error403');
 
 
-//validate password
-Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
+
+
