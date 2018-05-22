@@ -43,7 +43,7 @@ function handleCreatePostAPIResponse(response){
   let data = JSON.parse(response.responseText);
 
   buildPost(data);
-
+  this.value = "";
 }
 
 function buildPost(data){
@@ -195,6 +195,3 @@ function handleDeletePostAPIResponse(response){
 
   }
 }
-
-
-
