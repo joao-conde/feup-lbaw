@@ -7,6 +7,12 @@
             <a class="text-secondary align-middle" href="#">{{$post->name}}</a>
         </div>
 
+        {{-- @if($user->id == Auth::user()->id) --}}
+        <span class="d-none edit_field delete_skill_button">
+            <i class="fas fa-times text-danger"></i>
+        </span>
+        {{-- @endif --}}
+        
         <div class="col-4 text-right">
             <small>
                 <i class="text-secondary">{{$post->date}}</i>

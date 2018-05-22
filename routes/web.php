@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+
+
 // FEED
 // Route::get('/users/{id}/posts', 'FeedController@getPosts');
 Route::get('/feed', 'FeedController@getPosts')->name('feed');
