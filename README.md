@@ -63,15 +63,15 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US32      |Post using Soundcloud API|low|0%|
 |US33      |Post using Youtube API|low|0%|
 
-### Admin
+### Admin - 100%
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
-|US34      |Access reported content|high|50%-Danny|
+|US34      |Access reported content|high|100%|
 |US35      |Create music genre|high|100%|
 |US36      |Remove comments|high|100%|
 |US37      |Remove posts|high|100%|
-|US38      |Ban user|high|100%-Danny|
-|US39      |Ban band|high|100%-Danny|
+|US38      |Ban user|high|100%|
+|US39      |Ban band|high|100%|
 |US40      |Give/Take privileges|low|100%|
 |US41      |Notify user|low|100%|
 |US42      |Notify band|low|100%|
