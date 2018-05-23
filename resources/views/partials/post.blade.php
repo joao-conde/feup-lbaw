@@ -17,10 +17,10 @@
 
         <div class="col">
             <img src="{{ User::getUserProfilePicturePath($post->creatorid) }}" class="profile mr-2 profile_pic_post">
-            @if($post->band_post == true)
+            @if($post->post_type == 'band_post')
             <img src="{{ $band->getProfilePicturePath() }}" class="profile mr-2 band_img_post">
             @endif
-            <a class="text-secondary align-middle" href="/users/{{$post->creatorid}}">{{$post->name}}</a>
+            <a class="text-secondary align-middle" href="/users/{{$post->creatorid}}">{{$post->postername}}</a>
         </div>
 
         
@@ -39,7 +39,7 @@
 
         <div class="col align-self-center text-justify">
 
-            <small>{{$post->text}}
+            <small>{{$post->posttext}}
             </small>
 
         </div>
