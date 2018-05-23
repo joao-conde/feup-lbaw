@@ -74,6 +74,8 @@ Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
 Route::put('api/user_skills/{skillId}','ProfilePageController@addSkill');
 Route::delete('api/user_skills/{skillId}','ProfilePageController@deleteSkill');
 
+Route::get('api/bands/{bandId}/posts', 'BandController@getMorePosts');
+
 //validate password
 Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
 Route::delete('api/users/{id}/location','ProfilePageController@deleteLocation');
@@ -98,6 +100,10 @@ Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
 
 Route::get('/403', 'ErrorPagesController@error403');
 
+
+//Band Profile
+
+Route::get('bands/{id}', 'BandController@show')->name('band_profile');
 
 
 

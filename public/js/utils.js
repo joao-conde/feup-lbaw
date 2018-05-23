@@ -8,6 +8,8 @@ const URL_ENCODE = "application/x-www-form-urlencoded";
 
 const ERROR_CODE_GOOD = "00000";
 
+let globalBottomOfPage = false;
+
 function changeActiveTab(index) {
     
     menu_items = document.querySelectorAll("nav#menu li");
@@ -76,7 +78,9 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
 
     if(type == GET) {
 
-        request.open(type, (api + (data != undefined) ? '' : '?' + data),true);
+        let getApi = api + ((data == undefined) ? '' : ('?' + data));
+
+        request.open(type, getApi, true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
         request.send();
 
@@ -173,4 +177,25 @@ Element.prototype.selfHide = function() {
     if(!checkIfHasClass(this,'d-none'))
         this.classList.add('d-none');
 
+}
+
+function isBottomOfPage() {
+
+    let scrollTop = document.documentElement.scrollTop;
+    let windowInnerHeight = window.innerHeight;
+    let offset = scrollTop + windowInnerHeight;
+    let bodyHeight = document.documentElement.offsetHeight;
+
+    if(offset >= bodyHeight && !globalBottomOfPage) {
+
+        globalBottomOfPage = true;
+        return true;
+    }
+       
+    else {
+
+        globalBottomOfPage = false;
+        return false;
+    }
+        
 }

@@ -183,6 +183,14 @@ class User extends Authenticatable
 
     }
 
+
+    public static function getUserProfilePicturePath($userid) {
+
+        $user = User::find($userid);
+        return $user->getProfilePicturePath();
+
+    }
+
     
 
 }

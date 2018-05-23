@@ -1,4 +1,5 @@
-@extends('layouts.profile_layout') @section('leftmenumobile')
+@extends('layouts.profile_layout') 
+@section('leftmenumobile')
 
 <link rel="stylesheet" href="{{ asset('css/profile.css')}}">
 <link rel="stylesheet" href="{{ asset('css/feed.css')}}">
@@ -191,22 +192,21 @@
 												
 											</div>
 										</div>
-
-										
 										
 										@endif
-
-									
-										
+	
 									</li>
 									<li id="date_parent">
 
-										@if(Auth::user()->dateofbirth)
-											<small id="date_field">Born on
+											<small id="date_field">
+												@if(Auth::user()->dateofbirth)
+												Born on
 												<i>{{ $dateOfBirthString }}</i>
+												@else
+												<i>Unknown date of birth</i>
+												@endif
 											</small>
-										@endif
-
+										
 										@if( $user->id == Auth::user()->id)
 											<input type="date" class="d-none" id="date_input" value="{{Auth::user()->dateofbirth}}">
 											<span id="edit_date_button" class="edit_field d-none clickable">

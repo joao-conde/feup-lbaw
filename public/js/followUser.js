@@ -2,8 +2,6 @@
 
 let followButtons = document.querySelectorAll('.follow_unfollow');
 
-console.log(followButtons);
-
 for (let i = 0; i < followButtons.length; i++) {
 
     followButtons[i].addEventListener('click',startStopFollowingEventListener.bind(followButtons[i]));

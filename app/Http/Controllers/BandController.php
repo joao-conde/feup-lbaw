@@ -7,6 +7,7 @@ use App\Band;
 use App\User;
 use App\Report;
 use App\Ban;
+use App\City;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
@@ -179,7 +180,50 @@ class BandController extends Controller
      */
     public function show($id)
     {
-        return view('pages.band')->with($id);
+
+        if (!Auth::check()) return redirect('/login');
+
+        $band = Band::find($id);
+        $members = $band->membersSQL();
+        $rate = floatval($band->rate());
+        
+        $decimal = (($rate * 10) % 10) / 10;
+        $whole = floor($rate);
+
+        $roundedRate = round($rate,1);
+
+        $cities = City::getAll();
+        $location = $band->locationCity();
+
+        if($location != '') {
+            $location = $location->name;
+            $country = $band->locationCountry()->name;
+        }
+
+        else {
+            $location = '';
+            $country = '';
+        }
+
+        $founders = $band->founders();
+        $posts = $band->posts(0);
+
+        $genres = $band->genres();
+
+
+        $band['founders'] = $founders;
+        $band['posts'] = $posts;
+        $band['genres'] = $genres;
+        
+        return view('pages.band',
+            ['band' => $band, 
+            'members' => $members,
+            'wholeRate'=>$whole, 
+            'decimalRate'=>$decimal,
+            'roundedRate'=>$roundedRate,
+            'location'=> $location,
+            'country'=>$country,
+            'cities' =>$cities]);
     }
 
     /**
@@ -215,4 +259,18 @@ class BandController extends Controller
     {
         //
     }
+
+    public function getMorePosts(Request $request, $bandId) {
+
+        $band = Band::find($bandId);
+
+        if($request->__isset('offset')) $offset = $request->offset;
+
+        $posts = $band->posts($offset);
+
+        return response(json_encode($posts,200));
+
+    }
+
+
 }
