@@ -1,20 +1,37 @@
 <div class="jumbotron p-3 post mb-2">
 
+    <div class="d-none" id="postID">{{$post->id}}</div>
+
+    <div>
+        @if($post->creatorid == Auth::user()->id)
+        <span id="delete_post_button">
+            <i class="fas fa-times text-danger"></i>
+        </span>
+        <span id="edit_post_button">
+                <i class="fas fa-pencil-alt"></i>
+        </span>
+        @endif
+    </div>
+
     <div class="row mb-3 justify-content-between">
 
         <div class="col">
-            <img src="{{ User::getUserProfilePicturePath($post->userid) }}" class="profile mr-2 profile_pic_post">
+            <img src="{{ User::getUserProfilePicturePath($post->creatorid) }}" class="profile mr-2 profile_pic_post">
             @if($post->band_post == true)
             <img src="{{ $band->getProfilePicturePath() }}" class="profile mr-2 band_img_post">
             @endif
-            <a class="text-secondary align-middle" href="/users/{{$post->userid}}">{{$post->name}}</a>
+            <a class="text-secondary align-middle" href="/users/{{$post->creatorid}}">{{$post->name}}</a>
         </div>
 
+        
+        
         <div class="col-4 text-right">
             <small>
                 <i class="text-secondary">{{date('d/m/Y H:i:s',strtotime($post->date))}}</i>
             </small>
         </div>
+
+        
 
     </div>
 

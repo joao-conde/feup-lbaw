@@ -104,7 +104,7 @@ class Band extends Model
 
     public function posts($offset) {
 
-        $query = 'SELECT mb_user.id as userid, mb_user.username as username, post.id as id, mb_user.name as name, content.date as date, content.text as text, true as band_post  
+        $query = 'SELECT mb_user.id as creatorid, mb_user.username as username, post.id as id, mb_user.name as name, content.date as date, content.text as text, true as band_post  
                   FROM Post
                   JOIN content on content.id = post.contentid
                   JOIN mb_user on mb_user.id = content.creatorid
