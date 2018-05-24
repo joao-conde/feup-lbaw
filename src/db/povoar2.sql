@@ -27,7 +27,7 @@ DELETE FROM skill;
 DELETE FROM city;
 DELETE FROM country;
 
-\i db/insertLocations.sql;
+\i src/db/insertLocations.sql;
 
 --Users
 
@@ -61,7 +61,7 @@ insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivatio
 
 ALTER SEQUENCE mb_user_id_seq RESTART WITH 31;
 
-insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('trintaeum', 'zXizewgg', 'Caryl Kubicka', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
+insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values ('trintaeum', 'zXizewgg', 'José Figueiras', 'Assimilated didactic alliance', '21-09-1992', null, 2, 2, 1.4, false);
 
 
 --Bands
@@ -253,69 +253,69 @@ ALTER SEQUENCE report_id_seq RESTART WITH 14;
 
 --Warnings
 
-insert into warning(id,adminId,userId,bandId,contentId) values(1,1,7,NULL,NULL);
-insert into warning(id,adminId,userId,bandId,contentId) values(2,1,NULL,2,NULL);
-insert into warning(id,adminId,userId,bandId,contentId) values(3,1,7,NULL,4);
-insert into warning(id,adminId,userId,bandId,contentId) values(4,1,10,NULL,33);
-insert into warning(id,adminId,userId,bandId,contentId) values(5,1,NULL,4,9);
-insert into warning(id,adminId,userId,bandId,contentId) values(6,1,NULL,2,32);
+insert into warning(id,adminId,userId,bandId,contentId) values(1,28,7,NULL,NULL);
+insert into warning(id,adminId,userId,bandId,contentId) values(2,28,NULL,2,NULL);
+insert into warning(id,adminId,userId,bandId,contentId) values(3,28,7,NULL,4);
+insert into warning(id,adminId,userId,bandId,contentId) values(4,28,10,NULL,33);
+insert into warning(id,adminId,userId,bandId,contentId) values(5,28,NULL,4,9);
+insert into warning(id,adminId,userId,bandId,contentId) values(6,28,NULL,2,32);
 
 ALTER SEQUENCE warning_id_seq RESTART WITH 7;
 
 
 --Bans
 
-insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(1,'Bad behaviour',NULL,1,7,NULL,'17/01/2018');
-insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(2,'Bad behaviour',NULL,1,NULL,1,'21/03/2018');
-insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(3,'Bad behaviour','21/4/2018',1,NULL,4,'01/01/2018');
+insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(1,'Bad behaviour',NULL,28,7,NULL,'17/01/2018');
+insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(2,'Bad behaviour',NULL,28,NULL,5,'21/03/2018');
+insert into ban(id,reason,ceaseDate,adminId,userId,bandId,banDate) values(3,'Bad behaviour','21/4/2018',28,NULL,4,'01/01/2018');
 
 ALTER SEQUENCE ban_id_seq RESTART WITH 4;
 
 --Genres
 
-insert into genre (id,name, creatingAdminId, isActive) values (1,'Alternative',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (2,'Big Band',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (3,'Country',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (4,'Electronic',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (5,'Jazz',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (6,'Opera',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (7,'Classical',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (8,'Hip hop',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (9,'Rock',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (10,'Blues',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (11,'Folk',1,true);
-insert into genre (id,name, creatingAdminId, isActive) values (12,'Pop',1,true);
+insert into genre (id,name, creatingAdminId, isActive) values (1,'Alternative',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (2,'Big Band',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (3,'Country',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (4,'Electronic',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (5,'Jazz',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (6,'Opera',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (7,'Classical',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (8,'Hip hop',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (9,'Rock',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (10,'Blues',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (11,'Folk',28,true);
+insert into genre (id,name, creatingAdminId, isActive) values (12,'Pop',28,true);
 
 ALTER SEQUENCE genre_id_seq RESTART WITH 13;
 
 --Skills
 
-insert into skill (id,name, creatingAdminId, isActive) values (1,'Cajon',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (2,'Handpan',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (3,'Triangle',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (4,'Xylophone',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (5,'Drums',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (6,'Accordion',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (7,'Bagpipe',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (8,'Clarinet',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (9,'Flute',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (10,'Trumpet',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (11,'Organ',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (12,'Piano',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (13,'Keyboard',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (14,'Saxophone',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (15,'Trombone',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (16,'Tuba',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (17,'Harp',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (18,'Banjo',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (19,'Bass Guitar',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (20,'Electric Guitar',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (21,'Acoustic Guitar',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (22,'Violin',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (23,'Ukulele',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (24,'Cello',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (25,'Synthesizer',1,true);
-insert into skill (id,name, creatingAdminId, isActive) values (26,'Keytar',1,true);
+insert into skill (id,name, creatingAdminId, isActive) values (1,'Cajon',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (2,'Handpan',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (3,'Triangle',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (4,'Xylophone',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (5,'Drums',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (6,'Accordion',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (7,'Bagpipe',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (8,'Clarinet',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (9,'Flute',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (10,'Trumpet',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (11,'Organ',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (12,'Piano',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (13,'Keyboard',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (14,'Saxophone',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (15,'Trombone',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (16,'Tuba',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (17,'Harp',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (18,'Banjo',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (19,'Bass Guitar',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (20,'Electric Guitar',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (21,'Acoustic Guitar',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (22,'Violin',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (23,'Ukulele',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (24,'Cello',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (25,'Synthesizer',28,true);
+insert into skill (id,name, creatingAdminId, isActive) values (26,'Keytar',28,true);
 
 ALTER SEQUENCE skill_id_seq RESTART WITH 27;
 

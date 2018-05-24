@@ -61,6 +61,61 @@ class UserController extends Controller {
         return response('',200);
     }
 
+    public function readNotifications(){
+
+        $userId = Auth::user()->id;
+
+        $updateQuery = "UPDATE user_notification SET visualizedDate = now() WHERE user_notification.id IN (".User::queryNotifications().")";
+
+        Log::info($updateQuery);
+
+    }
+
+    public function getFollowing(Request $request){
+
+        
+        $words = explode(" ", trim($request->pattern));
+        $followingUsersResult = array();
+
+        if(count($words) && $words[0] == ""){
+            return response($followingUsersResult,200);
+        }
+        $string = "";
+        foreach ($words as $word) {
+            
+            $string = $string.$word.":* & ";            
+        }
+        $string = trim($string, "& ");
+
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+                        ORDER BY name ASC;";
+        
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
+    }
+
+    public function getFollowingAll(Request $request){
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        ORDER BY name ASC;";
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
+    }
+
     public function listReportedUsers(Request $request)
     {
         if (!Auth::check()) return redirect('/');
@@ -299,6 +354,13 @@ class UserController extends Controller {
 
     }
 
+    public function editPost(Request $request){
+
+
+
+        return response(json_encode(["text" => "Comment text"]), 200);
+    }
+
     public function editUserPicture(Request $request) {
 
         $user = User::find($request->id);
@@ -317,8 +379,6 @@ class UserController extends Controller {
         //}
 
         //return response('No picture',500);
-
-
     }
 
     public function validatePassword(Request $request) {
@@ -426,7 +486,7 @@ class UserController extends Controller {
             $response = $response.view('partials.post',['post' => $posts[$i]]);
         }
 
-        return response($response,200);
+        return response(json_encode(["postViews" => $response, "numberOfPosts" => count($posts)]),200);
 
     }
 
@@ -452,10 +512,13 @@ class UserController extends Controller {
 
         DB::insert($insertContent, [$request->content, Auth::user()->id]);
         DB::insert($insertPost, [$request->private]);
-        $postid = DB::select("SELECT currval('post_id_seq')")[0]->currval;
+
+        $postId = DB::select("SELECT currval('post_id_seq')")[0]->currval;
         DB::commit();
 
-        return response(json_encode(['postid'=>$postid, 'name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
+        $post = Post::getPost(Auth::user()->id, $postId);
+
+        return response(view('partials.post', ['post'=> $post]), 200);
     }
     
     public function deletePost(Request $request){

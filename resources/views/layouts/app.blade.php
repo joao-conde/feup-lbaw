@@ -39,6 +39,7 @@
 	</header>
 	<section id="content">
 		@yield('content')
+
 	</section>
 
 	<!-- Scripts -->

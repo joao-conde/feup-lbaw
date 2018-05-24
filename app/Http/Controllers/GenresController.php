@@ -21,8 +21,7 @@ class GenresController extends Controller
 
       //$this->authorize('list', Genre::class);
 
-        $query = 'SELECT * from genre WHERE isActive = TRUE';
-        $genres = DB::select($query);
+        $genres = Genre::allActives();
 
         return view('admin.genres', ['genres' => $genres]);
       }

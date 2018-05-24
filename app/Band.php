@@ -26,6 +26,17 @@ class Band extends Model
         return $this->hasMany('App\User');
     }
 
+
+
+    public static function sendInvitation($userId, $bandId){
+
+        $insertQuery = "INSERT INTO band_invitation(userId,bandId,date,lastStatusDate,status) 
+                        VALUES(?,?,now(),now(),'pending');";
+
+        DB::insert($insertQuery, [$userId, $bandId]);
+    }
+
+    
     public function membersSQL() {
 
         $queryBandMembers = 'SELECT mb_user.id as userid, mb_user.name as membername, band_membership.isowner as owner

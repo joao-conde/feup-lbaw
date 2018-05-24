@@ -283,7 +283,7 @@
 							</small>
 		
 						</a>
-						<a class="mr-1 d-block" href="#">
+						<a class="mr-1 d-block" href="{{route('create_band')}}">
 							<small>
 								<p class="text-secondary mt-2 mb-0">Create Band</p>
 							</small>

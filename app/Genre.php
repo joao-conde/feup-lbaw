@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Genre extends Model
 {
@@ -27,4 +28,10 @@ class Genre extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public static function allActives(){
+
+        $query = 'SELECT * from genre WHERE isActive = TRUE';
+        return DB::select($query);
+    }
 }

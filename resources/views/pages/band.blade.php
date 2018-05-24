@@ -155,7 +155,7 @@
 
         <div class="col-12 col-md-9 col-lg-6">
 
-            <div id="posts" class="toggleContent">
+            <div id="center_content" class="toggleContent">
 
                 @foreach($band['posts'] as $post)
                     @include('partials.post')

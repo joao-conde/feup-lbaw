@@ -5,7 +5,7 @@
 //Animation to switch chat
 
 let chat = document.querySelector('#chat');
-let feed = document.querySelector('#posts');
+let feed = document.querySelector('#center_content');
 let prof = document.querySelector('#profile_area');
 
 let chatButton = document.querySelector('#chatButton');
