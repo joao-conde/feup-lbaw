@@ -44,104 +44,12 @@ function handleCreatePostAPIResponse(response) {
   if (response.status != 200)
     return;
 
-  let data = JSON.parse(response.responseText);
-
-  buildPost(data);
+  let postList = document.querySelector('div#posts');
+  postList.innerHTML = response.responseText + postList.innerHTML;
+  postList.children[1].parentNode.insertBefore(postList.children[1], postList.children[0]);
   this.value = "";
-}
 
-function buildPost(data) {
-
-  let posts_div = document.querySelector('#posts');
-  let post = document.createElement('div');
-
-  let postid_div = document.createElement('div');
-  let post_buttons = document.createElement('div');
-  let span_delete = document.createElement('span');
-  let delete_i = document.createElement('i');
-  let span_edit = document.createElement('span');
-  let edit_i = document.createElement('i');
-
-
-  let header = document.createElement('div');
-  let id_div = document.createElement('div');
-  let img = document.createElement('img');
-  let link = document.createElement("a");
-  let date_div = document.createElement('div');
-  let small = document.createElement('small');
-  let i = document.createElement('i');
-
-  let content = document.createElement('div');
-  let content_div2 = document.createElement('div');
-  let small_content = document.createElement("small");
-
-  postid_div.classList.add("d-none");
-  postid_div.id = "postID";
-  postid_div.innerHTML = data.postid;
-
-  span_delete.id = "delete_post_button";
-  span_edit.id = "edit_post_button";
-
-  delete_i.classList.add("fas", "fa-trash-alt");
-  edit_i.classList.add("fas", "fa-pencil-alt");
-
-  span_delete.appendChild(delete_i);
-  span_edit.appendChild(edit_i);
-
-  post_buttons.appendChild(span_delete);
-  post_buttons.appendChild(span_edit);
-
-  post.appendChild(postid_div);
-  post.appendChild(post_buttons);
-
-  posts_div.insertBefore(post, posts_div.children[1]);
-  post.appendChild(header);
-  post.appendChild(content);
-
-
-  header.appendChild(id_div);
-  header.appendChild(date_div);
-
-  id_div.appendChild(img);
-  id_div.appendChild(link);
-
-  date_div.appendChild(small);
-  small.appendChild(i);
-
-
-  content.appendChild(content_div2);
-  content_div2.appendChild(small_content);
-
-
-  header.classList.add("row", "mb-3", "justify-content-between");
-
-  content.classList.add("row", "justify-content-start");
-
-  content_div2.classList.add("col", "align-self-center", "text-justify")
-
-  post.classList.add("jumbotron", "p-3", "post", "mb-2");
-
-  id_div.classList.add("col");
-
-  img.classList.add("profile", "mr-2");
-  img.src = "/images/system/dummy_profile.svg";
-
-  link.classList.add("text-secondary", "align-middle");
-
-  date_div.classList.add("col-4", "text-right");
-
-  i.classList.add("text-secondary");
-
-  small_content.innerHTML = data.content;
-  small_content.id = "text";
-  link.innerHTML = data.name;
-  i.innerHTML = data.date;
-
-  let postId = data.postid;
-
-  span_delete.addEventListener('click', handlerDeletePost.bind(this, postId, userId));
-
-  console.log(data);
+  addPostButtonsEventListeners(postList.children[1]);
 
 }
 
@@ -162,18 +70,24 @@ function handlerDeletePost(postId, userId) {
 
 
 //Delete Post
-
 let posts = document.querySelectorAll('.post');
 
 for (let i = 1; i < posts.length; i++) {
+  addPostButtonsEventListeners(posts[i]);
+}
 
-  let deletePostBtn = posts[i].querySelector('#delete_post_button');
-  let postId = posts[i].querySelector('#postID').innerHTML;
+function addPostButtonsEventListeners(post) {
+  console.log("ADDING LISTENERS");
+  let deletePostBtn = post.querySelector('#delete_post_button');
+  let editPostBtn = post.querySelector('#edit_post_button');
+  let postId = post.querySelector('#postID').innerHTML;
+  console.log(deletePostBtn);
+  console.log(editPostBtn);
+  if (deletePostBtn != null)
+    deletePostBtn.addEventListener('click', handlerDeletePost.bind(this, postId, userId));
 
-  if (deletePostBtn == null)
-    continue;
-
-  deletePostBtn.addEventListener('click', handlerDeletePost.bind(this, postId, userId));
+  if (editPostBtn != null)
+    editPostBtn.addEventListener('click', toggleOnEditPost.bind(editPostBtn, post));
 
 }
 
@@ -226,9 +140,18 @@ function getPostsAjaxRequestListener() {
   if (this.status != 200)
     return;
 
+  let data = JSON.parse(this.responseText);
   let postsList = document.querySelector('div#posts');
+  postsList.innerHTML += data.postViews;
 
-  postsList.innerHTML += this.responseText;
+
+  postsList = document.querySelector('div#posts');
+  console.log(postsList.children.length);
+  console.log(data.numberOfPosts);
+  console.log(postsList);
+  for (let i = 0; i < data.numberOfPosts; i++) {
+    addPostButtonsEventListeners(postsList.children[postsList.children.length - 1 - i]);
+  }
 
   window.scrollBy(0, 300);
   window.addEventListener('scroll', sendPostRequest);
@@ -247,28 +170,13 @@ function sendPostRequest() {
 }
 
 
-
-//Edit Post
-
-for (let i = 1; i < posts.length; i++) {
-
-  let editPostBtn = posts[i].querySelector('#edit_post_button');
-  let postId = posts[i].querySelector('#postID').innerHTML;
-
-  if (editPostBtn == null)
-    continue;
-
-  editPostBtn.addEventListener('click', toggleOnEditPost.bind(editPostBtn, posts[i]));
-}
-
-
 function toggleOffEditPost(cancelBtn, verifyBtn, saveChanges) {
   console.log("EDIT TOGGLED OFF--->SAVE? " + saveChanges);
-  if(saveChanges){
+  if (saveChanges) {
     //edit post in db
 
   }
-  else{
+  else {
     //cancel changes
   }
 
@@ -303,10 +211,10 @@ function toggleOnEditPost(post) {
   verifyBtn.appendChild(verifyIcon);
   verifyBtn.id = "verify_button";
   btnDiv.replaceChild(verifyBtn, this);
-  
+
   let cancelBtn = document.createElement('span');
   let cancelIcon = document.createElement('i');
-  cancelIcon.classList.add("clickable","fas", "fa-times", "text-danger");
+  cancelIcon.classList.add("clickable", "fas", "fa-times", "text-danger");
   cancelBtn.appendChild(cancelIcon);
   cancelBtn.id = "cancel_button";
   btnDiv.replaceChild(cancelBtn, btnDiv.querySelector('#delete_post_button'));
@@ -321,10 +229,8 @@ function toggleOnEditPost(post) {
   editTextArea.style = "resize: none;";
   editTextArea.placeholder = postText.innerHTML;
   postText.parentNode.replaceChild(editTextArea, postText);
-  
+
 }
-
-
 
 
 function handlerEditPost(postId, userId) {
