@@ -9,7 +9,7 @@
         <h5 class="text-center dropdown-item">Notifications</h5>
         <div class="dropdown-divider"></div>
         @foreach($notificationsInfo['notifications'] as $notification)
-            @include('layouts.header.partials.notification', ['notification'=>$notification]);
+            @include('layouts.header.partials.notification', ['notification'=>$notification])
         @endforeach
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-center" href="#">

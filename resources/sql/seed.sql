@@ -526,7 +526,8 @@ CREATE TABLE report (
     reportedContentId INTEGER,
     reportedUserId INTEGER,
     reportedBandId INTEGER,
-    reporterUserId INTEGER
+    reporterUserId INTEGER,
+    seen BOOLEAN DEFAULT FALSE
 );
 
 ALTER TABLE ONLY report
@@ -585,7 +586,8 @@ CREATE TABLE ban (
     ceaseDate TIMESTAMP,
     adminId INTEGER,
     userId INTEGER,
-    bandId INTEGER
+    bandId INTEGER,
+    isActive boolean DEFAULT true
 );
 
 ALTER TABLE ONLY ban
@@ -745,7 +747,7 @@ CREATE TABLE warning (
     adminId INTEGER NOT NULL,
     userId INTEGER,
     bandId INTEGER,
-    reason TEXT DEFAULT 'You have been often reported. Please consider your behavior.',
+    reason TEXT DEFAULT 'You have been reported. Please consider your behavior.',
     contentId INTEGER
 
 );

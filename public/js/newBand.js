@@ -8,19 +8,26 @@ let inputGenres = document.querySelector("#content input#genres");
 let dropdownGenres = document.querySelector("#content div#new_genres");
 let selectGenres = document.querySelector("select#selectNewGenre");
 
+let buttonPicture = document.querySelector("#btnBandPic");
+let inputPicture = document.querySelector("#band_img_input");
+let imgPicture = document.querySelector("#band_img");
+
+buttonPicture.addEventListener("click", function(){
+    inputPicture.click();
+});
+inputPicture.addEventListener("change", function(){
+    imgPicture.selfShow();
+    imgPicture.setAttribute("src", URL.createObjectURL(inputPicture.files[0]));
+});
 let usersObj = {listElements:  document.createElement("div"), currentFocus: -1};
 usersObj.listElements.setAttribute("class", "autocomplete-items");
 
+
+
 inputUsers.parentNode.appendChild(usersObj.listElements);
-
-// let genresObj = {listElements:  document.createElement("div"), currentFocus: -1};
-// genresObj.listElements.setAttribute("class", "autocomplete-items");
-
-// inputGenres.parentNode.appendChild(genresObj.listElements);
 
 
 inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
-// inputGenres.addEventListener("keydown", listNavigation.bind(this, genresObj));
 
 function sendRequestFindUsers(pattern) {
 
@@ -33,16 +40,6 @@ function sendRequestFindUsers(pattern) {
 
 }
 
-// function sendRequestFindGenres(pattern) {
-
-//     let requestData = { pattern: pattern };
-
-//     let api = '/api/genres';
-
-//     let listOfGenres = new XMLHttpRequest();
-//     sendAsyncAjaxRequest(listOfGenres, api, GET, requestPatternHandler.bind(listOfGenres, genresObj, '/bands/new_genre'), URL_ENCODE, requestData);
-
-// }
 
 inputUsers.addEventListener('keyup', function (e) {
     if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
@@ -52,15 +49,6 @@ inputUsers.addEventListener('keyup', function (e) {
     let pattern = inputUsers.value;
     sendRequestFindUsers(pattern);
 });
-
-// inputGenres.addEventListener('keyup', function (e) {
-//     if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
-//         return;
-//     }
-
-//     let pattern = inputGenres.value;
-//     sendRequestFindGenres(pattern);
-// });
 
 
 function requestPatternHandler(obj, api) {
@@ -131,7 +119,6 @@ function addActive(array, currentFocus) {
 }
 
 function removeActive(array) {
-    /*a function to remove the "active" class from all autocomplete items:*/
     for (var i = 0; i < array.length; i++) {
         array[i].classList.remove("autocomplete-active");
     }

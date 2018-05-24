@@ -7,10 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-
-
-
-
+use App\City;
 
 class User extends Authenticatable
 {
@@ -40,17 +37,52 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
-        'admin' => true,
+        'admin' => true
     ];
 
-    public function bands(){
-        return $this->belongsToMany('App\Band');
-    }
     /**
      * The skills of the user
      */
      public function skills() {
-        return $this->hasMany('App\Skill');
+        
+        $query = ' SELECT * FROM 
+        
+            (SELECT skills.id as skillId, skills.name as skill, user_skill.level as level, true as user_skill 
+            FROM user_skill 
+            JOIN skill as skills ON skills.id = user_skill.skillId
+            WHERE user_skill.userId = ? AND user_skill.isActive = true
+        
+            UNION ALL
+
+            SELECT skills.id as skillId, skills.name as skill, 0 as level, false as user_skill 
+            FROM skill as skills
+                WHERE (skills.id, ?) NOT IN (
+                SELECT skillId,userId 
+                FROM user_skill
+                )
+
+            UNION ALL
+
+            SELECT skills.id as skillId, skills.name as skill, user_skill.level as level, false as user_skill 
+            FROM user_skill 
+            JOIN skill as skills ON skills.id = user_skill.skillId
+            WHERE user_skill.userId = ? AND user_skill.isActive = false
+            
+            
+            ) AS result
+
+            ORDER BY result.skill ASC 
+
+        ';
+        return DB::select($query, [$this->id, $this->id, $this->id]);
+
+    }
+
+     /**
+     * The reports of the user
+     */
+     public function reports() {
+        return $this->hasMany('App\Report');
      }
 
      /**
@@ -58,7 +90,7 @@ class User extends Authenticatable
       */
 
       public function followedUsers() {
-          //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
+        //return $this->belongsToMany('App\User', 'user_follower', 'followinguserid', 'followeduserid','isactive','id');
 
         $query = 'SELECT * FROM user_follower 
                   JOIN mb_user as users ON users.id = user_follower.followedUserId
@@ -167,7 +199,82 @@ class User extends Authenticatable
 
         return $result;
     }
+    
+    public function city() {
+        return $this->belongsTo('App\City');
+    }
+
+    public function locationCity() {
+
+        $query = 'SELECT name,id FROM city 
+                  WHERE id = ?';
+
+        $location = DB::select($query, [$this->location]);
+
+        if(count($location) > 0)
+            return $location[0];
+        else
+            return '';
+
+    }
+
+    public function locationCountry() {
+
+        $location = $this->locationCity();
+
+        if($location == '')
+            return '';
+
+        $query = 'SELECT country.name,country.id FROM country 
+                  JOIN city ON country.id = city.countryid
+                  WHERE city.id = ?';
+
+        $country = DB::select($query, [$location->id]);
+
+        if(count($country) > 0)
+            return $country[0];
+
+    }
+
+
+    public static function getUserProfilePicturePath($userid) {
+
+        $user = User::find($userid);
+        return $user->getProfilePicturePath();
+
+    }
 
     
+
+    public static function getUserIconPicturePath($userid) {
+
+        $user = User::find($userid);
+        return $user->getIconPicturePath();
+
+    }
+
+
+    public function posts($offset) {
+
+        return Post::userPosts($this->id,$offset);
+        
+    }
+
+    public function feedPosts($offset) {
+
+        return Post::feedPosts($this->id,$offset);
+    }
+
+    public function bands() {
+
+        $query = 'SELECT band.id, band.name 
+                  FROM band_membership
+                  JOIN band ON band.id = band_membership.bandid
+                  WHERE band_membership.userid = ?
+                  AND band_membership.ceasedate IS NULL';
+
+        return DB::select($query,[$this->id]);
+
+    }
 
 }

@@ -3,7 +3,6 @@
 @section('content')
 
 
-
 <div class=" container-fluid">
         @yield('leftmenumobile')
 </div>

@@ -15,9 +15,14 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+
+
 // FEED
 // Route::get('/users/{id}/posts', 'FeedController@getPosts');
-Route::get('/feed', 'FeedController@getPosts')->name('feed');
+Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
+Route::post('/api/users/{userId}/posts', 'UserController@createPost');
+Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
+
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');
@@ -28,11 +33,16 @@ Route::get('/about', 'PagesController@about');
 Route::get('/faqs', 'PagesController@faq');
 
 // ADMIN
-Route::get('/reported_users', 'PagesController@adminReportedUsers')->middleware('admin');;
-Route::get('/reported_bands', 'PagesController@adminReportedBands')->middleware('admin');;
 Route::get('/users', 'UserController@listUserPermissions')->middleware('admin');;
+Route::get('/banned_users', 'UserController@listBannedUsers')->middleware('admin');;
+Route::get('/reported_users', 'UserController@listReportedUsers')->middleware('admin');;
+Route::get('/user_reports/', 'UserController@listUserReports')->middleware('admin');;
 Route::get('/genres', 'GenresController@list')->middleware('admin');;
 Route::get('/skills', 'SkillsController@list')->middleware('admin');;
+
+Route::get('/banned_bands', 'BandController@listBannedBands')->middleware('admin');;
+Route::get('/reported_bands', 'BandController@listReportedBands')->middleware('admin');;
+Route::get('/band_reports/', 'BandController@listBandReports')->middleware('admin');;
 
 
 // API
@@ -42,15 +52,41 @@ Route::put('/admin_api/genres/{genre_id}', 'GenresController@edit');
 Route::post('/admin_api/skills', 'SkillsController@create');
 Route::delete('/admin_api/skills/{skill_id}', 'SkillsController@delete');
 Route::put('/admin_api/skills/{skill_id}', 'SkillsController@edit');
+
 Route::put('/admin_api/users/{id}','UserController@permissions');
 
+Route::put('/admin_api/users/{id}/ignore_report', 'UserController@ignoreReport');
+Route::put('/admin_api/bands/{id}/ignore_report', 'BandController@ignoreReport');
 
+Route::put('/admin_api/users/{id}/remove_content', 'UserController@removeContentDueToReport');
+Route::put('/admin_api/bands/{id}/remove_content', 'BandController@removeContentDueToReport');
 
-Route::put('api/users/{id}', 'ProfilePageController@editUser');
-Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
+Route::post('/admin_api/users/{id}/reports/{reportId}/warns', 'UserController@warnUser');
+Route::post('/admin_api/bands/{id}/reports/{reportId}/warns', 'BandController@warnBand');
 
-Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
-Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
+Route::post('/admin_api/users/{id}/ban', 'UserController@banUser');
+Route::post('/admin_api/bands/{id}/ban', 'BandController@banBand');
+Route::put('/admin_api/users/{id}/lift_ban', 'UserController@liftBan');
+Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan');
+
+Route::put('api/users/{id}', 'UserController@editUser');
+Route::post('api/users/{id}', 'UserController@editUserPicture');
+
+Route::put('api/user_followers/{id}','UserController@startFollowing');
+Route::delete('api/user_followers/{id}','UserController@stopFollowing');
+
+Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
+Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
+
+Route::put('api/user_skills/{skillId}','UserController@addSkill');
+Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
+
+Route::get('api/bands/{bandId}/posts', 'BandController@getMorePosts');
+Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
+
+//validate password
+Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
+Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
 Route::put('/api/read_notifications','UserController@readNotifications[')->name('read_notifications');
 Route::get('/api/user_friends','UserController@getFriends');
@@ -77,11 +113,15 @@ Route::get('/bands/new_genre', 'BandController@getNewGenrePartial');
 
 //Profile
 
-Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
+Route::get('users/{id}', 'UserController@show')->name('profile');
 
 
 Route::get('/403', 'ErrorPagesController@error403');
 
 
-//validate password
-Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
+//Band Profile
+
+Route::get('bands/{id}', 'BandController@show')->name('band_profile');
+
+
+

@@ -27,7 +27,7 @@ DELETE FROM skill;
 DELETE FROM city;
 DELETE FROM country;
 
-\i src/db/insertLocations.sql;
+\i db/insertLocations.sql;
 
 --Users
 
@@ -67,12 +67,12 @@ insert into mb_user (username, password, name, bio, dateOfBirth, deactivationDat
 --Bands
 
 
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (1,'B. Riley Financial, Inc.', '09-04-1960', null, 1, true);
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (2,'Selecta Biosciences, Inc.', '29-03-2006', '06-08-1962', 2, true);
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (3,'iShares MSCI All Country Asia ex Japan Index Fund', '01-11-1997', null, 2, true);
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (4,'MRC Global Inc.', '20-12-1973', null, 2, true);
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (5,'Thermon Group Holdings, Inc.', '16-08-1983', '16-11-1987', 1, true);
-insert into band (id,name, creationDate, ceaseDate, location, isActive) values (6,'Blackrock Corporate High Yield Fund, Inc.', '02-10-1976', null, 1, true);
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (1,'B. Riley Financial, Inc.', '09-04-1960', null, 1, true,'Streamlined incremental band');
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (2,'Selecta Biosciences, Inc.', '06-08-1962', '29-03-2006', 2, true,'Profound needs-based rock solutions');
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (3,'iShares MSCI All Country Asia ex Japan Index Fund', '01-11-1997', null, 2, true,'Organic indie open band');
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (4,'MRC Global Inc.', '20-12-1973', null, 2, true,'Reactive transitional secured band');
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (5,'Thermon Group Holdings, Inc.', '16-08-1983', '16-11-1987', 1, true,'Re-contextualized synth pop synergy');
+insert into band (id,name, creationDate, ceaseDate, location, isActive,bio) values (6,'Blackrock Corporate High Yield Fund, Inc.', '02-10-1976', null, 1, true,'Polarised stable band');
 
 ALTER SEQUENCE band_id_seq RESTART WITH 7;
 
@@ -123,6 +123,7 @@ insert into content(id,creatorId,text) values(15,11,'Check them out below Green 
 insert into content(id,creatorId,text) values(16,6,'But if you let me be there, again.');
 
 
+
 insert into post(id,private,contentId,bandId) values(1,false,1,NULL);
 insert into post(id,private,contentId,bandId) values(2,true,2,1);
 insert into post(id,private,contentId,bandId) values(3,false,3,1);
@@ -139,6 +140,8 @@ insert into post(id,private,contentId,bandId) values(13,false,13,NULL);
 insert into post(id,private,contentId,bandId) values(14,false,14,NULL);
 insert into post(id,private,contentId,bandId) values(15,false,15,NULL);
 insert into post(id,private,contentId,bandId) values(16,false,16,NULL);
+
+
 
 ALTER SEQUENCE post_id_seq RESTART WITH 17;
 
@@ -204,7 +207,7 @@ insert into message(id,contentId,receiverId,bandId) values(11,39,7,NULL);
 insert into message(id,contentId,receiverId,bandId) values(12,40,14,NULL);
 
 ALTER SEQUENCE message_id_seq RESTART WITH 13;
-ALTER SEQUENCE content_id_seq RESTART WITH 40;
+ALTER SEQUENCE content_id_seq RESTART WITH 41;
 
 --DO NOT FORGET TO CREATE AT LEAST ONE ADMIN USER WITH ID 1
 
@@ -503,3 +506,69 @@ insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(
 insert into band_invitation(id,userId,bandId,date,lastStatusDate,status) values(10,30,3,now(),now(),'pending');
 
 ALTER SEQUENCE band_invitation_id_seq RESTART WITH 11;
+
+
+
+
+-- --Testes do Conde
+
+-- insert into mb_user (id, username, password, name, bio, dateOfBirth, deactivationDate, warns, location, rating, admin) values (32,'jotaque', '123456', 'Random name', 'Devolved optimal methodology', '12-11-1963', '31-10-2006', 1, 2, 5.0, false);
+
+-- insert into content(id,creatorId,text) values(100,32,'Test post1');
+-- insert into content(id,creatorId,text) values(101,32,'Test post2');
+-- insert into content(id,creatorId,text) values(102,32,'Test post3');
+
+-- insert into post(id,private,contentId,bandId) values(500,false,100,NULL);
+-- insert into post(id,private,contentId,bandId) values(501,false,101,NULL);
+-- insert into post(id,private,contentId,bandId) values(502,false,102,NULL);
+
+
+
+-- more posts
+
+
+insert into content(id,creatorId,text) values(41,6,'Shadows jumpin all over the walls. They wont follow me. If the neon Bible is right. Poured them out on into the world. All the birds in the boat were singing, "Man this is it". Dont have any dreams dont have any plans. Nothing lasts forever. Hypocrite reader, my double, my brother. When Lenin was little. All the sailors in heaven are singing up and shit.');
+insert into post(id,private,contentId,bandId) values(17,true,41,1);
+
+insert into content(id,creatorId,text) values(42,6,'The suburban kids are for real. Now you got to help me find. I know Ill burn. So the story of my life is a lie and my fortune will never turn. Candles burning in the night. Fast rolls on the wheels to the future so bright. I stand on the edge of the stair. The raiders of the ark. Its time to save them, to heal them. So why cant you hear me?. Passion is useless and Im not ready to play ball. The gospels in the air. Since the dawn of the days. Came along on a rainy day. Strangers in our eyes');
+insert into post(id,private,contentId,bandId) values(18,true,42,1);
+
+insert into content(id,creatorId,text) values(43,6,'Theres much we can do. The world is waiting for something. So I sing this suburban song. Who can tell bout the afterlife?. And the kids on the block never gonna be the same, enemies but friends. I know its a pity; the lack of desire now. Its not a penny from the blood red sky. (1409607566242). The wolves there at Wall Street are in for the kill. We look upon the man of twilight. They walk in shaped of God. Stay out; I will beware. Now and forever. Forever damned to holy ground. Behind the walls its black, but evil shines');
+insert into post(id,private,contentId,bandId) values(19,true,43,1);
+
+insert into content(id,creatorId,text) values(44,6,'Ooh, babe. Pass the tequila, Manuel. Dont leave me now. Gitta have a real need. And when youre on the street. (1409607566242). Dont say its the end of the road. Ooh, babe. Youve got to be crazy. (1409607566242). "Young Lust". I need you, babe. (1409607566242). Youve got to be able. Gotta sleep on your toes');
+insert into post(id,private,contentId,bandId) values(20,true,44,1);
+
+insert into content(id,creatorId,text) values(45,6,'Nowhere to run, your mind is reeling.. THE BEAST ARISES. to paint the pictures you desire.. Kickin your can all over the place. It seems a place in which to hide, to plan his wicked scene,. We will we will rock you. There you lie so still and wait, tonight she may return.. as you fade into the black, her face appears.. So safe inside your darkened room, you count the minutes.. Out from a blood red sky, m searching out the scene. to paint the pictures you desire.. ');
+insert into post(id,private,contentId,bandId) values(21,true,45,1);
+
+insert into content(id,creatorId,text) values(46,6,'and dream of all the things you did today.. You got mud on yo face. et fasse qu en un moment tu te consumes!". Im one bad dude, lockjaw my name, ill blow you away, i dont play games.. Locked in ill take you down, before you begin to run.. Fightin in the street gonna be a big man some day. You find your mind begin to boil, then blown to smithereens,. jusquà ce que tu viennes à moi. Your senses numb, losing all your feeling.. Chorus. A bounty hunter from a distant galaxy,. Are you saving up the hours, for when she comes to you,. Turn out the lights and go to sleep,. but still youre trapped inside this dream.. She is the keeper of your dreams, she watches over you');
+insert into post(id,private,contentId,bandId) values(22,true,46,1);
+
+insert into content(id,creatorId,text) values(47,6,'Morbi vulputate sit amet mauris et ultricies. Morbi cursus, tortor eu convallis porta, felis elit posuere nunc, eget convallis leo justo vel enim. Nam aliquam nunc vitae lobortis lobortis. Mauris venenatis auctor odio, a elementum dolor malesuada rutrum. Sed vitae nisl luctus, finibus quam eget, egestas ante. Fusce egestas ultricies blandit. Vivamus egestas scelerisque tortor in semper. Aliquam erat volutpat. Etiam et convallis felis. Nullam ullamcorper venenatis scelerisque. Pellentesque fringilla ipsum a consequat fermentum. Curabitur luctus luctus euismod. Aenean posuere urna nec sem vestibulum, ut tempus purus rutrum. Suspendisse lobortis rutrum magna posuere luctus.');
+insert into post(id,private,contentId,bandId) values(23,true,47,1);
+
+insert into content(id,creatorId,text) values(48,6,'Suspendisse mattis augue ac ex ultricies egestas. Phasellus non ipsum at sem bibendum congue. Integer a tempor libero. Mauris laoreet venenatis elit at suscipit. Nulla at venenatis mi, ut mollis sem. Maecenas id molestie dolor, consectetur vulputate libero. Sed commodo nunc in erat imperdiet tristique. Donec pretium nisi et.');
+insert into post(id,private,contentId,bandId) values(24,true,48,1);
+
+insert into content(id,creatorId,text) values(49,6,'Quisque id diam non ex finibus gravida. Donec efficitur, enim et convallis luctus, metus est ultrices neque, ac eleifend turpis mauris vitae est. Donec tincidunt lacinia risus et convallis. Ut elementum quam id convallis interdum. Phasellus efficitur sed ligula eget vestibulum. Sed consectetur, velit in scelerisque suscipit, diam massa sagittis nunc, et facilisis ligula diam et justo. Fusce elementum ultricies dolor, in ullamcorper ipsum vestibulum ac. Maecenas quis ullamcorper leo. Duis malesuada felis quis fringilla facilisis. Sed sed egestas sapien. Vivamus ullamcorper viverra auctor. Sed a elit blandit lectus pharetra accumsan vel quis neque. In pulvinar magna eget nisi porttitor, at accumsan leo venenatis.');
+insert into post(id,private,contentId,bandId) values(25,true,49,1);
+
+insert into content(id,creatorId,text) values(50,6,'Curabitur mauris neque, gravida a lobortis ut, laoreet vitae libero. Praesent ut felis cursus, condimentum sapien id, congue quam. Fusce quis diam sit amet mi elementum tempus quis consequat turpis. Quisque maximus ornare dui non iaculis. Suspendisse dictum placerat lorem at euismod. Duis sit amet faucibus enim. Pellentesque interdum dolor sed varius porttitor. Aliquam sed orci egestas leo dignissim lacinia. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque neque ex, imperdiet vel risus ut, tincidunt pretium est. Vestibulum fermentum lacus ipsum, at maximus erat fermentum efficitur. Morbi finibus euismod risus.');
+insert into post(id,private,contentId,bandId) values(26,true,50,1);
+
+insert into content(id,creatorId,text) values(51,6,'Aliquam orci ex, vulputate ac lobortis ac, pharetra et ex. Donec interdum mattis ex dapibus posuere. Suspendisse libero ligula, tincidunt eu orci quis, posuere efficitur urna. Praesent interdum, risus nec pretium porttitor, lectus felis eleifend ipsum, in aliquet diam arcu eu nunc. Sed nec fermentum felis. Nam vel elementum ex, in mollis nibh. Maecenas et nulla fringilla, ultricies dui vitae, efficitur leo. Phasellus nec vehicula ipsum. Aliquam sit amet lorem tellus. Vivamus at justo vel magna aliquet convallis et interdum dui. Donec vestibulum pulvinar augue sit amet pulvinar.');
+insert into post(id,private,contentId,bandId) values(27,true,51,1);
+
+insert into content(id,creatorId,text) values(52,6,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus venenatis neque nunc, at facilisis orci facilisis a. Nam eget suscipit est, quis placerat diam. Ut pharetra aliquam diam. Phasellus fringilla metus quis dolor congue, vitae scelerisque tortor lacinia. Integer tempus enim id pretium lobortis. Duis.');
+insert into post(id,private,contentId,bandId) values(28,true,52,1);
+
+insert into content(id, creatorId,text) values(53,16,'Nice Post');
+insert into comment(id,contentId,postId) values(13,53,28);
+
+insert into content(id, creatorId,text) values(54,16,'Nice Post Man');
+insert into comment(id,contentId,postId) values(14,54,23);
+
+ALTER SEQUENCE post_id_seq RESTART WITH 29;
+ALTER SEQUENCE comment_id_seq RESTART WITH 15;
+ALTER SEQUENCE content_id_seq RESTART WITH 55;
