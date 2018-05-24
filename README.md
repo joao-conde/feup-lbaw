@@ -92,3 +92,11 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US48      |Post|high|0%|
 |US49      |Post|high|0%|
 |US50      |Remove posts|high|0%|
+
+
+
+PORMENORES QUE FALTAM FAZER:
+
+- IMPORTANTE: 
+  - Novo user not admin
+- New Band page: sem dropdown genres
