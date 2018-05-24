@@ -39,18 +39,18 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 ### AuthenticatedUser
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
-|US11      |Profile Page|high|80%-João Furriel|
-|US12      |Notifications List|high|0%|
-|US13      |Feed Page|high|0%|
+|US11      |Profile Page|high|100%|
+|US12      |Notifications List|high|70%|
+|US13      |Feed Page|high|90%|
 |US14      |Follow Users|high|100%|
 |US15      |Unfollow Users|high|100%|
-|US16      |Follow Bands|high|0%|
-|US17      |Unfollow Bands|high|0%|
-|US18      |Create Band Page|high|50%-Leo|
-|US19      |Post|high|90%-João Conde|
-|US20      |Search for users/bands|high|25%-Leo|
+|US16      |Follow Bands|high|100%|
+|US17      |Unfollow Bands|high|100%|
+|US18      |Create Band Page|high|100%|
+|US19      |Post|high|70%-João Conde|
+|US20      |Search for users/bands|high|35%-Leo|
 |US21      |Profile Page|high|100%|
-|US22      |Band Page|high|0%|
+|US22      |Band Page|high|100%|
 |US23      |Comment|medium|0%|
 |US24      |Report bands'|medium|0%|
 |US25      |Report users'|medium|0%|
@@ -92,3 +92,13 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US48      |Post|high|0%|
 |US49      |Post|high|0%|
 |US50      |Remove posts|high|0%|
+
+
+
+PORMENORES QUE FALTAM FAZER:
+
+- IMPORTANTE: 
+  - Novo user not admin
+- New Band page: sem dropdown genres
+- Search for Bands based on genre
+- Search for Users based on skill

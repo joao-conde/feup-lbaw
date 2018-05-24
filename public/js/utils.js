@@ -8,23 +8,24 @@ let userId = document.querySelector('span#user_id_span').innerHTML;
 
 const JSON_ENCODE = "application/json";
 const URL_ENCODE = "application/x-www-form-urlencoded";
+const NO_ENCODING = "application/json";
 
 const ERROR_CODE_GOOD = "00000";
 
 let globalBottomOfPage = false;
 
 function changeActiveTab(index) {
-    
+
     menu_items = document.querySelectorAll("nav#menu li");
 
-        for (let i = 0; i < menu_items.length; i++) {
-            let item = menu_items[i];
+    for (let i = 0; i < menu_items.length; i++) {
+        let item = menu_items[i];
 
-            if (i == index)
-                item.classList.add("active");
-            else
-                item.classList.remove("active");
-        }
+        if (i == index)
+            item.classList.add("active");
+        else
+            item.classList.remove("active");
+    }
 }
 
 function convertDateToEpochSecs(dateString, format) {
@@ -63,23 +64,23 @@ function getCurrentDayEpochSecs() {
 
 function getCurrentEpochSecs() {
 
-    return parseInt(new Date().getTime()/1000);
+    return parseInt(new Date().getTime() / 1000);
 
 }
 
 function encodeForAjax(data) {
-    return Object.keys(data).map(function(k){
+    return Object.keys(data).map(function (k) {
         return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&');  
+    }).join('&');
 }
 
 function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, data) {
 
-    if(encoding == URL_ENCODE) 
+    if (encoding == URL_ENCODE)
         data = encodeForAjax(data);
 
 
-    if(type == GET) {
+    if (type == GET) {
 
         let getApi = api + ((data == undefined) ? '' : ('?' + data));
 
@@ -94,10 +95,10 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
         request.open(type, api, true);
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
 
-        if(encoding != undefined)
+        if (encoding != undefined)
             request.setRequestHeader('Content-Type', encoding);
 
-        if(data != undefined)
+        if (data != undefined)
             request.send(data);
 
         else
@@ -105,9 +106,9 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
 
     }
 
-    if(receiveListener != undefined) {
+    if (receiveListener != undefined) {
 
-        request.addEventListener('load',receiveListener);
+        request.addEventListener('load', receiveListener);
 
     }
 
@@ -115,7 +116,7 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
 
 function addLeadingZero(number) {
 
-    if(number < 10)
+    if (number < 10)
         return "0" + number;
     return number;
 
@@ -141,7 +142,7 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
 
         fixedElement.selfHide();
         editElement.selfShow();
-        
+
         parentElement.replaceChild(editElement, fixedElement);
         editElement.value = oldValue;
         window.addEventListener('keyup', keysHandler);
@@ -161,23 +162,23 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
             fixedElement.innerHTML = newValue;
         parentElement.replaceChild(fixedElement, editElement);
 
-        window.removeEventListener('keyup', keysHandler); 
+        window.removeEventListener('keyup', keysHandler);
 
     }
 
 }
 
 
-Element.prototype.selfShow = function() {
+Element.prototype.selfShow = function () {
 
-    if(checkIfHasClass(this,'d-none'))
+    if (checkIfHasClass(this, 'd-none'))
         this.classList.remove('d-none');
 
 }
 
-Element.prototype.selfHide = function() {
+Element.prototype.selfHide = function () {
 
-    if(!checkIfHasClass(this,'d-none'))
+    if (!checkIfHasClass(this, 'd-none'))
         this.classList.add('d-none');
 
 }

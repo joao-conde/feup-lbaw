@@ -50,7 +50,6 @@ function handleCreatePostAPIResponse(response) {
   this.value = "";
 
   addPostButtonsEventListeners(postList.children[1]);
-
 }
 
 function handlerDeletePost(postId, userId) {

@@ -61,6 +61,61 @@ class UserController extends Controller {
         return response('',200);
     }
 
+    public function readNotifications(){
+
+        $userId = Auth::user()->id;
+
+        $updateQuery = "UPDATE user_notification SET visualizedDate = now() WHERE user_notification.id IN (".User::queryNotifications().")";
+
+        Log::info($updateQuery);
+
+    }
+
+    public function getFollowing(Request $request){
+
+        
+        $words = explode(" ", trim($request->pattern));
+        $followingUsersResult = array();
+
+        if(count($words) && $words[0] == ""){
+            return response($followingUsersResult,200);
+        }
+        $string = "";
+        foreach ($words as $word) {
+            
+            $string = $string.$word.":* & ";            
+        }
+        $string = trim($string, "& ");
+
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+                        ORDER BY name ASC;";
+        
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
+    }
+
+    public function getFollowingAll(Request $request){
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        ORDER BY name ASC;";
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
+    }
+
     public function listReportedUsers(Request $request)
     {
         if (!Auth::check()) return redirect('/');
@@ -313,8 +368,8 @@ class UserController extends Controller {
         //if($request->hasFile('picture')) {
 
             $picture = $request->file('picture');
-            $profileSize = Image::make($picture)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
-            $iconSize = Image::make($picture)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
+            $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
 
             Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
             Storage::put($user->pathToIconPicture(), $iconSize->__toString());

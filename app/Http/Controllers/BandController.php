@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Band;
 use App\User;
 use App\Report;
 use App\Ban;
 use App\City;
+use App\Genre;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class BandController extends Controller
 {
@@ -149,7 +154,9 @@ class BandController extends Controller
      */
     public function create()
     {
-        return view('pages.newband');
+        $genres = Genre::allActives();
+
+        return view('pages.newband.page', ['genres' => $genres]);
 
     }
 
@@ -162,15 +169,51 @@ class BandController extends Controller
     public function store(Request $request)
     {
 
-      $band = new Band();
+        $band = new Band();
 
     //   $this->authorize('create', $band);
 
-      $band->name = $request->input('name');
-      $band->save();
+        $band->name = $request->input('name');
+        $band->bio = $request->input('bio');
+        $band->save();
 
-      return redirect()->route('band_page', ['bandId' => $band->id]);
-  }
+        $insertQuery = "INSERT INTO band_membership (bandId, userId, isOwner)VALUES(?,?,true);";
+        $insertQuery2 = "INSERT INTO band_follower (bandId, userId) VALUES(?,?);";
+
+        DB::insert($insertQuery, [$band->id, Auth::user()->id]);
+        DB::insert($insertQuery2, [$band->id, Auth::user()->id]);
+        
+        
+
+        if($request->__isset('selectNewMember')){
+
+            foreach ($request->input('selectNewMember') as $userId) {
+                Band::sendInvitation($userId, $band->id);
+            }
+        }
+
+        if($request->__isset('genres')){
+            
+            foreach ($request->input('genres') as $genreId) {
+
+                $bandGenreQuery = "INSERT INTO band_genre (bandId, genreId)VALUES(?,?);";
+                DB::insert($bandGenreQuery, [$band->id, $genreId]);
+            }
+        }
+
+        $picture = $request->file('band_img');
+        // $picture = $_FILES['band_img'];
+        $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+        $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
+
+        Storage::put($band->pathToProfilePicture(), $profileSize->__toString());
+        Storage::put($band->pathToIconPicture(), $iconSize->__toString());
+
+
+
+
+        return redirect()->route('band_page', ['bandID' => $band->id]);
+    }
 
     /**
      * Display the specified resource.
@@ -229,38 +272,43 @@ class BandController extends Controller
             'cities' =>$cities]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function getNewMemberPartial(Request $request){
+        return view('pages.newband.new_member', ['url_img' => $request->id, 'name' => $request->name]);
+        // TODO: user_img
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function getNewGenrePartial(Request $request){
+        return view('pages.newband.new_genre', ['name' => $request->name]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+
+    public function getGenres(Request $request){
+    
+            
+        $words = explode(" ", trim($request->pattern));
+        $genresResult = array();
+    
+        if(count($words) && $words[0] == ""){
+            return response($genresResult,200);
+        }
+        $string = "";
+        foreach ($words as $word) {
+            
+            $string = $string.$word.":* & ";            
+        }
+        $string = trim($string, "& ");
+    
+    
+        $genresQuery = "SELECT genre.id, genre.name as name 
+                        FROM genre 
+                        WHERE to_tsvector('simple', genre.name) @@ to_tsquery('simple', ?) 
+                        ORDER BY name ASC;";
+        
+    
+        $genresResult = DB::select($genresQuery, [$string]);
+    
+        $result = json_encode($genresResult);
+        return response($result,200);
     }
 
     public function getMorePosts(Request $request, $bandId) {
@@ -340,6 +388,8 @@ class BandController extends Controller
             return response('',500);
 
     }
+
+
 
 
 

@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 
-
 // FEED
 Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
 Route::post('/api/users/{userId}/posts', 'UserController@createPost');
@@ -87,18 +86,30 @@ Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
 Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
 Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
+Route::put('/api/read_notifications','UserController@readNotifications[')->name('read_notifications');
+Route::get('/api/user_friends','UserController@getFriends');
+Route::get('/api/user_followers','UserController@getFollowers');
+Route::get('/api/user_following','UserController@getFollowing');
+Route::get('/api/user_following/all','UserController@getFollowingAll');
+Route::get('/api/genres','BandController@getGenres');
+
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('do_login');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
+Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
+Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
 // Auth::routes();
 
 // Bands
 Route::get('band/{bandID}', 'BandController@show')->name('band_page');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
 Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
+Route::get('/bands/new_member', 'BandController@getNewMemberPartial');
+Route::get('/bands/new_genre', 'BandController@getNewGenrePartial');
 
 //Profile
 

@@ -1,45 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+<link href="{{ asset('css/forms.css') }}" rel="stylesheet">
+
+<div class="container-fluid main_form">
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-4">
+            <div class="jumbotron text-center bg-primary">
+                <h2>Reset Password</h2>
+                <form method="POST" action="{{ route('send_email') }}">
+                    {{ csrf_field() }}
+                    <div class="row justify-content-center">
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
+                            <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
+                            <input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="usrnm" placeholder="Enter username" name="username">
+                            @if ($errors->has('username'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
+                            @endif
                         </div>
-                    @endif
-
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
+                            <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
+                            <input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="email" placeholder="Enter email" name="email">
+                            @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                            @endif
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary m-4">Send Password Reset Link</button>
+                </form>
             </div>
         </div>
     </div>

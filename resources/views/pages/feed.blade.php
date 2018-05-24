@@ -5,7 +5,7 @@
 @include('partials.leftmenumobile') @endsection @section('logged_content') @include('partials.leftfeedmenu')
 
 <p id="posts_page_type" class="d-none">feed</p>
-<div id="posts" class="col-12 col-md-6 p-0 mt-2 toggleContent">
+<div id="center_content" class="col-12 col-md-6 p-0 mt-2 toggleContent">
 
 	<div class="jumbotron p-3 post mb-2" id="newpost">
 		<div class="row">

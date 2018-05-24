@@ -22,7 +22,7 @@ function getPostsAjaxRequestListener() {
     if(this.status != 200)
         return;
 
-    let postsList = document.querySelector('div#posts');
+    let postsList = document.querySelector('div#center_content');
 
     postsList.innerHTML += this.responseText;
 
