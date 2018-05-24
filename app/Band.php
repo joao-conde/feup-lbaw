@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Post;
 
 class Band extends Model
 {
@@ -25,6 +26,17 @@ class Band extends Model
         return $this->hasMany('App\User');
     }
 
+
+
+    public static function sendInvitation($userId, $bandId){
+
+        $insertQuery = "INSERT INTO band_invitation(userId,bandId,date,lastStatusDate,status) 
+                        VALUES(?,?,now(),now(),'pending');";
+
+        DB::insert($insertQuery, [$userId, $bandId]);
+    }
+
+    
     public function membersSQL() {
 
         $queryBandMembers = 'SELECT mb_user.id as userid, mb_user.name as membername, band_membership.isowner as owner
@@ -103,57 +115,8 @@ class Band extends Model
     }
 
     public function posts($offset) {
-
-        $query = 'SELECT mb_user.id as creatorid, mb_user.username as username, post.id as id, mb_user.name as name, content.date as date, content.text as text, true as band_post  
-                  FROM Post
-                  JOIN content on content.id = post.contentid
-                  JOIN mb_user on mb_user.id = content.creatorid
-                  WHERE post.bandid = ?
-                  ORDER BY content.date ASC
-                  LIMIT 5 OFFSET ?';
-
-        $posts =  DB::select($query,[$this->id, $offset]);
-
-        $comments = $this->comments($offset);
-
-        foreach($posts as $post) {
-
-            if(!array_key_exists("comments",$post))
-                $post->comments = array();
-
-            foreach($comments as $comment) {
-
-                if($comment->postid == $post->id) {
-                    
-                    array_push($post->comments,$comment);
-
-                }
-
-            }
-
-        }
         
-        return $posts;
-
-    }
-
-    public function comments($offset) {
-
-        $query = 'SELECT mb_user.id as userid, mb_user.username as username, mb_user.name as author, comment.id as id, post.id as postid, content.text as text, content.date as date 
-                  FROM comment
-                  JOIN content on content.id = comment.contentid
-                  JOIN post on comment.postid = post.id
-                  JOIN mb_user on mb_user.id = content.creatorid
-                  WHERE post.bandid = ?
-                  AND post.id IN 
-                    (SELECT post.id 
-                    FROM Post
-                    JOIN content on content.id = post.contentid
-                    WHERE post.bandid = ?
-                    LIMIT 5 OFFSET ?)
-                  ORDER BY content.date ASC';
-
-        return DB::select($query,[$this->id, $this->id, $offset]);
+        return Post::bandPosts($this->id,$offset);
 
     }
 
@@ -193,9 +156,40 @@ class Band extends Model
     public function getIconPicturePath() {
 
         if(Storage::disk('local')->exists($this->pathToIconPicture())) 
-            return url('storage/user_pics'.'/'.$this->id.'/'.$this->id.'_icon.png');
+            return url('storage/band_pics'.'/'.$this->id.'/'.$this->id.'_icon.png');
         else
             return asset('images/system/band-profile.svg');
+
+    }
+
+    public function followers() {
+
+        $query = 'SELECT userid 
+                  FROM band_follower
+                  WHERE bandid = ?';
+
+        return DB::select($query,[$this->id]);
+
+    }
+
+    public function isFollowing($userId) {
+
+        $query = 'SELECT count(*) FROM band_follower WHERE bandid = ? AND userid = ?';
+        return DB::select($query,[$this->id,$userId])[0]->count == 1;
+
+    }
+
+    public static function getBandProfilePicturePath($bandId) {
+
+        $band = Band::find($bandId);
+        return $band->getProfilePicturePath();
+
+    }
+
+    public static function getBandIconPicturePath($bandId) {
+
+        $band = Band::find($bandId);
+        return $band->getIconPicturePath();
 
     }
 

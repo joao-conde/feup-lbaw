@@ -11,11 +11,28 @@ for (let i = 0; i < followButtons.length; i++) {
 
 function startStopFollowingEventListener() {
 
-    let userToFollowId = this.querySelector('span.userId').innerHTML;
+    let userOrBandToFollowSpan = this.querySelector('span.userOrBandId');
+    let userOrBandToFollowId = userOrBandToFollowSpan.innerHTML;
 
     let request = new XMLHttpRequest();
     let method = PUT;
-    let api = '/api/user_followers/' + parseInt(userToFollowId);
+    let api;
+
+    let isUser = checkIfHasClass(userOrBandToFollowSpan,'isUser');
+    let isBand = checkIfHasClass(userOrBandToFollowSpan,'isBand');
+
+    let followType;
+
+    if(isUser) {
+        followType = 'user';
+        api = '/api/user_followers/' + parseInt(userOrBandToFollowId);
+    }
+       
+    else if(isBand) {
+        followType = 'band';
+        api = '/api/bands/' + parseInt(userOrBandToFollowId) + '/followers/' + userId;
+    }
+    
     let follow = true;
 
 
@@ -25,11 +42,11 @@ function startStopFollowingEventListener() {
     }
 
 
-    sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request));
+    sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request, followType));
 
 }
 
-function handleAPIResponse(follow, request) {
+function handleAPIResponse(follow, request, followType) {
 
     if(request.status == 200) {
 
@@ -37,7 +54,7 @@ function handleAPIResponse(follow, request) {
 
             this.classList.remove('btn-success','follow');
             this.classList.add('btn-danger','unfollow');
-            this.querySelector('span.btn_follow_label').innerHTML = 'Unfollow';
+            this.querySelector('span.btn_follow_label').innerHTML = followType == 'user' ? 'Unfollow' : 'Unfollow Band';
 
         }
 
@@ -45,7 +62,7 @@ function handleAPIResponse(follow, request) {
 
             this.classList.remove('btn-danger','unfollow');
             this.classList.add('btn-success','follow');
-            this.querySelector('span.btn_follow_label').innerHTML = "Follow";
+            this.querySelector('span.btn_follow_label').innerHTML = followType == 'user' ? "Follow" : 'Follow Band';
 
         }
 

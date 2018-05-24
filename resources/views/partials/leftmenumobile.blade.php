@@ -22,6 +22,17 @@
                     </a>
                   </li>
                 </ul>
+                <div class="d-flex flex-row m-0">
+
+                    <a class="mr-1 d-block mr-2" href="#">
+                      <small><p class="text-secondary mt-2 mb-0">See all</p></small>
+                
+                    </a>
+                    <a class="mr-1 d-block" href="{{ route('create_band') }}">
+                      <small><p class="text-secondary mt-2 mb-0">Create Band</p></small>
+                    </a>
+                
+                </div>
               </li>
               <hr>
               <li class="display-5 text-primary">My Fellow Musicians

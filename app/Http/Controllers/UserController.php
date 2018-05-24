@@ -6,15 +6,26 @@ use App\User;
 use App\Ban;
 use App\Report;
 use App\Warning;
+use App\City;
+use App\Post;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
-{
+
+class UserController extends Controller {
+    
+    const PICTURE_PROFILE_SIZE = 500;
+    const PICTURE_ICON_SIZE = 90;
+
     /**
      * Display a listing of the resource.
      *
@@ -48,6 +59,61 @@ class UserController extends Controller
         $user->save();
 
         return response('',200);
+    }
+
+    public function readNotifications(){
+
+        $userId = Auth::user()->id;
+
+        $updateQuery = "UPDATE user_notification SET visualizedDate = now() WHERE user_notification.id IN (".User::queryNotifications().")";
+
+        Log::info($updateQuery);
+
+    }
+
+    public function getFollowing(Request $request){
+
+        
+        $words = explode(" ", trim($request->pattern));
+        $followingUsersResult = array();
+
+        if(count($words) && $words[0] == ""){
+            return response($followingUsersResult,200);
+        }
+        $string = "";
+        foreach ($words as $word) {
+            
+            $string = $string.$word.":* & ";            
+        }
+        $string = trim($string, "& ");
+
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+                        ORDER BY name ASC;";
+        
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
+    }
+
+    public function getFollowingAll(Request $request){
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        ORDER BY name ASC;";
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
     }
 
     public function listReportedUsers(Request $request)
@@ -169,70 +235,302 @@ class UserController extends Controller
 
         return response(200);
     }
+    
+    public function show($id) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if (!Auth::check()) return redirect('/login');
+
+        $user = User::find($id);
+        $followedUsers = Auth::user()->followedUsers();
+        $skills = $user->skills();
+
+        $isFollowing = false;
+
+        foreach($followedUsers as $friend) {
+
+            if($friend->id == $id) {
+                
+                $isFollowing = ($friend->isactive == true);
+                break;
+                    
+            }
+
+        }
+
+        $timestamp = strtotime($user->dateofbirth); 
+        $dateOfBirthString = date('d/m/Y', $timestamp);
+
+        $cities = City::getAll();
+        $location = $user->locationCity();
+
+        if($location != '') {
+            $location = $location->name;
+            $country = $user->locationCountry()->name;
+        }
+
+        else {
+            $location = '';
+            $country = '';
+        }
+          
+        return view('pages.profile', ['country' => $country, 'location' => $location, 'cities' => $cities,'user' => $user, 'isFollowing' => $isFollowing, 'dateOfBirthString' => $dateOfBirthString, 'skills' => $skills]);
+
+    } 
+
+    public function startFollowing($userToFollowId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $verifyQuery = 'SELECT * FROM user_follower 
+                        JOIN mb_user as users ON users.id = user_follower.followedUserId
+                        WHERE user_follower.followingUserId = ?
+                        AND user_follower.followedUserId = ?';
+
+        $updateQuery = 'UPDATE user_follower
+                        SET isActive = true
+                        WHERE user_follower.followingUserId = ?
+                        AND user_follower.followedUserId = ?';
+
+        $insertQuery = 'INSERT INTO user_follower(followingUserId, followedUserId, isActive)
+                        VALUES (?,?,?)';
+
+        $alreadyExists = DB::select($verifyQuery, [Auth::user()->id, $userToFollowId]);
+
+        if(count($alreadyExists) == 0) {
+            DB::insert($insertQuery, [Auth::user()->id, $userToFollowId, true]);
+            return response('',200);
+        }
+            
+        else if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [Auth::user()->id, $userToFollowId]);
+            return response('',200);
+        }
+
+        else
+            return response(count($alreadyExists),500);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function stopFollowing($userToFollowId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $verifyQuery = 'SELECT * FROM user_follower 
+                        WHERE user_follower.followingUserId = ?
+                        AND user_follower.followedUserId = ?';
+
+        $updateQuery = 'UPDATE user_follower
+                        SET isActive = false
+                        WHERE user_follower.followingUserId = ?
+                        AND user_follower.followedUserId = ?';
+
+
+        $alreadyExists = DB::select($verifyQuery, [Auth::user()->id, $userToFollowId]);
+    
+        if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [Auth::user()->id, $userToFollowId]);
+            return response('',200);
+        }
+
+        else
+            return response('',500);
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
+    public function editUser(Request $request) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $user = User::find($request->id);
+
+        if($request->__isset('name')) $user->name = $request->name;
+        if($request->__isset('bio')) $user->bio = $request->bio;
+        if($request->__isset('birthdate')) $user->dateofbirth = $request->birthdate;
+        if($request->__isset('locationId')) $user->location = $request->locationId;
+
+        $user->save();
+
+        return response(200);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+    public function editUserPicture(Request $request) {
+
+        $user = User::find($request->id);
+
+        //if($request->hasFile('picture')) {
+
+            $picture = $request->file('picture');
+            $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
+
+            Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
+            Storage::put($user->pathToIconPicture(), $iconSize->__toString());
+
+            return response('',200);
+
+        //}
+
+        //return response('No picture',500);
+
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
+    public function validatePassword(Request $request) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        if($request->__isset('pwd')) {
+
+            if (Hash::check($request->pwd, Auth::user()->password)) {
+
+                return response('',200);
+
+            }
+
+            else {
+                return response('Not authorized',403);
+            }
+            
+        }
+
+        return response('No password detected',500);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
+    public function addSkill(Request $request, $skillId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        if(!$request->__isset('level'))
+            return response('',400);
+
+        $verifyQuery = 'SELECT * FROM user_skill
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        $updateQuery = 'UPDATE user_skill
+                        SET isActive = true,
+                            level = ?
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        $insertQuery = 'INSERT INTO user_skill(skillId, userId, level)
+                    VALUES (?,?,?)';
+
+        $alreadyExists = DB::select($verifyQuery, [$request->skillId, Auth::user()->id]);
+
+
+        if(count($alreadyExists) == 0) {
+            DB::insert($insertQuery, [$request->skillId,Auth::user()->id,$request->level]);
+            return response('',200);
+        }
+            
+
+        else if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [$request->level,$request->skillId, Auth::user()->id]);
+            return response('',200);
+        }
+
+        else
+            return response(count($alreadyExists),500);
+
     }
+
+    public function deleteSkill(Request $request, $skillId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $updateQuery = 'UPDATE user_skill
+                        SET isActive = false
+                        WHERE user_skill.skillId = ?
+                        AND user_skill.userId = ?';
+
+        DB::update($updateQuery, [$request->skillId, Auth::user()->id]);
+
+        return response(200);
+    }
+
+    public function deleteLocation() {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $delete = 'UPDATE mb_user
+                   SET location = NULL
+                   WHERE id = ?';
+
+        DB::update($delete, [Auth::user()->id]);
+
+        return response(200);
+
+    }
+
+    public function getMorePosts(Request $request, $userId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $user = User::find($userId);
+
+        if($request->__isset('offset')) $offset = $request->offset;
+        if($request->__isset('type')) $type = $request->type;
+
+        $posts = $type == 'profile' ? $user->posts($offset) : $user->feedPosts($offset);
+
+        $response = "";
+
+        for($i = 0; $i < count($posts); $i++) {
+            $response = $response.view('partials.post',['post' => $posts[$i]]);
+        }
+
+        return response($response,200);
+
+    }
+
+    public function getFeedPosts(){
+
+        if (!Auth::check()) return redirect('/login');
+
+        $posts = Post::feedPosts(Auth::user()->id,0);
+        
+        return view('pages.feed', ['posts' => $posts]);
+    }
+
+    public function createPost(Request $request) {    
+        
+        DB::beginTransaction();
+        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+
+        $insertContent = "INSERT INTO content (text, creatorId)
+                                VALUES (?, ?)";
+
+        $insertPost = "INSERT INTO post (private, contentId)
+                                VALUES (?, currval('content_id_seq'))";
+
+        DB::insert($insertContent, [$request->content, Auth::user()->id]);
+        DB::insert($insertPost, [$request->private]);
+        $postid = DB::select("SELECT currval('post_id_seq')")[0]->currval;
+        DB::commit();
+
+        return response(json_encode(['postid'=>$postid, 'name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
+    }
+    
+    public function deletePost(Request $request){
+
+        $getContentId = "SELECT post.contentid FROM post WHERE post.id = ?";
+        $content = DB::select($getContentId, [$request->postid]);
+        $contentid = $content[0]->contentid;
+        
+        DB::beginTransaction();
+        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+        
+        $deletePost = "DELETE FROM post WHERE post.id=?";
+        $deleteContent = "DELETE FROM content WHERE content.id=?";
+
+        DB::delete($deletePost, [$request->postid]);
+        DB::delete($deleteContent, [$contentid]);
+        
+        DB::commit();
+        
+        return response(json_encode(['postid'=>$request->postid]), 200);
+    }
+
 }

@@ -39,7 +39,7 @@ textarea#new_post_ta, textarea#new_comment_ta{
     width: 94%;
   }
 
-  div#posts {
+  div#center_content {
     display: block;
   }
 

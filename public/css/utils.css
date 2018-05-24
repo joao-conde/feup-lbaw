@@ -54,3 +54,19 @@
     border: none;
     background: none;
   }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+.halfstar {
+  margin-right: -20px !important;
+}
+
+.commentDate {
+  font-size: 0.7em;
+}
+
+.band_img_post {
+  margin-left: -30px !important;
+}

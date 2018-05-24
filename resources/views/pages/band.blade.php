@@ -3,11 +3,11 @@
 
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-<link href="{{ asset('css/band.css') }}" rel="stylesheet">
 {{-- <script defer src="{{ asset('js/newPost.js')}}"></script> --}}
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
-<script defer src="{{ asset('js/visitBandPage.js')}}"></script>
+{{-- <script defer src="{{ asset('js/visitBandPage.js')}}"></script> --}}
 <script defer src="{{ asset('js/editBandPage.js')}}"></script>
+<script defer src="{{ asset('js/post.js')}}"></script>
 
 @include('partials.leftmenumobile')
 @endsection
@@ -15,6 +15,8 @@
 @section('logged_content')
 
 <p class="d-none" id="bandId">{{$band->id}}</p>
+<p id="posts_page_type" class="d-none">band</p>
+
 
 <div class="toggleContent">
 
@@ -39,9 +41,10 @@
                     <div class="col-auto">
 
                         <img id="profile_pic" class="profile_image d-block my-3" src="{{$band->getProfilePicturePath()}}" alt="Profile Image">
-                        <button class="btn btn-success">Follow Band</button>
-
-
+                        
+						@include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id), 'userOrBandToFollowId'=> $band->id]) 
+						
+                        
                     </div>
 
                     <div class="col-12 col-lg-7 p-3 align-self-start text-justify">
@@ -89,12 +92,12 @@
                                 <li>
                                     <small>Founded on
                                         <i>{{date('Y',strtotime($band->creationdate))}}</i>
-                                        <p class="d-inline"> by {{$band['founders'][0]->membername}}</p>
+                                        <p class="d-inline"> by <a class="text-primary" href = {{"/users/".$band['founders'][0]->userid}}>{{$band['founders'][0]->membername}}</p></a>
                                         @if(count($band['founders']) > 2)
                                         @for($i = 1; $i < count($band['founders'])-1; $i++)
-                                        <i>, {{$band['founders'][$i]->membername}}<i>
+                                        , <a class="text-primary" href = {{"/users/".$band['founders'][$i]->userid}}><i> {{$band['founders'][$i]->membername}}<i></a>
                                         @endfor
-                                        <i> and {{$band['founders'][count($band['founders'])-1]->membername}}
+                                        <a class="text-primary" href = {{"/users/".$band['founders'][count($band['founders'])-1]->userid}}><i> and {{$band['founders'][count($band['founders'])-1]->membername}}</a>
                                         @endif
                                     </small>
                                     
@@ -136,8 +139,8 @@
             <div class="jumbotron p-3 mr-2">
                 <p class="align-middle">Members</p>
                 @foreach($members as $member)
-                <a class="d-block" href="#">
-                    <img class="profile_img_feed" src="{{asset('images/system/dummy_profile.svg')}}">
+                <a class="d-block" href="{{'/users/'.$member->userid}}">
+                    <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
                     <small class="text-primary">{{$member->membername}}</small>
                     @if($member->owner == true)
                     <small class="ml-1">f</small>
@@ -152,7 +155,7 @@
 
         <div class="col-12 col-md-9 col-lg-6">
 
-            <div id="posts" class="toggleContent">
+            <div id="center_content" class="toggleContent">
 
                 @foreach($band['posts'] as $post)
                     @include('partials.post')
