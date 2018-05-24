@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 
-
 // FEED
 // Route::get('/users/{id}/posts', 'FeedController@getPosts');
 Route::get('/feed', 'FeedController@getPosts')->name('feed');
@@ -90,6 +89,8 @@ Route::post('login', 'Auth\LoginController@login')->name('do_login');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
+Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
+Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
 // Auth::routes();
 
 // Bands
