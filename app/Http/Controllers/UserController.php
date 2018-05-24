@@ -306,8 +306,8 @@ class UserController extends Controller {
         //if($request->hasFile('picture')) {
 
             $picture = $request->file('picture');
-            $profileSize = Image::make($picture)->resize(ProfilePageController::PICTURE_PROFILE_SIZE,ProfilePageController::PICTURE_PROFILE_SIZE)->encode('jpg');
-            $iconSize = Image::make($picture)->resize(ProfilePageController::PICTURE_ICON_SIZE,ProfilePageController::PICTURE_ICON_SIZE)->encode('jpg');
+            $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
 
             Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
             Storage::put($user->pathToIconPicture(), $iconSize->__toString());
