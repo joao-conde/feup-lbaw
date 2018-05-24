@@ -8,7 +8,7 @@
             <i class="fas fa-times text-danger"></i>
         </span>
         <span id="edit_post_button">
-                <i class="fas fa-pencil-alt"></i>
+            <i class="fas fa-pencil-alt"></i>
         </span>
         @endif
     </div>
@@ -39,7 +39,7 @@
 
         <div class="col align-self-center text-justify">
 
-            <small>{{$post->posttext}}
+            <small id="text">{{$post->posttext}}
             </small>
 
         </div>

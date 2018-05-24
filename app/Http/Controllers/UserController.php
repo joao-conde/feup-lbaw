@@ -299,6 +299,13 @@ class UserController extends Controller {
 
     }
 
+    public function editPost(Request $request){
+        
+
+
+        return response(json_encode(["text" => "Comment text"]), 200);
+    }
+
     public function editUserPicture(Request $request) {
 
         $user = User::find($request->id);
@@ -317,8 +324,6 @@ class UserController extends Controller {
         //}
 
         //return response('No picture',500);
-
-
     }
 
     public function validatePassword(Request $request) {
