@@ -44,8 +44,7 @@
                 </select>
                 <div class="row justify-content-center">
                     <div class="form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="fas fa-music mr-2 form-icon clickable" data-toggle="collapse" href="#new_genres" role="button"
-                        aria-expanded="true" aria-controls="new_genres"></i>
+                        <i class="fas fa-music mr-2 form-icon"></i>
                             <div class="btn-group mx-4">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Select Genres
@@ -74,8 +73,8 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-4 form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                        <i class="far fa-image mr-2 form-icon"></i>
+                    <div class="col-4 form-group mt-4 border border-top-0 border-left-0 border-right-0 border-secondary p-0">
+                        <i class="far fa-image mr-2 form-icon align-bottom mb-2"></i>
                         <input type="file" class="border-0 text-center d-none" id="band_img_input"
                             placeholder="Enter Band Name" name="band_img">
                         <button type="button" id="btnBandPic" class="btn btn-primary">Select Picture</button>

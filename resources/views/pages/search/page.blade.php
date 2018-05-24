@@ -23,10 +23,10 @@
 		<ul class="list-group col-12">
 			<h3 class="text-primary text-center">Results for "{{$text}}"</h3>
 
-			@if(count($searchResult) > 0)
+			@if(count($searchResultUsers) > 0)
 				<h4 class="pl-3 text-primary">Users</h4>
 
-				@foreach($searchResult as $result)
+				@foreach($searchResultUsers as $result)
 
 					@include('pages.search.partials.user', ['result' => $result])
 

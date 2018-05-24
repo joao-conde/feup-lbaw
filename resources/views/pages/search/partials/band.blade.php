@@ -1,5 +1,5 @@
 <li class="list-group-item d-flex rounded">
-    <img src="{{User::getUserIconPicturePath($result->id)}}" class="profile">
+    <img src= "{{Band::getBandIconPicturePath($result->id)}}" class="profile">
     <ul class="list-group col-10 align-self-center">
         <li class="list-group-item border-0 py-0 my-0">
             <div class="row justify-content-between">
