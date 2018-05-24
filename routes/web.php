@@ -17,11 +17,10 @@ Route::get('/', function () {
 
 
 // FEED
-// Route::get('/users/{id}/posts', 'FeedController@getPosts');
 Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
 Route::post('/api/users/{userId}/posts', 'UserController@createPost');
+Route::post('/api/users/{userId}/posts/{postId}', 'UserController@editPost');
 Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
-
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');

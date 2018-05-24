@@ -354,6 +354,13 @@ class UserController extends Controller {
 
     }
 
+    public function editPost(Request $request){
+
+
+
+        return response(json_encode(["text" => "Comment text"]), 200);
+    }
+
     public function editUserPicture(Request $request) {
 
         $user = User::find($request->id);
@@ -372,8 +379,6 @@ class UserController extends Controller {
         //}
 
         //return response('No picture',500);
-
-
     }
 
     public function validatePassword(Request $request) {
@@ -481,7 +486,7 @@ class UserController extends Controller {
             $response = $response.view('partials.post',['post' => $posts[$i]]);
         }
 
-        return response($response,200);
+        return response(json_encode(["postViews" => $response, "numberOfPosts" => count($posts)]),200);
 
     }
 
@@ -507,10 +512,13 @@ class UserController extends Controller {
 
         DB::insert($insertContent, [$request->content, Auth::user()->id]);
         DB::insert($insertPost, [$request->private]);
-        $postid = DB::select("SELECT currval('post_id_seq')")[0]->currval;
+
+        $postId = DB::select("SELECT currval('post_id_seq')")[0]->currval;
         DB::commit();
 
-        return response(json_encode(['postid'=>$postid, 'name' => Auth::user()->name,'content' => $request->content, 'date'=>date("d/m/Y")]), 200);
+        $post = Post::getPost(Auth::user()->id, $postId);
+
+        return response(view('partials.post', ['post'=> $post]), 200);
     }
     
     public function deletePost(Request $request){
