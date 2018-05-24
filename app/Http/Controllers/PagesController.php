@@ -18,18 +18,6 @@ class PagesController extends Controller
     	return view('pages.faq.page');
     }
 
-    // public function adminUsers(){
-    // 	return view('admin.users');
-    // }
-
-    public function adminReportedUsers(){
-    	return view('admin.user_reports');
-    }
-
-    public function adminReportedBands(){
-    	return view('admin.band_reports');
-    }
-
     public function do_search(Request $request){
         $text = $request->input('text');
 

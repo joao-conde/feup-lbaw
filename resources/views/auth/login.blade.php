@@ -40,37 +40,11 @@
                             @endif
                         </div>
                     </div>
-                    {{-- <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
-                                Login
-                            </button>
-
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Forgot Your Password?
-                            </a>
-                        </div>
-                    </div>
-                    <div class="form-check mt-4">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-                        </label>
-                    </div>               --}}
                     <button type="submit" class="btn btn-secondary m-4">Login</button>
-                    {{-- <a href="./feed_jp.php" class="btn btn-secondary m-4">Login</a> --}}
                 </form>
                 <div class="row justify-content-center">
                     <p class="text-secondary">Do not have account? Register <a href="{{url("/register")}}"> Here</a>!</p>
+                    <p class="text-secondary">Forgot your password? Click <a href="{{url("/email")}}"> Here</a>!</p>
                 </div>
             </div>
         </div>
