@@ -100,3 +100,5 @@ PORMENORES QUE FALTAM FAZER:
 - IMPORTANTE: 
   - Novo user not admin
 - New Band page: sem dropdown genres
+- Search for Bands based on genre
+- Search for Users based on skill
