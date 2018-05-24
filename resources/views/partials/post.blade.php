@@ -5,10 +5,10 @@
     <div>
         @if($post->creatorid == Auth::user()->id)
         <span id="delete_post_button">
-            <i class="fas fa-times text-danger"></i>
+            <i class="clickable fas fa-trash-alt"></i>
         </span>
         <span id="edit_post_button">
-            <i class="fas fa-pencil-alt"></i>
+            <i class="clickable fas fa-pencil-alt"></i>
         </span>
         @endif
     </div>

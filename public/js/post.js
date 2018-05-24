@@ -82,7 +82,7 @@ function buildPost(data) {
   span_delete.id = "delete_post_button";
   span_edit.id = "edit_post_button";
 
-  delete_i.classList.add("fas", "fa-times", "text_danger");
+  delete_i.classList.add("fas", "fa-trash-alt");
   edit_i.classList.add("fas", "fa-pencil-alt");
 
   span_delete.appendChild(delete_i);
@@ -262,18 +262,57 @@ for (let i = 1; i < posts.length; i++) {
 }
 
 
-function toggleOffEditPost() {
-  console.log("EDIT TOGGLED OFF");
+function toggleOffEditPost(cancelBtn, verifyBtn, saveChanges) {
+  console.log("EDIT TOGGLED OFF--->SAVE? " + saveChanges);
+  if(saveChanges){
+    //edit post in db
+
+  }
+  else{
+    //cancel changes
+  }
+
+  let btnDiv = verifyBtn.parentNode;
+
+  //verify button to edit
+  let editBtn = document.createElement('span');
+  let editIcon = document.createElement('i');
+  editIcon.classList.add("clickable", "fas", "fa-pencil-alt");
+  editBtn.appendChild(editIcon);
+  editBtn.id = "edit_post_button";
+  btnDiv.replaceChild(editBtn, verifyBtn);
+
+  //cancel button to delete
+  let deleteBtn = document.createElement('span');
+  let deleteIcon = document.createElement('i');
+  deleteIcon.classList.add("clickable", "fas", "fa-trash-alt");
+  deleteBtn.appendChild(deleteIcon);
+  deleteBtn.id = "delete_post_button";
+  btnDiv.replaceChild(deleteBtn, cancelBtn);
+
 }
 
 
 function toggleOnEditPost(post) {
 
   //swap icones
-  let newIcone = document.createElement('i');
-  newIcone.classList.add("fas", "fa-check", "text-success");
-  newIcone.addEventListener('click', toggleOffEditPost);
-  this.replaceChild(newIcone, this.children[0]);
+  let btnDiv = this.parentNode;
+  let verifyBtn = document.createElement('span');
+  let verifyIcon = document.createElement('i');
+  verifyIcon.classList.add("clickable", "fas", "fa-check", "text-success");
+  verifyBtn.appendChild(verifyIcon);
+  verifyBtn.id = "verify_button";
+  btnDiv.replaceChild(verifyBtn, this);
+  
+  let cancelBtn = document.createElement('span');
+  let cancelIcon = document.createElement('i');
+  cancelIcon.classList.add("clickable","fas", "fa-times", "text-danger");
+  cancelBtn.appendChild(cancelIcon);
+  cancelBtn.id = "cancel_button";
+  btnDiv.replaceChild(cancelBtn, btnDiv.querySelector('#delete_post_button'));
+
+  verifyBtn.addEventListener('click', toggleOffEditPost.bind(this, cancelBtn, verifyBtn, true));
+  cancelBtn.addEventListener('click', toggleOffEditPost.bind(this, cancelBtn, verifyBtn, false));
 
   //replace comment for textarea but leave old text as placeholder
   let editTextArea = document.createElement('textarea');
@@ -282,7 +321,7 @@ function toggleOnEditPost(post) {
   editTextArea.style = "resize: none;";
   editTextArea.placeholder = postText.innerHTML;
   postText.parentNode.replaceChild(editTextArea, postText);
-
+  
 }
 
 
