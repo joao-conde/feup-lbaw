@@ -52,7 +52,13 @@ Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
 Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
 Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
 
-Route::put('/api/read_notifications','UserController@readNotifications')->name('read_notifications');
+Route::put('/api/read_notifications','UserController@readNotifications[')->name('read_notifications');
+Route::get('/api/user_friends','UserController@getFriends');
+Route::get('/api/user_followers','UserController@getFollowers');
+Route::get('/api/user_following','UserController@getFollowing');
+Route::get('/api/user_following/all','UserController@getFollowingAll');
+Route::get('/api/genres','BandController@getGenres');
+
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -66,6 +72,8 @@ Route::post('register', 'Auth\RegisterController@register')->name('do_register')
 Route::get('band/{bandID}', 'BandController@show')->name('band_page');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
 Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
+Route::get('/bands/new_member', 'BandController@getNewMemberPartial');
+Route::get('/bands/new_genre', 'BandController@getNewGenrePartial');
 
 //Profile
 

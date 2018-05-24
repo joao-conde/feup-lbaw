@@ -1,0 +1,16 @@
+{
+    "": "api\/users\/{id}\/verify_pwd",
+    "feed": "feed",
+    "search": "search",
+    "do_search": "do_search",
+    "read_notifications": "api\/read_notifications",
+    "login": "login",
+    "do_login": "login",
+    "do_logout": "logout",
+    "register": "register",
+    "do_register": "register",
+    "band_page": "band\/{bandID}",
+    "create_band": "bands\/create_band",
+    "do_create_band": "bands\/do_create_band",
+    "profile": "users\/{id}"
+}

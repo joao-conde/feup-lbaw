@@ -14,7 +14,7 @@
 @include('partials.leftfeedmenu')
 
 
-<div id="posts" class="col-12 col-md-6 p-0 mt-2 toggleContent">
+<div id="center_content" class="col-12 col-md-6 p-0 mt-2 toggleContent">
 
 	<div class="jumbotron p-3 post mb-2" id="newpost">
 		<div class="row">

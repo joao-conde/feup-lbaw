@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Band extends Model
 {
@@ -21,5 +22,15 @@ class Band extends Model
 
     public function members(){
         return $this->hasMany('App\User');
+    }
+
+
+
+    public static function sendInvitation($userId, $bandId){
+
+        $insertQuery = "INSERT INTO band_invitation(userId,bandId,date,lastStatusDate,status) 
+                        VALUES(?,?,now(),now(),'pending');";
+
+        DB::insert($insertQuery, [$userId, $bandId]);
     }
 }

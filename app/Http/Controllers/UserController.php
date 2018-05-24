@@ -48,69 +48,49 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function getFollowing(Request $request){
+
+        
+        $words = explode(" ", trim($request->pattern));
+        $followingUsersResult = array();
+
+        if(count($words) && $words[0] == ""){
+            return response($followingUsersResult,200);
+        }
+        $string = "";
+        foreach ($words as $word) {
+            
+            $string = $string.$word.":* & ";            
+        }
+        $string = trim($string, "& ");
+
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+                        ORDER BY name ASC;";
+        
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function getFollowingAll(Request $request){
+
+        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
+                        FROM mb_user
+                        JOIN user_follower
+                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+                        ORDER BY name ASC;";
+
+        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id]);
+
+        $result = json_encode($followingUsersResult);
+        return response($followingUsersResult,200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }
