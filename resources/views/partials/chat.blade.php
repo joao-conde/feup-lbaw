@@ -1,4 +1,4 @@
-<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
+<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0 d-none d-md-block">
 
     <script>
         $(document).ready(function () {

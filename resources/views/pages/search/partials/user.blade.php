@@ -8,16 +8,29 @@
 
             @if($result->id != Auth::user()->id)
             
-            @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
+                @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
 
             @endif
             </div>
         </li>
-        @if($result->city != '')
-        
+        @if(property_exists($result, "complement") && $result->complement != '')
+
+
             <li class="list-group-item border-0 py-0 my-0">
                 <small>
-                    <span class="list-group-item-text">{{$result->city.', '.$result->country.'.'}}</span>
+                    <span class="list-group-item-text mr-1">
+                        {{$result->complement}}
+                    </span>
+                    @if(property_exists($result, "stars"))
+                        @for($i = 0; $i<5; $i++)
+
+                            @if($i < $result->stars)
+                                <i class="fas fa-star" style="margin-right: -3px;"></i>
+                            @else
+                                <i class="far fa-star" style="margin-right: -3px;"></i>
+                            @endif
+                        @endfor
+                    @endif
                 </small>
             </li>
         @endif

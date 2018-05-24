@@ -1,30 +1,27 @@
-let btn_result_users = document.querySelector("button#btn_result_users");
-let btn_result_bands = document.querySelector("button#btn_result_bands");
 
-let list_users_result = document.querySelector("div#list_users_result");
-let list_bands_result = document.querySelector("div#list_bands_result");
+let btn_group = document.querySelector("div.btn-group");
+let div_results = document.querySelector("div#div_results");
 
-btn_result_users.addEventListener("click", function(){
+for (let i = 0; i < btn_group.childElementCount; i++) {
 
-    btn_result_bands.classList.remove("active");
-    btn_result_users.classList.add("active");
+    btn_group.children[i].addEventListener("click", function(){
 
-    list_users_result.classList.remove("d-none");
-    list_users_result.classList.add("d-block");
+        for (let j = 0; j < div_results.childElementCount; j++) {
 
-    list_bands_result.classList.remove("d-block");
-    list_bands_result.classList.add("d-none");
-});
+            if(j == i){
+                btn_group.children[j].classList.add("active");
 
-btn_result_bands.addEventListener("click", function(){
+                div_results.children[j].selfShow();
 
-    btn_result_users.classList.remove("active");
-    btn_result_bands.classList.add("active");
+            }
+            else{
+                btn_group.children[j].classList.remove("active");
 
-    list_users_result.classList.remove("d-block");
-    list_users_result.classList.add("d-none");
+                div_results.children[j].selfHide();
 
-    list_bands_result.classList.remove("d-none");
-    list_bands_result.classList.add("d-block");
-});
+
+            }
+        }
+    });
+}
 

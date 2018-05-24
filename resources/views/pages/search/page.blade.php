@@ -27,32 +27,61 @@
 			<div class="btn-group row justify-content-center my-2">
 				<button id="btn_result_users" type="button" class="active btn btn-primary col-auto">Users</button>
 				<button id="btn_result_bands" type="button" class="btn btn-primary col-auto">Bands</button>
+				<button id="btn_result_bands_by_genre" type="button" class="btn btn-primary col-auto">Genres <small>(bands)</small></button>
+				<button id="btn_result_users_by_skill" type="button" class="btn btn-primary col-auto">Skills <small>(users)</small></button>
 			</div>
 			
-			@if(count($searchResultUsers) > 0)
+			<div id="div_results">
 				<div id="list_users_result">
-					@foreach($searchResultUsers as $resultUsers)
+					@if(count($searchResultUsers) > 0)
+						@foreach($searchResultUsers as $resultUsers)
+		
+							@include('pages.search.partials.user', ['result' => $resultUsers])
+		
+						@endforeach
+					@else
+						<h4 class="text-secondary text-center mt-3">No results found!</h4>
+					@endif
+				</div>
 	
-						@include('pages.search.partials.user', ['result' => $resultUsers])
+	
+				<div id="list_bands_result" class="d-none">
+					@if(count($searchResultBands) > 0)
+					@foreach($searchResultBands as $resultBands)
+	
+						@include('pages.search.partials.band', ['result' => $resultBands])
 	
 					@endforeach
+					@else
+						<h4 class="text-secondary text-center mt-3">No results found!</h4>
+					@endif
+				</div>
+	
+				<div id="list_bands_by_genre_result" class="d-none">
+					@if(count($searchResultBandsByGenre) > 0)
+						@foreach($searchResultBandsByGenre as $resultBandsByGenre)
+		
+							@include('pages.search.partials.band', ['result' => $resultBandsByGenre])
+		
+						@endforeach
+					@else
+						<h4 class="text-secondary text-center mt-3">No results found!</h4>
+					@endif
 				</div>
 
-			@else
-				<h4 class="text-secondary text-center mt-3">No results found!</h4>
-			@endif
-
-			@if(count($searchResultBands) > 0)
-				<div id="list_bands_result" class="d-none">
-				@foreach($searchResultBands as $resultBands)
-
-					@include('pages.search.partials.band', ['result' => $resultBands])
-
-				@endforeach
+				<div id="list_bands_by_genre_result" class="d-none">
+					@if(count($searchResultUsersBySkill) > 0)
+						@foreach($searchResultUsersBySkill as $resultUsersBySkill)
+		
+							@include('pages.search.partials.user', ['result' => $resultUsersBySkill])
+		
+						@endforeach
+					@else
+						<h4 class="text-secondary text-center mt-3">No results found!</h4>
+					@endif
 				</div>
-			@else
-				<h4 class="text-secondary text-center mt-3">No results found!</h4>
-			@endif
+			</div>
+			
 			
 
 
