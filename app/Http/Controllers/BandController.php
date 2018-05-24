@@ -327,7 +327,7 @@ class BandController extends Controller
             $response = $response.view('partials.post',['post' => $posts[$i]]);
         }
 
-        return response($response,200);
+        return response(json_encode(["postViews" => $response, "numberOfPosts" => count($posts)]),200);
 
     }
 

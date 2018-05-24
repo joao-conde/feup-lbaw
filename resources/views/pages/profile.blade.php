@@ -325,12 +325,14 @@
 					<div class="row p-2 m-0 bg-primary d-block d-md-none">
 						<h6 class="col-auto m-0 text-success">My activity</h6>
 					</div>
+
+					<div id = "posts">
+						
+						@foreach($user->posts(0) as $post)
+							@include('partials.post')
+						@endforeach
 		
-					@foreach($user->posts(0) as $post)
-                    	@include('partials.post')
-                	@endforeach
-		
-		
+					</div>
 		
 				</div>
 			</div>

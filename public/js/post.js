@@ -14,9 +14,9 @@ if (textarea != null) {
 
   textarea.style.transition = "height 0.5s";
 
-  textarea.addEventListener('focusout', function () {
-    textarea.style.height = '30px';
-  })
+  // textarea.addEventListener('focusout', function () {
+  //   textarea.style.height = '30px';
+  // })
 }
 
 if (postButton != null) {
@@ -34,7 +34,7 @@ if (postButton != null) {
     };
 
     sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(textarea, request, "post"), JSON_ENCODE, JSON.stringify(data));
-    postButton.style.display = 'none';
+    //postButton.style.display = 'none';
   })
 
 }
@@ -44,15 +44,22 @@ function handleCreatePostAPIResponse(response) {
   if (response.status != 200)
     return;
 
-  let postList = document.querySelector('div#posts');
-  postList.innerHTML = response.responseText + postList.innerHTML;
-  postList.children[1].parentNode.insertBefore(postList.children[1], postList.children[0]);
-  this.value = "";
+  textarea.style.height = '30px';
+  textarea.value = "";
 
-  addPostButtonsEventListeners(postList.children[1]);
+  let tempDiv = document.createElement('div');
+  tempDiv.innerHTML = response.responseText;
+
+  let newComment = tempDiv.children[0];
+  addPostButtonsEventListeners(newComment);
+
+  let postList = document.querySelector('div#posts');
+  postList.insertBefore(newComment,postList.children[0]);
+
 }
 
 function handlerDeletePost(postId, userId) {
+
 
   let request = new XMLHttpRequest();
   let method = DELETE;
@@ -76,14 +83,18 @@ for (let i = 1; i < posts.length; i++) {
 }
 
 function addPostButtonsEventListeners(post) {
-  console.log("ADDING LISTENERS");
+  
   let deletePostBtn = post.querySelector('#delete_post_button');
   let editPostBtn = post.querySelector('#edit_post_button');
   let postId = post.querySelector('#postID').innerHTML;
-  console.log(deletePostBtn);
-  console.log(editPostBtn);
-  if (deletePostBtn != null)
+
+
+  if (deletePostBtn != null) {
+
     deletePostBtn.addEventListener('click', handlerDeletePost.bind(this, postId, userId));
+
+  }
+    
 
   if (editPostBtn != null)
     editPostBtn.addEventListener('click', toggleOnEditPost.bind(editPostBtn, post));
@@ -141,19 +152,24 @@ function getPostsAjaxRequestListener() {
 
   let data = JSON.parse(this.responseText);
   let postsList = document.querySelector('div#posts');
-  postsList.innerHTML += data.postViews;
 
+  let tempDiv = document.createElement('div');
 
-  postsList = document.querySelector('div#posts');
-  console.log(postsList.children.length);
-  console.log(data.numberOfPosts);
-  console.log(postsList);
-  for (let i = 0; i < data.numberOfPosts; i++) {
-    addPostButtonsEventListeners(postsList.children[postsList.children.length - 1 - i]);
+  tempDiv.innerHTML = data.postViews;
+
+  let newPosts = tempDiv.querySelectorAll('.post');
+
+  for (let i = 1; i < newPosts.length; i++) {
+    addPostButtonsEventListeners(newPosts[i]);
+    postsList.appendChild(newPosts[i]);
   }
+  
 
   window.scrollBy(0, 300);
   window.addEventListener('scroll', sendPostRequest);
+
+
+  
 
 }
 
@@ -170,7 +186,6 @@ function sendPostRequest() {
 
 
 function toggleOffEditPost(cancelBtn, verifyBtn, saveChanges) {
-  console.log("EDIT TOGGLED OFF--->SAVE? " + saveChanges);
   if (saveChanges) {
     //edit post in db
 
@@ -233,7 +248,6 @@ function toggleOnEditPost(post) {
 
 
 function handlerEditPost(postId, userId) {
-  console.log("AJAX EDIT POSTID " + postId);
   //change api, route, data...
   let request = new XMLHttpRequest();
   let method = POST;
@@ -249,11 +263,9 @@ function handlerEditPost(postId, userId) {
 
 
 function handleEditPostAPIResponse(request) {
-  console.log(request);
   if (request.status != 200)
     return;
 
   let data = JSON.parse(request.responseText);
 
-  console.log("EDIT API RESPONSE " + data.text);
 }

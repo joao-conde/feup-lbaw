@@ -157,9 +157,11 @@
 
             <div id="center_content" class="toggleContent">
 
-                @foreach($band['posts'] as $post)
-                    @include('partials.post')
-                @endforeach
+                <div id="posts">
+                    @foreach($band['posts'] as $post)
+                        @include('partials.post')
+                    @endforeach
+                </div>
 
             </div>
 
@@ -167,12 +169,6 @@
 
     </div>
 
-	
-	<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0">
-
-        @include('partials.chat')
-
-	</div>
 </div>
 
 @endsection
