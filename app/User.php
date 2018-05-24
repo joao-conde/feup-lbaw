@@ -39,9 +39,6 @@ class User extends Authenticatable
         'admin' => true
     ];
 
-    public function bands(){
-        return $this->belongsToMany('App\Band');
-    }
     /**
      * The skills of the user
      */
@@ -192,5 +189,36 @@ class User extends Authenticatable
     }
 
     
+
+    public static function getUserIconPicturePath($userid) {
+
+        $user = User::find($userid);
+        return $user->getIconPicturePath();
+
+    }
+
+
+    public function posts($offset) {
+
+        return Post::userPosts($this->id,$offset);
+        
+    }
+
+    public function feedPosts($offset) {
+
+        return Post::feedPosts($this->id,$offset);
+    }
+
+    public function bands() {
+
+        $query = 'SELECT band.id, band.name 
+                  FROM band_membership
+                  JOIN band ON band.id = band_membership.bandid
+                  WHERE band_membership.userid = ?
+                  AND band_membership.ceasedate IS NULL';
+
+        return DB::select($query,[$this->id]);
+
+    }
 
 }

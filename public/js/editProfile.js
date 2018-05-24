@@ -160,7 +160,6 @@ function confirmVerifyPasswordKeyListener(event) {
 
 
 
-let userId = document.querySelector('span#user_id_span').innerHTML;
 let api = '/api/users/' + userId;
 
 let editNameButton = document.querySelector('span#edit_name_button');
@@ -839,6 +838,7 @@ function editLocationAjaxRequestHandler(city,country) {
     spanElement.addEventListener('click',deleteLocation);
 
     locationElement.parentElement.insertBefore(spanElement,locationElement.nextSibling);
+    editFields = document.querySelectorAll('.edit_field');
 
 }
 

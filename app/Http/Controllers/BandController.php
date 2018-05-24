@@ -214,6 +214,9 @@ class BandController extends Controller
         $band['founders'] = $founders;
         $band['posts'] = $posts;
         $band['genres'] = $genres;
+
+
+        $followers = $band->followers();
         
         return view('pages.band',
             ['band' => $band, 
@@ -262,15 +265,82 @@ class BandController extends Controller
 
     public function getMorePosts(Request $request, $bandId) {
 
+        if (!Auth::check()) return response('No user logged',500);
+
         $band = Band::find($bandId);
 
         if($request->__isset('offset')) $offset = $request->offset;
 
         $posts = $band->posts($offset);
 
-        return response(json_encode($posts,200));
+        $response = "";
+
+        for($i = 0; $i < count($posts); $i++) {
+            $response = $response.view('partials.post',['post' => $posts[$i]]);
+        }
+
+        return response($response,200);
 
     }
+
+    public function startFollowing($bandId, $userId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $verifyQuery = 'SELECT * FROM band_follower 
+                        WHERE band_follower.bandid = ?
+                        AND band_follower.userId = ?';
+
+        $updateQuery = 'UPDATE band_follower
+                        SET isActive = true
+                        WHERE band_follower.bandid = ?
+                        AND band_follower.userid = ?';
+
+        $insertQuery = 'INSERT INTO band_follower(bandid, userid, isActive)
+                        VALUES (?,?,?)';
+
+        $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
+
+        if(count($alreadyExists) == 0) {
+            DB::insert($insertQuery, [$bandId, $userId, true]);
+            return response('',200);
+        }
+            
+        else if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [$bandId, $userId]);
+            return response('',200);
+        }
+
+        else
+            return response(count($alreadyExists),500);
+
+    }   
+
+    public function stopFollowing($bandId, $userId) {
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $verifyQuery = 'SELECT * FROM band_follower 
+                        WHERE band_follower.bandid = ?
+                        AND band_follower.userId = ?';
+
+        $updateQuery = 'UPDATE band_follower
+                        SET isActive = false
+                        WHERE band_follower.bandid = ?
+                        AND band_follower.userid = ?';
+
+         $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
+    
+        if(count($alreadyExists) == 1) {
+            DB::update($updateQuery, [$bandId, $userId]);
+            return response('',200);
+        }
+
+        else
+            return response('',500);
+
+    }
+
 
 
 }

@@ -3,6 +3,9 @@ const POST = "post";
 const PUT = "put";
 const DELETE = "delete";
 
+let userId = document.querySelector('span#user_id_span').innerHTML;
+
+
 const JSON_ENCODE = "application/json";
 const URL_ENCODE = "application/x-www-form-urlencoded";
 
@@ -81,7 +84,7 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
         let getApi = api + ((data == undefined) ? '' : ('?' + data));
 
         request.open(type, getApi, true);
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);        
         request.send();
 
     }

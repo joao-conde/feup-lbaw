@@ -5,35 +5,39 @@
 let textarea = document.querySelector('#new_post_ta');
 let postButton = document.querySelector('#postbutton');
 
-textarea.addEventListener('focus',function(){
-  textarea.style.height = '150px';
-  postButton.style.display = 'flex';
-})
+if(textarea != null) {
 
-textarea.style.transition = "height 0.5s";
+  textarea.addEventListener('focus',function(){
+    textarea.style.height = '150px';
+    postButton.style.display = 'flex';
+  })
 
-postButton.addEventListener('click', function(){
+  textarea.style.transition = "height 0.5s";
 
-  let request = new XMLHttpRequest();
-  let method = POST;
+  textarea.addEventListener('focusout',function(){
+    textarea.style.height = '30px';
+  })
+}
 
-  let userId = document.querySelector('span#user_id_span').innerHTML;
-  let api = '/api/users/' + userId + '/posts';
+if(postButton != null) {
+
+  postButton.addEventListener('click', function(){
+
+    let request = new XMLHttpRequest();
+    let method = POST;
   
-  let data = {
-    private: false,
-    content: textarea.value
-  };
+    let api = '/api/users/' + userId + '/posts';
+    
+    let data = {
+      private: false,
+      content: textarea.value
+    };
+  
+    sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(textarea, request, "post"), JSON_ENCODE,JSON.stringify(data));
+    postButton.style.display = 'none';
+  })
 
-  sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(textarea, request, "post"), JSON_ENCODE,JSON.stringify(data));
-  postButton.style.display = 'none';
-})
-
-
-textarea.addEventListener('focusout',function(){
-  textarea.style.height = '30px';
-})
-
+}
 
 function handleCreatePostAPIResponse(response){
 
@@ -46,7 +50,7 @@ function handleCreatePostAPIResponse(response){
   this.value = "";
 }
 
-function buildPost(data){
+function buildPost(data) {
 
   let posts_div = document.querySelector('#posts');
   let post = document.createElement('div');
@@ -114,13 +118,12 @@ function buildPost(data){
 
   content_div2.classList.add("col", "align-self-center", "text-justify")
 
-  
   post.classList.add("jumbotron", "p-3", "post", "mb-2");
   
   id_div.classList.add("col");
   
   img.classList.add("profile", "mr-2");
-  img.src = "images/system/dummy_profile.svg";
+  img.src = "/images/system/dummy_profile.svg";
   
   link.classList.add("text-secondary", "align-middle");
     
@@ -134,18 +137,24 @@ function buildPost(data){
 
   let postId = data.postid;
 
-  span_delete.addEventListener('click', function(){
+  span_delete.addEventListener('click', handlerDeletePost.bind(this,postId, userId));
 
-    let request = new XMLHttpRequest();
-    let method = DELETE;
-    let api = '/api/users/' + userId + '/posts/' + postId;
-    
-    let data = {
-      postid: postId
-    };
+  console.log(data);
+
+}
+
+function handlerDeletePost(postId, userId) {
+
+  let request = new XMLHttpRequest();
+  let method = DELETE;
+  let api = '/api/users/' + userId + '/posts/' + postId;
   
-    sendAsyncAjaxRequest(request, api, method, handleDeletePostAPIResponse.bind(span_delete, request, "delete"), JSON_ENCODE, JSON.stringify(data));  
-  });
+  let data = {
+    postid: postId
+  };
+
+  sendAsyncAjaxRequest(request, api, method, handleDeletePostAPIResponse.bind(this,request, "delete"), JSON_ENCODE, JSON.stringify(data));  
+ 
 }
 
 
@@ -153,34 +162,25 @@ function buildPost(data){
 //Delete Post
 
 let posts = document.querySelectorAll('.post');
-let userId = document.querySelector('span#user_id_span').innerHTML;
 
 for(let i = 1; i < posts.length; i++){
   
   let deletePostBtn = posts[i].querySelector('#delete_post_button');
   let postId = posts[i].querySelector('#postID').innerHTML;
 
-  deletePostBtn.addEventListener('click', function(){
+  if(deletePostBtn == null)
+    continue;
 
-    let request = new XMLHttpRequest();
-    let method = DELETE;
-    let api = '/api/users/' + userId + '/posts/' + postId;
-    
-    let data = {
-      postid: postId
-    };
-  
-    sendAsyncAjaxRequest(request, api, method, handleDeletePostAPIResponse.bind(deletePostBtn, request, "delete"), JSON_ENCODE, JSON.stringify(data));  
-  });
+  deletePostBtn.addEventListener('click', handlerDeletePost.bind(this,postId, userId));
 
 }
 
-function handleDeletePostAPIResponse(response){
+function handleDeletePostAPIResponse(request){
 
-  if(response.status != 200)
+  if(request.status != 200)
     return;
 
-  let data = JSON.parse(response.responseText);
+  let data = JSON.parse(request.responseText);
   let posts = document.querySelectorAll('.post');
   let postidToDelete = data.postid;
 
@@ -189,9 +189,57 @@ function handleDeletePostAPIResponse(response){
     let postId = posts[i].querySelector('#postID').innerHTML;
     if(postId == postidToDelete){
       posts[i].parentNode.removeChild(posts[i]);
-      console.log("REMOVED POST " + postId);
       break;
     }
 
   }
+}
+
+let globalOffset = 1;
+
+const NUMBER_OF_POSTS_IN_REQUEST = 5;
+let globalBand = document.querySelector('p#bandId');
+
+let globalBandId;
+
+if(globalBand != null)
+
+  globalBandId = globalBand.innerHTML;
+
+
+function getPosts() {
+
+  let type = document.querySelector('p#posts_page_type').innerHTML;  
+  let api = (type == 'band') ? '/api/bands/'+ globalBandId +'/posts': '/api/users/'+ userId +'/posts';
+  
+  let request = new XMLHttpRequest();
+  let data = {offset: globalOffset++ * 5, type:type}
+
+  sendAsyncAjaxRequest(request,api,GET,getPostsAjaxRequestListener,URL_ENCODE,data);
+
+}
+
+function getPostsAjaxRequestListener() {
+
+    if(this.status != 200)
+        return;
+
+    let postsList = document.querySelector('div#posts');
+
+    postsList.innerHTML += this.responseText;
+
+    window.scrollBy(0,300);
+    window.addEventListener('scroll', sendPostRequest);
+
+}
+
+window.addEventListener('scroll', sendPostRequest);
+
+function sendPostRequest() {
+
+    if(isBottomOfPage() == true) {
+        window.removeEventListener('scroll',sendPostRequest);
+        getPosts();
+    }
+
 }

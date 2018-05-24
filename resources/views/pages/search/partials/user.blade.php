@@ -8,7 +8,7 @@
 
             @if($result->id != Auth::user()->id)
             
-            @include('partials.followbutton', ['isFollowing' => $result->isfollowing, 'userToFollowId' => $result->id])
+            @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
 
             @endif
             </div>

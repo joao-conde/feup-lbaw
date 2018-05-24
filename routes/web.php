@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 // FEED
 // Route::get('/users/{id}/posts', 'FeedController@getPosts');
-Route::get('/feed', 'FeedController@getPosts')->name('feed');
-Route::post('/api/users/{userId}/posts', 'FeedController@createPost');
-Route::delete('/api/users/{userId}/posts/{postId}', 'FeedController@deletePost');
+Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
+Route::post('/api/users/{userId}/posts', 'UserController@createPost');
+Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
 
 
 // SEARCH
@@ -69,20 +69,24 @@ Route::post('/admin_api/bands/{id}/ban', 'BandController@banBand');
 Route::put('/admin_api/users/{id}/lift_ban', 'UserController@liftBan');
 Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan');
 
-Route::put('api/users/{id}', 'ProfilePageController@editUser');
-Route::post('api/users/{id}', 'ProfilePageController@editUserPicture');
+Route::put('api/users/{id}', 'UserController@editUser');
+Route::post('api/users/{id}', 'UserController@editUserPicture');
 
-Route::put('api/user_followers/{id}','ProfilePageController@startFollowing');
-Route::delete('api/user_followers/{id}','ProfilePageController@stopFollowing');
+Route::put('api/user_followers/{id}','UserController@startFollowing');
+Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 
-Route::put('api/user_skills/{skillId}','ProfilePageController@addSkill');
-Route::delete('api/user_skills/{skillId}','ProfilePageController@deleteSkill');
+Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
+Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
+
+Route::put('api/user_skills/{skillId}','UserController@addSkill');
+Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
 
 Route::get('api/bands/{bandId}/posts', 'BandController@getMorePosts');
+Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
 
 //validate password
-Route::post('api/users/{id}/verify_pwd','ProfilePageController@validatePassword');
-Route::delete('api/users/{id}/location','ProfilePageController@deleteLocation');
+Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
+Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -99,7 +103,7 @@ Route::post('bands/do_create_band', 'BandController@store')->name('do_create_ban
 
 //Profile
 
-Route::get('users/{id}', 'ProfilePageController@show')->name('profile');
+Route::get('users/{id}', 'UserController@show')->name('profile');
 
 
 Route::get('/403', 'ErrorPagesController@error403');
