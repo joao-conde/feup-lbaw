@@ -7,46 +7,32 @@
             <ul>
               <li class="display-5 text-primary">My Bands
                 <ul>
+                  @foreach(Auth::user()->bands() as $band)
                   <li>
-                    <a href="#">
-                      <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat">
-                      <p class="text-secondary">Cold Play</p>
-    
+                    <a href="{{'/bands/'.$band->id}}">
+                      <img src="{{ Band::getBandIconPicturePath($band->id) }}" class="profile_img_chat">
+                      <p class="text-secondary">{{$band->name}}</p>
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat">
-                      <p class="text-secondary">Pearl Jam</p>
-    
-                    </a>
-                  </li>
+                  @endforeach
+                  
                 </ul>
               </li>
               <hr>
               <li class="display-5 text-primary">My Fellow Musicians
                 <ul>
+                  @foreach(Auth::user()->fellowMusicians() as $fellowMusician)
                   <li>
-                    <a href="#">
-                      <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat">
-                      <p class="text-secondary">Eric Clapton</p>
+                    <a href="{{'/users/'.$fellowMusician->id}}">
+                      <img src="{{ User::getUserIconPicturePath($fellowMusician->id) }}" class="profile_img_chat">
+                      <p class="text-secondary">{{$fellowMusician->name}}</p>
     
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat">
-                      <p class="text-secondary">Eddie Vedder</p>
-    
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat">
-                      <p class="text-secondary">Jeff Ament</p>
-    
-                    </a>
-                  </li>
+                  @endforeach
+                  <a class="mr-1 d-block mr-2" href="#">
+                    <small><p class="text-secondary mt-2">See all</p></small>
+                  </a>
                 </ul>
               </li>
               <hr>

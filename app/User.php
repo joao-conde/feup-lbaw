@@ -221,4 +221,34 @@ class User extends Authenticatable
 
     }
 
+    public function fellowMusicians() {
+
+        $bands = $this->bands();
+
+        if(count($bands) == 0)
+            return array(); 
+
+        $query = 'SELECT DISTINCT mb_user.id, mb_user.name 
+                  FROM band
+                  JOIN band_membership ON band_membership.bandid = band.id
+                  JOIN mb_user on mb_user.id = band_membership.userid
+                  WHERE band.id=ANY(?)
+                  AND mb_user.id <> ?
+                  LIMIT 4';
+
+        $bands_ids = "{";
+        for($i = 0; $i < count($bands)-1; $i++){
+            $bands_ids = $bands_ids.$bands[$i]->id.',';
+        }
+
+        if(count($bands) >= 1)
+            $bands_ids = $bands_ids.$bands[count($bands)-1]->id;
+            
+            
+        $bands_ids = $bands_ids.'}';
+
+        return DB::select($query,[$bands_ids, $this->id]);
+
+    }
+
 }
