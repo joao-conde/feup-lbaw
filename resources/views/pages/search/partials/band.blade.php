@@ -8,19 +8,11 @@
 
             @if($result->id != Auth::user()->id)
             
-            @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
+            @include('partials.followbutton', ['followType' => 'band','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
 
             @endif
             </div>
         </li>
-        @if($result->city != '')
-        
-            <li class="list-group-item border-0 py-0 my-0">
-                <small>
-                    <span class="list-group-item-text">{{$result->city.', '.$result->country.'.'}}</span>
-                </small>
-            </li>
-        @endif
 
     </ul>
 </li>
