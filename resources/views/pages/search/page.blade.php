@@ -24,7 +24,7 @@
 		<ul class="list-group col-12">
 			<h3 class="text-primary text-center">Results for "{{$text}}"</h3>
 
-			<div class="btn-group row justify-content-center my-2">
+			<div id="results_pagination" class="btn-group row justify-content-center my-2">
 				<button id="btn_result_users" type="button" class="active btn btn-primary col-auto">Users</button>
 				<button id="btn_result_bands" type="button" class="btn btn-primary col-auto">Bands</button>
 				<button id="btn_result_bands_by_genre" type="button" class="btn btn-primary col-auto">Genres <small>(bands)</small></button>

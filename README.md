@@ -41,14 +41,14 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 | -------- | -- |:------:| --------- |
 |US11      |Profile Page|high|100%|
 |US12      |Notifications List|high|70%|
-|US13      |Feed Page|high|90%|
+|US13      |Feed Page|high|100%|
 |US14      |Follow Users|high|100%|
 |US15      |Unfollow Users|high|100%|
 |US16      |Follow Bands|high|100%|
 |US17      |Unfollow Bands|high|100%|
 |US18      |Create Band Page|high|100%|
 |US19      |Post|high|70%-João Conde|
-|US20      |Search for users/bands|high|35%-Leo|
+|US20      |Search for users/bands|high|100|
 |US21      |Profile Page|high|100%|
 |US22      |Band Page|high|100%|
 |US23      |Comment|medium|0%|

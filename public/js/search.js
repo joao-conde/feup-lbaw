@@ -1,5 +1,5 @@
 
-let btn_group = document.querySelector("div.btn-group");
+let btn_group = document.querySelector("div#results_pagination");
 let div_results = document.querySelector("div#div_results");
 
 for (let i = 0; i < btn_group.childElementCount; i++) {
