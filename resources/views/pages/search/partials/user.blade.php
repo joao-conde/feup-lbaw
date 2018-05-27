@@ -1,14 +1,14 @@
 <li class="list-group-item d-flex rounded">
-    <img src="{{User::getUserIconPicturePath($result->id)}}" class="profile">
+    <img src="{{User::getUserIconPicturePath($result->user_id)}}" class="profile">
     <ul class="list-group col-10 align-self-center">
         <li class="list-group-item border-0 py-0 my-0">
             <div class="row justify-content-between">
-            <a href="{{route('profile', [$result->id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
+            <a href="{{route('profile', [$result->user_id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
 
 
-            @if($result->id != Auth::user()->id)
+            @if($result->user_id != Auth::user()->id)
             
-                @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->isfollowing, 'userOrBandToFollowId' => $result->id])
+                @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->is_following, 'userOrBandToFollowId' => $result->user_id])
 
             @endif
             </div>

@@ -29,26 +29,26 @@ function changeActiveTab(index) {
 }
 
 function convertDateToEpochSecs(dateString, format) {
-    
+
     return new Date(dateString).getTime() / 1000;
 
 }
 
 function convertEpochSecsToDateStringPT(seconds) {
-    
-    return new Date(seconds*1000).toLocaleDateString("pt-PT");
-    
+
+    return new Date(seconds * 1000).toLocaleDateString("pt-PT");
+
 }
 
 function convertEpochSecsToDateString(seconds) {
-    
-    let date = new Date(seconds*1000);
+
+    let date = new Date(seconds * 1000);
 
     let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
     let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
-    return date.getFullYear() + '-' + month+ '-' + day;
-    
+    return date.getFullYear() + '-' + month + '-' + day;
+
 }
 
 function getCurrentDayEpochSecs() {
@@ -85,7 +85,7 @@ function sendAsyncAjaxRequest(request, api, type, receiveListener, encoding, dat
         let getApi = api + ((data == undefined) ? '' : ('?' + data));
 
         request.open(type, getApi, true);
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);        
+        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
         request.send();
 
     }
@@ -183,6 +183,16 @@ Element.prototype.selfHide = function () {
 
 }
 
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+
+    if (div.childElementCount > 1) {
+        return div.children;
+    }
+    return div.firstChild;
+}
+
 function isBottomOfPage() {
 
     let scrollTop = document.documentElement.scrollTop;
@@ -190,16 +200,16 @@ function isBottomOfPage() {
     let offset = scrollTop + windowInnerHeight;
     let bodyHeight = document.documentElement.offsetHeight;
 
-    if(offset >= bodyHeight && !globalBottomOfPage) {
+    if (offset >= bodyHeight && !globalBottomOfPage) {
 
         globalBottomOfPage = true;
         return true;
     }
-       
+
     else {
 
         globalBottomOfPage = false;
         return false;
     }
-        
+
 }

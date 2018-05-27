@@ -71,7 +71,7 @@ class UserController extends Controller {
 
     }
 
-    public function getFollowing(Request $request){
+    public function api_userFollowing(Request $request){
 
         
         $words = explode(" ", trim($request->pattern));
@@ -88,12 +88,13 @@ class UserController extends Controller {
         $string = trim($string, "& ");
 
 
-        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
-                        FROM mb_user
-                        JOIN user_follower
-                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
-                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
-                        ORDER BY name ASC;";
+        $followingUsersQuery = 
+            "SELECT mb_user.id, mb_user.name as name
+            FROM mb_user
+            JOIN user_follower
+            ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+            WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+            ORDER BY name ASC;";
         
 
         $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
@@ -102,15 +103,9 @@ class UserController extends Controller {
         return response($followingUsersResult,200);
     }
 
-    public function getFollowingAll(Request $request){
+    public function api_userFollowingAll(Request $request){
 
-        $followingUsersQuery = "SELECT mb_user.id, mb_user.name as name
-                        FROM mb_user
-                        JOIN user_follower
-                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
-                        ORDER BY name ASC;";
-
-        $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id]);
+        $followingUsersResult = User::getFollowingAll(Auth::user()->id);
 
         $result = json_encode($followingUsersResult);
         return response($followingUsersResult,200);
@@ -541,4 +536,43 @@ class UserController extends Controller {
         return response(json_encode(['postid'=>$request->postid]), 200);
     }
 
+    public function userFollowings(){
+
+        $followingUsersResult = User::getFollowingAll(Auth::user()->id);
+        
+        return view("layouts.list_page", [
+            'title' => "Users you follow", 
+            'results' => $followingUsersResult,
+            'route' => 'profile']);
+    }
+
+    public function userFollowers(){
+
+        $followerUsersResult = User::getFollowersAll(Auth::user()->id);
+        
+        return view("layouts.list_page", [
+            'title' => "Followers", 
+            'results' => $followerUsersResult,
+            'route' => 'profile']);
+    }
+
+    public function bandFollowings(){
+
+        $followingBandsResult = User::getFollowingBands(Auth::user()->id);
+        
+        return view("layouts.list_page", [
+            'title' => "Bands you follow",
+            'results' => $followingBandsResult,
+            'route' => 'band_profile']);
+    }
+
+    public function bandMemberships(){
+
+        $ownBandsResult = User::getOwnBands(Auth::user()->id);
+        
+        return view("layouts.list_page", [
+            'title' => "Your Bands",
+            'results' => $ownBandsResult,
+            'route' => 'band_profile']);
+    }
 }

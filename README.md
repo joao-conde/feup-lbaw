@@ -48,7 +48,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US17      |Unfollow Bands|high|100%|
 |US18      |Create Band Page|high|100%|
 |US19      |Post|high|70%-João Conde|
-|US20      |Search for users/bands|high|100|
+|US20      |Search for users/bands|high|100%|
 |US21      |Profile Page|high|100%|
 |US22      |Band Page|high|100%|
 |US23      |Comment|medium|0%|
@@ -79,7 +79,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 ### Band Member
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
-|US43      |Band page|high|0%|
+|US43      |Band page|high|70%-(falta editar) jp|
 |US44      |Band chat|medium|0%|
 
 
@@ -100,5 +100,3 @@ PORMENORES QUE FALTAM FAZER:
 - IMPORTANTE: 
   - Novo user not admin
 - New Band page: sem dropdown genres
-- Search for Bands based on genre
-- Search for Users based on skill

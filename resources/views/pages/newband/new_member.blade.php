@@ -1,6 +1,9 @@
-<div class="row ml-2 justify-content-center px-1 pb-2">
-    <div class="col-6 text-left">
-        <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_feed">
+<div class="row justify-content-between mb-1" style="margin: 0 32%;">
+    <img src="{{ User::getUserProfilePicturePath($id) }}" class="profile_img_feed">
+    <a href="{{ route('profile', ['id' => $id])}}" class="col text-left" target="_blank">
         <small class="text-white">{{ $name }}</small>
-    </div>
+    </a>
+    <small class="col-auto align-self-center">
+        <i class="fas fa-times cross_btn text-white"></i>
+    </small>
 </div>
