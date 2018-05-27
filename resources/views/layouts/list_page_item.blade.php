@@ -1,14 +1,23 @@
 <li class="list-group-item d-flex rounded">
-    <img src="{{User::getUserIconPicturePath($result->user_id)}}" class="profile">
+    @if(property_exists($result, "user_id"))
+        <img src="{{User::getUserIconPicturePath($result->user_id)}}" class="profile">
+        <?php $id = $result->user_id ?>
+    @elseif(property_exists($result, "band_id"))
+        <img src="{{Band::getBandIconPicturePath($result->band_id)}}" class="profile">
+        <?php $id = $result->band_id ?>
+    @endif
     <ul class="list-group col-10 align-self-center">
         <li class="list-group-item border-0 py-0 my-0">
             <div class="row justify-content-between">
-            <a href="{{route('profile', [$result->user_id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
+            <a href="{{route($route, [$id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
 
 
-            @if($result->user_id != Auth::user()->id)
+            @if($id != Auth::user()->id && property_exists($result, "is_following"))
             
-                @include('partials.followbutton', ['followType' => 'user','isFollowing' => $result->is_following, 'userOrBandToFollowId' => $result->user_id])
+                @include('partials.followbutton', [
+                    'followType' => 'user',
+                    'isFollowing' => $result->is_following,
+                    'userOrBandToFollowId' => $id])
 
             @endif
             </div>

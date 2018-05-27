@@ -193,5 +193,32 @@ class Band extends Model
 
     }
 
+    public static function getBandsByPattern($userId, $pattern){
+        $searchQueryBands = 
+            "SELECT band.id as band_id, band.name as name, coalesce(band_follower.isActive, false) as is_following
+            FROM band
+            LEFT JOIN band_follower 
+            ON band_follower.bandId = band.id AND band_follower.userId = ?
+            WHERE to_tsvector('simple', band.name) @@ to_tsquery('simple', ?)
+            ORDER BY is_following DESC";
+        
+        return DB::select($searchQueryBands, [$userId, $pattern]);  
+    }
 
+    public static function getBandsByGenre($userId, $pattern){
+        $searchQueryBandsByGenre = 
+            "SELECT genre.name as complement, band.id as band_id, band.name as name, coalesce(band_follower.isActive, false) as is_following
+            FROM genre
+            JOIN band_genre ON band_genre.genreId = genre.id
+            JOIN band ON band.id = band_genre.bandId
+            LEFT JOIN band_follower
+            ON band_follower.bandId = band.id AND band_follower.userId = ?
+            WHERE to_tsvector('simple', genre.name) @@ to_tsquery('simple', ?)
+            ORDER BY is_following DESC";
+
+        return DB::select($searchQueryBandsByGenre, [$userId, $pattern]);  
+    }
+
+
+    
 }

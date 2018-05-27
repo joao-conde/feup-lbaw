@@ -250,7 +250,7 @@ class User extends Authenticatable
 
         $user = User::find($userid);
         return $user->getIconPicturePath();
-
+        // return print_r($user);
     }
 
 
@@ -305,6 +305,91 @@ class User extends Authenticatable
 
         return DB::select($query,[$bands_ids, $this->id]);
 
+    }
+
+    public static function getUsersByPattern($userId, $pattern){
+        $searchQueryUsers = 
+            "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, coalesce(user_follower.isActive, false) as is_following
+            FROM mb_user
+            LEFT JOIN city ON city.id = mb_user.location 
+            LEFT JOIN country ON city.countryId = country.id
+            LEFT JOIN user_follower 
+            ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+            WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+            ORDER BY is_following DESC, name ASC";
+
+        return DB::select($searchQueryUsers, [$userId, $pattern]);
+    }
+
+    public static function getUsersBySkill($userId, $pattern){
+        
+        $searchQueryUsersBySkill = 
+            "SELECT user_skill.level as stars, skill.name as complement, mb_user.id as user_id, mb_user.name as name, coalesce(user_follower.isActive, false) as is_following
+            FROM mb_user
+            LEFT JOIN user_skill ON user_skill.userId = mb_user.id
+            JOIN skill ON skill.id = user_skill.skillId
+            LEFT JOIN user_follower
+            ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+            WHERE to_tsvector('simple', skill.name) @@ to_tsquery('simple', ?)
+            ORDER BY is_following DESC, user_skill.level DESC";
+        
+        return DB::select($searchQueryUsersBySkill, [$userId, $pattern]);
+
+    }
+
+    public static function getFollowingAll($id){
+        $followingUsersQuery = 
+            "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, true as is_following
+            FROM mb_user
+            LEFT JOIN city ON city.id = mb_user.location 
+            LEFT JOIN country ON city.countryId = country.id
+            JOIN user_follower 
+            ON user_follower.followedUserId = mb_user.id 
+            AND user_follower.followingUserId = ?
+            AND user_follower.isactive = true
+            ORDER BY  mb_user.name ASC";
+
+        return DB::select($followingUsersQuery, [$id]);
+    }
+
+    public static function getFollowersAll($id){
+        $followerUsersQuery = 
+            "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, coalesce(follows.isActive,false) as is_following
+            FROM mb_user
+            LEFT JOIN city ON city.id = mb_user.location 
+            LEFT JOIN country ON city.countryId = country.id
+            JOIN user_follower 
+            ON user_follower.followingUserId = mb_user.id 
+            AND user_follower.followedUserId = ?
+            AND user_follower.isactive = true
+            LEFT JOIN (select * from user_follower) as follows
+            ON follows.followingUserId = ?
+            AND follows.followedUserId = mb_user.id
+            ORDER BY is_following DESC, mb_user.name ASC";
+
+        return DB::select($followerUsersQuery, [$id, $id]);
+    }
+
+    public static function getFollowingBands($userId){
+        $searchQueryBands = 
+            "SELECT band.id as band_id, band.name as name, band_follower.isActive as is_following
+            FROM band
+            JOIN band_follower 
+            ON band_follower.bandId = band.id AND band_follower.userId = ?
+            ORDER BY is_following ASC";
+        
+        return DB::select($searchQueryBands, [$userId]);  
+    }
+    
+    public static function getOwnBands($userId){
+        $searchQueryBands = 
+            "SELECT band.id as band_id, band.name as name
+            FROM band
+            JOIN band_membership
+            ON band_membership.bandId = band.id AND band_membership.userId = ?
+            ORDER BY band.name ASC";
+        
+        return DB::select($searchQueryBands, [$userId]);  
     }
 
 }

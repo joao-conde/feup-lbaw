@@ -16,7 +16,7 @@
 
   <div class="d-flex flex-row m-0">
 
-    <a class="mr-1 d-block mr-2" href="#">
+    <a class="mr-1 d-block mr-2" href="{{ route('bands_membership') }}">
       <small><p class="text-secondary mt-2 mb-0">See all</p></small>
 
     </a>
@@ -42,8 +42,8 @@
 
   <hr>
 
-  <a href="followers.html"><p class="text-secondary align-middle mb-1">Followers</p></a>
-  <a href="following_users.html"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a>
-  <a href="following_bands.html"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a>
+  <a href="{{ route('user_followers') }}"><p class="text-secondary align-middle mb-1">Followers</p></a>
+  <a href="{{ route('user_followings') }}"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a>
+  <a href="{{ route('bands_following') }}"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a>
 </div>
 
