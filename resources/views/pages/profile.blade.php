@@ -268,7 +268,7 @@
 				<div class="jumbotron p-3 mr-2">
 					<p class="align-middle">Bands</p>
 					@foreach($user->bands() as $band)
-					<a class="d-block" href="{{'/bands/'.$band->id}}">
+					<a class="d-block" href="{{route('band_profile', [$band->id])}}">
 						<img class="profile_img_feed" src="{{ Band::getBandIconPicturePath($band->id) }}">
 						<small class="d-none">{{$band->id}}</small>
 						<small class="text-primary">{{$band->name}}</small>

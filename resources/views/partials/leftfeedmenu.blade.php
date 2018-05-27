@@ -8,7 +8,7 @@
 
   <p class="align-middle mb-1">Bands</p>
   @foreach(Auth::user()->bands() as $band)
-  <a class="mr-1 d-block" href="{{'/bands/'.$band->id}}">
+  <a class="mr-1 d-block" href="{{route('band_profile', [$band->id])}}">
     <img class="profile_img_feed" src="{{ Band::getBandIconPicturePath($band->id) }}">
     <small class="text-primary">{{$band->name}}</small>
   </a>

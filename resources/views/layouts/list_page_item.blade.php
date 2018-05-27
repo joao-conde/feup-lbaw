@@ -11,15 +11,26 @@
             <div class="row justify-content-between">
             <a href="{{route($route, [$id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
 
+            @if(property_exists($result, "user_id"))
+                @if($id != Auth::user()->id)
 
-            @if($id != Auth::user()->id && property_exists($result, "is_following"))
+                    @include('partials.followbutton', [
+                        'followType' => 'user',
+                        'isFollowing' => $result->is_following,
+                        'userOrBandToFollowId' => $id])
+
+                @endif
+            @elseif(property_exists($result, "band_id"))
+                @if(property_exists($result, "is_following"))
+                    
+                    @include('partials.followbutton', [
+                        'followType' => 'band',
+                        'isFollowing' => $result->is_following,
+                        'userOrBandToFollowId' => $id])
+
+                @endif
+            @endif            
             
-                @include('partials.followbutton', [
-                    'followType' => 'user',
-                    'isFollowing' => $result->is_following,
-                    'userOrBandToFollowId' => $id])
-
-            @endif
             </div>
         </li>
         @if(property_exists($result, "complement") && $result->complement != '')

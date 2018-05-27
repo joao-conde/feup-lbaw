@@ -571,7 +571,7 @@ class UserController extends Controller {
         $ownBandsResult = User::getOwnBands(Auth::user()->id);
         
         return view("layouts.list_page", [
-            'title' => "Bands you follow",
+            'title' => "Your Bands",
             'results' => $ownBandsResult,
             'route' => 'band_profile']);
     }

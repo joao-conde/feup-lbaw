@@ -9,7 +9,7 @@
                 <ul>
                   @foreach(Auth::user()->bands() as $band)
                   <li>
-                    <a href="{{'/bands/'.$band->id}}">
+                    <a href="{{route('band_profile', [$band->id])}}">
                       <img src="{{ Band::getBandIconPicturePath($band->id) }}" class="profile_img_chat">
                       <p class="text-secondary">{{$band->name}}</p>
                     </a>
