@@ -395,7 +395,16 @@ class BandController extends Controller
     }
 
 
+    public function addMember($bandId, $userId){
 
+        $inviteMember = "INSERT INTO band_invitation(userid, bandid) 
+                            VALUES (?, ?)";
+
+       
+        DB::insert($inviteMember, [$userId, $bandId]);
+
+        return response('', 200);
+    }
 
 
 }

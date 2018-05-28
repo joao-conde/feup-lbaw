@@ -76,6 +76,8 @@ Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
 Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
 
+Route::put('/api/bands/{bandId}/invitations/{userId}', 'BandController@addMember');
+
 Route::put('api/user_skills/{skillId}','UserController@addSkill');
 Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
 

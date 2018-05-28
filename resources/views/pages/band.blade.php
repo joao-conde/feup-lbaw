@@ -136,8 +136,8 @@
 	<div class="row no-gutters">
         <div class="col-3 d-none d-lg-block">
 
-            <div class="jumbotron p-3 mr-2">
-                <p class="align-middle">Members</p>
+            <div id="members" class="jumbotron p-3 mr-2">
+                Members  
                 @foreach($members as $member)
                 <a class="d-block" href="{{'/users/'.$member->userid}}">
                     <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
@@ -148,7 +148,11 @@
                 </a>
                 @endforeach
                 
-
+                <div id="inviteMember">
+                    <input placeholder="Invite member..." type="text" name="name">
+                    <span id="inviteMemberBtn"> <i class="clickable fas fa-plus"></i> </span>
+                </div> 
+            
             </div>
 
         </div>
