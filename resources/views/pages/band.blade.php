@@ -3,9 +3,10 @@
 
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-{{-- <script defer src="{{ asset('js/newPost.js')}}"></script> --}}
+<link href="{{ asset('css/utils.css') }}" rel="stylesheet">
+<link href="{{ asset('css/newband.css') }}" rel="stylesheet">
+
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
-{{-- <script defer src="{{ asset('js/visitBandPage.js')}}"></script> --}}
 <script defer src="{{ asset('js/editBandPage.js')}}"></script>
 <script defer src="{{ asset('js/post.js')}}"></script>
 
@@ -136,8 +137,8 @@
 	<div class="row no-gutters">
         <div class="col-3 d-none d-lg-block">
 
-            <div class="jumbotron p-3 mr-2">
-                <p class="align-middle">Members</p>
+            <div id="members" class="jumbotron p-3 mr-2">
+                Members  
                 @foreach($members as $member)
                 <a class="d-block" href="{{'/users/'.$member->userid}}">
                     <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
@@ -148,7 +149,12 @@
                 </a>
                 @endforeach
                 
-
+                <div class="autocomplete" id="inviteMember">
+                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
+                </div>
+                <div class="collapse show" id="new_members">
+                </div>
+            
             </div>
 
         </div>

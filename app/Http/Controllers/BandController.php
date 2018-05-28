@@ -395,7 +395,10 @@ class BandController extends Controller
     }
 
 
-
+    public function inviteMember($bandId, $userId){
+        Band::sendInvitation($userId, $bandId);
+        return response('', 200);
+    }
 
 
 }
