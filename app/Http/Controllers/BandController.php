@@ -212,7 +212,7 @@ class BandController extends Controller
 
 
 
-        return redirect()->route('band_page', ['bandID' => $band->id]);
+        return redirect()->route('band_profile', ['id' => $band->id]);
     }
 
     /**
@@ -273,7 +273,12 @@ class BandController extends Controller
     }
 
     public function getNewMemberPartial(Request $request){
-        return view('pages.newband.new_member', ['url_img' => $request->id, 'name' => $request->name]);
+
+        return view('pages.newband.new_member', [
+            'img_url' => User::find($request->id)->getIconPicturePath(),
+            'id' => $request->id, 
+            'name' => $request->name
+        ]);
         // TODO: user_img
     }
 
@@ -327,7 +332,7 @@ class BandController extends Controller
             $response = $response.view('partials.post',['post' => $posts[$i]]);
         }
 
-        return response($response,200);
+        return response(json_encode(["postViews" => $response, "numberOfPosts" => count($posts)]),200);
 
     }
 

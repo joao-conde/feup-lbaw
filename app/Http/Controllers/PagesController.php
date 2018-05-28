@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Band;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,18 +30,17 @@ class PagesController extends Controller
     public function search(){
         $text = Session::get('searchData')['text'];
 
-        $searchQuery = "SELECT mb_user.id, mb_user.name as name, city.name as city, country.name as country, user_follower.isActive as isFollowing
-                        FROM mb_user
-                        LEFT JOIN city ON city.id = mb_user.location 
-                        LEFT JOIN country ON city.countryId = country.id
-                        LEFT JOIN user_follower 
-                        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
-                        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
-                        ORDER BY isFollowing ASC";
-        
+        $searchResultUsers = User::getUsersByPattern(Auth::user()->id, $text.':*');
+        $searchResultBands = Band::getBandsByPattern(Auth::user()->id, $text.':*');
+        $searchResultBandsByGenre = Band::getBandsByGenre(Auth::user()->id, $text.':*');
+        $searchResultUsersBySkill = User::getUsersBySkill(Auth::user()->id, $text.':*');
 
-        $searchResult = DB::select($searchQuery, [Auth::user()->id, $text.':*']);
-
-    	return view('pages.search.page', ['searchResult' => $searchResult, 'text' => $text]);
+    	return view('pages.search.page', [
+            'searchResultUsers' => $searchResultUsers,
+            'searchResultBands' => $searchResultBands, 
+            'searchResultBandsByGenre' => $searchResultBandsByGenre, 
+            'searchResultUsersBySkill' => $searchResultUsersBySkill, 
+            'text' => $text
+        ]);
     }
 }

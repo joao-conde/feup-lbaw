@@ -268,7 +268,7 @@
 				<div class="jumbotron p-3 mr-2">
 					<p class="align-middle">Bands</p>
 					@foreach($user->bands() as $band)
-					<a class="d-block" href="{{'/bands/'.$band->id}}">
+					<a class="d-block" href="{{route('band_profile', [$band->id])}}">
 						<img class="profile_img_feed" src="{{ Band::getBandIconPicturePath($band->id) }}">
 						<small class="d-none">{{$band->id}}</small>
 						<small class="text-primary">{{$band->name}}</small>
@@ -283,7 +283,7 @@
 							</small>
 		
 						</a>
-						<a class="mr-1 d-block" href="#">
+						<a class="mr-1 d-block" href="{{route('create_band')}}">
 							<small>
 								<p class="text-secondary mt-2 mb-0">Create Band</p>
 							</small>
@@ -325,12 +325,14 @@
 					<div class="row p-2 m-0 bg-primary d-block d-md-none">
 						<h6 class="col-auto m-0 text-success">My activity</h6>
 					</div>
+
+					<div id = "posts">
+						
+						@foreach($user->posts(0) as $post)
+							@include('partials.post')
+						@endforeach
 		
-					@foreach($user->posts(0) as $post)
-                    	@include('partials.post')
-                	@endforeach
-		
-		
+					</div>
 		
 				</div>
 			</div>

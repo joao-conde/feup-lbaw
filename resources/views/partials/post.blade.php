@@ -5,10 +5,10 @@
     <div>
         @if($post->creatorid == Auth::user()->id)
         <span id="delete_post_button">
-            <i class="fas fa-times text-danger"></i>
+            <i class="clickable fas fa-trash-alt"></i>
         </span>
         <span id="edit_post_button">
-                <i class="fas fa-pencil-alt"></i>
+            <i class="clickable fas fa-pencil-alt"></i>
         </span>
         @endif
     </div>
@@ -39,7 +39,7 @@
 
         <div class="col align-self-center text-justify">
 
-            <small>{{$post->posttext}}
+            <small id="text">{{$post->posttext}}
             </small>
 
         </div>
@@ -59,7 +59,7 @@
 
     <form class="form-inline row justify-content-between px-3 pt-2">
         <textarea placeholder="new comment" class="col-9 col-sm-10 col-md-9 col-lg-10 text-primary form-control-sm border border-secondary"
-            rows="2" id="new_comment_ta"></textarea>
+            rows="2" class="new_comment_ta"></textarea>
         <input type="submit" value="comment" class="btn btn-primary btn-sm">
     </form>
 

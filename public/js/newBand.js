@@ -74,7 +74,8 @@ function requestPatternHandler(obj, api) {
 
             let requestPartial = new XMLHttpRequest();
             sendAsyncAjaxRequest(requestPartial, api, GET, function () {
-                dropdownUsers.innerHTML += this.responseText;
+                let userChoosed = createElementFromHTML(this.responseText);
+                dropdownUsers.appendChild(userChoosed);
             }, URL_ENCODE, requestData);
 
             let option = document.createElement('option');
@@ -113,8 +114,6 @@ function addActive(array, currentFocus) {
 
     if (currentFocus >= array.length) currentFocus = 0;
     if (currentFocus < 0) currentFocus = (array.length - 1);
-    console.log(array);
-    console.log(currentFocus);
     array[currentFocus].classList.add("autocomplete-active");
 }
 

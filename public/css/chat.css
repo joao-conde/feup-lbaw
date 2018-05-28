@@ -44,7 +44,7 @@ textarea#chat_msg {
     div#chat {
         position: static;
         margin-top: 8px;
-        display: none;
+        /* display: none; */
     }
 
 }

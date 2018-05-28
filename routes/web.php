@@ -17,11 +17,10 @@ Route::get('/', function () {
 
 
 // FEED
-// Route::get('/users/{id}/posts', 'FeedController@getPosts');
 Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
 Route::post('/api/users/{userId}/posts', 'UserController@createPost');
+Route::post('/api/users/{userId}/posts/{postId}', 'UserController@editPost');
 Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
-
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');
@@ -90,8 +89,8 @@ Route::delete('api/users/{id}/location','UserController@deleteLocation');
 Route::put('/api/read_notifications','UserController@readNotifications[')->name('read_notifications');
 Route::get('/api/user_friends','UserController@getFriends');
 Route::get('/api/user_followers','UserController@getFollowers');
-Route::get('/api/user_following','UserController@getFollowing');
-Route::get('/api/user_following/all','UserController@getFollowingAll');
+Route::get('/api/user_following','UserController@api_userFollowing');
+Route::get('/api/user_following/all','UserController@api_userFollowingAll');
 Route::get('/api/genres','BandController@getGenres');
 
 
@@ -108,23 +107,27 @@ Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')-
 // Auth::routes();
 
 // Bands
-Route::get('band/{bandID}', 'BandController@show')->name('band_page');
+// Route::get('band/{bandID}', 'BandController@show')->name('band_page');
+Route::get('band/{id}', 'BandController@show')->name('band_profile');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
 Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
-Route::get('/bands/new_member', 'BandController@getNewMemberPartial');
-Route::get('/bands/new_genre', 'BandController@getNewGenrePartial');
+Route::get('bands/new_member', 'BandController@getNewMemberPartial');
+Route::get('bands/new_genre', 'BandController@getNewGenrePartial');
 
+
+//Pages
+Route::get('users/following', 'UserController@userFollowings')->name('user_followings');
+Route::get('users/followers', 'UserController@userFollowers')->name('user_followers');
+Route::get('users/bands_following', 'UserController@bandFollowings')->name('bands_following');
+Route::get('users/bands_membership', 'UserController@bandMemberships')->name('bands_membership');
 //Profile
-
 Route::get('users/{id}', 'UserController@show')->name('profile');
 
-
+// Errors
 Route::get('/403', 'ErrorPagesController@error403');
 
 
-//Band Profile
 
-Route::get('bands/{id}', 'BandController@show')->name('band_profile');
 
 
 

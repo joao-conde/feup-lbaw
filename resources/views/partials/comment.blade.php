@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-auto align-self-center comment_author">
-                <img src="{{ asset('images/system/dummy_profile.svg') }}" class=" profile_img_message mr-2">
+                <img src="{{ User::getUserProfilePicturePath($comment->userid) }}" class=" profile_img_message mr-2">
                 <small>
                     <a class="text-secondary align-middle" href="/users/{{$comment->userid}}">{{$comment->author}}</a>
                     <span>:</span>

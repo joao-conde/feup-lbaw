@@ -12,6 +12,20 @@ class Post extends Model
     protected $table = 'post';
 
 
+    public static function getPost($userId, $postId){
+        $query = "SELECT post.bandid as postbandid, content.creatorId as creatorid, post.private as private, post.id as id,
+        content.text as postText, content.creatorId as poster_id, mb_user.name as posterName,
+        'na' as bandName, content.date as date
+        
+        
+        from post
+        join content on post.contentId = content.id
+        join mb_user on mb_user.id = ? and mb_user.id = content.creatorId
+        WHERE post.id=?";
+
+        return Post::insertCommentsOnPosts(DB::select($query, [$userId, $postId]))[0];
+    }
+
     public static function userPosts($userId,$offset) {
 
         $query = "SELECT post.bandid as postbandid, content.creatorId as creatorid, post.private as private, post.id as id,
@@ -46,7 +60,7 @@ class Post extends Model
 
     }
 
-    public static function feedPosts($userId,$offset) {
+    public static function feedPosts($userId, $offset) {
 
         $query_posts = "SELECT DISTINCT post_id as id, postbandid, poster_id as creatorid, posterName,date,bandname,postText
         
