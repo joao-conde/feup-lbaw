@@ -28,6 +28,14 @@
                         'isFollowing' => $result->is_following,
                         'userOrBandToFollowId' => $id])
 
+                @elseif(property_exists($result, "membership_status"))
+                    
+                    {{-- @include('partials.followbutton', [
+                        'followType' => 'band',
+                        'isFollowing' => $result->is_following,
+                        'userOrBandToFollowId' => $id]) --}}
+                        {{print_r($result->membership_status)}}
+
                 @endif
             @endif            
             
