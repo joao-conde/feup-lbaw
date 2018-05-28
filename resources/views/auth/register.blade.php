@@ -61,6 +61,20 @@
                         @endif
 					</div>
 				</div>
+				<div class="row justify-content-center">
+					<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
+						<i class="fas fa-envelope" style="width: 1rem; height: 1rem; color: white;"></i>
+						<input type="email" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 border-secondary" id="email"
+						 placeholder="Enter email" name="email" value="{{ old('email') }}" required autofocus>
+					
+						@if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+					</div>
+				</div>
+				
 				<button type="submit" class="btn btn-secondary mt-3">Submit</button>
 			</form>
 		</div>

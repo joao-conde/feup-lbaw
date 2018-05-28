@@ -152,7 +152,9 @@ CREATE TABLE mb_user (
     location INTEGER,
     rating REAL,
     admin BOOLEAN NOT NULL DEFAULT FALSE,
-    remember_token TEXT
+    remember_token TEXT,
+    email text NOT NULL DEFAULT 'danny.a_soares@hotmail.com',
+    password_token text
 );
 
 ALTER TABLE ONLY mb_user

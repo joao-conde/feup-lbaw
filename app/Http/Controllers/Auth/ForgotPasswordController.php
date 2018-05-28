@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Mail;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ForgotPasswordController extends Controller
 {
@@ -39,15 +40,39 @@ class ForgotPasswordController extends Controller
 
     public function sendEmail(Request $request){
 
-        // verificar se email e username coincidem para 1 utilizador não poder recuperar a password de outro utilizador
-        // $user = DB::table('mb_user')->where('username',$request->username)->where('email',$request->email)->get();
+        $user = User::where('username',$request->username)->where('email',$request->email)->first();
+        if($user == null)
+            return redirect('/');
+        $token = str_random(40);
+        $token = hash("sha256",$token);
+        $user->password_token = $token;
+        $user->save();
 
-        Mail::send(['text'=>'partials.mail'],['name','LBAW1712'], function($message) {
+        Mail::send(['html'=>'partials.password_mail','email'=>'$request->email'],['name','LBAW1712','token'=>$token], function($message) {
             global $request;
             // dd($request->email);
-            $message->to($request->email, 'Danny')->subject('Cenas');
+            $message->to($user->email, $user->name)->subject('Password Recovery');
             $message->from('lbaw1712@gmail.com','LBAW1712');
         });
+
+        return redirect('/');
+    }
+
+    public function resetPassword(/*Request $request*/ $token){
+        $user = User::where('password_token',$token)->first();
+        // dd($user->username);
+
+        return view('auth.passwords.reset', ['user'=>$user, 'token'=>$token]);
+    }
+
+    public function updatePassword(Request $request){
+        if($request->pass1 != $request->pass2){
+            dd('passes diferentes');
+        }
+        $user = User::where('username',$request->username)->first();
+        $user->password = bcrypt($request->pass1);
+        $user->password_token = null;
+        $user->save();
 
         return redirect('/');
     }
