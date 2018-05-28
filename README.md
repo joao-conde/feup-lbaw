@@ -100,3 +100,4 @@ PORMENORES QUE FALTAM FAZER:
 - IMPORTANTE: 
   - Novo user not admin
 - New Band page: sem dropdown genres
+- Post não aparecem os ENTERs
