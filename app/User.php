@@ -392,4 +392,32 @@ class User extends Authenticatable
         return DB::select($searchQueryBands, [$userId]);  
     }
 
+    public static function getBandsMembership($userId){
+        $searchQueryBands = 
+            "SELECT * FROM(
+                SELECT band.id as band_id, band.name as name, 'member' as membership_status, 'Your Band' as complement
+                FROM band_membership
+                JOIN band ON band_membership.bandId = band.id 
+                WHERE band_membership.userId = ?
+
+                UNION
+
+                SELECT band.id as band_id, band.name as name, 'pending_invitation' as membership_status, 'Invitation' as complement
+                FROM band_invitation
+                JOIN band ON band_invitation.bandId = band.id
+                WHERE band_invitation.status = 'pending' AND band_invitation.userId = ?
+
+
+                UNION
+
+                SELECT band.id as band_id, band.name as name, 'pending_application' as membership_status, 'Application' as complement
+                FROM band_application
+                JOIN band ON band_application.bandId = band.id
+                WHERE band_application.status = 'pending' AND band_application.userId = ?
+            ) as result
+            ORDER BY result.membership_status DESC, result.name ASC";
+        
+        return DB::select($searchQueryBands, [$userId, $userId, $userId]);  
+    }
+
 }

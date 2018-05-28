@@ -22,12 +22,6 @@ class Band extends Model
      */
     protected $guarded = [];
 
-    public function members(){
-        return $this->hasMany('App\User');
-    }
-
-
-
     public static function sendInvitation($userId, $bandId){
 
         $insertQuery = "INSERT INTO band_invitation(userId,bandId,date,lastStatusDate,status) 
@@ -37,21 +31,48 @@ class Band extends Model
     }
 
     
+    public function getMembersAndPending() {
+
+        $queryBandMembers = 
+            "SELECT * FROM (
+                SELECT mb_user.id as userid, mb_user.name as membername, band_membership.isowner as owner, false as pending
+                FROM band_membership
+                JOIN band on band.id = band_membership.bandid
+                JOIN mb_user on band_membership.userid = mb_user.id
+                WHERE band.id = ?
+                AND band_membership.ceasedate IS NULL
+                
+                UNION
+                
+                SELECT mb_user.id as userid, mb_user.name as membername, false as owner, true as pending
+                FROM band_invitation
+                JOIN band ON band.id = band_invitation.bandid
+                JOIN mb_user on band_invitation.userid = mb_user.id
+                WHERE band.id = ? 
+                AND band_invitation.status = 'pending'
+            ) as result
+            ORDER BY result.owner DESC, result.pending ASC";
+
+        return DB::select($queryBandMembers,[$this->id, $this->id]);
+
+    }
+
     public function membersSQL() {
 
         $queryBandMembers = 'SELECT mb_user.id as userid, mb_user.name as membername, band_membership.isowner as owner
-                           FROM band_membership
-                           JOIN band on band.id = band_membership.bandid
-                           JOIN mb_user on band_membership.userid = mb_user.id
-                           WHERE band.id = ?
-                           AND band_membership.ceasedate IS NULL
-                           ORDER BY band_membership.initialdate';
+                            FROM band_membership
+                            JOIN band on band.id = band_membership.bandid
+                            JOIN mb_user on band_membership.userid = mb_user.id
+                            WHERE band.id = ?
+                            AND band_membership.ceasedate IS NULL
+                            ORDER BY band_membership.initialdate';
 
         $members = DB::select($queryBandMembers,[$this->id]);
         return $members;
 
     }
 
+    
 
     public function founders() {
 

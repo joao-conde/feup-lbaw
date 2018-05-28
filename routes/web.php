@@ -104,6 +104,8 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
 Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
 Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
+Route::get('/password/reset/{token}', 'Auth\ForgotPasswordController@resetPassword')->name('reset_pass');
+Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')->name('update_pass');
 // Auth::routes();
 
 // Bands
