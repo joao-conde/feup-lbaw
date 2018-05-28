@@ -3,9 +3,10 @@
 
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-{{-- <script defer src="{{ asset('js/newPost.js')}}"></script> --}}
+<link href="{{ asset('css/utils.css') }}" rel="stylesheet">
+<link href="{{ asset('css/newband.css') }}" rel="stylesheet">
+
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
-{{-- <script defer src="{{ asset('js/visitBandPage.js')}}"></script> --}}
 <script defer src="{{ asset('js/editBandPage.js')}}"></script>
 <script defer src="{{ asset('js/post.js')}}"></script>
 
@@ -148,10 +149,11 @@
                 </a>
                 @endforeach
                 
-                <div id="inviteMember">
-                    <input placeholder="Invite member..." type="text" name="name">
-                    <span id="inviteMemberBtn"> <i class="clickable fas fa-plus"></i> </span>
-                </div> 
+                <div class="autocomplete" id="inviteMember">
+                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
+                </div>
+                <div class="collapse show" id="new_members">
+                </div>
             
             </div>
 
