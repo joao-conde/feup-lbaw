@@ -9,7 +9,7 @@
     <ul class="list-group col-10 align-self-center">
         <li class="list-group-item border-0 py-0 my-0">
             <div class="row justify-content-between">
-            <a href="{{route($route, [$id])}}" class="list-group-item-text col-7 text-primary">{{$result->name}}</a>
+            <a href="{{route($route, [$id])}}" class="list-group-item-text col-auto text-primary">{{$result->name}}</a>
 
             @if(property_exists($result, "user_id"))
                 @if($id != Auth::user()->id)
@@ -30,11 +30,9 @@
 
                 @elseif(property_exists($result, "membership_status"))
                     
-                    {{-- @include('partials.followbutton', [
-                        'followType' => 'band',
-                        'isFollowing' => $result->is_following,
-                        'userOrBandToFollowId' => $id]) --}}
-                        {{print_r($result->membership_status)}}
+                    @include('partials.band_membership_button', [
+                        'membership_status' => $result->membership_status,
+                        'bandId' => $id])
 
                 @endif
             @endif            
@@ -51,12 +49,9 @@
                     </span>
                     @if(property_exists($result, "stars"))
                         @for($i = 0; $i<5; $i++)
-
-                            @if($i < $result->stars)
-                                <i class="fas fa-star" style="margin-right: -3px;"></i>
-                            @else
-                                <i class="far fa-star" style="margin-right: -3px;"></i>
-                            @endif
+                            <i class="
+                            @if($i < $result->stars) fas @else far @endif
+                            fa-star" style="margin-right: -3px;"></i>
                         @endfor
                     @endif
                 </small>

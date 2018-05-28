@@ -568,7 +568,7 @@ class UserController extends Controller {
 
     public function bandMemberships(){
 
-        $ownBandsResult = User::getOwnBands(Auth::user()->id);
+        $ownBandsResult = User::getBandsMembership(Auth::user()->id);
         
         return view("layouts.list_page", [
             'title' => "Your Bands",
