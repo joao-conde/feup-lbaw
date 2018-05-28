@@ -76,6 +76,8 @@ Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
 Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
 
+Route::put('/api/bands/{bandId}/invitations/{userId}', 'BandController@inviteMember');
+
 Route::put('api/user_skills/{skillId}','UserController@addSkill');
 Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
 
@@ -102,6 +104,8 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
 Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
 Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
+Route::get('/password/reset/{token}', 'Auth\ForgotPasswordController@resetPassword')->name('reset_pass');
+Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')->name('update_pass');
 // Auth::routes();
 
 // Bands

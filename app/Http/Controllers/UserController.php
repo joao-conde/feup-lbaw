@@ -8,7 +8,7 @@ use App\Report;
 use App\Warning;
 use App\City;
 use App\Post;
-
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -165,9 +165,17 @@ class UserController extends Controller {
         $report = Report::find($request->reportId);
         $report->seen = true;
         $report->save();
+    
+        Mail::send(['html'=>'partials.ban_mail','email'=>'$user->email'],['name','LBAW1712','reason'=>$request->reason], function($message) {
+            global $request;
+            $user = User::find($request->id);
+            $message->to($user->email, $user->name)->subject('Ban');
+            $message->from('lbaw1712@gmail.com','LBAW1712');
+        });
 
         return response(200);
     }
+
 
     /**
      * Lift a ban

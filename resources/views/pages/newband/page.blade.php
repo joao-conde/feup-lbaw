@@ -4,6 +4,7 @@
     <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
     <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
     <link href="{{ asset('css/utils.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/newband.css') }}" rel="stylesheet">
     <script defer src="{{ asset('js/followers.js') }}"></script>
 
     @include('partials.leftmenumobile')
@@ -15,7 +16,6 @@
     @include('partials.leftfeedmenu')
 
     <script defer src="{{ asset('js/newBand.js')}}"></script>
-    <link href="{{ asset('css/newband.css') }}" rel="stylesheet">
 
     <div id="center_content" class="col-12 col-md-6 p-0 mt-2">
 
