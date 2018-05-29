@@ -20,7 +20,6 @@ inputUsers.addEventListener('keyup', function (e) {
 inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
 
 
-
 function sendRequestFindUsers(pattern) {
 
     let requestData = { pattern: pattern };
@@ -157,17 +156,8 @@ function removeMemberAPI(memberId){
     let method = DELETE;
     let api = '/api/band_membership/' + bandId + '/' + memberId + '/inactive';
 
-    sendAsyncAjaxRequest(request, api, method, handleRemoveMemberAPIResponse.bind(this, request, "delete"));
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
-
-function handleRemoveMemberAPIResponse(response){
-    
-    if (response.status != 200)
-        return;
-
-    //delete
-}
-
 
 //Remove band invite
 let removeInviteBtns = document.querySelectorAll('.remove_invite_button');
@@ -182,13 +172,15 @@ function removeInviteAPI(userId){
     let method = DELETE;
     let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
 
-    sendAsyncAjaxRequest(request, api, method, handleRemoveInviteAPIResponse.bind(this, request, "delete"));
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
 
-function handleRemoveInviteAPIResponse(response){
+function handleDeleteMemberFromListAPIResponse(response){
 
     if (response.status != 200)
         return;
 
-    //delete
+    let member = this.parentNode.parentNode;
+    member.removeChild(this.parentNode);
+    
 }
