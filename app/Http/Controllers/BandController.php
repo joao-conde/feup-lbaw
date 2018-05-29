@@ -178,11 +178,8 @@ class BandController extends Controller
         $band->save();
 
         $insertQuery = "INSERT INTO band_membership (bandId, userId, isOwner)VALUES(?,?,true);";
-        $insertQuery2 = "INSERT INTO band_follower (bandId, userId) VALUES(?,?);";
 
-        DB::insert($insertQuery, [$band->id, Auth::user()->id]);
-        DB::insert($insertQuery2, [$band->id, Auth::user()->id]);
-        
+        DB::insert($insertQuery, [$band->id, Auth::user()->id]);        
         
 
         if($request->__isset('selectNewMember')){
@@ -201,13 +198,16 @@ class BandController extends Controller
             }
         }
 
-        $picture = $request->file('band_img');
-        // $picture = $_FILES['band_img'];
-        $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
-        $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
+        if($request->__isset('band_img')){
 
-        Storage::put($band->pathToProfilePicture(), $profileSize->__toString());
-        Storage::put($band->pathToIconPicture(), $iconSize->__toString());
+            $picture = $request->file('band_img');
+            // $picture = $_FILES['band_img'];
+            $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+            $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
+
+            Storage::put($band->pathToProfilePicture(), $profileSize->__toString());
+            Storage::put($band->pathToIconPicture(), $iconSize->__toString());
+        }
 
 
 
@@ -389,14 +389,64 @@ class BandController extends Controller
             DB::update($updateQuery, [$bandId, $userId]);
             return response('',200);
         }
-
         else
             return response('',500);
 
     }
 
 
+    public function inviteMember($bandId, $userId){
+        Band::sendInvitation($userId, $bandId);
+        return response(json_encode(["userId" => $userId, "name" => "NAME", "picPath" => User::getUserIconPicturePath($userId)]), 200);
+    }
+
+    public function updateInvitation($bandId, $userId, $status){
+        $verifyQuery = "SELECT * FROM band_invitation
+                        WHERE bandid = ? AND userId = ? AND status = 'pending'";
+
+        $updateQuery = 
+            "UPDATE band_invitation
+            SET status = ?
+            WHERE bandId = ? AND userId = ? AND status = 'pending'";
+
+        $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
+        
+        if(count($alreadyExists > 0)){
+            
+            DB::update($updateQuery, [$status, $bandId, $userId]);
+            return response($updateQuery,200);
+        }
+        else
+            return response('',500);  
+        
+        
+        return response($alreadyExists,200);
 
 
+    }
+
+    public function removeBandMembership($bandId, $userId){
+        $verifyQuery = 
+            "SELECT * FROM band_membership
+            WHERE bandid = ? AND userId = ? AND ceaseDate IS NULL";
+
+        $updateQuery = 
+            "UPDATE band_membership
+            SET ceaseDate = now()
+            WHERE bandId = ? AND userId = ? AND ceaseDate IS NULL";
+
+        $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
+        
+        if(count($alreadyExists == 1)){
+            
+            DB::update($updateQuery, [$bandId, $userId]);
+            return response($updateQuery,200);
+        }
+        else
+            return response('',500);  
+        
+        
+        return response($alreadyExists,200);
+    }
 
 }

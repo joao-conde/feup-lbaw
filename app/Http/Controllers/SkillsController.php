@@ -16,7 +16,7 @@ class SkillsController extends Controller
 	 */
 	public function list()
 	{
-		if (!Auth::check()) return redirect('/');
+		// if (!Auth::check()) return redirect('/');
 
 	  //$this->authorize('list', Genre::class);
 
@@ -33,6 +33,7 @@ class SkillsController extends Controller
 	 */
 	 public function create(Request $request)
 	 {
+	 	if (!Auth::check()) return redirect('/');
 
 	 	$query = 'SELECT * FROM skill WHERE name = ?';
 	 	$s = DB::select($query,[$request->input('skill')]);
@@ -57,6 +58,7 @@ class SkillsController extends Controller
 
 	 public function delete(Request $request, $id)
 	 {
+	 	if (!Auth::check()) return redirect('/');
 	 	$skill = Skill::find($id);
 
 	 // $this->authorize('delete', $skill);
@@ -69,7 +71,8 @@ class SkillsController extends Controller
 	 }
 
 	 public function edit(Request $request, $id){
-	 	$skill = Skill::find($id)  ;
+	 	if (!Auth::check()) return redirect('/');
+	 	$skill = Skill::find($id);
 
 	 	$skill->name = $request->input('name');
 	 	$skill->creatingadminid = Auth::user()->id;

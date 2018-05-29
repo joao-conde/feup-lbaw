@@ -42,28 +42,28 @@ Route::get('/band_reports/', 'BandController@listBandReports')->middleware('admi
 
 
 // API
-Route::post('/admin_api/genres', 'GenresController@create');
-Route::delete('/admin_api/genres/{genre_id}', 'GenresController@delete');
-Route::put('/admin_api/genres/{genre_id}', 'GenresController@edit');
-Route::post('/admin_api/skills', 'SkillsController@create');
-Route::delete('/admin_api/skills/{skill_id}', 'SkillsController@delete');
-Route::put('/admin_api/skills/{skill_id}', 'SkillsController@edit');
+Route::post('/admin_api/genres', 'GenresController@create')->middleware('admin');;
+Route::delete('/admin_api/genres/{genre_id}', 'GenresController@delete')->middleware('admin');;
+Route::put('/admin_api/genres/{genre_id}', 'GenresController@edit')->middleware('admin');;
+Route::post('/admin_api/skills', 'SkillsController@create')->middleware('admin');;
+Route::delete('/admin_api/skills/{skill_id}', 'SkillsController@delete')->middleware('admin');;
+Route::put('/admin_api/skills/{skill_id}', 'SkillsController@edit')->middleware('admin');;
 
-Route::put('/admin_api/users/{id}','UserController@permissions');
+Route::put('/admin_api/users/{id}','UserController@permissions')->middleware('admin');;
 
-Route::put('/admin_api/users/{id}/ignore_report', 'UserController@ignoreReport');
-Route::put('/admin_api/bands/{id}/ignore_report', 'BandController@ignoreReport');
+Route::put('/admin_api/users/{id}/ignore_report', 'UserController@ignoreReport')->middleware('admin');;
+Route::put('/admin_api/bands/{id}/ignore_report', 'BandController@ignoreReport')->middleware('admin');;
 
-Route::put('/admin_api/users/{id}/remove_content', 'UserController@removeContentDueToReport');
-Route::put('/admin_api/bands/{id}/remove_content', 'BandController@removeContentDueToReport');
+Route::put('/admin_api/users/{id}/remove_content', 'UserController@removeContentDueToReport')->middleware('admin');;
+Route::put('/admin_api/bands/{id}/remove_content', 'BandController@removeContentDueToReport')->middleware('admin');;
 
-Route::post('/admin_api/users/{id}/reports/{reportId}/warns', 'UserController@warnUser');
-Route::post('/admin_api/bands/{id}/reports/{reportId}/warns', 'BandController@warnBand');
+Route::post('/admin_api/users/{id}/reports/{reportId}/warns', 'UserController@warnUser')->middleware('admin');;
+Route::post('/admin_api/bands/{id}/reports/{reportId}/warns', 'BandController@warnBand')->middleware('admin');;
 
-Route::post('/admin_api/users/{id}/ban', 'UserController@banUser');
-Route::post('/admin_api/bands/{id}/ban', 'BandController@banBand');
-Route::put('/admin_api/users/{id}/lift_ban', 'UserController@liftBan');
-Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan');
+Route::post('/admin_api/users/{id}/ban', 'UserController@banUser')->middleware('admin');;
+Route::post('/admin_api/bands/{id}/ban', 'BandController@banBand')->middleware('admin');;
+Route::put('/admin_api/users/{id}/lift_ban', 'UserController@liftBan')->middleware('admin');;
+Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan')->middleware('admin');;
 
 Route::put('api/users/{id}', 'UserController@editUser');
 Route::post('api/users/{id}', 'UserController@editUserPicture');
@@ -74,11 +74,17 @@ Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
 Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
 
+Route::put('/api/bands/{bandId}/invitations/{userId}', 'BandController@inviteMember');
+
 Route::put('api/user_skills/{skillId}','UserController@addSkill');
 Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
 
 Route::get('api/bands/{bandId}/posts', 'BandController@getMorePosts');
 Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
+
+Route::delete('/api/band_application/{bandId}/{userId}/canceled', 'BandController@cancelApplication');
+Route::put('/api/band_invitation/{bandId}/{userId}/{status}', 'BandController@updateInvitation');
+Route::delete('/api/band_membership/{bandId}/{userId}/inactive', 'BandController@removeBandMembership');
 
 //validate password
 Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
@@ -106,7 +112,8 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
 Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
 Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
-// Auth::routes();
+Route::get('/password/reset/{token}', 'Auth\ForgotPasswordController@resetPassword')->name('reset_pass');
+Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')->name('update_pass');
 
 // Bands
 

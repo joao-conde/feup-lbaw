@@ -84,7 +84,7 @@ function handleToggleAPIResponse(request) {
 
 let userReportsLines = document.querySelectorAll('.user_reports_line');
 let bandReportsLines = document.querySelectorAll('.band_reports_line');
-let userId = document.querySelector('.user_id');
+let userIdAdmin = document.querySelector('.user_id');
 let bandId = document.querySelector('.band_id');
 
 if(userReportsLines != null || bandReportsLines != null)
@@ -146,7 +146,7 @@ function ignoreButtonListener(type){
 
 	let id;
 	if(type == 'user')
-		id = userId.innerHTML;
+		id = userIdAdmin.innerHTML;
 	else if(type == 'band')
 		id = bandId.innerHTML;
 
@@ -175,7 +175,7 @@ function removeButtonListener(type){
 
 	let id;
 	if(type == 'user')
-		id = userId.innerHTML;
+		id = userIdAdmin.innerHTML;
 	else if(type == 'band')
 		id = bandId.innerHTML;
 
@@ -204,7 +204,7 @@ function warnButtonListener(type){
 
 	let id;
 	if(type == 'user')
-		id = userId.innerHTML;
+		id = userIdAdmin.innerHTML;
 	else if(type == 'band')
 		id = bandId.innerHTML;
 
@@ -233,7 +233,7 @@ function banButtonListener(type){
 
 	let id;
 	if(type == 'user')
-		id = userId.innerHTML;
+		id = userIdAdmin.innerHTML;
 	else if(type == 'band')
 		id = bandId.innerHTML;
 
@@ -285,7 +285,7 @@ function liftBanButtonListener(type){
 
 	let id;
 	if(type == 'user')
-		id = userId.innerHTML;
+		id = userIdAdmin.innerHTML;
 	else if(type == 'band')
 		id = bandId.innerHTML;
 
