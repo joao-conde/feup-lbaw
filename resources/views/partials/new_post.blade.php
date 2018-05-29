@@ -5,10 +5,10 @@
         </div>
         @if($bandNewPost == true)
         <div class="col-auto">
-            <span id="lock_locked" class=" d-none clickable">
+            <span id="lock_locked_post" class=" d-none clickable">
                 <i class="fas fa-lock text-primary"></i>
             </span>
-            <span id="lock_opened" class="clickable">
+            <span id="lock_opened_post" class="clickable">
                 <i class="fas fa-lock-open text-primary"></i>
             </span>
         </div>
@@ -18,21 +18,28 @@
              
     </div>
 
-    <div class="p-0 row my-3 justify-content-end">
+    <div class="p-0 row my-3 justify-content-end d-none soundCloudRow">
         <div class="pl-5 pr-0 col-12">
-            <small class="d-inline">Sound Cloud Link</small>
+            <small class="d-inline"><i class=" text-warning fab fa-soundcloud"></i></small>
             <input id="soundCloudLink" class="w-75 d-inline" type="text">
         </div>
-        
     </div>
+
+    <div class="p-0 row my-3 justify-content-end d-none youTubeRow">
+        <div class="pl-5 pr-0 col-12">
+            <small class="d-inline"><i class="text-danger fab fa-youtube"></i></small>
+            <input id="youTubeLink" class="w-75 d-inline" type="text">
+        </div>
+    </div>
+
 
     <div class="row justify-content-end mt-2" id="btns" role="group">
 
         <div class="btn-group col-auto">
-            <button type="button" class="btn btn-light ">
+            <button type="button" class="btn btn-light d-none ">
                 <i class="far fa-image"></i>
             </button>
-            <button type="button" class="btn btn-light ">
+            <button id="youTubeButton" type="button" class="btn btn-light mr-2">
                 <i class="fas fa-film"></i>
             </button>
             <button id="soundCloudButton" type="button" class="btn btn-light border">

@@ -218,7 +218,7 @@ ALTER TABLE ONLY band
 CREATE TABLE content (
 
     id SERIAL NOT NULL,
-    text TEXT NOT NULL,
+    text TEXT,
     date TIMESTAMP DEFAULT now(),
     creatorId INTEGER NOT NULL,
     isActive BOOLEAN DEFAULT TRUE

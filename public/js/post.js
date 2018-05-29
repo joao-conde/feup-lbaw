@@ -1,7 +1,7 @@
 'use strict';
 
-let lockButton = document.querySelector('span#lock_opened');
-let unlockButton = document.querySelector('span#lock_locked');
+let lockButton = document.querySelector('span#lock_opened_post');
+let unlockButton = document.querySelector('span#lock_locked_post');
 let privatePost = false;
 
 
@@ -33,15 +33,43 @@ let textarea = document.querySelector('#new_post_ta');
 let postButton = document.querySelector('#postbutton');
 let postList = document.querySelector('div#posts');
 
+
+let postInput;
+
+if(postButton != null)
+  postInput = postButton.querySelector('[type=submit]');
+
 if (postButton != null) {
 
-  let postInput = postButton.querySelector('[type=submit]');
+  textarea.addEventListener('input', updatePostButtonDisabled);
+  
+}
 
-  textarea.addEventListener('input', function () {
+function updatePostButtonDisabled() {
 
-    postInput.disabled = textarea.value.trim().length == 0;
+  let disabled = true;
 
-  });
+  switch(currentMedia) {
+
+    case NO_MEDIA:
+      disabled = textarea.value.trim().length == 0;
+      break;
+
+    case MEDIA_SOUND:
+      disabled = inputSoundCloud.value.trim().length == 0;
+      break;
+
+    case MEDIA_VIDEO:
+      disabled = inputYoutube.value.trim().length == 0;
+      break;
+
+    default:
+      disabled = true;
+      break;
+
+  }
+
+  postInput.disabled = disabled;
 
 }
 
@@ -71,6 +99,9 @@ if (postButton != null) {
 
         case MEDIA_SOUND:
           sendCreatePostRequestWithSoundCloud();
+
+        case MEDIA_VIDEO:
+          sendCreatePostRequestWithYoutube();
       
         default:
           break;
@@ -106,13 +137,21 @@ function sendCreatePostRequest(mediaURL) {
 
 
 function handleCreatePostAPIResponse(response) {
-
-  if (response.status != 200)
-    return;
-
+  
   textarea.style.height = '30px';
   textarea.value = "";
   inputSoundCloud.value = "";
+  inputYoutube.value = "";
+
+  currentMedia = NO_MEDIA;
+  soundCloudButton.classList.remove('border-dark','border');
+  youTubeButton.classList.remove('border-dark','border');
+  youTubeRow.selfHide();
+  soundCloudRow.selfHide();
+  
+  if (response.status != 200)
+    return;
+
 
   let tempDiv = document.createElement('div');
   tempDiv.innerHTML = response.responseText;
@@ -127,7 +166,8 @@ function handleCreatePostAPIResponse(response) {
 
   postList.insertBefore(newPost, postList.children[0]);
 
-  let mediaElement = newPost.querySelector('iframe');
+  
+  postButton.querySelector('[type=submit]').disabled = true;
 
 
 }
@@ -361,9 +401,26 @@ let currentMedia = NO_MEDIA;
 let mediaURL = "";
 
 let inputSoundCloud = document.querySelector('input#soundCloudLink');
+let inputYoutube = document.querySelector('input#youTubeLink');
+
+if(inputSoundCloud != null) {
+  
+  inputSoundCloud.addEventListener('input', updatePostButtonDisabled);
+  inputYoutube.addEventListener('input', updatePostButtonDisabled);
+
+}
+
+function sendCreatePostRequestWithYoutube() {
+
+  let originalURLYoutube = inputYoutube.value.trim();
+  mediaURL = originalURLYoutube.replace(/watch\?v=/,'embed/');
+
+  sendCreatePostRequest(mediaURL);
+
+
+}
 
 function sendCreatePostRequestWithSoundCloud() {
-
 
   let data = {
     "format": "json",
@@ -397,18 +454,59 @@ function receiveSoundCloudResponse() {
 }
 
 let soundCloudButton = document.querySelector('button#soundCloudButton');
+let soundCloudRow = document.querySelector('div.soundCloudRow');
 
-soundCloudButton.addEventListener('click', function() {
+let youTubeButton = document.querySelector('button#youTubeButton');
+let youTubeRow = document.querySelector('div.youTubeRow');
 
-  if(currentMedia == MEDIA_SOUND) {
+if(soundCloudButton != null) {
 
+  soundCloudButton.addEventListener('click', function() {
+
+    youTubeRow.selfHide();
+    youTubeButton.classList.remove('border-dark','border');
+
+    if(currentMedia == MEDIA_SOUND) {
+  
+      soundCloudButton.classList.remove('border-dark','border');
+      currentMedia = NO_MEDIA;
+      soundCloudRow.selfHide();
+      
+
+    }
+    else {
+      soundCloudButton.classList.add('border-dark','border');
+      currentMedia = MEDIA_SOUND;
+      soundCloudRow.selfShow();
+  
+    }
+  
+    updatePostButtonDisabled();
+  
+  });
+
+  youTubeButton.addEventListener('click', function() {
+
+    soundCloudRow.selfHide();
     soundCloudButton.classList.remove('border-dark','border');
-    currentMedia = NO_MEDIA;
-  }
-  else {
-    soundCloudButton.classList.add('border-dark','border');
-    currentMedia = MEDIA_SOUND;
-  }
 
+    if(currentMedia == MEDIA_VIDEO) {
+  
+      youTubeButton.classList.remove('border-dark','border');
+      currentMedia = NO_MEDIA;
+      youTubeRow.selfHide();
+    }
+    
+    else {
+      youTubeButton.classList.add('border-dark','border');
+      currentMedia = MEDIA_VIDEO;
+      youTubeRow.selfShow();
+     
+    }
 
-});
+    updatePostButtonDisabled();
+
+  });
+
+}
+
