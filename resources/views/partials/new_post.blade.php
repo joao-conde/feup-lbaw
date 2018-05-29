@@ -18,18 +18,16 @@
              
     </div>
 
-    <div class="p-0 row my-3 justify-content-end d-none soundCloudRow">
-        <div class="pl-5 pr-0 col-12">
-            <small class="d-inline"><i class=" text-warning fab fa-soundcloud"></i></small>
-            <input id="soundCloudLink" class="w-75 d-inline" type="text">
-        </div>
+    <div class="p-0 row my-3 d-none justify-content-between soundCloudRow">
+        <small class="col-1 d-inline text-center"><i class="align-middle text-warning fab fa-soundcloud"></i></small>
+        <input id="soundCloudLink" class="p-0 col-10 d-inline border rounded border-dark" type="text">
+        <div class="col-1"></div>
     </div>
 
     <div class="p-0 row my-3 justify-content-end d-none youTubeRow">
-        <div class="pl-5 pr-0 col-12">
-            <small class="d-inline"><i class="text-danger fab fa-youtube"></i></small>
-            <input id="youTubeLink" class="w-75 d-inline" type="text">
-        </div>
+        <small class="col-1 d-inline text-center"><i class="align-middle text-danger fab fa-youtube"></i></small>
+        <input id="youTubeLink" class="p-0 col-10 d-inline border rounded border-dark" type="text">
+        <div class="col-1"></div>
     </div>
 
 
