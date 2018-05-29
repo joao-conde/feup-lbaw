@@ -87,7 +87,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
 |US45      |Recruit users|high|100%|
-|US46      |Remove users|high|5% - conde|
+|US46      |Remove users|high|70%|
 |US47      |Schedule Concerts|high|0%|
 |US48      |Post|high|90%|
 |US49      |Post|high|90%|

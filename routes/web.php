@@ -68,6 +68,7 @@ Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan')->middlewa
 Route::put('api/users/{id}', 'UserController@editUser');
 Route::post('api/users/{id}', 'UserController@editUserPicture');
 
+
 Route::put('api/user_followers/{id}','UserController@startFollowing');
 Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 
@@ -85,6 +86,7 @@ Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
 Route::delete('/api/band_application/{bandId}/{userId}/canceled', 'BandController@cancelApplication');
 Route::put('/api/band_invitation/{bandId}/{userId}/{status}', 'BandController@updateInvitation');
 Route::delete('/api/band_membership/{bandId}/{userId}/inactive', 'BandController@removeBandMembership');
+Route::delete('/api/band_invitation/{bandId}/{userId}/inactive', 'BandController@removeBandInvitation');
 
 //validate password
 Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
