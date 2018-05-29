@@ -47,9 +47,9 @@
                 </ul>
               </li>
               <hr>
-              <li><a href="#"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
-              <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
-              <li><a href="#"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
+              <li><a href="{{ route('user_followers') }}"><p class="text-secondary align-middle mb-1">Followers</p></a></li>
+              <li><a href="{{ route('user_followings') }}"><p class="text-secondary align-middle mb-1">Following <small>(users)</small></p></a></li>
+              <li><a href="{{ route('bands_following') }}"><p class="text-secondary align-middle mb-1">Following <small>(bands)</small></p></a></li>
             </ul>
           </div>
         </div>

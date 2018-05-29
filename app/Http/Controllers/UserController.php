@@ -360,13 +360,6 @@ class UserController extends Controller {
 
     }
 
-    public function editPost(Request $request){
-
-
-
-        return response(json_encode(["text" => "Comment text"]), 200);
-    }
-
     public function editUserPicture(Request $request) {
 
         $user = User::find($request->id);
@@ -505,47 +498,9 @@ class UserController extends Controller {
         return view('pages.feed', ['posts' => $posts]);
     }
 
-    public function createPost(Request $request) {    
-        
-        DB::beginTransaction();
-        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
-
-        $insertContent = "INSERT INTO content (text, creatorId)
-                                VALUES (?, ?)";
-
-        $insertPost = "INSERT INTO post (private, contentId)
-                                VALUES (?, currval('content_id_seq'))";
-
-        DB::insert($insertContent, [$request->content, Auth::user()->id]);
-        DB::insert($insertPost, [$request->private]);
-
-        $postId = DB::select("SELECT currval('post_id_seq')")[0]->currval;
-        DB::commit();
-
-        $post = Post::getPost(Auth::user()->id, $postId);
-
-        return response(view('partials.post', ['post'=> $post]), 200);
-    }
+   
     
-    public function deletePost(Request $request){
 
-        $getContentId = "SELECT post.contentid FROM post WHERE post.id = ?";
-        $content = DB::select($getContentId, [$request->postid]);
-        $contentid = $content[0]->contentid;
-        
-        DB::beginTransaction();
-        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
-        
-        $deletePost = "DELETE FROM post WHERE post.id=?";
-        $deleteContent = "DELETE FROM content WHERE content.id=?";
-
-        DB::delete($deletePost, [$request->postid]);
-        DB::delete($deleteContent, [$contentid]);
-        
-        DB::commit();
-        
-        return response(json_encode(['postid'=>$request->postid]), 200);
-    }
 
     public function userFollowings(){
 

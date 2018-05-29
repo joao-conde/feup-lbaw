@@ -26,9 +26,7 @@ DROP FUNCTION  IF EXISTS insert_notification_trigger_band_invitation_updated();
 DROP TRIGGER IF EXISTS insert_notification_trigger_band_application_updated ON band_application;
 DROP FUNCTION  IF EXISTS insert_notification_trigger_band_application_updated();
 
-DROP TRIGGER IF EXISTS update_last_satus_date_trigger_band_application ON band_application;
-DROP TRIGGER IF EXISTS update_last_satus_date_trigger_band_invitation ON band_invitation;
-DROP FUNCTION  IF EXISTS update_last_satus_date_trigger();
+DROP FUNCTION  IF EXISTS update_last_status_date_trigger();
 
 
 
@@ -45,8 +43,7 @@ DROP TABLE IF EXISTS band_invitation CASCADE;
 DROP TYPE IF EXISTS BAND_INVITATION_STATUS;
 DROP TABLE IF EXISTS band_application CASCADE;
 DROP TYPE IF EXISTS BAND_APPLICATION_STATUS;
---DROP TRIGGER IF EXISTS insert_notification_trigger_band_follower ON band_follower;
---DROP FUNCTION  IF EXISTS insert_notification_trigger_band_follower();
+
 DROP TABLE IF EXISTS band_follower CASCADE;
 DROP TABLE IF EXISTS band_rating CASCADE;
 DROP TABLE IF EXISTS band_membership CASCADE;
@@ -56,8 +53,7 @@ DROP TRIGGER IF EXISTS check_is_admin_warning ON warning;
 DROP FUNCTION  IF EXISTS check_is_admin_warning();
 DROP TABLE IF EXISTS warning CASCADE;
 DROP TABLE IF EXISTS user_rating CASCADE;
--- DROP TRIGGER IF EXISTS insert_notification_trigger_user_follower ON user_follower;
--- DROP FUNCTION  IF EXISTS insert_notification_trigger_user_follower();
+
 DROP TABLE IF EXISTS user_follower CASCADE;
 DROP TABLE IF EXISTS user_skill CASCADE;
 DROP TRIGGER IF EXISTS check_xor_user_band ON ban;
@@ -246,7 +242,8 @@ CREATE TABLE post (
     id SERIAL NOT NULL,
     private BOOLEAN NOT NULL DEFAULT FALSE,
     contentId INTEGER NOT NULL,
-    bandId INTEGER
+    bandId INTEGER,
+    mediaURL TEXT
 );
 
 ALTER TABLE ONLY post
@@ -990,7 +987,6 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_application_updated(
         END IF;
 
         NEW.lastStatusDate = now();
-
         RETURN NEW;
 
     END;
@@ -999,21 +995,6 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_notification_trigger_band_application_updated AFTER UPDATE ON band_application
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_application_updated();
-
-
-CREATE OR REPLACE FUNCTION update_last_satus_date_trigger() RETURNS trigger AS $$
-    
-    BEGIN
-       
-        NEW.lastStatusDate = now();
-        RETURN NEW;
-
-    END;
-    
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER update_last_satus_date_trigger_band_application BEFORE UPDATE ON band_application
-    FOR EACH ROW EXECUTE PROCEDURE update_last_satus_date_trigger();
 
 
 
@@ -1065,10 +1046,10 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_updated()
             INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_updated',New.id);
         END IF;
         IF NEW.status = 'accepted' THEN
-            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
+            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, TRUE);
         END IF;
-            UPDATE band_invitation SET lastStatusDate = now();
-
+            
+        NEW.lastStatusDate = now();
         RETURN NEW;
 
     END;
@@ -1078,9 +1059,6 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_notification_trigger_band_invitation_updated AFTER UPDATE ON band_invitation
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_updated();
-
-CREATE TRIGGER update_last_satus_date_trigger_band_invitation BEFORE UPDATE ON band_invitation
-    FOR EACH ROW EXECUTE PROCEDURE update_last_satus_date_trigger();
 
 /*****************************************************/
 /************ Notification Trigger *******************/
@@ -1470,7 +1448,7 @@ create index comment_content on comment using hash(contentId);
 
 create index user_username on mb_user using hash(username);
 
---create index band_name on band using hash(name);
+create index band_name on band using hash(name);
 
 create index message_receiver on message using hash(receiverId);
 

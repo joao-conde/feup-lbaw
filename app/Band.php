@@ -195,7 +195,7 @@ class Band extends Model
 
     public function isFollowing($userId) {
 
-        $query = 'SELECT count(*) FROM band_follower WHERE bandid = ? AND userid = ?';
+        $query = 'SELECT count(*) FROM band_follower WHERE bandid = ? AND userid = ? AND isactive = true';
         return DB::select($query,[$this->id,$userId])[0]->count == 1;
 
     }
@@ -238,6 +238,22 @@ class Band extends Model
             ORDER BY is_following DESC";
 
         return DB::select($searchQueryBandsByGenre, [$userId, $pattern]);  
+    }
+
+    public function isMember($userId) {
+
+        $query = 'SELECT COUNT(*) FROM band_membership WHERE bandid = ? AND userid = ? AND ceasedate IS NULL' ;
+
+        return DB::select($query, [$this->id, $userId])[0]->count == 1;
+
+    }
+
+    public static function getBandName($bandId) {
+
+        $band = Band::find($bandId);
+
+        return $band->name;
+
     }
 
 

@@ -4,7 +4,7 @@ let followButtons = document.querySelectorAll('.follow_unfollow');
 
 for (let i = 0; i < followButtons.length; i++) {
 
-    followButtons[i].addEventListener('click',startStopFollowingEventListener.bind(followButtons[i]));
+    followButtons[i].addEventListener('click', startStopFollowingEventListener.bind(followButtons[i]));
 
 }
 
@@ -41,6 +41,8 @@ function startStopFollowingEventListener() {
         follow = false;
     }
 
+    console.log(follow);
+    console.log(userOrBandToFollowId);
 
     sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request, followType));
 

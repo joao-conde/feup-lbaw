@@ -3,6 +3,7 @@
 @section('leftmenumobile')
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
+<script defer src="{{ asset('js/bandMembership.js')}}"></script>
 
 @include('partials.leftmenumobile')
 

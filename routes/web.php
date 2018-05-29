@@ -18,9 +18,7 @@ Route::get('/', function () {
 
 // FEED
 Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
-Route::post('/api/users/{userId}/posts', 'UserController@createPost');
-Route::post('/api/users/{userId}/posts/{postId}', 'UserController@editPost');
-Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
+
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');
@@ -84,6 +82,10 @@ Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
 Route::get('api/bands/{bandId}/posts', 'BandController@getMorePosts');
 Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
 
+Route::delete('/api/band_application/{bandId}/{userId}/canceled', 'BandController@cancelApplication');
+Route::put('/api/band_invitation/{bandId}/{userId}/{status}', 'BandController@updateInvitation');
+Route::delete('/api/band_membership/{bandId}/{userId}/inactive', 'BandController@removeBandMembership');
+
 //validate password
 Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
 Route::delete('api/users/{id}/location','UserController@deleteLocation');
@@ -94,6 +96,12 @@ Route::get('/api/user_followers','UserController@getFollowers');
 Route::get('/api/user_following','UserController@api_userFollowing');
 Route::get('/api/user_following/all','UserController@api_userFollowingAll');
 Route::get('/api/genres','BandController@getGenres');
+
+Route::post('/api/users/{userId}/posts', 'PostController@createPost');
+Route::put('/api/users/{userId}/posts/{postId}', 'PostController@editPost');
+Route::delete('/api/users/{userId}/posts/{postId}', 'PostController@deletePost');
+Route::post('/api/posts/{postId}/comments', 'CommentController@createComment');
+Route::delete('/api/comments/{comment}','CommentController@deleteComment');
 
 
 // Authentication
@@ -106,9 +114,9 @@ Route::get('/email', 'Auth\ForgotPasswordController@emailForm')->name('email');
 Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('send_email');
 Route::get('/password/reset/{token}', 'Auth\ForgotPasswordController@resetPassword')->name('reset_pass');
 Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')->name('update_pass');
-// Auth::routes();
 
 // Bands
+
 // Route::get('band/{bandID}', 'BandController@show')->name('band_page');
 Route::get('band/{id}', 'BandController@show')->name('band_profile');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
