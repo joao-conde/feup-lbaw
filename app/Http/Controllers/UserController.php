@@ -33,6 +33,8 @@ class UserController extends Controller {
      */
     public function listUserPermissions()
     {       
+        if (!Auth::check()) return redirect('/');
+
         $users = User::orderBy('admin','DESC')->orderBy('name','ASC');
         $users = $users->simplePaginate(6);
         
@@ -41,14 +43,15 @@ class UserController extends Controller {
 
     public function listBannedUsers()
     {   
-
+        if (!Auth::check()) return redirect('/');
+        
         $bans = User::join('ban','mb_user.id','=','ban.userid')->where('ban.isactive','true')->orderBy('mb_user.id')->get();
 
         return view('admin.banned_users', ['bans' => $bans]);
     }
 
     public function permissions(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $user = User::find($request->input('id'));
 
         if($user->admin)
@@ -154,7 +157,7 @@ class UserController extends Controller {
      *
      */
     public function banUser(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $ban = new Ban();
 
         $ban->reason = $request->reason;
@@ -182,7 +185,7 @@ class UserController extends Controller {
      *
      */
     public function liftBan(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $ban = Ban::find($request->banId);
 
         $ban->isactive = false;
@@ -196,7 +199,7 @@ class UserController extends Controller {
      *
      */
     public function ignoreReport(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $report = Report::find($request->reportId);
         $report->seen = true;
         $report->save();
@@ -209,7 +212,7 @@ class UserController extends Controller {
      *
      */
     public function warnUser(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $warning = new Warning();
 
         $warning->reason = $request->reason;
@@ -230,7 +233,7 @@ class UserController extends Controller {
      *
      */
     public function removeContentDueToReport(Request $request){
-
+        if (!Auth::check()) return redirect('/');
         $report = Report::find($request->reportId);
         $report->seen = true;
         $report->save();

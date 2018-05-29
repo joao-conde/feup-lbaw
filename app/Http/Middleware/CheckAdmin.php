@@ -15,7 +15,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::user()->admin){
+        if(Auth::user() == null || !Auth::user()->admin){
             return redirect('/403');
         }
         
