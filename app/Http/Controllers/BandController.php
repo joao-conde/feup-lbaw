@@ -227,6 +227,7 @@ class BandController extends Controller
         if (!Auth::check()) return redirect('/login');
 
         $band = Band::find($id);
+
         $members = $band->membersSQL();
         $rate = floatval($band->rate());
         

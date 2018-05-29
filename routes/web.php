@@ -18,9 +18,7 @@ Route::get('/', function () {
 
 // FEED
 Route::get('/feed', 'UserController@getFeedPosts')->name('feed');
-Route::post('/api/users/{userId}/posts', 'UserController@createPost');
-Route::post('/api/users/{userId}/posts/{postId}', 'UserController@editPost');
-Route::delete('/api/users/{userId}/posts/{postId}', 'UserController@deletePost');
+
 
 // SEARCH
 Route::get('/search', 'PagesController@search')->name('search');
@@ -93,6 +91,12 @@ Route::get('/api/user_following','UserController@api_userFollowing');
 Route::get('/api/user_following/all','UserController@api_userFollowingAll');
 Route::get('/api/genres','BandController@getGenres');
 
+Route::post('/api/users/{userId}/posts', 'PostController@createPost');
+Route::put('/api/users/{userId}/posts/{postId}', 'PostController@editPost');
+Route::delete('/api/users/{userId}/posts/{postId}', 'PostController@deletePost');
+Route::post('/api/posts/{postId}/comments', 'CommentController@createComment');
+Route::delete('/api/comments/{comment}','CommentController@deleteComment');
+
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -105,8 +109,9 @@ Route::post('/send_email', 'Auth\ForgotPasswordController@sendEmail')->name('sen
 // Auth::routes();
 
 // Bands
+
 // Route::get('band/{bandID}', 'BandController@show')->name('band_page');
-Route::get('band/{id}', 'BandController@show')->name('band_profile');
+Route::get('bands/{id}', 'BandController@show')->name('band_profile');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
 Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
 Route::get('bands/new_member', 'BandController@getNewMemberPartial');

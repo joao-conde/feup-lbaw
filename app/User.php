@@ -376,6 +376,7 @@ class User extends Authenticatable
             FROM band
             JOIN band_follower 
             ON band_follower.bandId = band.id AND band_follower.userId = ?
+            WHERE band_follower.isActive = true
             ORDER BY is_following ASC";
         
         return DB::select($searchQueryBands, [$userId]);  

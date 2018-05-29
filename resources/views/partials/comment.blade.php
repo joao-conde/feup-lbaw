@@ -1,4 +1,5 @@
 <div class="row comment mb-2">
+    <p class="d-none commentId">{{$comment->id}}</p>
 
     <div class="col align-self-center">
 
@@ -26,6 +27,26 @@
                     </small>
                 </small>
             </div>
+
+            @if($comment->userid == Auth::user()->id)
+            <div class="col">
+                <span class="p-2 clickable text-secondary" data-toggle="dropdown" id="moreOption" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreOption">
+                        <span class="dropdown-item clickable delete_comment_button">
+                            <i class=" mr-2 clickable fas fa-trash-alt"></i>
+                            <small>Remove Comment</small>
+                        </span>
+                        <span class="dropdown-item clickable edit_comment_button">
+                            <i class="mr-2 fas fa-pencil-alt"></i>
+                            <small>Edit Comment</small>
+                        </span>
+
+                    </div>
+                </span>
+            </div>
+            @endif
+
         </div>
 
     </div>

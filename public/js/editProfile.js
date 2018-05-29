@@ -4,6 +4,7 @@
  */ 
 
 let editMode = false;
+let globalBandId = undefined;
 
 let editFields = document.querySelectorAll('.edit_field');
 let lockLocked = document.querySelector('span#lock_locked');

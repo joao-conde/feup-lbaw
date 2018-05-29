@@ -244,7 +244,8 @@ CREATE TABLE post (
     id SERIAL NOT NULL,
     private BOOLEAN NOT NULL DEFAULT FALSE,
     contentId INTEGER NOT NULL,
-    bandId INTEGER
+    bandId INTEGER,
+    mediaURL TEXT
 );
 
 ALTER TABLE ONLY post

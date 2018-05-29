@@ -42,8 +42,7 @@
 
                         <img id="profile_pic" class="profile_image d-block my-3" src="{{$band->getProfilePicturePath()}}" alt="Profile Image">
                         
-						@include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id), 'userOrBandToFollowId'=> $band->id]) 
-						
+						@include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id), 'userOrBandToFollowId'=> $band->id])
                         
                     </div>
 
@@ -95,9 +94,9 @@
                                         <p class="d-inline"> by <a class="text-primary" href = {{"/users/".$band['founders'][0]->userid}}>{{$band['founders'][0]->membername}}</p></a>
                                         @if(count($band['founders']) > 2)
                                         @for($i = 1; $i < count($band['founders'])-1; $i++)
-                                        , <a class="text-primary" href = {{"/users/".$band['founders'][$i]->userid}}><i> {{$band['founders'][$i]->membername}}<i></a>
+                                        , <a class="text-primary" href = {{"/users/".$band['founders'][$i]->userid}}></i> {{$band['founders'][$i]->membername}}</i></a>
                                         @endfor
-                                        <a class="text-primary" href = {{"/users/".$band['founders'][count($band['founders'])-1]->userid}}><i> and {{$band['founders'][count($band['founders'])-1]->membername}}</a>
+                                        and<a class="text-primary" href = {{"/users/".$band['founders'][count($band['founders'])-1]->userid}}></i> {{$band['founders'][count($band['founders'])-1]->membername}}</a>
                                         @endif
                                     </small>
                                     
@@ -156,6 +155,11 @@
         <div class="col-12 col-md-9 col-lg-6">
 
             <div id="center_content" class="toggleContent">
+
+                @if($band->isMember(Auth::user()->id))
+                <?php $bandNewPost = true ?>                
+                @include('partials.new_post',[$bandNewPost])
+                @endif
 
                 <div id="posts">
                     @foreach($band['posts'] as $post)

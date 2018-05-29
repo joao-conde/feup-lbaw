@@ -7,7 +7,8 @@
 <p id="posts_page_type" class="d-none">feed</p>
 <div id="center_content" class="col-12 col-md-6 p-0 mt-2 toggleContent">
 
-	@include('partials.new_post')
+	{{$bandNewPost = false}}
+	@include('partials.new_post',[$bandNewPost])
 
 	<div id = "posts">
 		@if(count($posts) > 0)

@@ -134,8 +134,6 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
 
         let oldValue = innerHTML != undefined ? innerHTML : fixedElement.innerHTML;
 
-        console.log("Old value: " + innerHTML);
-
         editButton.selfHide();
         confirmButton.selfShow();
         cancelButton.selfShow();
