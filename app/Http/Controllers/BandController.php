@@ -264,9 +264,21 @@ class BandController extends Controller
 
 
         $followers = $band->followers();
+
+        $isFounder = false;
         
+        foreach($founders as $founder){
+            if($founder->userid == Auth::user()->id){
+                $isFounder = true;
+                break;
+            }
+        }
+
+        //dd($members);
+
         return view('pages.band',
-            ['band' => $band, 
+            ['isFounder' => $isFounder,
+            'band' => $band, 
             'members' => $members,
             'wholeRate'=>$whole, 
             'decimalRate'=>$decimal,
@@ -417,7 +429,7 @@ class BandController extends Controller
 
         $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
         
-        if(count($alreadyExists > 0)){
+        if(count($alreadyExists) > 0){
             
             DB::update($updateQuery, [$status, $bandId, $userId]);
             return response($updateQuery,200);
@@ -432,6 +444,7 @@ class BandController extends Controller
     }
 
     public function removeBandMembership($bandId, $userId){
+
         $verifyQuery = 
             "SELECT * FROM band_membership
             WHERE bandid = ? AND userId = ? AND ceaseDate IS NULL";
@@ -443,7 +456,7 @@ class BandController extends Controller
 
         $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
         
-        if(count($alreadyExists == 1)){
+        if(count($alreadyExists) == 1){
             
             DB::update($updateQuery, [$bandId, $userId]);
             return response($updateQuery,200);
@@ -453,6 +466,33 @@ class BandController extends Controller
         
         
         return response($alreadyExists,200);
+    }
+
+    public function removeBandInvitation($bandId, $userId){
+
+        $verifyQuery = 
+            "SELECT * FROM band_invitation
+            WHERE bandid = ? AND userId = ? AND status='pending'";
+
+        $updateQuery = 
+            "UPDATE band_invitation
+            SET laststatusdate = now(),
+            status='canceled'
+            WHERE bandId = ? AND userId = ? AND status='pending'";
+
+        $exists = DB::select($verifyQuery, [$bandId, $userId]);
+        
+        if(count($exists) == 1){
+            
+            DB::update($updateQuery, [$bandId, $userId]);
+            return response($updateQuery,200);
+        }
+        else
+            return response('',500);  
+        
+        
+        return response($exists,200);
+
     }
 
 }

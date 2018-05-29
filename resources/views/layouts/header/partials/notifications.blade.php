@@ -1,4 +1,5 @@
-<?php $notificationsInfo = Auth::user()->getNotifications();?>
+<?php $notificationsInfo = Auth::user()->getNotifications();
+?>
 
 <li class="nav-item">
 <a class="nav-link text-success pt-3 read-notifications" href="{{route('read_notifications')}}" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">

@@ -1,5 +1,6 @@
-
-<a class="dropdown-item text-warning" href="#">
+<?php //print_r($notification);?>
+<a class="dropdown-item text-warning" 
+    href="{{NotificationTrigger::getLinkOfNotification($notification->id, $notification->type)}}">
     <small class=" time mr-1">
     <?php 
         $notif_date = date_parse($notification->date);

@@ -68,6 +68,7 @@ Route::put('/admin_api/bands/{id}/lift_ban', 'BandController@liftBan')->middlewa
 Route::put('api/users/{id}', 'UserController@editUser');
 Route::post('api/users/{id}', 'UserController@editUserPicture');
 
+
 Route::put('api/user_followers/{id}','UserController@startFollowing');
 Route::delete('api/user_followers/{id}','UserController@stopFollowing');
 
@@ -85,6 +86,7 @@ Route::get('api/users/{userId}/posts', 'UserController@getMorePosts');
 Route::delete('/api/band_application/{bandId}/{userId}/canceled', 'BandController@cancelApplication');
 Route::put('/api/band_invitation/{bandId}/{userId}/{status}', 'BandController@updateInvitation');
 Route::delete('/api/band_membership/{bandId}/{userId}/inactive', 'BandController@removeBandMembership');
+Route::delete('/api/band_invitation/{bandId}/{userId}/inactive', 'BandController@removeBandInvitation');
 
 //validate password
 Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
@@ -106,7 +108,7 @@ Route::delete('/api/comments/{comment}','CommentController@deleteComment');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('do_login');
+Route::post('login', 'Auth\LoginController@login')->name('do_login')->middleware('not_banned');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');

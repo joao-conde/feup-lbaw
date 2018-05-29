@@ -232,7 +232,9 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'User' => App\User::class,
-        'Band' => App\Band::class
+        'Band' => App\Band::class,
+        'NotificationTrigger' => App\NotificationTrigger::class
+        
 
     ],
 
