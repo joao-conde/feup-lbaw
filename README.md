@@ -51,16 +51,16 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US20      |Search for users/bands|high|100%|
 |US21      |Profile Page|high|100%|
 |US22      |Band Page|high|100%|
-|US23      |Comment|medium|0%|
+|US23      |Comment|medium|80%|
 |US24      |Report bands'|medium|0%|
 |US25      |Report users'|medium|0%|
 |US26      |Rate bands|medium|0%|
 |US27      |Rate users|medium|0%|
 |US28      |Apply to Bands|low|0%|
 |US29      |Chat|low|0%|
-|US30      |Remove own comments|low|0%|
-|US31      |Remove own posts|low|0%|
-|US32      |Post using Soundcloud API|low|0%|
+|US30      |Remove own comments|low|100%|
+|US31      |Remove own posts|low|100%|
+|US32      |Post using Soundcloud API|low|90%|
 |US33      |Post using Youtube API|low|0%|
 
 ### Admin - 100%
@@ -86,12 +86,12 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 ### Band Admin
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
-|US45      |Recruit users|high|0%|
-|US46      |Remove users|high|0%|
+|US45      |Recruit users|high|100%|
+|US46      |Remove users|high|5% - conde|
 |US47      |Schedule Concerts|high|0%|
-|US48      |Post|high|0%|
-|US49      |Post|high|0%|
-|US50      |Remove posts|high|0%|
+|US48      |Post|high|90%|
+|US49      |Post|high|90%|
+|US50      |Remove posts|high|90%|
 
 
 

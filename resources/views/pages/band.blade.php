@@ -137,23 +137,34 @@
         <div class="col-3 d-none d-lg-block">
 
             <div id="members" class="jumbotron p-3 mr-2">
-                Members  
+                Members
+
                 @foreach($members as $member)
                 <a class="d-block" href="{{'/users/'.$member->userid}}">
                     <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
                     <small class="text-primary">{{$member->membername}}</small>
+                    
                     @if($member->owner == true)
                     <small class="ml-1">f</small>
+                    @endif
+
+                    @if($member->pending == true)
+                    <small class="ml-1">p</small>
                     @endif
                 </a>
                 @endforeach
                 
-                <div class="autocomplete" id="inviteMember">
-                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
-                </div>
-                <div class="collapse show" id="new_members">
-                </div>
-            
+                @if($isFounder)
+                            
+                    <div class="autocomplete" id="inviteMember">
+                        <input id="band_members" placeholder="Invite member..." type="text" name="name">
+                    </div>
+                    <div class="collapse show" id="new_members">
+                    </div>
+                    
+                @endif
+
+
             </div>
 
         </div>

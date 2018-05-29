@@ -53,6 +53,7 @@ class Band extends Model
             ) as result
             ORDER BY result.owner DESC, result.pending ASC";
 
+
         return DB::select($queryBandMembers,[$this->id, $this->id]);
 
     }

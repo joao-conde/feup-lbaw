@@ -503,7 +503,7 @@ class UserController extends Controller {
 
     public function userFollowings(){
 
-        $followingUsersResult = User::getFollowingAll(Auth::user()->id);
+        $followingUsersResult = Auth::user()->getFollowingAll();
         
         return view("layouts.list_page", [
             'title' => "Users you follow", 
@@ -513,7 +513,7 @@ class UserController extends Controller {
 
     public function userFollowers(){
 
-        $followerUsersResult = User::getFollowersAll(Auth::user()->id);
+        $followerUsersResult = Auth::user()->getFollowersAll();
         
         return view("layouts.list_page", [
             'title' => "Followers", 
@@ -523,7 +523,7 @@ class UserController extends Controller {
 
     public function bandFollowings(){
 
-        $followingBandsResult = User::getFollowingBands(Auth::user()->id);
+        $followingBandsResult = Auth::user()->getFollowingBands();
         
         return view("layouts.list_page", [
             'title' => "Bands you follow",
@@ -533,7 +533,7 @@ class UserController extends Controller {
 
     public function bandMemberships(){
 
-        $ownBandsResult = User::getBandsMembership(Auth::user()->id);
+        $ownBandsResult = Auth::user()->getBandsMembership();
         
         return view("layouts.list_page", [
             'title' => "Your Bands",

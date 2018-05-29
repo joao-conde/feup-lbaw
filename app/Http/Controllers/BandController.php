@@ -230,7 +230,8 @@ class BandController extends Controller
 
         $band = Band::find($id);
 
-        $members = $band->membersSQL();
+        //$members = $band->membersSQL();
+        $members = $band->getMembersAndPending();
         $rate = floatval($band->rate());
         
         $decimal = (($rate * 10) % 10) / 10;
@@ -263,9 +264,22 @@ class BandController extends Controller
 
 
         $followers = $band->followers();
+
+        $isFounder = false;
         
+        foreach($founders as $founder){
+            //dd($founder);
+            if($founder->userid == Auth::user()->id){
+                $isFounder = true;
+                break;
+            }
+        }
+
+        //dd($isFounder);
+
         return view('pages.band',
-            ['band' => $band, 
+            ['isFounder' => $isFounder,
+            'band' => $band, 
             'members' => $members,
             'wholeRate'=>$whole, 
             'decimalRate'=>$decimal,
@@ -399,7 +413,10 @@ class BandController extends Controller
 
     public function inviteMember($bandId, $userId){
         Band::sendInvitation($userId, $bandId);
-        return response(json_encode(["userId" => $userId, "name" => "NAME", "picPath" => User::getUserIconPicturePath($userId)]), 200);
+
+        $userName = User::where('id', $userId)->first()->name;
+        
+        return response(json_encode(["userId" => $userId, "name" => $userName, "picPath" => User::getUserIconPicturePath($userId)]), 200);
     }
 
     public function updateInvitation($bandId, $userId, $status){
@@ -413,7 +430,7 @@ class BandController extends Controller
 
         $alreadyExists = DB::select($verifyQuery, [$bandId, $userId]);
         
-        if(count($alreadyExists > 0)){
+        if(count($alreadyExists) > 0){
             
             DB::update($updateQuery, [$status, $bandId, $userId]);
             return response($updateQuery,200);

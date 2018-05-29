@@ -96,86 +96,85 @@ class User extends Authenticatable
                   JOIN mb_user as users ON users.id = user_follower.followedUserId
                   WHERE user_follower.followingUserId = ?';
 
-return DB::select($query, [$this->id]);
+        return DB::select($query, [$this->id]);
 
+    }
 
-}
+    /**
+     * The following user of this user
+     */
 
-/**
- * The following user of this user
- */
-
-public function followers() {
-    //return $this->belongsToMany('App\User', 'user_follower', 'followeduserid', 'followinguserid', 'isactive','id');
-    
-    $query = 'SELECT * FROM user_follower 
-                  JOIN mb_user as users ON users.id = user_follower.followingUserId
-                  WHERE user_follower.followedUserId = ?';
-
-return DB::select($query, [$this->id]);
-
-}
-
-public function pathToProfilePicture() {
-    
-    return 'public/user_pics/'.$this->username.'/'.$this->username.'_profile.png';
-    
-} 
-public function pathToIconPicture() {
-    
-    return 'public/user_pics/'.$this->username.'/'.$this->username.'_icon.png';
-    
-}
-
-public function getProfilePicturePath() {
-    
-    if(Storage::disk('local')->exists($this->pathToProfilePicture())) 
-    return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_profile.png');
-    else
-    return url('images/system/dummy_profile.svg');
-    
-}
-
-public function getIconPicturePath() {
-    
-    if(Storage::disk('local')->exists($this->pathToIconPicture())) 
-    return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_icon.png');
-    else
-    return asset('images/system/dummy_profile.svg');
-    
-}
-
-public function getNotifications() {
-    
-    $result = array();
-    
-    $result = DB::transaction(function () {
-        $db_result = array();
+    public function followers() {
+        //return $this->belongsToMany('App\User', 'user_follower', 'followeduserid', 'followinguserid', 'isactive','id');
         
-        DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
+        $query = 'SELECT * FROM user_follower 
+                    JOIN mb_user as users ON users.id = user_follower.followingUserId
+                    WHERE user_follower.followedUserId = ?';
+
+        return DB::select($query, [$this->id]);
+
+    }
+
+    public function pathToProfilePicture() {
         
-        $countQuery = "SELECT count(*)
-                            FROM user_notification
-                            JOIN notification_trigger
-                            ON user_notification.notificationTriggerId = notification_trigger.id
-                            AND notification_trigger.type != 'message'
-                            WHERE visualizedDate IS NULL
-                            AND userId = ?";
+        return 'public/user_pics/'.$this->username.'/'.$this->username.'_profile.png';
+        
+    } 
+    public function pathToIconPicture() {
+        
+        return 'public/user_pics/'.$this->username.'/'.$this->username.'_icon.png';
+        
+    }
 
-$db_result['count'] = DB::select($countQuery, [$this->id])[0]->count;
+    public function getProfilePicturePath() {
+        
+        if(Storage::disk('local')->exists($this->pathToProfilePicture())) 
+        return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_profile.png');
+        else
+        return url('images/system/dummy_profile.svg');
+        
+    }
 
-$notificationsQuery = $this->queryNotifications();
+    public function getIconPicturePath() {
+        
+        if(Storage::disk('local')->exists($this->pathToIconPicture())) 
+        return url('storage/user_pics'.'/'.$this->username.'/'.$this->username.'_icon.png');
+        else
+        return asset('images/system/dummy_profile.svg');
+        
+    }
 
-$db_result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+    public function getNotifications() {
+        
+        $result = array();
+        
+        $result = DB::transaction(function () {
+            $db_result = array();
+            
+            DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
+            
+            $countQuery = "SELECT count(*)
+                                FROM user_notification
+                                JOIN notification_trigger
+                                ON user_notification.notificationTriggerId = notification_trigger.id
+                                AND notification_trigger.type != 'message'
+                                WHERE visualizedDate IS NULL
+                                AND userId = ?";
 
-return $db_result;
-});
+            $db_result['count'] = DB::select($countQuery, [$this->id])[0]->count;
 
-return $result;
-}
+            $notificationsQuery = $this->queryNotifications();
 
-public function queryNotifications(){
-    return "SELECT user_notification.userId, user_notification.notificationTriggerId, user_notification.text, notification_trigger.date, notification_trigger.type
+            $db_result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+
+            return $db_result;
+        });
+
+        return $result;
+    }
+
+    public function queryNotifications(){
+        return "SELECT user_notification.userId, user_notification.notificationTriggerId as id, user_notification.text, notification_trigger.date, notification_trigger.type
                 FROM user_notification
                 JOIN notification_trigger
                 ON user_notification.notificationTriggerId = notification_trigger.id
@@ -183,109 +182,112 @@ public function queryNotifications(){
                 WHERE user_notification.userId = ?
                 ORDER BY notification_trigger.date DESC
                 LIMIT 7";
-    }
+        }
+
     public function getNotificationsBlock($blockNo = 0){
         
-        $notificationsQuery = "SELECT notification_trigger.id, user_notification.text, notification_trigger.date, notification_trigger.type
-                                FROM user_notification
-                                JOIN notification_trigger
-                                ON user_notification.notificationTriggerId = notification_trigger.id
-                                AND notification_trigger.type != 'message'
-                                WHERE user_notification.userId = ?
-                                ORDER BY notification_trigger.date DESC
-                                LIMIT 7 OFFSET ?;";
+        $notificationsQuery = 
+            "SELECT notification_trigger.id, user_notification.notificationTriggerId, user_notification.text, notification_trigger.date, notification_trigger.type
+            FROM user_notification
+            JOIN notification_trigger
+            ON user_notification.notificationTriggerId = notification_trigger.id
+            AND notification_trigger.type != 'message'
+            WHERE user_notification.userId = ?
+            ORDER BY notification_trigger.date DESC
+            LIMIT 7 OFFSET ?;";
 
-$result['notifications'] = DB::select($notificationsQuery, [$this->id, $blockNo*7]);
+        $result['notifications'] = DB::select($notificationsQuery, [$this->id, $blockNo*7]);
 
-return $result;
-}
+        return $result;
+    }
 
-public function city() {
-    return $this->belongsTo('App\City');
-}
+    public function city() {
+        return $this->belongsTo('App\City');
+    }
 
-public function locationCity() {
-    
-    $query = 'SELECT name,id FROM city 
-                  WHERE id = ?';
+    public function locationCity() {
+        
+        $query = 'SELECT name,id FROM city 
+                    WHERE id = ?';
 
-$location = DB::select($query, [$this->location]);
+    $location = DB::select($query, [$this->location]);
 
-if(count($location) > 0)
-return $location[0];
-else
-return '';
-
-}
-
-public function locationCountry() {
-    
-    $location = $this->locationCity();
-    
-    if($location == '')
+    if(count($location) > 0)
+    return $location[0];
+    else
     return '';
-    
-    $query = 'SELECT country.name,country.id FROM country 
-                  JOIN city ON country.id = city.countryid
-                  WHERE city.id = ?';
 
-$country = DB::select($query, [$location->id]);
+    }
 
-if(count($country) > 0)
-return $country[0];
+    public function locationCountry() {
+        
+        $location = $this->locationCity();
+        
+        if($location == '')
+        return '';
+        
+        $query = 'SELECT country.name,country.id FROM country 
+                    JOIN city ON country.id = city.countryid
+                    WHERE city.id = ?';
 
-}
+    $country = DB::select($query, [$location->id]);
 
+    if(count($country) > 0)
+    return $country[0];
 
-public static function getUserProfilePicturePath($userid) {
-    
-    $user = User::find($userid);
-    return $user->getProfilePicturePath();
-    
-}
-
-
-
-public static function getUserIconPicturePath($userid) {
-    
-    $user = User::find($userid);
-    return $user->getIconPicturePath();
-    // return print_r($user);
-}
+    }
 
 
-public function posts($offset) {
-    
-    return Post::userPosts($this->id,$offset);
-    
-}
-
-public function feedPosts($offset) {
-    
-    return Post::feedPosts($this->id,$offset);
-}
-
-public function bands() {
-    
-    $query = 'SELECT band.id, band.name 
-                  FROM band_membership
-                  JOIN band ON band.id = band_membership.bandid
-                  WHERE band_membership.userid = ?
-                  AND band_membership.ceasedate IS NULL';
-
-return DB::select($query,[$this->id]);
-
-}
+    public static function getUserProfilePicturePath($userid) {
+        
+        $user = User::find($userid);
+        return $user->getProfilePicturePath();
+        
+    }
 
 
-public function fellowMusicians() {
-    
-    $bands = $this->bands();
-    
-    if(count($bands) == 0)
-    return array(); 
-    
-    $query = 'SELECT DISTINCT mb_user.id, mb_user.name 
+
+    public static function getUserIconPicturePath($userid) {
+        
+        $user = User::find($userid);
+        return $user->getIconPicturePath();
+    }
+
+
+    public function posts($offset) {
+        
+        return Post::userPosts($this->id,$offset);
+        
+    }
+
+    public function feedPosts($offset) {
+        
+        return Post::feedPosts($this->id,$offset);
+    }
+
+    public function bands() {
+
+        $searchQueryBands = 
+            "SELECT band.id, band.name
+            FROM band
+            JOIN band_membership
+            ON band_membership.bandId = band.id AND band_membership.userId = ?
+            AND band_membership.ceasedate IS NULL
+            ORDER BY band.name ASC";
+        
+        return DB::select($searchQueryBands, [$this->id]);
+
+    }
+
+
+    public function fellowMusicians() {
+        
+        $bands = $this->bands();
+        
+        if(count($bands) == 0)
+        return array(); 
+        
+        $query = 'SELECT DISTINCT mb_user.id, mb_user.name 
                   FROM band
                   JOIN band_membership ON band_membership.bandid = band.id
                   JOIN mb_user on mb_user.id = band_membership.userid
@@ -338,7 +340,7 @@ public function fellowMusicians() {
 
     }
 
-    public static function getFollowingAll($id){
+    public function getFollowingAll(){
         $followingUsersQuery = 
             "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, true as is_following
             FROM mb_user
@@ -350,10 +352,10 @@ public function fellowMusicians() {
             AND user_follower.isactive = true
             ORDER BY  mb_user.name ASC";
 
-        return DB::select($followingUsersQuery, [$id]);
+        return DB::select($followingUsersQuery, [$this->id]);
     }
 
-    public static function getFollowersAll($id){
+    public function getFollowersAll(){
         $followerUsersQuery = 
             "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, coalesce(follows.isActive,false) as is_following
             FROM mb_user
@@ -368,10 +370,10 @@ public function fellowMusicians() {
             AND follows.followedUserId = mb_user.id
             ORDER BY is_following DESC, mb_user.name ASC";
 
-        return DB::select($followerUsersQuery, [$id, $id]);
+        return DB::select($followerUsersQuery, [$this->id, $this->id]);
     }
 
-    public static function getFollowingBands($userId){
+    public function getFollowingBands(){
         $searchQueryBands = 
             "SELECT band.id as band_id, band.name as name, band_follower.isActive as is_following
             FROM band
@@ -380,22 +382,11 @@ public function fellowMusicians() {
             WHERE band_follower.isActive = true
             ORDER BY is_following ASC";
         
-        return DB::select($searchQueryBands, [$userId]);  
-    }
-    
-    public static function getOwnBands($userId){
-        $searchQueryBands = 
-            "SELECT band.id as band_id, band.name as name
-            FROM band
-            JOIN band_membership
-            ON band_membership.bandId = band.id AND band_membership.userId = ?
-            AND band_membership.ceasedate IS NULL
-            ORDER BY band.name ASC";
-        
-        return DB::select($searchQueryBands, [$userId]);  
+        return DB::select($searchQueryBands, [$this->id]);  
     }
 
-    public static function getBandsMembership($userId){
+
+    public function getBandsMembership(){
         $searchQueryBands = 
             "SELECT * FROM(
                 SELECT band.id as band_id, band.name as name, 'member' as membership_status, 'Your Band' as complement
@@ -421,7 +412,7 @@ public function fellowMusicians() {
             ) as result
             ORDER BY result.membership_status DESC, result.name ASC";
         
-        return DB::select($searchQueryBands, [$userId, $userId, $userId]);  
+        return DB::select($searchQueryBands, [$this->id, $this->id, $this->id]);  
     }
 
 }
