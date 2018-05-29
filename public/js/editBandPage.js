@@ -75,9 +75,36 @@ function handleInviteMemberAPIResponse(response){
     if (response.status != 200)
         return;
 
-    console.log("RESPONSE " + response.responseText);
+    let data = JSON.parse(response.responseText);
+    buildMemberItem(data);
     
 } 
+
+function buildMemberItem(data){
+    let members = document.querySelector('#members');
+
+    let member = document.createElement('a');
+    member.classList.add("d-block");
+    member.href = "/users/" + data.userId;
+    
+    let img = document.createElement('img');
+    img.classList.add("profile_img_feed");
+    img.src = data.picPath; 
+
+    let small = document.createElement('small');
+    small.classList.add("text-primary");
+    small.innerHTML = data.name;
+
+    let small2 = document.createElement('small');
+    small2.classList.add("ml-1");
+    small2.innerHTML = "p";
+
+    member.appendChild(img);
+    member.appendChild(small);
+    member.appendChild(small2);
+
+    members.insertBefore(member, members.childNodes[members.children.length - 1]);
+}
 
 
 
