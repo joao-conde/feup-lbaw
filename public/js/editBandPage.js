@@ -141,3 +141,54 @@ function removeActive(array) {
         array[i].classList.remove("autocomplete-active");
     }
 }
+
+
+
+//Remove band member
+let removeMemberBtns = document.querySelectorAll('.remove_member_button');
+
+for(let i = 0; i < removeMemberBtns.length; i++) {
+    let memberId = removeMemberBtns[i].querySelector('#memberId').innerHTML;
+    removeMemberBtns[i].addEventListener('click', removeMemberAPI.bind(removeMemberBtns[i], memberId));
+}
+
+function removeMemberAPI(memberId){
+    let request = new XMLHttpRequest();
+    let method = DELETE;
+    let api = '/api/band_membership/' + bandId + '/' + memberId + '/inactive';
+
+    sendAsyncAjaxRequest(request, api, method, handleRemoveMemberAPIResponse.bind(this, request, "delete"));
+}
+
+function handleRemoveMemberAPIResponse(response){
+    
+    if (response.status != 200)
+        return;
+
+    //delete
+}
+
+
+//Remove band invite
+let removeInviteBtns = document.querySelectorAll('.remove_invite_button');
+
+for(let i = 0; i < removeInviteBtns.length; i++) {
+    let userId = removeInviteBtns[i].querySelector('#userId').innerHTML;
+    removeInviteBtns[i].addEventListener('click', removeInviteAPI.bind(removeInviteBtns[i], userId));
+}
+
+function removeInviteAPI(userId){
+    let request = new XMLHttpRequest();
+    let method = DELETE;
+    let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
+
+    sendAsyncAjaxRequest(request, api, method, handleRemoveInviteAPIResponse.bind(this, request, "delete"));
+}
+
+function handleRemoveInviteAPIResponse(response){
+
+    if (response.status != 200)
+        return;
+
+    //delete
+}
