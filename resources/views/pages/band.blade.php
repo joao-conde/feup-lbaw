@@ -154,12 +154,17 @@
                 </a>
                 @endforeach
                 
-                <div class="autocomplete" id="inviteMember">
-                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
-                </div>
-                <div class="collapse show" id="new_members">
-                </div>
-            
+                @if($isFounder)
+                            
+                    <div class="autocomplete" id="inviteMember">
+                        <input id="band_members" placeholder="Invite member..." type="text" name="name">
+                    </div>
+                    <div class="collapse show" id="new_members">
+                    </div>
+                    
+                @endif
+
+
             </div>
 
         </div>
