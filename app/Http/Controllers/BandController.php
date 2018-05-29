@@ -230,7 +230,8 @@ class BandController extends Controller
 
         $band = Band::find($id);
 
-        $members = $band->membersSQL();
+        //$members = $band->membersSQL();
+        $members = $band->getMembersAndPending();
         $rate = floatval($band->rate());
         
         $decimal = (($rate * 10) % 10) / 10;
@@ -399,7 +400,10 @@ class BandController extends Controller
 
     public function inviteMember($bandId, $userId){
         Band::sendInvitation($userId, $bandId);
-        return response(json_encode(["userId" => $userId, "name" => "NAME", "picPath" => User::getUserIconPicturePath($userId)]), 200);
+
+        $userName = User::where('id', $userId)->first()->name;
+        
+        return response(json_encode(["userId" => $userId, "name" => $userName, "picPath" => User::getUserIconPicturePath($userId)]), 200);
     }
 
     public function updateInvitation($bandId, $userId, $status){

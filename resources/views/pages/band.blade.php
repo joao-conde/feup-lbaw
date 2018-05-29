@@ -137,13 +137,19 @@
         <div class="col-3 d-none d-lg-block">
 
             <div id="members" class="jumbotron p-3 mr-2">
-                Members  
+                Members
+
                 @foreach($members as $member)
                 <a class="d-block" href="{{'/users/'.$member->userid}}">
                     <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
                     <small class="text-primary">{{$member->membername}}</small>
+                    
                     @if($member->owner == true)
                     <small class="ml-1">f</small>
+                    @endif
+
+                    @if($member->pending == true)
+                    <small class="ml-1">p</small>
                     @endif
                 </a>
                 @endforeach

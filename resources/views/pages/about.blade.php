@@ -39,7 +39,7 @@
 			</div>
 			<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
 				<div class="card text-center p-2">
-					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t1.0-9/13230251_1290168791010841_3001626276875554671_n.jpg?oh=7ce907fe19ca874a61d0057407eddfe7&oe=5B0C3234" alt="Card image">
+					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t1.0-9/12802752_1222285871132467_1164102876889737192_n.jpg?_nc_cat=0&oh=b6c2e6bb21ca4913dbddf4e774a378ce&oe=5B8F655A" alt="Card image">
 					<div class="card-body">
 						<h4 class="card-title">João Conde</h4>
 					</div>
