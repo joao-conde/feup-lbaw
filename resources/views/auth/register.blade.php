@@ -19,7 +19,7 @@
 					<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
 						<i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
 						<input type="text" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 border-secondary" id="username"
-						 placeholder="Enter username" name="username" value="{{ old('username') }}" pattern=".{3,}" title="Must have at least 3 characters" required autofocus>
+						 placeholder="Enter username" name="username" value="{{ old('username') }}" required autofocus>
 					
 						@if ($errors->has('username'))
                             <span class="help-block">
