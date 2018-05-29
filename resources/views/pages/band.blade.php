@@ -90,7 +90,7 @@
                                     <small>Founded on
                                         <i>{{date('Y',strtotime($band->creationdate))}}</i>
                                         <p class="d-inline"> by
-                                            <a class="text-primary" href={ { "/users/".$band[ 'founders'][0]->userid}}>{{$band['founders'][0]->membername}}</p>
+                                            <a class="text-primary" href={{ "/users/".$band[ 'founders'][0]->userid}}>{{$band['founders'][0]->membername}}</p>
                                         </a>
                                         @if(count($band['founders']) > 2) @for($i = 1; $i
                                         < count($band[ 'founders'])-1;
@@ -137,7 +137,9 @@
         <div class="col-3 d-none d-lg-block">
 
             <div id="members" class="jumbotron p-3 mr-2">
-                Members @foreach($members as $member)
+                Members             
+                
+                @foreach($members as $member)
 
                 <div class="d-block">
                     
@@ -174,7 +176,7 @@
 
                 </div>
 
-
+            
                 @endforeach 
                 
                 @if($isFounder)

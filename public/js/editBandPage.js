@@ -20,7 +20,6 @@ inputUsers.addEventListener('keyup', function (e) {
 inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
 
 
-
 function sendRequestFindUsers(pattern) {
 
     let requestData = { pattern: pattern };
@@ -59,7 +58,6 @@ function requestPatternHandler(obj, api) {
 }
 
 
-
 function addMember(bandId, userId) {
     
     let request = new XMLHttpRequest();
@@ -76,37 +74,58 @@ function handleInviteMemberAPIResponse(response){
         return;
 
     let data = JSON.parse(response.responseText);
-    buildMemberItem(data);
+    buildPendingMemberItem(data);
     
 } 
 
-function buildMemberItem(data){
+function buildPendingMemberItem(data){
     let members = document.querySelector('#members');
 
-    let member = document.createElement('a');
+    let member = document.createElement('div');
     member.classList.add("d-block");
-    member.href = "/users/" + data.userId;
-    
+
     let img = document.createElement('img');
     img.classList.add("profile_img_feed");
-    img.src = data.picPath; 
+    img.src = data.picPath;
+
+    member.appendChild(img);
+
+    let link = document.createElement('a');
+    member.href = "/users/" + data.userId;    
 
     let small = document.createElement('small');
     small.classList.add("text-primary");
     small.innerHTML = data.name;
 
-    let small2 = document.createElement('small');
-    small2.classList.add("ml-1");
-    small2.innerHTML = "p";
+    link.appendChild(small);
+    member.appendChild(link);
 
-    member.appendChild(img);
-    member.appendChild(small);
-    member.appendChild(small2);
+    let status = document.createElement('small');
+    status.classList.add("ml-1");
+    status.innerHTML = "p";
+
+    member.appendChild(status);
+
+    let removeInvBtn = document.createElement('span');
+    removeInvBtn.classList.add("col-2", "clickable", "remove_invite_button");
+
+    member.appendChild(removeInvBtn);
+
+    let hiddenUserId = document.createElement('span');
+    hiddenUserId.classList.add("d-none");
+    hiddenUserId.id = "userId";
+    hiddenUserId.innerHTML = data.userId;
+
+    removeInvBtn.appendChild(hiddenUserId);
+
+    let removeIcon = document.createElement('i');
+    removeIcon.classList.add("fas", "fa-times", "text-danger");
+
+    removeInvBtn.appendChild(removeIcon);    
+    removeInvBtn.addEventListener('click', removeInviteAPI.bind(removeInvBtn, data.userId));
 
     members.insertBefore(member, members.childNodes[members.children.length - 1]);
 }
-
-
 
 
 function listNavigation(obj, e) {
@@ -157,17 +176,8 @@ function removeMemberAPI(memberId){
     let method = DELETE;
     let api = '/api/band_membership/' + bandId + '/' + memberId + '/inactive';
 
-    sendAsyncAjaxRequest(request, api, method, handleRemoveMemberAPIResponse.bind(this, request, "delete"));
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
-
-function handleRemoveMemberAPIResponse(response){
-    
-    if (response.status != 200)
-        return;
-
-    //delete
-}
-
 
 //Remove band invite
 let removeInviteBtns = document.querySelectorAll('.remove_invite_button');
@@ -182,13 +192,15 @@ function removeInviteAPI(userId){
     let method = DELETE;
     let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
 
-    sendAsyncAjaxRequest(request, api, method, handleRemoveInviteAPIResponse.bind(this, request, "delete"));
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
 
-function handleRemoveInviteAPIResponse(response){
+function handleDeleteMemberFromListAPIResponse(response){
 
     if (response.status != 200)
         return;
 
-    //delete
+    let member = this.parentNode.parentNode;
+    member.removeChild(this.parentNode);
+    
 }
