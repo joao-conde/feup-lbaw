@@ -40,17 +40,22 @@ class ForgotPasswordController extends Controller
 
     public function sendEmail(Request $request){
 
+        $validateData = $request->validate([
+            'username' => 'required',
+            'email' => 'required'
+        ]);
+
         $user = User::where('username',$request->username)->where('email',$request->email)->first();
         if($user == null)
             return redirect('/');
+        $userId = $user->id;
         $token = str_random(40);
         $token = hash("sha256",$token);
         $user->password_token = $token;
         $user->save();
 
-        Mail::send(['html'=>'partials.password_mail','email'=>'$request->email'],['name','LBAW1712','token'=>$token], function($message) {
-            global $request;
-            // dd($request->email);
+        Mail::send(['html'=>'partials.password_mail','email'=>'$user->email'],['name','LBAW1712','token'=>$token], function($message) {
+            global $user;
             $message->to($user->email, $user->name)->subject('Password Recovery');
             $message->from('lbaw1712@gmail.com','LBAW1712');
         });

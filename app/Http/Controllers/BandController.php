@@ -396,7 +396,7 @@ class BandController extends Controller
 
     public function inviteMember($bandId, $userId){
         Band::sendInvitation($userId, $bandId);
-        return response('', 200);
+        return response(json_encode(["userId" => $userId, "name" => "NAME", "picPath" => User::getUserIconPicturePath($userId)]), 200);
     }
 
     public function updateInvitation($bandId, $userId, $status){
