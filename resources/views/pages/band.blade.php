@@ -192,6 +192,13 @@
 
             </div>
 
+            <div id="concerts" class="jumbotron p-3 mr-2">
+                Scheduled Concerts
+                @foreach($concerts as $concert)
+                    @include('partials.concert',[$concert, $band])
+                @endforeach
+            </div>
+
         </div>
 
         <div class="col-12 col-md-9 col-lg-6">

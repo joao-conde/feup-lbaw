@@ -10,6 +10,7 @@ use App\Report;
 use App\Ban;
 use App\City;
 use App\Genre;
+use App\Concert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -274,18 +275,21 @@ class BandController extends Controller
             }
         }
 
-        //dd($members);
 
+        $concerts = Concert::getBandConcerts($id);
+        
         return view('pages.band',
-            ['isFounder' => $isFounder,
+        [   'isFounder' => $isFounder,
             'band' => $band, 
             'members' => $members,
-            'wholeRate'=>$whole, 
-            'decimalRate'=>$decimal,
-            'roundedRate'=>$roundedRate,
+            'wholeRate'=> $whole, 
+            'decimalRate'=> $decimal,
+            'roundedRate'=> $roundedRate,
             'location'=> $location,
-            'country'=>$country,
-            'cities' =>$cities]);
+            'country'=> $country,
+            'cities' => $cities,
+            'concerts' => $concerts
+            ]);
     }
 
     public function getNewMemberPartial(Request $request){

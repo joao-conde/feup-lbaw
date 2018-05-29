@@ -96,6 +96,7 @@ DROP TABLE IF EXISTS mb_user CASCADE;
 
 DROP TABLE IF EXISTS city CASCADE;
 DROP TABLE IF EXISTS country CASCADE;
+DROP TABLE IF EXISTS concert CASCADE;
 
 
 /*****************************************************/
@@ -1060,6 +1061,30 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER insert_notification_trigger_band_invitation_updated AFTER UPDATE ON band_invitation
     FOR EACH ROW EXECUTE PROCEDURE insert_notification_trigger_band_invitation_updated();
 
+
+/*****************************************************/
+/****************** Concert **************************/
+/*****************************************************/
+
+CREATE TABLE concert (
+    id SERIAL NOT NULL,
+    bandId INTEGER NOT NULL,
+    concertDate DATE,
+    locationId INTEGER NOT NULL,
+    description TEXT 
+);
+
+ALTER TABLE ONLY concert
+    ADD CONSTRAINT concert_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY concert
+    ADD CONSTRAINT concert_band_fkey FOREIGN KEY (bandId) REFERENCES band(id) ON UPDATE CASCADE;
+
+ALTER TABLE ONLY concert
+    ADD CONSTRAINT concert_location_fkey FOREIGN KEY (locationId) REFERENCES city(id) ON UPDATE CASCADE;
+
+
+
 /*****************************************************/
 /************ Notification Trigger *******************/
 /*****************************************************/
@@ -1465,3 +1490,8 @@ CREATE INDEX search_user ON mb_user USING GIST ((
 	setweight(to_tsvector('english', name), 'A') ||
 	setweight(to_tsvector('english', bio), 'B')
 ));
+
+
+
+
+
