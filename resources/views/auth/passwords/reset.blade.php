@@ -4,6 +4,16 @@
 
 <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
 
+<script type="text/javascript">
+    let pass1 = document.querySelector('#pass1');
+    let pass2 = document.querySelector('#pass2');
+    let pass_error = document.querySelector('#pass_error');
+
+    if(pass1 != pass2){
+        pass_error.display = inline;
+    }
+</script>
+
 <div class="container-fluid main_form">
     <div class="row justify-content-center mt-5">
         <div class="col-sm-4">
@@ -44,6 +54,10 @@
                             @endif
                         </div>
                     </div>
+                    @foreach($errors->all() as $error)            
+                        <p class="text-secondary">Error: {{ $error }}</p>
+                    @endforeach
+                    <p class="text-secondary d-none" id="pass_error">Error: Passwords do not match.
                     <button type="submit" class="btn btn-secondary m-4">Confirm</button>
                 </form>
             </div>
