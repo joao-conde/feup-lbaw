@@ -72,11 +72,8 @@ class ForgotPasswordController extends Controller
     }
 
     public function updatePassword(Request $request){
-        // if($request->pass1 != $request->pass2){
-        //     dd('passes diferentes');
-        // }
         $user = User::where('username',$request->username)->first();
-        $user->password = bcrypt($request->pass1);
+        $user->password = bcrypt($request->pass);
         $user->password_token = null;
         $user->save();
 

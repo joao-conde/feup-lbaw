@@ -35,18 +35,7 @@
                     <div class="row justify-content-center">
                         <div class="form-group{{ $errors->has('pass') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
                             <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                            <input type="password" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="pass1" placeholder="Enter password" name="pass1" pattern="(?=.*[-_?!@#+*$%&/()=])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}" title="Must have 8 to 32 characters, including 1 lowercase and 1 uppercase, 1 number and 1 of the following -_?!@#+*$%&/()=">
-                            @if ($errors->has('pass'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('pass') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="form-group{{ $errors->has('pass') ? ' has-error' : '' }} mt-4 border border-top-0 border-left-0 border-right-0 border-secondary">
-                            <i class="fas fa-user mr-2" style="width: 1rem; height: 1rem; color: white;"></i>
-                            <input type="password" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="pass2" placeholder="Confirm password" name="pass2" pattern="(?=.*[-_?!@#+*$%&/()=])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}" title="Must have 8 to 32 characters, including 1 lowercase and 1 uppercase, 1 number and 1 of the following -_?!@#+*$%&/()=">
+                            <input type="password" class="border border-top-0 border-bottom-0 border-left-0 border-right-0 text-center" id="pass" placeholder="Enter password" name="pass" pattern="(?=.*[-_?!@#+*$%&/()=])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}" title="Must have 8 to 32 characters, including 1 lowercase and 1 uppercase, 1 number and 1 of the following -_?!@#+*$%&/()=">
                             @if ($errors->has('pass'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('pass') }}</strong>

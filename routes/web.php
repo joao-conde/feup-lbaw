@@ -106,7 +106,7 @@ Route::delete('/api/comments/{comment}','CommentController@deleteComment');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('do_login');
+Route::post('login', 'Auth\LoginController@login')->name('do_login')->middleware('not_banned');
 Route::get('logout', 'Auth\LoginController@logout')->name('do_logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('do_register');
