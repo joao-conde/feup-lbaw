@@ -24,10 +24,10 @@ DELETE FROM mb_user WHERE id > 4;
 DELETE FROM band;
 DELETE FROM genre;
 DELETE FROM skill;
-DELETE FROM city;
-DELETE FROM country;
+-- DELETE FROM city;
+-- DELETE FROM country;
 
-\i src/db/insertLocations.sql;
+-- \i src/db/insertLocations.sql;
 
 --Users
 

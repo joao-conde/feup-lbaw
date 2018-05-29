@@ -54,8 +54,9 @@ class ForgotPasswordController extends Controller
         $user->password_token = $token;
         $user->save();
 
-        Mail::send(['html'=>'partials.password_mail','email'=>'$user->email'],['name','LBAW1712','token'=>$token], function($message) {
-            global $user;
+        // dd($user);
+
+        Mail::send(['html'=>'partials.password_mail','email'=>'$user->email'],['name','LBAW1712','token'=>$token], function($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Password Recovery');
             $message->from('lbaw1712@gmail.com','LBAW1712');
         });
@@ -71,9 +72,9 @@ class ForgotPasswordController extends Controller
     }
 
     public function updatePassword(Request $request){
-        if($request->pass1 != $request->pass2){
-            dd('passes diferentes');
-        }
+        // if($request->pass1 != $request->pass2){
+        //     dd('passes diferentes');
+        // }
         $user = User::where('username',$request->username)->first();
         $user->password = bcrypt($request->pass1);
         $user->password_token = null;
