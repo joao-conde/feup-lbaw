@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 
-class Comment extends Model
-{
+class Comment extends Model {
+    
+    protected $table = 'comment';
+    
     public static function comments($posts) {
 
         $comments = array();
@@ -26,12 +28,14 @@ class Comment extends Model
             $post_ids = $post_ids.'}';
             
 
-            $query_comments_alt = "SELECT content.date, mb_user.name AS author, mb_user.id AS userid, content.text, post.id AS postid
+            $query_comments_alt = "SELECT comment.id, content.date, mb_user.name AS author, mb_user.id AS userid, content.text, post.id AS postid
                                     FROM comment 
                                     JOIN content ON content.id=comment.contentid 
                                     JOIN post ON post.id=comment.postid 
                                     JOIN mb_user ON mb_user.id=content.creatorid
-                                    WHERE post.id=ANY(?)
+                                    WHERE content.isactive = true
+                                    AND post.id=ANY(?)
+                                    
                                     ORDER BY content.date ASC";
 
 
@@ -41,4 +45,5 @@ class Comment extends Model
         return $comments;
 
     }
+
 }

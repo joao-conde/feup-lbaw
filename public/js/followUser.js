@@ -41,6 +41,8 @@ function startStopFollowingEventListener() {
         follow = false;
     }
 
+    console.log(follow);
+    console.log(userOrBandToFollowId);
 
     sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request, followType));
 

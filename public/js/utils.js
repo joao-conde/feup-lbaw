@@ -4,6 +4,8 @@ const PUT = "put";
 const DELETE = "delete";
 
 let userId = document.querySelector('span#user_id_span').innerHTML;
+let globalBand = document.querySelector('p#bandId');
+// let globalBandId = globalBand.innerHTML;
 
 
 const JSON_ENCODE = "application/json";
@@ -133,8 +135,6 @@ function toggleProfileField(showEdit, fixedElement, editElement, parentElement, 
     if (showEdit == true) {
 
         let oldValue = innerHTML != undefined ? innerHTML : fixedElement.innerHTML;
-
-        console.log("Old value: " + innerHTML);
 
         editButton.selfHide();
         confirmButton.selfShow();

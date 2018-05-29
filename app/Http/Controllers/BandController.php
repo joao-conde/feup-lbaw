@@ -205,6 +205,8 @@ class BandController extends Controller
             $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
             $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
 
+            print_r($band->pathToProfilePicture());
+
             Storage::put($band->pathToProfilePicture(), $profileSize->__toString());
             Storage::put($band->pathToIconPicture(), $iconSize->__toString());
         }
@@ -227,7 +229,9 @@ class BandController extends Controller
         if (!Auth::check()) return redirect('/login');
 
         $band = Band::find($id);
-        $members = $band->membersSQL();
+
+        //$members = $band->membersSQL();
+        $members = $band->getMembersAndPending();
         $rate = floatval($band->rate());
         
         $decimal = (($rate * 10) % 10) / 10;
@@ -396,7 +400,10 @@ class BandController extends Controller
 
     public function inviteMember($bandId, $userId){
         Band::sendInvitation($userId, $bandId);
-        return response(json_encode(["userId" => $userId, "name" => "NAME", "picPath" => User::getUserIconPicturePath($userId)]), 200);
+
+        $userName = User::where('id', $userId)->first()->name;
+        
+        return response(json_encode(["userId" => $userId, "name" => $userName, "picPath" => User::getUserIconPicturePath($userId)]), 200);
     }
 
     public function updateInvitation($bandId, $userId, $status){

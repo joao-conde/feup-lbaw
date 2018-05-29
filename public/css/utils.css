@@ -1,63 +1,70 @@
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 2.2rem;
-    height: 1.2rem;
-  }
-  
-  .switch input {display:none;}
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #757575;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 1rem;
-    width: 1rem;
-    left: 0.2rem;
-    bottom: 0.1rem;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #2c3e50;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(0.8rem);
-    -ms-transform: translateX(0.8rem);
-    transform: translateX(0.8rem);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 1.2rem;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
-  
-  .card-header#headingOne {
-    border: none;
-    background: none;
-  }
+textarea.not_resizable {
+  resize: none;
+}
 
-  .clickable {
-    cursor: pointer;
-  }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 2.2rem;
+  height: 1.2rem;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #757575;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 0.2rem;
+  bottom: 0.1rem;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #2c3e50;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(0.8rem);
+  -ms-transform: translateX(0.8rem);
+  transform: translateX(0.8rem);
+}
+
+/* Rounded sliders */
+
+.slider.round {
+  border-radius: 1.2rem;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.card-header#headingOne {
+  border: none;
+  background: none;
+}
+
+.clickable {
+  cursor: pointer;
+}
 
 .halfstar {
   margin-right: -20px !important;
