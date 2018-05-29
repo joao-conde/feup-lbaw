@@ -4,7 +4,6 @@ FEUP LBAW Repository
 # Group
 LBAW1712 - Social Network
 
-
 Danny Almeida Soares - up201505509@fe.up.pt
 
 João Dias Conde Azevedo - up201503256@fe.up.pt
@@ -46,7 +45,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US15      |Unfollow Users|high|100%|
 |US16      |Follow Bands|high|100%|
 |US17      |Unfollow Bands|high|100%|
-|US18      |Create Band Page|high|100%|
+|US18      |Create Band Page|high|90%|
 |US19      |Post|high|70%-João Conde|
 |US20      |Search for users/bands|high|100%|
 |US21      |Profile Page|high|100%|
@@ -60,8 +59,8 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US29      |Chat|low|0%|
 |US30      |Remove own comments|low|100%|
 |US31      |Remove own posts|low|100%|
-|US32      |Post using Soundcloud API|low|90%|
-|US33      |Post using Youtube API|low|0%|
+|US32      |Post using Soundcloud API|low|100%|
+|US33      |Post using Youtube API|low|100%|
 
 ### Admin - 100%
 |Identifier|Name|Priority|State|
@@ -87,11 +86,11 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
 |US45      |Recruit users|high|100%|
-|US46      |Remove users|high|0%|
+|US46      |Remove users|high|90%|
 |US47      |Schedule Concerts|high|0%|
-|US48      |Post|high|90%|
-|US49      |Post|high|90%|
-|US50      |Remove posts|high|90%|
+|US48      |Post|high|100%|
+|US49      |Post|high|100%|
+|US50      |Remove posts|high|100%|
 
 
 

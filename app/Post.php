@@ -40,8 +40,8 @@ class Post extends Model
         join content on post.contentId = content.id
         join mb_user on mb_user.id = ? and mb_user.id = content.creatorId
         WHERE content.isactive = true
-        AND post.private = ?
-        OR post.private = false
+        AND (post.private = ?
+        OR post.private = false)
         ORDER BY content.date DESC
         LIMIT 5 OFFSET ?";
 

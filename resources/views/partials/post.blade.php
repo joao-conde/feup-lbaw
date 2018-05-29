@@ -5,26 +5,28 @@
     <div class="row mb-3 justify-content-between">
 
         <div class="col">
-            <img src="{{ User::getUserProfilePicturePath($post->creatorid) }}" class="profile mr-2 profile_pic_post">
-            @if($post->postbandid != null)
+            <img src="{{ User::getUserProfilePicturePath($post->creatorid) }}" class="profile mr-2 profile_pic_post"> @if($post->postbandid != null)
             <img src="{{ Band::getBandIconPicturePath($post->postbandid) }}" class="profile mr-2 band_img_post">
             <a class=" mr-2 text-secondary align-middle" href="/bands/{{$post->postbandid}}">{{Band::getBandName($post->postbandid)}}</a>
-            <small><a class="text-secondary align-middle mr-2" href="/users/{{$post->creatorid}}"><i>({{$post->postername}})</i></a></small>
-                @if($post->private == true)
-                <span id="lock_locked" class="">
-                    <i class="fas fa-lock text-primary"></i>
-                </span>
-                @endif
-            @else
+            <small>
+                <a class="text-secondary align-middle mr-2" href="/users/{{$post->creatorid}}">
+                    <i>({{$post->postername}})</i>
+                </a>
+            </small>
+            @if($post->private == true)
+            <span id="lock_locked" class="">
+                <i class="fas fa-lock text-primary"></i>
+            </span>
+            @endif @else
             <a class="text-secondary align-middle" href="/users/{{$post->creatorid}}">{{$post->postername}}</a>
-            
+
             @endif
         </div>
 
-        
-        
+
+
         <div class="col-4 text-right">
-            <small> 
+            <small>
                 <i class="text-secondary">{{date('d/m/Y H:i:s',strtotime($post->date))}}</i>
             </small>
             @if($post->creatorid == Auth::user()->id)
@@ -32,39 +34,48 @@
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreOption">
                     <span class="dropdown-item clickable delete_post_button">
-                        <i class=" mr-2 clickable fas fa-trash-alt"></i><small>Remove Post</small>
+                        <i class=" mr-2 clickable fas fa-trash-alt"></i>
+                        <small>Remove Post</small>
                     </span>
                     <span class=" dropdown-item clickable edit_post_button">
-                        <i class="mr-2 fas fa-pencil-alt"></i><small>Edit Post</small>
+                        <i class="mr-2 fas fa-pencil-alt"></i>
+                        <small>Edit Post</small>
                     </span>
-                    
+
                 </div>
             </span>
             @endif
         </div>
-       
-        
+
+
 
     </div>
 
-    <div class="row justify-content-start">
+    <div class="row">
 
-        <div class="col p-0 align-self-center text-justify">
+        <div class="col">
 
             <div class="post_body">
-                <small class="px-3 text">{{$post->posttext}}</small>
+                @if($post->posttext == "")
+                <small class="d-none text">{{$post->posttext}}</small>
+                @else
+                <small class="text">{{$post->posttext}}</small>
+                @endif
+                <textarea class="editPostTextArea d-none w-100"></textarea>
+                <span class="clickable confirm_edit_post_button d-none">
+                    <i class="fas fa-check text-success"></i>
+                </span>
+                <span class="clickable cancel_edit_post_button d-none">
+                    <i class="fas fa-times text-danger"></i>
+                </span>
                 @if($post->mediaurl != "")
                 <hr class="mx-2">
-                <iframe class="px-2 w-100" height="315" src="{{$post->mediaurl}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe class="px-2 mt-2 w-100" height="315" src="{{$post->mediaurl}}" frameborder="0" allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
                 @endif
+
             </div>
-            <textarea class="editPostTextArea d-none w-100"></textarea>
-            <span class="clickable confirm_edit_post_button d-none">
-                <i class="fas fa-check text-success"></i>
-            </span>
-            <span class="clickable cancel_edit_post_button d-none">
-                <i class="fas fa-times text-danger"></i>
-            </span>
+
 
         </div>
 
@@ -74,9 +85,7 @@
 
     <div class="comments_list" class="p-2 pl-4 mt-3">
 
-        @foreach($post->comments as $comment)
-            @include('partials.comment')
-        @endforeach
+        @foreach($post->comments as $comment) @include('partials.comment') @endforeach
     </div>
 
     <form class="form-inline row justify-content-between px-3 pt-2">

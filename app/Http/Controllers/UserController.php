@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller {
-    
+
     const PICTURE_PROFILE_SIZE = 500;
     const PICTURE_ICON_SIZE = 90;
 
@@ -85,7 +85,7 @@ class UserController extends Controller {
     
     public function api_userFollowing(Request $request){
 
-        
+
         $words = explode(" ", trim($request->pattern));
         $followingUsersResult = array();
 
@@ -94,19 +94,19 @@ class UserController extends Controller {
         }
         $string = "";
         foreach ($words as $word) {
-            
+
             $string = $string.$word.":* & ";            
         }
         $string = trim($string, "& ");
 
 
         $followingUsersQuery = 
-            "SELECT mb_user.id, mb_user.name as name
-            FROM mb_user
-            JOIN user_follower
-            ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
-            WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
-            ORDER BY name ASC;";
+        "SELECT mb_user.id, mb_user.name as name
+        FROM mb_user
+        JOIN user_follower
+        ON user_follower.followedUserId = mb_user.id AND user_follower.followingUserId = ?
+        WHERE to_tsvector('simple', mb_user.name) @@ to_tsquery('simple', ?)
+        ORDER BY name ASC;";
         
 
         $followingUsersResult = DB::select($followingUsersQuery, [Auth::user()->id, $string]);
@@ -166,7 +166,21 @@ class UserController extends Controller {
      *
      */
     public function banUser(Request $request){
+
         if (!Auth::check()) return redirect('/');
+
+        $user = User::find($request->id);
+
+        // if the user is already banned, the current ban is ceased and a new one is applied
+        if($user != null){
+            $isBanned = Ban::where('userid',$user->id)->where('isactive','true')->first();
+            if($isBanned != null){
+                $isBanned->ceasedate = date('Y-m-d H:i',time());
+                $isBanned->isactive = false;
+                $isBanned->save();
+            }
+        }
+
         $ban = new Ban();
 
         $ban->reason = $request->reason;
@@ -177,7 +191,7 @@ class UserController extends Controller {
         $report = Report::find($request->reportId);
         $report->seen = true;
         $report->save();
-    
+
         Mail::send(['html'=>'partials.ban_mail','email'=>'$user->email'],['name','LBAW1712','reason'=>$request->reason], function($message) {
             global $request;
             $user = User::find($request->id);
@@ -264,10 +278,10 @@ class UserController extends Controller {
         foreach($followedUsers as $friend) {
 
             if($friend->id == $id) {
-                
+
                 $isFollowing = ($friend->isactive == true);
                 break;
-                    
+
             }
 
         }
@@ -287,7 +301,7 @@ class UserController extends Controller {
             $location = '';
             $country = '';
         }
-          
+
         return view('pages.profile', ['country' => $country, 'location' => $location, 'cities' => $cities,'user' => $user, 'isFollowing' => $isFollowing, 'dateOfBirthString' => $dateOfBirthString, 'skills' => $skills]);
 
     } 
@@ -297,17 +311,17 @@ class UserController extends Controller {
         if (!Auth::check()) return response('No user logged',500);
 
         $verifyQuery = 'SELECT * FROM user_follower 
-                        JOIN mb_user as users ON users.id = user_follower.followedUserId
-                        WHERE user_follower.followingUserId = ?
-                        AND user_follower.followedUserId = ?';
+        JOIN mb_user as users ON users.id = user_follower.followedUserId
+        WHERE user_follower.followingUserId = ?
+        AND user_follower.followedUserId = ?';
 
         $updateQuery = 'UPDATE user_follower
-                        SET isActive = true
-                        WHERE user_follower.followingUserId = ?
-                        AND user_follower.followedUserId = ?';
+        SET isActive = true
+        WHERE user_follower.followingUserId = ?
+        AND user_follower.followedUserId = ?';
 
         $insertQuery = 'INSERT INTO user_follower(followingUserId, followedUserId, isActive)
-                        VALUES (?,?,?)';
+        VALUES (?,?,?)';
 
         $alreadyExists = DB::select($verifyQuery, [Auth::user()->id, $userToFollowId]);
 
@@ -315,7 +329,7 @@ class UserController extends Controller {
             DB::insert($insertQuery, [Auth::user()->id, $userToFollowId, true]);
             return response('',200);
         }
-            
+
         else if(count($alreadyExists) == 1) {
             DB::update($updateQuery, [Auth::user()->id, $userToFollowId]);
             return response('',200);
@@ -331,17 +345,17 @@ class UserController extends Controller {
         if (!Auth::check()) return response('No user logged',500);
 
         $verifyQuery = 'SELECT * FROM user_follower 
-                        WHERE user_follower.followingUserId = ?
-                        AND user_follower.followedUserId = ?';
+        WHERE user_follower.followingUserId = ?
+        AND user_follower.followedUserId = ?';
 
         $updateQuery = 'UPDATE user_follower
-                        SET isActive = false
-                        WHERE user_follower.followingUserId = ?
-                        AND user_follower.followedUserId = ?';
+        SET isActive = false
+        WHERE user_follower.followingUserId = ?
+        AND user_follower.followedUserId = ?';
 
 
         $alreadyExists = DB::select($verifyQuery, [Auth::user()->id, $userToFollowId]);
-    
+
         if(count($alreadyExists) == 1) {
             DB::update($updateQuery, [Auth::user()->id, $userToFollowId]);
             return response('',200);
@@ -374,15 +388,14 @@ class UserController extends Controller {
         $user = User::find($request->id);
 
         //if($request->hasFile('picture')) {
+        $picture = $request->file('picture');
+        $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
+        $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
 
-            $picture = $request->file('picture');
-            $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
-            $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
+        Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
+        Storage::put($user->pathToIconPicture(), $iconSize->__toString());
 
-            Storage::put($user->pathToProfilePicture(), $profileSize->__toString());
-            Storage::put($user->pathToIconPicture(), $iconSize->__toString());
-
-            return response('',200);
+        return response('',200);
 
         //}
 
@@ -418,17 +431,17 @@ class UserController extends Controller {
             return response('',400);
 
         $verifyQuery = 'SELECT * FROM user_skill
-                        WHERE user_skill.skillId = ?
-                        AND user_skill.userId = ?';
+        WHERE user_skill.skillId = ?
+        AND user_skill.userId = ?';
 
         $updateQuery = 'UPDATE user_skill
-                        SET isActive = true,
-                            level = ?
-                        WHERE user_skill.skillId = ?
-                        AND user_skill.userId = ?';
+        SET isActive = true,
+        level = ?
+        WHERE user_skill.skillId = ?
+        AND user_skill.userId = ?';
 
         $insertQuery = 'INSERT INTO user_skill(skillId, userId, level)
-                    VALUES (?,?,?)';
+        VALUES (?,?,?)';
 
         $alreadyExists = DB::select($verifyQuery, [$request->skillId, Auth::user()->id]);
 
@@ -437,7 +450,7 @@ class UserController extends Controller {
             DB::insert($insertQuery, [$request->skillId,Auth::user()->id,$request->level]);
             return response('',200);
         }
-            
+
 
         else if(count($alreadyExists) == 1) {
             DB::update($updateQuery, [$request->level,$request->skillId, Auth::user()->id]);
@@ -454,9 +467,9 @@ class UserController extends Controller {
         if (!Auth::check()) return response('No user logged',500);
 
         $updateQuery = 'UPDATE user_skill
-                        SET isActive = false
-                        WHERE user_skill.skillId = ?
-                        AND user_skill.userId = ?';
+        SET isActive = false
+        WHERE user_skill.skillId = ?
+        AND user_skill.userId = ?';
 
         DB::update($updateQuery, [$request->skillId, Auth::user()->id]);
 
@@ -468,8 +481,8 @@ class UserController extends Controller {
         if (!Auth::check()) return response('No user logged',500);
 
         $delete = 'UPDATE mb_user
-                   SET location = NULL
-                   WHERE id = ?';
+        SET location = NULL
+        WHERE id = ?';
 
         DB::update($delete, [Auth::user()->id]);
 

@@ -3,9 +3,14 @@ const POST = "post";
 const PUT = "put";
 const DELETE = "delete";
 
-let userId = document.querySelector('span#user_id_span').innerHTML;
+let userIdElement = document.querySelector('span#user_id_span');
+let userId;
+
+if(userIdElement != null)
+    userId = userIdElement.innerHTML;
+    
+
 let globalBand = document.querySelector('p#bandId');
-// let globalBandId = globalBand.innerHTML;
 
 
 const JSON_ENCODE = "application/json";

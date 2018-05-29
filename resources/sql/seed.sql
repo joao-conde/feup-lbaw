@@ -218,7 +218,7 @@ ALTER TABLE ONLY band
 CREATE TABLE content (
 
     id SERIAL NOT NULL,
-    text TEXT NOT NULL,
+    text TEXT,
     date TIMESTAMP DEFAULT now(),
     creatorId INTEGER NOT NULL,
     isActive BOOLEAN DEFAULT TRUE
@@ -1046,7 +1046,7 @@ CREATE OR REPLACE FUNCTION insert_notification_trigger_band_invitation_updated()
             INSERT INTO notification_trigger(type,originBandInvitation) VALUES('band_invitation_updated',New.id);
         END IF;
         IF NEW.status = 'accepted' THEN
-            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, TRUE);
+            INSERT INTO band_membership(userId, bandId, isOwner) VALUES(New.userId, New.bandId, FALSE);
         END IF;
             
         NEW.lastStatusDate = now();

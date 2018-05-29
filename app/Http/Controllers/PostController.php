@@ -22,14 +22,11 @@ class PostController extends Controller
 
         if (!Auth::check()) return response('No user logged',500);
 
-        if (!$request->__isset('content'))
-            return response('No content',500);
-
         $mediaURL = $request->__isset('mediaURL') ? $request->mediaURL : "" ;
 
         $bandId = $request->__isset('bandId') ? $request->bandId : null;
         
-        if (strlen(trim($request->content)) == 0)
+        if (strlen(trim($request->content)) == 0 && strlen(trim($mediaURL)) == 0)
             return response('No content',500);
         
 
@@ -48,6 +45,7 @@ class PostController extends Controller
         $post = Post::getPost(Auth::user()->id, $postId);
 
         return response(view('partials.post', ['post'=> $post]), 200);
+
     }
     
     public function editPost(Request $request, $userId, $postId){
