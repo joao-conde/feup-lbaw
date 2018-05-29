@@ -1,4 +1,3 @@
-<?php //print_r($notification);?>
 <a class="dropdown-item text-warning" 
     href="{{NotificationTrigger::getLinkOfNotification($notification->id, $notification->type)}}">
     <small class=" time mr-1">

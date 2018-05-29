@@ -1247,29 +1247,98 @@ CREATE OR REPLACE FUNCTION insert_user_notifications_comment(notifTriggerId INTE
 RETURNS VOID AS $$
     DECLARE
         vPosterId INTEGER;
+        vCommenterId INTEGER;
         vBandId INTEGER;
         vCommenterName TEXT;
-        vNotifText TEXT;
+        vPosterName TEXT;
+        vPosterNotifText TEXT;
+        vPrevCommentersNotifText TEXT;
         vCommentText TEXT;
+        vPostId INTEGER;
+        vPrevCommentersId INTEGER[];
+        vIt INTEGER;
+
     BEGIN
-        SELECT content.creatorId, post.bandId, mb_user.name, content.text 
-        INTO vPosterId, vBandId, vCommenterName, vCommentText 
+        SELECT poster.id, poster.name, post.bandId, commenter.name, commenter.id, content_comment.text
+        INTO vPosterId, vPosterName, vBandId, vCommenterName, vCommenterId, vCommentText 
         FROM comment
         JOIN post ON post.id = comment.postId
-        JOIN content ON content.id = comment.contentId
-        JOIN mb_user ON mb_user.id = content.creatorId
-        WHERE comment.id = commentId;
+        JOIN content as content_comment ON content_comment.id = comment.contentId
+        JOIN content as content_post ON content_post.id = post.contentId
+        JOIN mb_user as commenter ON commenter.id = content_comment.creatorId
+        JOIN mb_user as poster ON poster.id = content_post.creatorId
+        WHERE comment.id = commentId
+        AND poster.id <> commenter.id;
 
-        vNotifText := vCommenterName || ' commented your post: ' || vCommentText;
+        SELECT post.id
+        INTO vPostId
+        FROM comment
+        JOIN post ON post.id = comment.postid 
+        WHERE comment.id = 16;
+
+        vPrevCommentersId = ARRAY(
+            SELECT content_comment.creatorId
+            FROM post
+            JOIN comment ON comment.postid = post.id
+            JOIN content as content_comment ON content_comment.id = comment.contentid
+            JOIN content as content_post ON content_post.id = post.contentid
+            WHERE post.id = vPostId
+            AND content_comment.creatorId <> content_post.creatorId
+        );
+
+        vPosterNotifText := vCommenterName || ' commented your post: ' || vCommentText;
+        vPrevCommentersNotifText := vCommenterName || ' commented ' || vPosterName || ' post: ' || vCommentText;
         CASE
             WHEN vBandId IS NOT NULL THEN
-                PERFORM send_notification_to_band(vBandId, notifTriggerId, vNotifText);
+                PERFORM send_notification_to_band(vBandId, notifTriggerId, vPosterNotifText);
             ELSE
-                INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vPosterId, vNotifText);
+                IF vPosterId <> vCommenterId THEN
+                    INSERT INTO user_notification(notificationTriggerId, userId, text) VALUES(notifTriggerId, vPosterId, vPosterNotifText);
+                END IF;
         END CASE;
+
+        -- TODO: User already commented also are notified;
 
     END;
 $$ LANGUAGE plpgsql;
+
+-- CREATE OR REPLACE FUNCTION test_function(notifTriggerId INTEGER, commentId INTEGER)
+-- RETURNS TEXT AS $$
+--     DECLARE
+--         vPosterId INTEGER;
+--         vCommenters INTEGER[];
+--         vBandId INTEGER;
+--         vCommenterName TEXT;
+--         vNotifText TEXT;
+--         vCommentText TEXT;
+--         id INTEGER;
+--     BEGIN
+
+--         SELECT post.id
+--         INTO vPostId
+--         FROM comment
+--         JOIN post ON post.id = comment.postid 
+--         WHERE comment.id = 16;
+
+--         vCommenters = ARRAY(SELECT content_comment.creatorId
+--         FROM post
+--         JOIN comment ON comment.postid = post.id
+--         JOIN content as content_comment ON content_comment.id = comment.contentid
+--         JOIN content as content_post ON content_post.id = post.contentid
+--         WHERE post.id = vPosterId
+--         AND content_comment.creatorId <> content_post.creatorId);
+
+--         FOREACH i IN ARRAY a
+--         LOOP 
+--         RAISE NOTICE '%', i;
+--         END LOOP;
+        
+
+--         RETURN vCommenters;
+
+
+--     END;
+-- $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION insert_user_notifications_band_application(notifTriggerId INTEGER, bandApplicationId INTEGER)
 RETURNS VOID AS $$
