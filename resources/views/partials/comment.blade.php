@@ -37,7 +37,7 @@
                             <i class=" mr-2 clickable fas fa-trash-alt"></i>
                             <small>Remove Comment</small>
                         </span>
-                        <span class="dropdown-item clickable edit_comment_button">
+                        <span class="d-none dropdown-item clickable edit_comment_button">
                             <i class="mr-2 fas fa-pencil-alt"></i>
                             <small>Edit Comment</small>
                         </span>

@@ -52,12 +52,9 @@
         <div class="col p-0 align-self-center text-justify">
 
             <div class="post_body">
-                <div class="p-1">
-                <small class="text">{{$post->posttext}}</small>
-                <hr>
-                </div>
+                <small class="px-3 text">{{$post->posttext}}</small>
                 @if($post->mediaurl != "")
-                
+                <hr class="mx-2">
                 <iframe class="px-2 w-100" height="315" src="{{$post->mediaurl}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 @endif
             </div>

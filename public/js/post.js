@@ -97,8 +97,8 @@ function sendCreatePostRequest(mediaURL) {
     mediaURL : mediaURL
   };
 
-  if (globalBandId != undefined)
-    data.bandId = globalBandId;
+  if (globalBand != null)
+    data.bandId = parseInt(globalBand.innerHTML);
 
   sendAsyncAjaxRequest(request, api, method, handleCreatePostAPIResponse.bind(this, request), JSON_ENCODE, JSON.stringify(data));
 
@@ -296,19 +296,12 @@ function handleEditPostAPIResponse(request, postText, textArea, postTextParent, 
 let globalOffset = 1;
 
 const NUMBER_OF_POSTS_IN_REQUEST = 5;
-let globalBand = document.querySelector('p#bandId');
-
-let globalBandId;
-
-if (globalBand != null)
-
-  globalBandId = globalBand.innerHTML;
 
 
 function getPosts() {
 
   let type = document.querySelector('p#posts_page_type').innerHTML;
-  let api = (type == 'band') ? '/api/bands/' + globalBandId + '/posts' : '/api/users/' + userId + '/posts';
+  let api = (type == 'band') ? '/api/bands/' + parseInt(globalBand.innerHTML) + '/posts' : '/api/users/' + userId + '/posts';
 
   let request = new XMLHttpRequest();
   let data = { offset: globalOffset++ * 5, type: type }

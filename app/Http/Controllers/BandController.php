@@ -205,6 +205,8 @@ class BandController extends Controller
             $profileSize = Image::make($picture)->resize(UserController::PICTURE_PROFILE_SIZE,UserController::PICTURE_PROFILE_SIZE)->encode('jpg');
             $iconSize = Image::make($picture)->resize(UserController::PICTURE_ICON_SIZE,UserController::PICTURE_ICON_SIZE)->encode('jpg');
 
+            print_r($band->pathToProfilePicture());
+
             Storage::put($band->pathToProfilePicture(), $profileSize->__toString());
             Storage::put($band->pathToIconPicture(), $iconSize->__toString());
         }

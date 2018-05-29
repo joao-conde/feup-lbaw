@@ -118,7 +118,7 @@ Route::post('/password/update', 'Auth\ForgotPasswordController@updatePassword')-
 // Bands
 
 // Route::get('band/{bandID}', 'BandController@show')->name('band_page');
-Route::get('bands/{id}', 'BandController@show')->name('band_profile');
+Route::get('band/{id}', 'BandController@show')->name('band_profile');
 Route::get('bands/create_band', 'BandController@create')->name('create_band');
 Route::post('bands/do_create_band', 'BandController@store')->name('do_create_band');
 Route::get('bands/new_member', 'BandController@getNewMemberPartial');
