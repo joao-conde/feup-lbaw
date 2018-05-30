@@ -47,6 +47,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="\faqs">FAQ</a>
                 <a class="dropdown-item" href="\about">About</a>
+                <a class="dropdown-item" href="\terms">Terms</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="{{ route('do_logout') }}">Logout</a>
             </div>

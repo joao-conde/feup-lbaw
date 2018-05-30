@@ -98,7 +98,6 @@ PORMENORES QUE FALTAM FAZER:
 
 - IMPORTANTE: 
   - Novo user not admin
-  - Online help
   - Validate HTML, CSS, JS e LARAVEL?
 
 - Comments na página de perfil de outro user disabled

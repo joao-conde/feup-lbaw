@@ -27,6 +27,7 @@ Route::post('/do_search', 'PagesController@do_search')->name('do_search');
 // STATIC
 Route::get('/about', 'PagesController@about');
 Route::get('/faqs', 'PagesController@faq');
+Route::get('/terms', 'PagesController@terms');
 
 // ADMIN
 Route::get('/users', 'UserController@listUserPermissions')->middleware('admin');;
