@@ -15,7 +15,6 @@ function updateMessagesHandler() {
 
     messagesCount.innerHTML = newCount > 0 ? newCount : "";
 
-    readMessages();
 }
 
 console.log(read_messages);
@@ -35,4 +34,5 @@ document.querySelector("#see_more_messages").addEventListener('click', function(
     nMessagesLoaded++;
     sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/messages/' + nMessagesLoaded, GET, updateMessagesHandler);
     setTimeout(function() {read_messages.click()});
+    readMessages();
 });
