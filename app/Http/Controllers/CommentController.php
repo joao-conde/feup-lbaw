@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Comment;
+use App\Content;
+use App\Report;
 
 class CommentController extends Controller {
     
@@ -74,6 +76,33 @@ class CommentController extends Controller {
 
         return response(200);
 
+    }
+
+
+    public function reportComment(Request $request){
+
+        if (!Auth::check()) return response('No user logged',500);
+
+        $commentId = $request->commentId;
+
+        $query = "select * from mb_user join content on content.creatorid = mb_user.id join comment on content.id = comment.contentid and comment.id = ?;";
+        $user = DB::select($query,[$commentId]);
+
+        $content = DB::select("select * from content join comment on comment.contentid = content.id and comment.id = ?;",[$commentId]);
+
+        // dd(Auth::user()->id);
+        $reportId = DB::select("select id from report order by date desc limit 1;");
+
+        $report = new Report();
+        $report->id = $reportId[0]->id+1;
+        $report->text = str_random(10);
+        $report->reportedcontentid = $content[0]->id;
+        $report->reporteduserid = $user[0]->id;
+        $report->reporteruserid = Auth::user()->id;
+        $report->reporttype = 'content_report';
+        $report->save();
+
+        return response('',200);
     }
 
 

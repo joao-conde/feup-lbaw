@@ -370,6 +370,7 @@ class ComposerStaticInit0e08a599f251f87cc9e0c0d405c294ca
         'App\\Band' => __DIR__ . '/../..' . '/app/Band.php',
         'App\\City' => __DIR__ . '/../..' . '/app/City.php',
         'App\\Comment' => __DIR__ . '/../..' . '/app/Comment.php',
+        'App\\Concert' => __DIR__ . '/../..' . '/app/Concert.php',
         'App\\Console\\Commands\\GenerateRoutesForJavascript' => __DIR__ . '/../..' . '/app/Console/Commands/GenerateRoutesForJavascript.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Content' => __DIR__ . '/../..' . '/app/Content.php',

@@ -99,6 +99,8 @@ Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
 Route::put('/api/read_notifications','UserController@readNotifications')->name('read_notifications');
 Route::get('/api/notifications/{offset}','UserController@getNotifications')->name('get_notifications');
+Route::put('/api/read_messages','UserController@readMessages')->name('read_messages');
+Route::get('/api/messages/{offset}','UserController@getMessages')->name('get_messages');
 Route::get('/api/user_friends','UserController@getFriends');
 Route::get('/api/user_followers','UserController@getFollowers');
 Route::get('/api/user_following','UserController@api_userFollowing');
@@ -145,8 +147,12 @@ Route::get('users/bands_membership', 'UserController@bandMemberships')->name('ba
 
 //Profile
 Route::get('users/{id}', 'UserController@show')->name('profile');
-
 Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('post_page');
+
+Route::post('/api/comments/{commentId}/report','CommentController@reportComment');
+Route::post('/api/users/{userId}/posts/{postId}/report','PostController@reportPost');
+
+
 
 // Errors
 Route::get('/403', 'ErrorPagesController@error403');

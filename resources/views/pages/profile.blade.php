@@ -94,7 +94,7 @@
 		
 							<img id="profile_pic" class="profile_image d-block my-3" src="{{$user->getProfilePicturePath()}}" alt="Profile Image"> 
 							@if($user->id != Auth::user()->id) 
-							@include('partials.followbutton', ['followType'=> 'user','isFollowing' => $isFollowing, 'userOrBandToFollowId'=> $user->id]) 
+							@include('partials.followbutton', ['followType'=> 'user','isFollowing' => $isFollowing, 'userOrBandToFollowId'=> $user->id])
 							@else
 							<span id="edit_picture_button">
 								<input id="inputPicture" name="picture" type="file" class="d-none">

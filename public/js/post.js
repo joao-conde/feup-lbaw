@@ -176,6 +176,26 @@ function handleCreatePostAPIResponse(response) {
 
 }
 
+function requestReportPost(postId, userId, post) {
+
+  let request = new XMLHttpRequest();
+  let method = POST;
+  let api = '/api/users/' + userId + '/posts/' + postId + '/report';
+
+  let data = {
+    postId: postId,
+    userId: userId
+  }
+
+  sendAsyncAjaxRequest(request, api, method, handleReportPostAPIResponse.bind(this, request, post),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function handleReportPostAPIResponse(request, post) {
+  return;
+}
+
+
 function requestDeletePost(postId, userId, post) {
 
   let request = new XMLHttpRequest();
@@ -214,6 +234,7 @@ function addPostListeners(post) {
   let postId = post.querySelector('.postID').innerHTML;
 
   let deletePostBtn = post.querySelector('.delete_post_button');
+  let reportPostBtn = post.querySelector('.report_button');
 
   let newCommentTextArea = post.querySelector('.new_comment_ta');
   let newCommentButton = post.querySelector('form > input[type=submit]');
@@ -239,9 +260,10 @@ function addPostListeners(post) {
     editPostButton.addEventListener('click', toggleProfileField.bind(this, true, postText, editElement, postTextParent, editPostButton, cancelButton, confirmButton, undefined, undefined, undefined));
     confirmButton.addEventListener('click', requestEditPost.bind(this, postId, editElement, postText, postTextParent, editPostButton, cancelButton, confirmButton));
     deletePostBtn.addEventListener('click', requestDeletePost.bind(this, postId, userId, post));
-
   }
 
+  if(reportPostBtn != null)
+    reportPostBtn.addEventListener('click', requestReportPost.bind(this, postId, userId, post));
 
   let commentsDivs = post.querySelectorAll('div.comment');
 
@@ -256,12 +278,34 @@ function addPostListeners(post) {
 function addCommentListeners(commentDiv, postDiv) {
 
   let deleteButton = commentDiv.querySelector('span.delete_comment_button');
+  let reportButton = commentDiv.querySelector('span.report_button');
 
   if (deleteButton != null)
-
     deleteButton.addEventListener('click', sendDeleteCommentRequest.bind(this, commentDiv, postDiv));
 
+  if (reportButton != null){
+    reportButton.addEventListener('click', sendReportCommentRequest.bind(this, commentDiv, postDiv));
+  }
 
+}
+
+function sendReportCommentRequest(commentDiv, postDiv) {
+
+  let commentId = parseInt(commentDiv.querySelector('p.commentId').innerHTML);
+  let api = '/api/comments/' + commentId + '/report';
+
+  let request = new XMLHttpRequest();
+
+  let data = {
+    commentId: commentId
+  };
+
+  sendAsyncAjaxRequest(request, api, POST, reportCommentRequestHandler.bind(request, commentDiv, postDiv),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function reportCommentRequestHandler(commentDiv, postDiv) {
+  return;
 }
 
 function sendDeleteCommentRequest(commentDiv, postDiv) {

@@ -10,9 +10,10 @@ setTimeout(function(){
 }, 2500);
 
 function updateNotificationsHandler() {
-
+    
+    let notifications_div = document.querySelector('div#notifications_div');
     notifications_div.innerHTML = this.responseText;
-    let newCount = notifications_div.querySelector('#count_hidden').innerHTML;
+    let newCount = notifications_div.querySelector('#count_notifications').innerHTML;
 
     notsCount.innerHTML = newCount > 0 ? newCount : "";
 }
