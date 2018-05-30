@@ -26,7 +26,7 @@ function addListenersToSendMessageForm(newMessageForm, messagesListDiv, dropdown
 function cleanNotifications(badge, friendId) {
     
     let request = new XMLHttpRequest();
-    let api = '/api/read_messages/' + friendId;
+    let api = '/api/read_messages/user/' + friendId;
 
     sendAsyncAjaxRequest(request,api,PUT, function() {
 

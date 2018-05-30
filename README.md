@@ -51,7 +51,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US21      |Profile Page|high|100%|
 |US22      |Band Page|high|100%|
 |US23      |Comment|medium|80%|
-|US24      |Report bands'|medium|0%|
+|US24      |Report bands'|medium|100%|
 |US25      |Report users'|medium|100%|
 |US26      |Rate bands|medium|0%|
 |US27      |Rate users|medium|0%|

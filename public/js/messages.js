@@ -15,7 +15,6 @@ function updateMessagesHandler() {
 
     messagesCount.innerHTML = newCount > 0 ? newCount : "";
 
-    readMessages();
 }
 
 console.log(read_messages);
@@ -26,7 +25,7 @@ function readMessages(){
 
     let ids = document.querySelectorAll(".message_user_id");
     for (let i = 0; i < ids.length; i++) {
-        sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages/' + ids[i].innerHTML , PUT, null);
+        sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages/user/' + ids[i].innerHTML , PUT, null);
     }
 }
 
@@ -35,4 +34,5 @@ document.querySelector("#see_more_messages").addEventListener('click', function(
     nMessagesLoaded++;
     sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/messages/' + nMessagesLoaded, GET, updateMessagesHandler);
     setTimeout(function() {read_messages.click()});
+    readMessages();
 });
