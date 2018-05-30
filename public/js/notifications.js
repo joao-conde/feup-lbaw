@@ -5,7 +5,7 @@ let notsCount = document.querySelector('#notification_count');
 let notifications_div = document.querySelector('div#notifications_div');
 let read_notifications = document.querySelector("#notifications_read");
 
-setTimeout(function(){ 
+setInterval(function(){ 
     sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/notifications/' + nNotificationsLoaded, GET, updateNotificationsHandler);
 }, 2500);
 

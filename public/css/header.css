@@ -54,7 +54,7 @@ div#messagesList {
 div#messagesList .sender::after{
     content: ":";
 }
-div#notificationsList .time,
+div.notificationsList .time,
 div#messagesList .time{
     font-size: 0.6em !important;
 }

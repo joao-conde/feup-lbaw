@@ -1,5 +1,5 @@
-@extends('layouts.profile_layout') 
 
+@extends('layouts.profile_layout') @section('leftmenumobile')
 
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
@@ -8,15 +8,9 @@
 
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
 <script defer src="{{ asset('js/editBandPage.js')}}"></script>
-<script defer src="{{ asset('js/post.js')}}"></script> 
+<script defer src="{{ asset('js/post.js')}}"></script> @include('partials.leftmenumobile') @endsection @section('logged_content')
 
-@section('leftmenumobile')
-@include('partials.leftmenumobile') 
-
-@endsection 
-@section('logged_content')
-
-<p class="d-none" id="bandId">{{$band->id}}</p> 
+<p class="d-none" id="bandId">{{$band->id}}</p>
 <p id="posts_page_type" class="d-none">band</p>
 
 
@@ -44,6 +38,7 @@
 
                         <img id="profile_pic" class="profile_image d-block my-3" src="{{$band->getProfilePicturePath()}}" alt="Profile Image"> @include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id),
                         'userOrBandToFollowId'=> $band->id])
+
                     </div>
 
                     <div class="col-12 col-lg-7 p-3 align-self-start text-justify">
@@ -65,8 +60,7 @@
 
                         <div class="row justify-content-center p-2">
                             <div class="col-auto align-self-center">
-                                @if($roundedRate > 0) 
-                                    @for($i = 0; $i
+                                @if($roundedRate > 0) @for($i = 0; $i
                                     < $wholeRate; $i++) <span class="mt-1 text-primary fullstar">
                                         <i class="fas fa-star"></i>
                                     </span>
@@ -74,13 +68,11 @@
                                     <span class="mt-1 text-primary halfstar">
                                         <i class="fas fa-star-half"></i>
                                     </span>
-                                    @endif 
-                                    @for($i = $wholeRate; $i
+                                    @endif @for($i = $wholeRate; $i
                                         < 5; $i++) <span class="mt-1 text-primary emptystar">
                                             <i class="far fa-star"></i>
                                         </span>
-                                        @endfor 
-                                @endif
+                                        @endfor @endif
 
                                         <small class="m-1 text-info">{{$roundedRate > 0 ? $roundedRate : "Not rated yet"}}</small>
                                     </div>
@@ -141,88 +133,83 @@
 
                     </div>
 
-            </div>
+                    <div class="row no-gutters">
+                        <div class="col-3 d-none d-lg-block">
 
-        </div>
+                            <div id="members" class="jumbotron p-3 mr-2">
+                                <h4>Members</h4> 
+                                
+                                @foreach($members as $member)
 
-    </div>
+                                @include('pages.band.band_members', [$member, $isFounder])
+                            
+                                @endforeach 
+                                
+                                @if($isFounder)
 
-    <div class="row no-gutters">
-        <div class="col-3 d-none d-lg-block">
-
-            <div id="members" class="jumbotron p-3 mr-2">
-                Members             
-                
-                @foreach($members as $member)
-
-                @include('pages.band.band_members', [$member, $isFounder])
-            
-                @endforeach 
-                
-                @if($isFounder)
-
-                <div class="autocomplete" id="inviteMember">
-                    <input id="band_members" placeholder="Invite member..." type="text" name="name" autocomplete="off">
-                </div>
-                <div class="collapse show" id="new_members">
-                </div>
-
-                @endif
-
-                <hr>
-                <div id="concerts">
-                    <h4>Scheduled Concerts</h4>
-                    <div id="scheduled_concerts">
-                        @foreach($concerts as $concert) 
-                        @include('partials.concert',[$concert]) 
-                        @endforeach
-                    </div>
+                                <div class="autocomplete" id="inviteMember">
+                                    <input id="band_members" placeholder="Invite member..." type="text" name="name" autocomplete="off">
+                                </div>
+                                <div class="collapse show" id="new_members">
+                                </div>
 
 
-                    <h5 class="m-0 mt-3 text-primary">New concert</h5>
+                                <hr>
+                                <div id="concerts">
+                                    <h4>Scheduled Concerts</h4>
+                                    <div id="scheduled_concerts">
+                                        @foreach($concerts as $concert) 
+                                        @include('partials.concert',[$concert]) 
+                                        @endforeach
+                                    </div>
 
-                    <div class="text-left">
 
-                        <div class="new_concert d-block">
-                            <input type="text" id="description" name="description" class="mt-1 w-75" placeholder="Short description"></input>
-                            <input id="date" name="date" type="date" class="mt-1 w-75" placeholder="Date" required></input><br>
-                            <i id="location" class="mt-1 w-75">Location</i><br>
-                            <button type="button" class="mt-1 btn btn-sm btn-primary w-75 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" required>
-                                Edit Location
-                            </button>
-                            <span class="d-none" id="location_id"></span>
-                            <div class="dropdown-menu dropdown-menu-left p-3 bg-secondary">
-                                @foreach($cities as $city)
-                                @include('partials.location')
-                                @endforeach
+                                    <h5 class="m-0 mt-3 text-primary">New concert</h5>
+
+                                    <div class="text-left">
+
+                                        <div class="new_concert d-block">
+                                            <input type="text" id="description" name="description" class="mt-1 w-75" placeholder="Short description"></input>
+                                            <input id="date" name="date" type="date" class="mt-1 w-75" placeholder="Date" required></input><br>
+                                            <i id="location" class="mt-1 w-75">Location</i><br>
+                                            <button type="button" class="mt-1 btn btn-sm btn-primary w-75 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" required>
+                                                Edit Location
+                                            </button>
+                                            <span class="d-none" id="location_id"></span>
+                                            <div class="dropdown-menu dropdown-menu-left p-3 bg-secondary">
+                                                @foreach($cities as $city)
+                                                @include('partials.location')
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary mt-1 w-50" id="schedule_button">Schedule</button>
+                                        <br><p class="" id="schedule_error" style="display: none;">Error: Invalid concert scheduling.</p>
+                                    </div>
+                                </div>
+                                @endif
+
+
                             </div>
+
                         </div>
-                        <button type="button" class="btn btn-primary mt-1 w-50" id="schedule_button">Schedule</button>
-                        <br><p class="" id="schedule_error" style="display: none;">Error: Invalid concert scheduling.</p>
+
+                        <div class="col-12 col-md-9 col-lg-6">
+
+                            <div id="center_content" class="toggleContent">
+
+                                @if($band->isMember(Auth::user()->id))
+                                <?php $bandNewPost = true ?> @include('partials.new_post',[$bandNewPost]) @endif
+
+                                <div id="posts">
+                                    @foreach($band['posts'] as $post) @include('partials.post') @endforeach
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
+
                 </div>
 
-            </div>
-
-        </div>
-
-        <div class="col-12 col-md-9 col-lg-6">
-
-            <div id="center_content" class="toggleContent">
-
-                @if($band->isMember(Auth::user()->id))
-                <?php $bandNewPost = true ?> @include('partials.new_post',[$bandNewPost]) @endif
-
-                <div id="posts">
-                    @foreach($band['posts'] as $post) @include('partials.post') @endforeach
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-@endsection
+                @endsection

@@ -99,7 +99,8 @@ Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
 Route::put('/api/read_notifications','UserController@readNotifications')->name('read_notifications');
 Route::get('/api/notifications/{offset}','UserController@getNotifications')->name('get_notifications');
-Route::put('/api/read_messages/{userId}','UserController@readMessages')->name('read_messages');
+Route::put('/api/read_messages/user/{userId}','UserController@readMessages')->name('read_messages');
+Route::put('/api/read_messages/band/{bandId}','UserController@readMessagesBand')->name('read_messages_band');
 Route::get('/api/messages/{offset}','UserController@getMessages')->name('get_messages');
 Route::get('/api/user_friends','UserController@getFriends');
 Route::get('/api/user_followers','UserController@getFollowers');
@@ -152,6 +153,7 @@ Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('po
 Route::post('/api/comments/{commentId}/report','CommentController@reportComment');
 Route::post('/api/users/{userId}/posts/{postId}/report','PostController@reportPost');
 Route::post('/api/users/{userId}/report','UserController@reportUser');
+Route::post('/api/bands/{bandId}/report','BandController@reportBand');
 
 
 // Errors

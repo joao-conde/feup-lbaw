@@ -515,4 +515,19 @@ class BandController extends Controller
         return response('',200);
     }
 
+    public function reportBand(Request $request){
+
+        $reportId = DB::select("select id from report order by date desc limit 1;");
+
+        $report = new Report();
+        $report->id = $reportId[0]->id+1;
+        $report->text = str_random(10);
+        $report->reportedbandid = $request->reportedBandId;
+        $report->reporteruserid = Auth::user()->id;
+        $report->reporttype = 'band_report';
+        $report->save();
+
+        return response('',200);
+    }
+
 }

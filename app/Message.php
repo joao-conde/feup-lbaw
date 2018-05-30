@@ -46,6 +46,7 @@ class Message extends Model {
                     ON user_notification.notificationTriggerId = notification_trigger.id
                     AND notification_trigger.type = 'message'
                     JOIN message ON message.id = notification_trigger.originmessage
+                    AND message.bandId IS NULL
                     JOIN content ON content.id = message.contentid
                     WHERE visualizedDate IS NULL
                     AND userId = ?
@@ -56,9 +57,20 @@ class Message extends Model {
     }
 
     public static function getMessagesFromBands($userId, $bandId) {
+        $query = 
+            "SELECT message.bandId, count(message.bandId) as numberofmessages
+            FROM user_notification
+            JOIN notification_trigger
+            ON user_notification.notificationTriggerId = notification_trigger.id
+            AND notification_trigger.type = 'message'
+            JOIN message ON message.id = notification_trigger.originmessage
+            AND message.bandId IS NOT NULL
+            JOIN content ON content.id = message.contentid
+            WHERE visualizedDate IS NULL
+            AND userId = ?
+            GROUP BY message.bandId";
 
-
-        
+        return DB::select($query, [$userId]);
     }
 
 
