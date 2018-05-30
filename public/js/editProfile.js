@@ -886,7 +886,7 @@ function reportUser(){
 
     let request = new XMLHttpRequest();
 
-    let reportApi = '/api/users/{userId}/report';
+    let reportApi = '/api/users/' + reportedUserId + '/report';
 
     let data = {
         reportedUserId: reportedUserId.innerHTML
