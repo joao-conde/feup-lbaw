@@ -227,9 +227,10 @@ class User extends Authenticatable
                 JOIN content ON content.date = recent_message.date
                 AND content.creatorId = recent_message.userid
                 JOIN mb_user ON mb_user.id = recent_message.userid
+                ORDER BY content.date DESC
                 LIMIT ?;";
 
-            $db_result['messages'] = DB::select($notificationsQuery, [$this->id, ($offset+1)*7]);
+            $db_result['messages'] = DB::select($notificationsQuery, [$this->id, ($offset+1)*5]);
 
             return $db_result;
         });
@@ -537,6 +538,11 @@ class User extends Authenticatable
 
         return Message::getMessagesFromBands($bandId);
 
+    }
+
+    public function getBandUnreadMessages($bandId) {
+
+        return Message::getBandsUnreadMessages($this->id,$bandId);
     }
 
 

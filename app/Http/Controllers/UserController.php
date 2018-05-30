@@ -70,7 +70,15 @@ class UserController extends Controller {
         $updateQuery = 
         "UPDATE user_notification 
         SET visualizedDate = now()
-        WHERE userid = ?";
+        WHERE (user_notification.notificationtriggerid, user_notification.userid) IN (
+            SELECT user_notification.notificationtriggerid, user_notification.userid
+            FROM user_notification 
+            JOIN notification_trigger 
+            ON notification_trigger.id = user_notification.notificationtriggerid 
+            AND type != 'message'
+            WHERE userid = ?
+            AND visualizeddate IS NULL
+        );";
         
         DB::update($updateQuery, [Auth::user()->id]);
 
@@ -89,6 +97,7 @@ class UserController extends Controller {
             AND type = 'message' 
             JOIN message 
             ON message.id = notification_trigger.originmessage 
+            AND message.bandId IS NULL
             JOIN content ON content.id = message.contentid 
             WHERE user_notification.userid = ? 
             AND content.creatorid = ? 
@@ -96,6 +105,30 @@ class UserController extends Controller {
         );";
         
         DB::update($updateQuery, [Auth::user()->id, $userId]);
+
+    }
+
+    public function readMessagesBand($bandId){
+
+        $updateQuery = 
+        "UPDATE user_notification 
+        SET visualizedDate = now()
+        WHERE (user_notification.notificationtriggerid, user_notification.userid) IN (
+            SELECT user_notification.notificationtriggerid, user_notification.userid
+            FROM user_notification 
+            JOIN notification_trigger 
+            ON notification_trigger.id = user_notification.notificationtriggerid 
+            AND type = 'message' 
+            JOIN message 
+            ON message.id = notification_trigger.originmessage 
+            AND message.bandId IS NOT NULL
+            JOIN content ON content.id = message.contentid 
+            WHERE user_notification.userid = ? 
+            AND message.bandId = ? 
+            AND user_notification.visualizeddate IS NULL
+        );";
+        
+        DB::update($updateQuery, [Auth::user()->id, $bandId]);
 
     }
 
@@ -110,7 +143,7 @@ class UserController extends Controller {
 
     public function getMessages(Request $request){
         
-        $notifications = Auth::user()->getMessages($request->offset);
+        $messages = Auth::user()->getMessages($request->offset);
 
         return view('layouts.header.partials.messageslist', [
                     'messages' => $messages['messages'],
@@ -605,4 +638,7 @@ class UserController extends Controller {
 
         return response('',200);
     }
+
+    
+
 }

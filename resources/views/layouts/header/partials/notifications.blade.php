@@ -5,7 +5,7 @@
         <i class="far fa-flag"></i>
         <span id="notification_count" class="badge badge-secondary bg-primary text-warning">@if($notificationsInfo['count'] > 0) {{$notificationsInfo['count']}} @endif</span>
     </a>
-    <div id="notificationsList" class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
+    <div class="notificationsList dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
         <h5 class="text-center dropdown-item">Notifications</h5>
         <div class="dropdown-divider"></div>
         <div id="notifications_div">    

@@ -6,7 +6,25 @@
 
         </div>
         <div class="col-2">
-            <span class="badge badge-primary align-middle newMessagesBand">4</span>
+
+            <?php 
+            
+            $unreadMessages = 0;
+            foreach ($user->getBandUnreadMessages($band->id) as $unreadMessage) {
+                
+                if($unreadMessage->bandid == $band->id) {
+                    $unreadMessages = $unreadMessage->numberofmessages;
+                }
+            }
+                    
+            ?>
+
+            @if($unreadMessages > 0)
+            <span class="badge badge-primary align-middle newMessagesBand">{{$unreadMessages}}</span>
+            @else
+            <span class="badge badge-primary align-middle d-none newMessagesBand">{{$unreadMessages}}</span>
+            @endif
+
         </div>
     </div>
 

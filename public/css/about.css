@@ -13,27 +13,9 @@ h2 {
 
 .jumbotron h5 {
 	color: #dbbba0;
-	/*overflow: hidden; /* Ensures the content is not revealed until the animation */
-  	/*border-right: .15em solid #dbbba0; /* The typwriter cursor */
-  	/*white-space: nowrap; /* Keeps the content on a single line */
-  	margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  /*	animation: 
-    typing 3.5s steps(60, end),
-    blink-caret .75s step-end infinite;*/
+  	margin: 0 auto;
 }
 
 .jumbotron h2 {
 	color: #af947c;	
 }
-
-/*@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
-}*/
-
-
