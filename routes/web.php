@@ -164,3 +164,7 @@ Route::post('/api/bands/{bandId}/report','BandController@reportBand');
 // Errors
 Route::get('/403', 'ErrorPagesController@error403');
 Route::get('/404', 'ErrorPagesController@error404');
+
+
+
+Route::put('/api/userstate','UserController@changeStatus');

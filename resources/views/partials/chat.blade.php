@@ -28,11 +28,8 @@
         @include('partials.band_conversation')
    @endforeach
 
-    <div class="container">
-        <span class="h5">Online</span>
-        <span class="text-success status-dot align-baseline pl-1">
-            <i class="fas fa-circle"></i>
-        </span>
+    <div class="container mt-3">
+        <span class="h5">Friends</span>
     </div>
     <hr class="m-2">
 
@@ -47,13 +44,13 @@
     </div>
 
 
-    <div class="container mt-3">
+    {{-- <div class="container mt-3">
         <span class="h5">Offline</span>
         <span class="text-danger status-dot align-middle pl-1">
             <i class="fas fa-circle"></i>
         </span>
     </div>
-    <hr class="m-2">
+    <hr class="m-2"> --}}
 
 
     {{-- <div class="chat_dropdown row offline ml-2 justify-content-between pr-4" href="#chatMichelangelo" data-toggle="collapse"

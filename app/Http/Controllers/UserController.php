@@ -639,6 +639,16 @@ class UserController extends Controller {
         return response('',200);
     }
 
-    
+    public function changeStatus(Request $request) {
+
+        $status = $request->online;
+        $update = 'UPDATE mb_user SET online = ? WHERE id = ?';
+        DB::update($update, [$status, Auth::user()->id]);
+
+        return response(200);
+
+    }
+
+
 
 }

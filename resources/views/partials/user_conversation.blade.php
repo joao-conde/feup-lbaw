@@ -1,4 +1,4 @@
-<div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="{{"#user_".$friend->id}}" role="button"
+<div class="chat_dropdown row {{$friend->online ? "online" : "offline" }} ml-2 justify-content-between pr-4" data-toggle="collapse" href="{{"#user_".$friend->id}}" role="button"
     aria-expanded="false" aria-controls="chatWindow">
     <div class="col">
         <img src="{{ User::getUserIconPicturePath($friend->id) }}" class="mr-2 profile_img_chat">
