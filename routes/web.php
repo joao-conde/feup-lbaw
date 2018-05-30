@@ -133,6 +133,8 @@ Route::get('users/following', 'UserController@userFollowings')->name('user_follo
 Route::get('users/followers', 'UserController@userFollowers')->name('user_followers');
 Route::get('users/bands_following', 'UserController@bandFollowings')->name('bands_following');
 Route::get('users/bands_membership', 'UserController@bandMemberships')->name('bands_membership');
+
+
 //Profile
 Route::get('users/{id}', 'UserController@show')->name('profile');
 

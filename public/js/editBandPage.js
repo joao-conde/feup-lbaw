@@ -204,3 +204,7 @@ function handleDeleteMemberFromListAPIResponse(response){
     member.removeChild(this.parentNode);
     
 }
+
+
+//Schedule concert
+

@@ -569,6 +569,8 @@ insert into comment(id,contentId,postId) values(13,53,28);
 insert into content(id, creatorId,text) values(54,16,'Nice Post Man');
 insert into comment(id,contentId,postId) values(14,54,23);
 
+INSERT INTO concert(bandId, concertDate, locationId, description) VALUES(1, '31/03/2035', 1, 'MY CONCERT ROCKS');
+
 ALTER SEQUENCE post_id_seq RESTART WITH 29;
 ALTER SEQUENCE comment_id_seq RESTART WITH 15;
 ALTER SEQUENCE content_id_seq RESTART WITH 55;
