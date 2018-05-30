@@ -77,6 +77,10 @@ Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
 Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
 
 Route::put('/api/bands/{bandId}/invitations/{userId}', 'BandController@inviteMember');
+Route::post('/api/bands/{bandId}/concerts', 'BandController@scheduleConcert');
+Route::post('/api/bands/{bandId}/concertDate', 'BandController@concertDate');
+Route::delete('/api/bands/{bandId}/concerts/{concertId}/remove', 'BandController@removeConcert');
+
 
 Route::put('api/user_skills/{skillId}','UserController@addSkill');
 Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');

@@ -494,9 +494,34 @@ class BandController extends Controller
         else
             return response('',500);  
         
-        
         return response($exists,200);
 
+    }
+
+    public function concertDate(Request $request){    
+        return response('',200);
+    }
+
+    public function scheduleConcert(Request $request){
+        
+        $concert = new Concert();
+        $concert->bandid = $request->bandId;
+        $concert->description = $request->description;
+        $concert->locationid = City::where('name', $request->cityName)->pluck('id')[0];
+        $concert->concertdate = $request->date;
+        $concert->save();
+
+
+        return view('partials.concert',['concert'=>$concert,'']);
+    }
+
+    public function removeConcert(Request $request, $bandId, $concertId){
+
+        $concert = Concert::find($concertId);
+        $concert->isactive = false;
+        $concert->save();
+
+        return response('',200);
     }
 
 }

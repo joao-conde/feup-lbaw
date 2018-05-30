@@ -1071,7 +1071,8 @@ CREATE TABLE concert (
     bandId INTEGER NOT NULL,
     concertDate DATE,
     locationId INTEGER NOT NULL,
-    description TEXT 
+    description TEXT,
+    isActive boolean default true
 );
 
 ALTER TABLE ONLY concert
