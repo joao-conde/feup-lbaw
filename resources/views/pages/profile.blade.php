@@ -245,9 +245,9 @@
 		
 							<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 								<div class="navbar-nav">
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Bands</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Following</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('bands_membership') }}">Bands</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('user_followings') }}">Following</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('user_followers') }}">Followers</a>
 								</div>
 							</div>
 						</nav>
@@ -279,13 +279,13 @@
 		
 						<a class="mr-1 d-block mr-2" href="#">
 							<small>
-								<p class="text-secondary mt-2 mb-0">See all</p>
+								<a class="text-secondary mt-2 mb-0" href="{{route('bands_membership')}}">See all</a>
 							</small>
 		
 						</a>
 						<a class="mr-1 d-block" href="{{route('create_band')}}">
 							<small>
-								<p class="text-secondary mt-2 mb-0">Create Band</p>
+								<a class="text-secondary mt-2 mb-0" href="{{ route('create_band') }}">Create Band</a>
 							</small>
 						</a>
 		

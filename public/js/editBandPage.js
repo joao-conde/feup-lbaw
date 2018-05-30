@@ -191,7 +191,7 @@ function removeInviteAPI(userId){
     let request = new XMLHttpRequest();
     let method = DELETE;
     let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
-
+    
     sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
 
