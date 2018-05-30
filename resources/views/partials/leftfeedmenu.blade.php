@@ -1,7 +1,7 @@
 <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
   <a class="mr-1 d-block" href="{{route('profile', Auth::user()->id)}}">
     <img class="profile mr-2" src="{{ Auth::user()->getProfilePicturePath() }}">
-    <span class="text-secondary align-middle">My Profile</span>
+    <span class="text-secondary align-middle">{{explode(" ",Auth::user()->name)[0]}}</span>
   </a>
 
   <hr>

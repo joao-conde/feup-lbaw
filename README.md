@@ -98,5 +98,10 @@ PORMENORES QUE FALTAM FAZER:
 
 - IMPORTANTE: 
   - Novo user not admin
-- New Band page: sem dropdown genres
+  - Online help
+  - Validate HTML, CSS, JS e LARAVEL?
+
 - Post não aparecem os ENTERs
+- Unfollow na lista de following users e bands, AJAX para dinamicamente mostrar unfollow
+- Botões de perfil para bandas, following e followers hardcoded
+- Comments na página de perfil de outro user disabled
