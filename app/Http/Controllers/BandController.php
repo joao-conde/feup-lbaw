@@ -10,6 +10,7 @@ use App\Report;
 use App\Ban;
 use App\City;
 use App\Genre;
+use App\Content;
 use App\Concert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
@@ -278,8 +279,8 @@ class BandController extends Controller
 
         $concerts = Concert::getBandConcerts($id);
         
-        return view('pages.band',
-        [   'isFounder' => $isFounder,
+        return view('pages.band.profile',
+            ['isFounder' => $isFounder,
             'band' => $band, 
             'members' => $members,
             'wholeRate'=> $whole, 
@@ -299,30 +300,20 @@ class BandController extends Controller
             'id' => $request->id, 
             'name' => $request->name
         ]);
-        // TODO: user_img
     }
 
     public function getNewGenrePartial(Request $request){
         return view('pages.newband.new_genre', ['name' => $request->name]);
     }
 
+    // public function getNewMemberProfilePartial(Request $request){
+    //     return view('pages.band.band_members', ['name' => $request->name]);
+    // }
+
 
     public function getGenres(Request $request){
     
-            
-        $words = explode(" ", trim($request->pattern));
-        $genresResult = array();
-    
-        if(count($words) && $words[0] == ""){
-            return response($genresResult,200);
-        }
-        $string = "";
-        foreach ($words as $word) {
-            
-            $string = $string.$word.":* & ";            
-        }
-        $string = trim($string, "& ");
-    
+        $string = Content::patternToTSVector($request->pattern);    
     
         $genresQuery = "SELECT genre.id, genre.name as name 
                         FROM genre 

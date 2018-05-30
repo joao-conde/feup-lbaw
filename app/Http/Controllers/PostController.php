@@ -18,9 +18,6 @@ class PostController extends Controller
     }
     public function createPost(Request $request) {    
         
-        DB::beginTransaction();
-        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
-
         if (!Auth::check()) return response('No user logged',500);
 
         $mediaURL = $request->__isset('mediaURL') ? $request->mediaURL : "" ;
@@ -28,7 +25,7 @@ class PostController extends Controller
         $bandId = $request->__isset('bandId') ? $request->bandId : null;
         
         if (strlen(trim($request->content)) == 0 && strlen(trim($mediaURL)) == 0)
-            return response('No content',500);
+            return response('No content c',500);
         
 
         $insertContent = "INSERT INTO content (text, creatorId)
@@ -36,6 +33,9 @@ class PostController extends Controller
 
         $insertPost = "INSERT INTO post (private, contentId, bandId, mediaURL)
                                 VALUES (?, currval('content_id_seq'), ?, ?)";
+
+        DB::beginTransaction();
+        DB::statement('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
 
         DB::insert($insertContent, [$request->content, Auth::user()->id]);
         DB::insert($insertPost, [$request->private, $bandId, $mediaURL]);

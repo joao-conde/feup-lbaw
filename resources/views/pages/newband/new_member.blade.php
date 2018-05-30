@@ -1,4 +1,5 @@
 <div class="row justify-content-between mb-1" style="margin: 0 32%;">
+    <span class="new_member_id d-none">{{$id}}</span>
     <img src="{{ User::getUserProfilePicturePath($id) }}" class="profile_img_feed">
     <a href="{{ route('profile', ['id' => $id])}}" class="col text-left" target="_blank">
         <small class="text-white">{{ $name }}</small>

@@ -60,7 +60,9 @@
                 @if($post->posttext == "")
                 <small class="d-none text">{{$post->posttext}}</small>
                 @else
-                <small class="text">{{$post->posttext}}</small>
+                <div class="px-2">
+                    <small class=" text">{{$post->posttext}}</small>
+                </div>
                 @endif
                 <textarea class="editPostTextArea d-none w-100"></textarea>
                 <span class="clickable confirm_edit_post_button d-none">

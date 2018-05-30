@@ -1,12 +1,13 @@
-<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0 d-none d-md-block">
 
+<div id="chat" class="p-0 card bg-light rounded-0 col-12 col-md-3 mt-0 d-none d-md-block">
+    
+    <script defer src="{{ asset('js/chat.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     <link href="{{ asset('css/chat.css') }}" rel="stylesheet">
-
 
     <form class="form-inline mt-2 ml-0 pl-2 pr-4 row justify-content-center">
         <input class="form-control mr-2 col-8 col-lg-9" type="search" placeholder="Search" aria-label="Search">
@@ -15,20 +16,19 @@
         </button>
     </form>
 
-    <div class="container">
-        <span class="h5">Online</span>
-        <span class="text-success status-dot align-baseline pl-1">
-            <i class="fas fa-circle"></i>
+    <div class="container mt-3">
+        <span class="h5">Bands</span>
+        <span class="text-danger status-dot align-middle pl-1">
+            <!-- <i class="fas fa-circle"></i> -->
         </span>
     </div>
     <hr class="m-2">
 
-
-    <div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatWindow1" role="button"
+    {{-- <div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatWindow1" role="button"
         aria-expanded="false" aria-controls="chatWindow">
         <div class="col">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_chat">
-            <small class="text-secondary">Leo</small>
+            <small class="text-secondary">Pearl Jam</small>
 
         </div>
         <div class="col-2">
@@ -112,281 +112,25 @@
             </form>
         </div>
 
+    </div> --}}
+
+    <div class="container">
+        <span class="h5">Online</span>
+        <span class="text-success status-dot align-baseline pl-1">
+            <i class="fas fa-circle"></i>
+        </span>
     </div>
+    <hr class="m-2">
 
+    <div id="user_chat">
 
-    <div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatDanny" role="button"
-        aria-expanded="false" aria-controls="chatWindow">
-        <div class="col">
-            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_chat">
-            <small class="text-secondary">Danny</small>
+        @foreach($user->friends() as $friend)
 
-        </div>
-        <div class="col-2">
-            <span class="badge badge-primary align-middle">2</span>
-        </div>
-    </div>
+            @include('partials.user_conversation')
 
-    <div class="collapse" id="chatDanny">
-        <div class="card card-body rounded-0 p-0 m-0 chats">
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>What is the meaning of life?</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
-                            est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <form class="row form-inline">
-                <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-                <textarea class="col form-control mr-1" name="Chat message" id="chat_msg2" cols="25" rows="1"></textarea>
-                <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
+        @endforeach
 
     </div>
-
-
-    <div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatJP" role="button"
-        aria-expanded="false" aria-controls="chatWindow">
-        <div class="col">
-            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_chat">
-            <small class="text-secondary">João Pedro</small>
-
-        </div>
-        <div class="col-2">
-            <span class="badge badge-primary align-middle">5</span>
-        </div>
-    </div>
-
-    <div class="collapse" id="chatJP">
-        <div class="card card-body rounded-0 p-0 m-0 chats">
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>What is the meaning of life?</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
-                            est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <form class="row form-inline">
-                <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-                <textarea class="col form-control mr-1" name="Chat message" id="chat_msg3" cols="25" rows="1"></textarea>
-                <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
-
-    </div>
-
-
-    <div class="chat_dropdown row online ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatConde" role="button"
-        aria-expanded="false" aria-controls="chatWindow">
-        <div class="col">
-            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_chat">
-            <small class="text-secondary">João Conde</small>
-
-        </div>
-        <div class="col-2">
-            <span class="badge badge-primary align-middle">132</span>
-        </div>
-    </div>
-
-    <div class="collapse" id="chatConde">
-        <div class="card card-body rounded-0 p-0 m-0 chats">
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>What is the meaning of life?</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec ultrices sollicitudin
-                            est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-auto px-2">
-                        <a href="#" data-toggle="tooltip" title="16:33" data-placement="left">
-                            <img src="{{ asset('images/system/dummy_profile.svg') }}" class="profile_img_chat_window">
-                        </a>
-
-                    </div>
-                    <div class="col px-0">
-                        <small>Ok, good bye! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed augue massa. Donec
-                            ultrices sollicitudin est, eu rhoncus tellus fermentum quis.</small>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <form class="row form-inline">
-                <img src="{{ asset('images/system/dummy_profile.svg') }}" class="m-2 profile_img_chat">
-                <textarea class="col form-control mr-1" name="Chat message" id="chat_msg4" cols="25" rows="1"></textarea>
-                <button type="submit" class="col-auto form-control btn btn-sm btn-primary">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
-
-    </div>
-
 
 
     <div class="container mt-3">
@@ -398,7 +142,7 @@
     <hr class="m-2">
 
 
-    <div class="chat_dropdown row offline ml-2 justify-content-between pr-4" href="#chatMichelangelo" data-toggle="collapse"
+    {{-- <div class="chat_dropdown row offline ml-2 justify-content-between pr-4" href="#chatMichelangelo" data-toggle="collapse"
         role="button" aria-expanded="false" aria-controls="chatWindow">
         <div class="col">
             <img src="{{ asset('images/system/dummy_profile.svg') }}" class="mr-2 profile_img_chat">
@@ -484,7 +228,6 @@
         </div>
 
     </div>
-
 
 
     <div class="chat_dropdown row offline ml-2 justify-content-between pr-4" data-toggle="collapse" href="#chatDummy" role="button"
@@ -747,4 +490,4 @@
         </div>
     </div>
 
-</div>
+</div> --}}

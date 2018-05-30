@@ -63,6 +63,8 @@ class NotificationTrigger extends Model
                 break;
 
             case 'band_invitation':
+                return route('bands_membership');
+
             case 'band_invitation_updated':
                     
                 $query = 
@@ -74,10 +76,7 @@ class NotificationTrigger extends Model
                     
                 $userId = DB::select($query, [$notificationTriggerId]);
 
-                if($type == 'band_invitation')
-                    return route('band_profile', ['id' => $userId[0]->bandid]);
-                else
-                    return route('profile', ['id' => $userId[0]->userid]);
+                return route('profile', ['id' => $userId[0]->userid]);
                 break;
             
             case 'comment':

@@ -8,6 +8,7 @@ use App\Report;
 use App\Warning;
 use App\City;
 use App\Post;
+use App\Content;
 use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,17 +67,18 @@ class UserController extends Controller {
 
     public function readNotifications(){
 
-        $userId = Auth::user()->id;
-
-        $updateQuery = "UPDATE user_notification SET visualizedDate = now() WHERE user_notification.id IN (".User::queryNotifications().")";
-
-        Log::info($updateQuery);
+        $updateQuery = 
+        "UPDATE user_notification 
+        SET visualizedDate = now()
+        WHERE userid = ?";
+        
+        DB::update($updateQuery, [Auth::user()->id]);
 
     }
 
     public function getNotifications(Request $request){
-    
-        $notifications = Auth::user()->getNotifications();
+        
+        $notifications = Auth::user()->getNotifications($request->offset);
 
         return view('layouts.header.partials.notificationslist', [
                     'notifications' => $notifications['notifications'],
@@ -86,19 +88,7 @@ class UserController extends Controller {
     public function api_userFollowing(Request $request){
 
 
-        $words = explode(" ", trim($request->pattern));
-        $followingUsersResult = array();
-
-        if(count($words) && $words[0] == ""){
-            return response($followingUsersResult,200);
-        }
-        $string = "";
-        foreach ($words as $word) {
-
-            $string = $string.$word.":* & ";            
-        }
-        $string = trim($string, "& ");
-
+        $string = Content::patternToTSVector($request->pattern);
 
         $followingUsersQuery = 
         "SELECT mb_user.id, mb_user.name as name
@@ -547,6 +537,16 @@ class UserController extends Controller {
             'title' => "Bands you follow",
             'results' => $followingBandsResult,
             'route' => 'band_profile']);
+    }
+
+    public function fellowMusicians(){
+
+        $fellowMusiciansResult = Auth::user()->fellowMusiciansAll();
+        
+        return view("layouts.list_page", [
+            'title' => "Fellow musicians",
+            'results' => $fellowMusiciansResult,
+            'route' => 'profile']);
     }
 
     public function bandMemberships(){

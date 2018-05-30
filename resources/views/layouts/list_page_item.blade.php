@@ -1,3 +1,4 @@
+
 <li class="list-group-item d-flex rounded">
     @if(property_exists($result, "user_id"))
         <img src="{{User::getUserIconPicturePath($result->user_id)}}" class="profile">

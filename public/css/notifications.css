@@ -1,0 +1,18 @@
+#notificationsList{
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    overflow-x: hidden;
+    max-width: 50vw;
+    max-height: 50vh;
+}
+
+#notificationsList::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+@media(max-width:767px) {
+    #notificationsList{
+        max-width: 90vw;
+        max-height: 50vh;
+    }
+}

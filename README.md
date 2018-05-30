@@ -20,7 +20,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US01      |About Page|medium|100%|
 |US02      |FAQ Page|medium|100%|
 |US03      |Contact Page|medium|0%|
-|US04      |Terms Page|medium|0%|
+|US04      |Terms Page|medium|50%|
 
 
 ### UnauthenticatedUser
@@ -39,7 +39,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
 |US11      |Profile Page|high|100%|
-|US12      |Notifications List|high|70%|
+|US12      |Notifications List|high|100%|
 |US13      |Feed Page|high|100%|
 |US14      |Follow Users|high|100%|
 |US15      |Unfollow Users|high|100%|
@@ -87,7 +87,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 | -------- | -- |:------:| --------- |
 |US45      |Recruit users|high|100%|
 |US46      |Remove users|high|100%|
-|US47      |Schedule Concerts|high|30%|
+|US47      |Schedule Concerts|high|100%|
 |US48      |Post|high|100%|
 |US49      |Post|high|100%|
 |US50      |Remove posts|high|100%|
@@ -98,7 +98,6 @@ PORMENORES QUE FALTAM FAZER:
 
 - IMPORTANTE: 
   - Novo user not admin
-  - Online help
   - Validate HTML, CSS, JS e LARAVEL?
 
 - Comments na página de perfil de outro user disabled
