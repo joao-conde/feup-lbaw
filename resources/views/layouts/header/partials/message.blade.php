@@ -16,8 +16,9 @@
     ?> 
     </small>
     {{-- <img id="icon_profile_image" class="profile" src="{{Auth::user()->getIconPicturePath()}}"> --}}
+    <span class="message_user_id d-none">{{$message->userid}}</span>
     <img class="profile_img_message mr-1" src="{{User::find($message->userid)->getIconPicturePath()}}">
-    <small class="sender"><i>{{$message->name}}</i></small>
+    <small class="sender"><i>{{$message->name}}:</i></small>
     <small class="message">{{$message->text}}</small>
     
 </a>
