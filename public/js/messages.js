@@ -26,7 +26,7 @@ function readMessages(){
 
     let ids = document.querySelectorAll(".message_user_id");
     for (let i = 0; i < ids.length; i++) {
-        sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages/' + ids[i].innerHTML , PUT, null);
+        sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages/user/' + ids[i].innerHTML , PUT, null);
     }
 }
 
