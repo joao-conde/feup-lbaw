@@ -6,10 +6,10 @@
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-12 text-secondary">
-                        <h1 id="error404" class=" text-secondary">Error 403</h1>
+                        <h1 id="error404" class=" text-secondary">Error 404</h1>
                     </div>
                 </div>
-                <h3 >You don't rock hard enough to access the page you were looking for.</h3>
+                <h3 >The page you are looking for does not rock.</h3>
             </div>
         </section>
 

@@ -140,9 +140,4 @@ Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('po
 
 // Errors
 Route::get('/403', 'ErrorPagesController@error403');
-
-
-
-
-
-
+Route::get('/404', 'ErrorPagesController@error404');

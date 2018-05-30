@@ -19,13 +19,13 @@
     </div>
 
     <div class="p-0 row my-3 d-none justify-content-between soundCloudRow">
-        <small class="col-1 d-inline text-center"><i class="align-middle text-warning fab fa-soundcloud"></i></small>
+        <div class="p-0 m-0 col-1 d-inline text-center"><i class="p-0 m-0 align-middle text-center text-warning fab fa-soundcloud"></i></div>
         <input id="soundCloudLink" class="p-0 col-10 d-inline border rounded border-dark" type="text">
         <div class="col-1"></div>
     </div>
 
     <div class="p-0 row my-3 justify-content-end d-none youTubeRow">
-        <small class="col-1 d-inline text-center"><i class="align-middle text-danger fab fa-youtube"></i></small>
+        <div class="p-0 m-0 col-1 d-inline text-center"><i class="p-0 m-0 align-middle text-center text-danger fab fa-youtube"></i></div>
         <input id="youTubeLink" class="p-0 col-10 d-inline border rounded border-dark" type="text">
         <div class="col-1"></div>
     </div>
