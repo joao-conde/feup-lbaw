@@ -76,6 +76,29 @@ class UserController extends Controller {
 
     }
 
+    public function readMessages($userId){
+
+        $updateQuery = 
+        "UPDATE user_notification 
+        SET visualizedDate = now()
+        WHERE (user_notification.notificationtriggerid, user_notification.userid) IN (
+            SELECT user_notification.notificationtriggerid, user_notification.userid
+            FROM user_notification 
+            JOIN notification_trigger 
+            ON notification_trigger.id = user_notification.notificationtriggerid 
+            AND type = 'message' 
+            JOIN message 
+            ON message.id = notification_trigger.originmessage 
+            JOIN content ON content.id = message.contentid 
+            WHERE user_notification.userid = ? 
+            AND content.creatorid = ? 
+            AND user_notification.visualizeddate IS NULL
+        );";
+        
+        DB::update($updateQuery, [Auth::user()->id, $userId]);
+
+    }
+
     public function getNotifications(Request $request){
         
         $notifications = Auth::user()->getNotifications($request->offset);
@@ -83,6 +106,15 @@ class UserController extends Controller {
         return view('layouts.header.partials.notificationslist', [
                     'notifications' => $notifications['notifications'],
                     'count' => $notifications['count']]);      
+    }
+
+    public function getMessages(Request $request){
+        
+        $notifications = Auth::user()->getMessages($request->offset);
+
+        return view('layouts.header.partials.messageslist', [
+                    'messages' => $messages['messages'],
+                    'count' => $messages['count']]);      
     }
     
     public function api_userFollowing(Request $request){
