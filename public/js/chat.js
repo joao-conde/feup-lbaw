@@ -14,22 +14,33 @@ function addListenersToSendMessageForm(newMessageForm, messagesListDiv, dropdown
 
     inputNewMessage.addEventListener('keyup',enterKeyListener.bind(this,inputNewMessage,friendId));
 
-    inputNewMessage.addEventListener('focus',function() {
-
-        badge.innerHTML = 0;
-        badge.selfHide();
-    });
-
+    inputNewMessage.addEventListener('focus',cleanNotifications.bind(this,badge, friendId));
+    inputNewMessage.addEventListener('click',cleanNotifications.bind(this,badge, friendId));
 
     messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
 
-    dropdown.addEventListener('click',function(){
+    dropdown.addEventListener('click',cleanNotifications.bind(this,badge, friendId));
+
+}
+
+function cleanNotifications(badge, friendId) {
+    
+    let request = new XMLHttpRequest();
+    let api = '/api/read_messages/' + friendId;
+
+    sendAsyncAjaxRequest(request,api,PUT, function() {
+
+        if(this.status !=200)
+            return;
 
         badge.innerHTML = 0;
         badge.selfHide();
 
-    });
 
+    });
+    
+    
+    
 }
 
 function sendMessageRequest(inputNewMessage, friendId, event) {
@@ -87,23 +98,34 @@ function handleNewMessagesRequestListener(messagesListDiv, badge) {
 
     let newMessages = createElementsArrayFromHTML(this.responseText);
 
+
     for(let i = 0; i < newMessages.length; i++) {
 
         messagesListDiv.appendChild(newMessages[i]);
+
         badge.innerHTML = parseInt(badge.innerHTML) + 1;
         badge.selfShow();
 
     }
 
+    let messagesOwns = messagesListDiv.querySelectorAll('p.isown');
+    let isOwn = parseInt(messagesOwns[messagesOwns.length-1].innerHTML);
+
+    if(isOwn == 1) {
+
+        badge.innerHTML = 0;
+        badge.selfHide();
+
+    }
+
 
     if(newMessages.length > 0) {
-
-        
         badge.innerHTML = newMessages.length;
-
     }
         
     messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
+
+
 
 }
 

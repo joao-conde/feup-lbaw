@@ -63,7 +63,8 @@
 
                         <div class="row justify-content-center p-2">
                             <div class="col-auto align-self-center">
-                                @if($roundedRate > 0) @for($i = 0; $i
+                                @if($roundedRate > 0) 
+                                    @for($i = 0; $i
                                     < $wholeRate; $i++) <span class="mt-1 text-primary fullstar">
                                         <i class="fas fa-star"></i>
                                     </span>
@@ -71,11 +72,13 @@
                                     <span class="mt-1 text-primary halfstar">
                                         <i class="fas fa-star-half"></i>
                                     </span>
-                                    @endif @for($i = $wholeRate; $i
+                                    @endif 
+                                    @for($i = $wholeRate; $i
                                         < 5; $i++) <span class="mt-1 text-primary emptystar">
                                             <i class="far fa-star"></i>
                                         </span>
-                                        @endfor @endif
+                                        @endfor 
+                                @endif
 
                                         <small class="m-1 text-info">{{$roundedRate > 0 ? $roundedRate : "Not rated yet"}}</small>
                                     </div>
@@ -158,14 +161,6 @@
 
                 <div class="autocomplete" id="inviteMember">
                     <input id="band_members" placeholder="Invite member..." type="text" name="name" autocomplete="off">
-                </div>
-                <div class="collapse show" id="new_members">
-                </div>
-
-                @if($isFounder)
-
-                <div class="mt-3 autocomplete" id="inviteMember">
-                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
                 </div>
                 <div class="collapse show" id="new_members">
                 </div>

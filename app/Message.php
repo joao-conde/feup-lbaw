@@ -55,5 +55,11 @@ class Message extends Model {
 
     }
 
+    public static function getMessagesFromBands($userId, $bandId) {
+
+
+        
+    }
+
 
 }
