@@ -515,7 +515,7 @@ class User extends Authenticatable
                      WHERE us_being_followed.followedUserId = ?)
                   AND us_user_following.followingUserId = ? 
                   AND isactive = true
-                  ORDER BY mb_user.name';
+                  ORDER BY mb_user.online';
 
         return DB::Select($query, [$this->id, $this->id]);
 

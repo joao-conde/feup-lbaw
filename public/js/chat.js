@@ -175,7 +175,7 @@ let bandMessagesListDivs = document.querySelectorAll('div.messagesListBand');
 let bandDropDownItems = document.querySelectorAll('div.chat_dropdown_band');
 let bandBadges = document.querySelectorAll('span.newMessagesBand');
 
-// window.setInterval(requestPeriodicMessages,CHAT_INTERVAL_REFRESH_TIME);
+window.setInterval(requestPeriodicMessages,CHAT_INTERVAL_REFRESH_TIME);
 
 function requestPeriodicMessages() {
 
