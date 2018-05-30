@@ -105,6 +105,8 @@ Route::delete('/api/users/{userId}/posts/{postId}', 'PostController@deletePost')
 Route::post('/api/posts/{postId}/comments', 'CommentController@createComment');
 Route::delete('/api/comments/{comment}','CommentController@deleteComment');
 
+Route::post('/api/users/{userId}/messages/{friendId}', 'MessageController@store');
+Route::get('/api/users/{userId}/messages/{friendId}', 'MessageController@getNewMessages');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

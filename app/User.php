@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\City;
+use App\Message;
 
 class User extends Authenticatable
 {
@@ -230,10 +231,10 @@ class User extends Authenticatable
                     JOIN city ON country.id = city.countryid
                     WHERE city.id = ?';
 
-    $country = DB::select($query, [$location->id]);
+        $country = DB::select($query, [$location->id]);
 
-    if(count($country) > 0)
-    return $country[0];
+        if(count($country) > 0)
+        return $country[0];
 
     }
 
@@ -373,7 +374,7 @@ class User extends Authenticatable
         return DB::select($followerUsersQuery, [$this->id, $this->id]);
     }
 
-    public function getFollowingBands(){
+    public function getFollowingBands() {
         $searchQueryBands = 
             "SELECT band.id as band_id, band.name as name, band_follower.isActive as is_following
             FROM band
@@ -413,6 +414,30 @@ class User extends Authenticatable
             ORDER BY result.membership_status DESC, result.name ASC";
         
         return DB::select($searchQueryBands, [$this->id, $this->id, $this->id]);  
+    }
+
+    public function friends() {
+
+        $query = 'SELECT mb_user.* 
+                  FROM user_follower as us_user_following
+                  JOIN mb_user ON us_user_following.followedUserId = mb_user.id
+                  WHERE us_user_following.followedUserId 
+                  IN
+                    (SELECT id 
+                     FROM user_follower as us_being_followed
+                     WHERE us_being_followed.followedUserId = ?)
+                  AND us_user_following.followingUserId = ? 
+                  AND isactive = true';
+
+        return DB::Select($query, [$this->id, $this->id]);
+
+
+    }
+
+    public function friendMessages($friendId, $offset) {
+
+        return Message::getMessagesFromUser($this->id, $friendId, $offset);
+
     }
 
 }

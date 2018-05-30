@@ -11,12 +11,8 @@
 	@include('partials.new_post',[$bandNewPost])
 
 	<div id = "posts">
-		@if(count($posts) > 0)
-			@foreach($posts as $post) @include('partials.post', ['post' => $post]) 
-			@endforeach 
-		@else
-			<h4 class="text-secondary text-center mt-3">No posts!</h4>
-		@endif
+		@foreach($posts as $post) @include('partials.post', ['post' => $post]) 
+		@endforeach 
 	</div>
 
 	

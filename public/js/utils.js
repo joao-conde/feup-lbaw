@@ -198,6 +198,13 @@ function createElementFromHTML(htmlString) {
     return div.firstChild;
 }
 
+function createElementsArrayFromHTML(htmlString) {
+    
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+    return div.children;
+}
+
 function isBottomOfPage() {
 
     let scrollTop = document.documentElement.scrollTop;

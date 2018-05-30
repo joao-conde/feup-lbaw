@@ -99,9 +99,11 @@ if (postButton != null) {
 
         case MEDIA_SOUND:
           sendCreatePostRequestWithSoundCloud();
+          break;
 
         case MEDIA_VIDEO:
           sendCreatePostRequestWithYoutube();
+          break;
       
         default:
           break;
@@ -113,19 +115,21 @@ if (postButton != null) {
 
 
 
-function sendCreatePostRequest(mediaURL) {
+function sendCreatePostRequest(media_URL) {
 
   let request = new XMLHttpRequest();
   let method = POST;
 
-  mediaURL = mediaURL == undefined ? "" : mediaURL;
+  let url = media_URL == undefined ? "" : media_URL;
 
   let api = '/api/users/' + userId + '/posts';
+
+  console.log(media_URL);
 
   let data = {
     private: privatePost,
     content: textarea.value.trim(),
-    mediaURL : mediaURL
+    mediaURL : url
   };
 
   if (globalBand != null)

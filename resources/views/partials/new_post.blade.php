@@ -40,10 +40,10 @@
                 <i class="far fa-image"></i>
             </button>
             <button id="youTubeButton" type="button" class="btn btn-light mr-2">
-                <i class="fas fa-film"></i>
+                <i class="text-danger fab fa-youtube"></i>
             </button>
             <button id="soundCloudButton" type="button" class="btn btn-light border">
-                <i class="fas fa-music"></i>
+                <i class=" text-warning fab fa-soundcloud"></i>
             </button>
             
             <div class="ml-2" id="postbutton">

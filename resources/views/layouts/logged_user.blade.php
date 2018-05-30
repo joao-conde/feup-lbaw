@@ -11,7 +11,7 @@
 
         @yield('logged_content')
 
-        @include('partials.chat')
+        @include('partials.chat',['user' => Auth::user()])
 
 
     </div>
