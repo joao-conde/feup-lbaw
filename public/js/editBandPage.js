@@ -6,19 +6,20 @@ let inputUsers = document.querySelector("input#band_members");
 let usersObj = {listElements:  document.createElement("div"), currentFocus: -1};
 usersObj.listElements.setAttribute("class", "autocomplete-items");
 
-inputUsers.parentNode.appendChild(usersObj.listElements);
+if(inputUsers != null){
+    inputUsers.parentNode.appendChild(usersObj.listElements);
 
-inputUsers.addEventListener('keyup', function (e) {
-    if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
-        return;
-    }
+    inputUsers.addEventListener('keyup', function (e) {
+        if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
+            return;
+        }
 
-    let pattern = inputUsers.value;
-    sendRequestFindUsers(pattern);
-});
+        let pattern = inputUsers.value;
+        sendRequestFindUsers(pattern);
+    });
 
-inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
-
+    inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
+}
 
 function sendRequestFindUsers(pattern) {
 
@@ -322,4 +323,31 @@ function handleRemoveConcertAPIResponse(request){
     if(request.status == 200) {
         this.parentNode.removeChild(this);
     }
+}
+
+/**************
+* REPORT BAND *
+**************/
+let reportButton = document.querySelector('#reportButton');
+let reportedBandId = document.querySelector('#bandId');
+
+if(reportButton != null)
+    reportButton.addEventListener('click',reportBand);
+
+function reportBand(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let reportApi = '/api/bands/' + reportedBandId + '/report';
+
+    let data = {
+        reportedBandId: reportedBandId.innerHTML
+    }
+
+    sendAsyncAjaxRequest(request,reportApi,POST,handleReportedBandResponse,JSON_ENCODE,JSON.stringify(data));    
+}
+
+function handleReportedBandResponse(request){
+    return;
 }

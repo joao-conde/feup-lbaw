@@ -153,6 +153,7 @@ Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('po
 Route::post('/api/comments/{commentId}/report','CommentController@reportComment');
 Route::post('/api/users/{userId}/posts/{postId}/report','PostController@reportPost');
 Route::post('/api/users/{userId}/report','UserController@reportUser');
+Route::post('/api/bands/{bandId}/report','BandController@reportBand');
 
 
 // Errors

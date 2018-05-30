@@ -44,6 +44,7 @@
 
                         <img id="profile_pic" class="profile_image d-block my-3" src="{{$band->getProfilePicturePath()}}" alt="Profile Image"> @include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id),
                         'userOrBandToFollowId'=> $band->id])
+                        <button id="reportButton" class="btn btn-primary">Report</button>
                     </div>
 
                     <div class="col-12 col-lg-7 p-3 align-self-start text-justify">
