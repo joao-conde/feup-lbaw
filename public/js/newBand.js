@@ -55,6 +55,19 @@ function requestPatternHandler(obj, api) {
 
     let followingUsers = JSON.parse(this.responseText);
     obj.listElements.innerHTML = "";
+    let alreadyAddedUsers = document.querySelectorAll(".new_member_id");
+
+    for (let i = 0; i < followingUsers.length; i++) {
+        for (let j = 0; j < alreadyAddedUsers.length; j++) {
+            if(followingUsers[i].id == alreadyAddedUsers[j].innerHTML){
+                followingUsers.splice(i, 1);
+                i--;
+                break;
+            }
+        }
+        
+    }
+
     
     for (let i = 0; i < followingUsers.length; i++) {
 

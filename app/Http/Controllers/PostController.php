@@ -9,7 +9,12 @@ use App\Post;
 
 class PostController extends Controller
 {
+    public function showPost($userId, $postId) {
 
+        $post = Post::getPost($userId, $postId);
+
+        return view('pages.post', ['post' => $post]);
+    }
     public function createPost(Request $request) {    
         
         if (!Auth::check()) return response('No user logged',500);

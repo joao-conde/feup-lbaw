@@ -33,10 +33,7 @@
                     @endif
                 </div>
             </div>
-            
-            
-
-
+        
         </ul>
     </div>
 

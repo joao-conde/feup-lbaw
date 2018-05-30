@@ -20,7 +20,6 @@ inputUsers.addEventListener('keyup', function (e) {
 inputUsers.addEventListener("keydown", listNavigation.bind(this, usersObj));
 
 
-
 function sendRequestFindUsers(pattern) {
 
     let requestData = { pattern: pattern };
@@ -36,6 +35,20 @@ function requestPatternHandler(obj, api) {
 
     let followingUsers = JSON.parse(this.responseText);
     obj.listElements.innerHTML = "";
+    let pendingUsers = document.querySelectorAll(".pending_member");
+    console.log(followingUsers);
+    console.log(pendingUsers);
+
+    for (let i = 0; i < followingUsers.length; i++) {
+        for (let j = 0; j < pendingUsers.length; j++) {
+            if(followingUsers[i].id == pendingUsers[j].innerHTML){
+                followingUsers.splice(i, 1);
+                i--;
+                break;
+            }
+        }
+        
+    }
     
     for (let i = 0; i < followingUsers.length; i++) {
 
@@ -59,7 +72,6 @@ function requestPatternHandler(obj, api) {
 }
 
 
-
 function addMember(bandId, userId) {
     
     let request = new XMLHttpRequest();
@@ -76,37 +88,65 @@ function handleInviteMemberAPIResponse(response){
         return;
 
     let data = JSON.parse(response.responseText);
-    buildMemberItem(data);
+    buildPendingMemberItem(data);
     
 } 
 
-function buildMemberItem(data){
+function buildPendingMemberItem(data){
     let members = document.querySelector('#members');
 
-    let member = document.createElement('a');
+    let member = document.createElement('div');
     member.classList.add("d-block");
-    member.href = "/users/" + data.userId;
-    
+
     let img = document.createElement('img');
     img.classList.add("profile_img_feed");
-    img.src = data.picPath; 
-
-    let small = document.createElement('small');
-    small.classList.add("text-primary");
-    small.innerHTML = data.name;
-
-    let small2 = document.createElement('small');
-    small2.classList.add("ml-1");
-    small2.innerHTML = "p";
+    img.src = data.picPath;
 
     member.appendChild(img);
-    member.appendChild(small);
-    member.appendChild(small2);
+
+    let link = document.createElement('a');
+    member.href = "/users/" + data.userId;    
+
+    let small = document.createElement('small');
+    small.classList.add("text-secondary");
+    small.classList.add("ml-1");
+    small.innerHTML = data.name;
+
+    link.appendChild(small);
+    member.appendChild(link);
+
+    let status = document.createElement('small');
+    status.classList.add("ml-1");
+    status.innerHTML = "p";
+    member.appendChild(status);
+
+    let pending_flag = document.createElement('span');
+    pending_flag.classList.add("pending_member");
+    pending_flag.classList.add("d-none");
+    pending_flag.innerHTML = data.userId;
+    member.appendChild(pending_flag);
+
+
+    let removeInvBtn = document.createElement('span');
+    removeInvBtn.classList.add("col-2", "clickable", "remove_invite_button");
+
+    member.appendChild(removeInvBtn);
+
+    let hiddenUserId = document.createElement('span');
+    hiddenUserId.classList.add("d-none");
+    hiddenUserId.id = "userId";
+    hiddenUserId.innerHTML = data.userId;
+
+    removeInvBtn.appendChild(hiddenUserId);
+
+    let removeIcon = document.createElement('i');
+    removeIcon.classList.add("fas", "fa-times", "text-danger");
+
+    removeInvBtn.appendChild(removeIcon);    
+    removeInvBtn.addEventListener('click', removeInviteAPI.bind(removeInvBtn, data.userId));
 
     members.insertBefore(member, members.childNodes[members.children.length - 1]);
 }
-
-
 
 
 function listNavigation(obj, e) {
@@ -157,17 +197,8 @@ function removeMemberAPI(memberId){
     let method = DELETE;
     let api = '/api/band_membership/' + bandId + '/' + memberId + '/inactive';
 
-    sendAsyncAjaxRequest(request, api, method, handleRemoveMemberAPIResponse.bind(this, request, "delete"));
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
-
-function handleRemoveMemberAPIResponse(response){
-    
-    if (response.status != 200)
-        return;
-
-    //delete
-}
-
 
 //Remove band invite
 let removeInviteBtns = document.querySelectorAll('.remove_invite_button');
@@ -181,14 +212,114 @@ function removeInviteAPI(userId){
     let request = new XMLHttpRequest();
     let method = DELETE;
     let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
-
-    sendAsyncAjaxRequest(request, api, method, handleRemoveInviteAPIResponse.bind(this, request, "delete"));
+    
+    sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
 
-function handleRemoveInviteAPIResponse(response){
+function handleDeleteMemberFromListAPIResponse(response){
 
     if (response.status != 200)
         return;
 
-    //delete
+    let member = this.parentNode.parentNode;
+    member.removeChild(this.parentNode);
+    
+}
+
+
+/*******************
+* SCHEDULE CONCERT *
+*******************/
+
+let scheduleButton = document.querySelector('#schedule_button');
+let locationsDiv = document.querySelectorAll('div.location');
+let locationField = document.querySelector('#location');
+let date = document.querySelector('#date');
+let description = document.querySelector('#description');
+let concertLines = document.querySelectorAll('.concert_line');
+
+if(scheduleButton != null)
+    addScheduleListener();
+
+function addScheduleListener(){
+    scheduleButton.addEventListener('click',scheduleConcert);
+}
+
+for(let i = 0; i < locationsDiv.length; i++) {
+
+    let cityId = parseInt(locationsDiv[i].querySelector('.cityId').innerHTML);
+    let cityName = locationsDiv[i].querySelector('.cityName').innerHTML;
+    let countryName = locationsDiv[i].querySelector('.countryName').innerHTML;
+
+    locationsDiv[i].addEventListener('click',editLocation.bind(this,cityId,cityName,countryName));
+}
+
+function editLocation(cityId,cityName,countryName) {
+    let data = {locationId:cityId};
+    let request = new XMLHttpRequest();
+    let api = '/api/bands/'+bandId+'/concertDate';
+    sendAsyncAjaxRequest(request,api,POST,handleLocation.bind(request,cityName,countryName),JSON_ENCODE,JSON.stringify(data));
+}
+
+function handleLocation(cityName, countryName){
+    locationField.innerHTML = cityName + ', ' + countryName;
+}
+
+function scheduleConcert(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let id = this.querySelector('.id');
+    let method = POST;
+    let api = '/api/bands/'+bandId+'/concerts';
+
+    let locationNames = locationField.innerHTML.split(", ");
+
+    let data = {
+        cityName: locationNames[0],
+        countryName: locationNames[1],
+        date: date.value,
+        description: description.value,
+        bandId: bandId
+    };
+    sendAsyncAjaxRequest(request,api,method,handleConcertAPIResponse.bind(this,request),JSON_ENCODE,JSON.stringify(data));
+}
+
+function handleConcertAPIResponse(request){
+    if(request.status == 200){
+        let child = createElementFromHTML(request.response);
+        let position = document.querySelector('#scheduled_concerts');
+        position.appendChild(child);
+    }
+}
+
+for(let line in concertLines){
+    if(!isNaN(concertLines[line]))
+        break;
+    let dbutton = concertLines[line].querySelector('#remove_button');
+    dbutton.addEventListener('click', removeConcert.bind(concertLines[line]));
+}
+
+function removeConcert(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let concertId = this.querySelector('.concert_id');
+
+    let method = DELETE;
+    let api = '/api/bands/'+bandId+'/concerts/'+concertId.innerHTML+'/remove';
+
+    let data = {
+        bandId: bandId
+    };
+    sendAsyncAjaxRequest(request,api,method,handleRemoveConcertAPIResponse.bind(this,request),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function handleRemoveConcertAPIResponse(request){
+    if(request.status == 200) {
+        this.parentNode.removeChild(this);
+    }
 }

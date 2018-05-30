@@ -10,7 +10,7 @@
 	</video>
 </div>
 <div class="row justify-content-center p-0 mx-0">
-	<div class="col-sm-4">
+	<div class="col-11 col-sm-8 col-md-7 col-lg-6 col-xl-5">
 		<div class="jumbotron text-center bg-primary py-5">
 			<h2 class="">Register</h2>
 			<form method="POST" action="{{ route('do_register') }}">

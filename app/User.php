@@ -145,11 +145,11 @@ class User extends Authenticatable
         
     }
 
-    public function getNotifications() {
+    public function getNotifications($offset) {
         
         $result = array();
         
-        $result = DB::transaction(function () {
+        $result = DB::transaction(function () use($offset) {
             $db_result = array();
             
             DB::statement('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY');
@@ -164,9 +164,17 @@ class User extends Authenticatable
 
             $db_result['count'] = DB::select($countQuery, [$this->id])[0]->count;
 
-            $notificationsQuery = $this->queryNotifications();
+            $notificationsQuery = 
+                "SELECT notification_trigger.id, user_notification.notificationTriggerId as id, user_notification.text, notification_trigger.date, notification_trigger.type
+                FROM user_notification
+                JOIN notification_trigger
+                ON user_notification.notificationTriggerId = notification_trigger.id
+                AND notification_trigger.type != 'message'
+                WHERE user_notification.userId = ?
+                ORDER BY notification_trigger.date DESC
+                LIMIT ?;";
 
-            $db_result['notifications'] = DB::select($notificationsQuery, [$this->id]);
+            $db_result['notifications'] = DB::select($notificationsQuery, [$this->id, ($offset+1)*7]);
 
             return $db_result;
         });
@@ -188,7 +196,7 @@ class User extends Authenticatable
     public function getNotificationsBlock($blockNo = 0){
         
         $notificationsQuery = 
-            "SELECT notification_trigger.id, user_notification.notificationTriggerId, user_notification.text, notification_trigger.date, notification_trigger.type
+            "SELECT notification_trigger.id, user_notification.notificationTriggerId as id, user_notification.text, notification_trigger.date, notification_trigger.type
             FROM user_notification
             JOIN notification_trigger
             ON user_notification.notificationTriggerId = notification_trigger.id
@@ -311,6 +319,38 @@ class User extends Authenticatable
 
     }
 
+    public function fellowMusiciansAll() {
+        
+        $bands = $this->bands();
+        
+        if(count($bands) == 0)
+        return array(); 
+        $query = 
+            'SELECT DISTINCT mb_user.id as user_id, mb_user.name as name, band.name as complement, coalesce(follows.isActive,false) as is_following
+            FROM band
+            JOIN band_membership ON band_membership.bandid = band.id
+            JOIN mb_user on mb_user.id = band_membership.userid
+            LEFT JOIN user_follower as follows
+            ON follows.followingUserId = ?
+            AND follows.followedUserId = mb_user.id
+            WHERE band.id=ANY(?)
+            AND mb_user.id <> ?';
+
+        $bands_ids = "{";
+        for($i = 0; $i < count($bands)-1; $i++){
+            $bands_ids = $bands_ids.$bands[$i]->id.',';
+        }
+
+        if(count($bands) >= 1)
+            $bands_ids = $bands_ids.$bands[count($bands)-1]->id;
+            
+            
+        $bands_ids = $bands_ids.'}';
+
+        return DB::select($query,[$this->id, $bands_ids, $this->id]);
+
+    }
+
     public static function getUsersByPattern($userId, $pattern){
         $searchQueryUsers = 
             "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, coalesce(user_follower.isActive, false) as is_following
@@ -366,7 +406,7 @@ class User extends Authenticatable
             ON user_follower.followingUserId = mb_user.id 
             AND user_follower.followedUserId = ?
             AND user_follower.isactive = true
-            LEFT JOIN (select * from user_follower) as follows
+            LEFT JOIN user_follower as follows
             ON follows.followingUserId = ?
             AND follows.followedUserId = mb_user.id
             ORDER BY is_following DESC, mb_user.name ASC";
@@ -384,6 +424,24 @@ class User extends Authenticatable
             ORDER BY is_following ASC";
         
         return DB::select($searchQueryBands, [$this->id]);  
+    }
+
+    public function getFellowMusicians(){
+        $followerUsersQuery = 
+            "SELECT mb_user.id as user_id, mb_user.name as name, city.name || ', ' || country.name as complement, coalesce(follows.isActive,false) as is_following
+            FROM mb_user
+            LEFT JOIN city ON city.id = mb_user.location 
+            LEFT JOIN country ON city.countryId = country.id
+            JOIN user_follower 
+            ON user_follower.followingUserId = mb_user.id 
+            AND user_follower.followedUserId = ?
+            AND user_follower.isactive = true
+            LEFT JOIN user_follower as follows
+            ON follows.followingUserId = ?
+            AND follows.followedUserId = mb_user.id
+            ORDER BY is_following DESC, mb_user.name ASC";
+
+        return DB::select($followerUsersQuery, [$this->id, $this->id]);
     }
 
 

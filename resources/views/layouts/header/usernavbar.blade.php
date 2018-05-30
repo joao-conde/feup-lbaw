@@ -32,8 +32,8 @@
                 </a>
             </div>
         </li>
-        
-        @include('layouts.header.partials.notifications')
+
+        @include('layouts.header.partials.notifications', ['notificationsInfo' => Auth::user()->getNotifications(0)])
 
         <li class="nav-item dropdown">
             <a class="nav-link text-success p-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,6 +47,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="\faqs">FAQ</a>
                 <a class="dropdown-item" href="\about">About</a>
+                <a class="dropdown-item" href="\terms">Terms</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="{{ route('do_logout') }}">Logout</a>
             </div>

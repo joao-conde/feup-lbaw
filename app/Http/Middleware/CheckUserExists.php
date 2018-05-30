@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Closure;
 
-class CheckNotBanned
+class CheckUserExists
 {
     /**
      * Handle an incoming request.
@@ -19,13 +19,13 @@ class CheckNotBanned
      */
     public function handle($request, Closure $next)
     {
+
         $user = User::where('username',$request->username)->first();
-        if($user != null){
-            $isBanned = Ban::where('userid',$user->id)->where('isactive','true')->first();
-            if($isBanned != null)
-                return redirect('/403');
+
+        if($user->email != $request->email){
+            $errors->has('username') ? ' has-error' : '';
         }
 
-        return $next($request);
+        return $errors;
     }
 }

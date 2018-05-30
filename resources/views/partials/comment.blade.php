@@ -5,27 +5,23 @@
 
         <div class="row">
 
-            <div class="commentDate col-auto align-self-center pr-0">
-                <small>{{date('d/m/Y H:i',strtotime($comment->date))}}</small>
+            <div class="col-1 align-self-center comment_author">
+                <a href="/users/{{$comment->userid}}"><img src="{{ User::getUserProfilePicturePath($comment->userid) }}" class=" profile_img_message mr-2"></a>
             </div>
 
-            <div class="col-auto align-self-center comment_author">
-                <img src="{{ User::getUserProfilePicturePath($comment->userid) }}" class=" profile_img_message mr-2">
-                <small>
-                    <a class="text-secondary align-middle" href="/users/{{$comment->userid}}">{{$comment->author}}</a>
-                    <span>:</span>
-                </small>
-            </div>
-
-            <div class="col align-self-center">
+            <div class="col-9 align-self-center">
                 <small class="comment_text">
                     <small>
                         <sup>
                             <i class="fas fa-quote-right"></i>
                         </sup>
-                        <i>{{$comment->text}}</i>
                     </small>
+                        <i>{{$comment->text}}</i>
                 </small>
+            </div>
+
+            <div class="commentDate col-1 align-self-center pr-0">
+                <small>{{date('d/m/Y H:i',strtotime($comment->date))}}</small>
             </div>
 
             @if($comment->userid == Auth::user()->id)

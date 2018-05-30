@@ -10,6 +10,8 @@ use App\Report;
 use App\Ban;
 use App\City;
 use App\Genre;
+use App\Content;
+use App\Concert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -274,18 +276,21 @@ class BandController extends Controller
             }
         }
 
-        //dd($members);
 
-        return view('pages.band',
+        $concerts = Concert::getBandConcerts($id);
+        
+        return view('pages.band.profile',
             ['isFounder' => $isFounder,
             'band' => $band, 
             'members' => $members,
-            'wholeRate'=>$whole, 
-            'decimalRate'=>$decimal,
-            'roundedRate'=>$roundedRate,
+            'wholeRate'=> $whole, 
+            'decimalRate'=> $decimal,
+            'roundedRate'=> $roundedRate,
             'location'=> $location,
-            'country'=>$country,
-            'cities' =>$cities]);
+            'country'=> $country,
+            'cities' => $cities,
+            'concerts' => $concerts
+            ]);
     }
 
     public function getNewMemberPartial(Request $request){
@@ -295,30 +300,20 @@ class BandController extends Controller
             'id' => $request->id, 
             'name' => $request->name
         ]);
-        // TODO: user_img
     }
 
     public function getNewGenrePartial(Request $request){
         return view('pages.newband.new_genre', ['name' => $request->name]);
     }
 
+    // public function getNewMemberProfilePartial(Request $request){
+    //     return view('pages.band.band_members', ['name' => $request->name]);
+    // }
+
 
     public function getGenres(Request $request){
     
-            
-        $words = explode(" ", trim($request->pattern));
-        $genresResult = array();
-    
-        if(count($words) && $words[0] == ""){
-            return response($genresResult,200);
-        }
-        $string = "";
-        foreach ($words as $word) {
-            
-            $string = $string.$word.":* & ";            
-        }
-        $string = trim($string, "& ");
-    
+        $string = Content::patternToTSVector($request->pattern);    
     
         $genresQuery = "SELECT genre.id, genre.name as name 
                         FROM genre 
@@ -490,9 +485,34 @@ class BandController extends Controller
         else
             return response('',500);  
         
-        
         return response($exists,200);
 
+    }
+
+    public function concertDate(Request $request){    
+        return response('',200);
+    }
+
+    public function scheduleConcert(Request $request){
+        
+        $concert = new Concert();
+        $concert->bandid = $request->bandId;
+        $concert->description = $request->description;
+        $concert->locationid = City::where('name', $request->cityName)->pluck('id')[0];
+        $concert->concertdate = $request->date;
+        $concert->save();
+
+
+        return view('partials.concert',['concert'=>$concert,'']);
+    }
+
+    public function removeConcert(Request $request, $bandId, $concertId){
+
+        $concert = Concert::find($concertId);
+        $concert->isactive = false;
+        $concert->save();
+
+        return response('',200);
     }
 
 }

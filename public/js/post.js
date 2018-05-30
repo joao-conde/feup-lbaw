@@ -220,7 +220,15 @@ function addPostListeners(post) {
 
   newCommentTextArea.addEventListener('input', function () {
     newCommentButton.disabled = newCommentTextArea.value.trim().length == 0;
-  })
+  });
+
+  newCommentTextArea.addEventListener('keypress', function (e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) { // Enter
+      newCommentButton.click();
+    }
+});
+
 
   newCommentButton.addEventListener('click', sendNewCommentRequest.bind(this, postId, newCommentTextArea, post));
 

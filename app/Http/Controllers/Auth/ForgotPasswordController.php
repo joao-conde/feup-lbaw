@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Mail;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Validator;
+
 
 class ForgotPasswordController extends Controller
 {
@@ -40,21 +42,28 @@ class ForgotPasswordController extends Controller
 
     public function sendEmail(Request $request){
 
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
-            'email' => 'required'
+            'email' => 'required',
         ]);
 
+
         $user = User::where('username',$request->username)->where('email',$request->email)->first();
-        if($user == null)
-            return redirect('/');
+
+        if ($validator->fails()) {
+            return redirect('/email')->withErrors($validator)->withInput();
+        }
+
+        if($user == null){
+            $validator->errors()->add('Credentials','These credentials do not match our records.');
+            return redirect('/email')->withErrors($validator)->withInput();
+        }
+
         $userId = $user->id;
         $token = str_random(40);
         $token = hash("sha256",$token);
         $user->password_token = $token;
         $user->save();
-
-        // dd($user);
 
         Mail::send(['html'=>'partials.password_mail','email'=>'$user->email'],['name','LBAW1712','token'=>$token], function($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Password Recovery');
