@@ -11,6 +11,7 @@ use App\Ban;
 use App\City;
 use App\Genre;
 use App\Content;
+use App\Concert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -275,18 +276,21 @@ class BandController extends Controller
             }
         }
 
-        //dd($members);
 
+        $concerts = Concert::getBandConcerts($id);
+        
         return view('pages.band.profile',
             ['isFounder' => $isFounder,
             'band' => $band, 
             'members' => $members,
-            'wholeRate'=>$whole, 
-            'decimalRate'=>$decimal,
-            'roundedRate'=>$roundedRate,
+            'wholeRate'=> $whole, 
+            'decimalRate'=> $decimal,
+            'roundedRate'=> $roundedRate,
             'location'=> $location,
-            'country'=>$country,
-            'cities' =>$cities]);
+            'country'=> $country,
+            'cities' => $cities,
+            'concerts' => $concerts
+            ]);
     }
 
     public function getNewMemberPartial(Request $request){
@@ -481,9 +485,34 @@ class BandController extends Controller
         else
             return response('',500);  
         
-        
         return response($exists,200);
 
+    }
+
+    public function concertDate(Request $request){    
+        return response('',200);
+    }
+
+    public function scheduleConcert(Request $request){
+        
+        $concert = new Concert();
+        $concert->bandid = $request->bandId;
+        $concert->description = $request->description;
+        $concert->locationid = City::where('name', $request->cityName)->pluck('id')[0];
+        $concert->concertdate = $request->date;
+        $concert->save();
+
+
+        return view('partials.concert',['concert'=>$concert,'']);
+    }
+
+    public function removeConcert(Request $request, $bandId, $concertId){
+
+        $concert = Concert::find($concertId);
+        $concert->isactive = false;
+        $concert->save();
+
+        return response('',200);
     }
 
 }

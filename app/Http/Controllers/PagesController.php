@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Session;
 
 class PagesController extends Controller
 {
+    public function terms(){
+        return view('pages.terms');
+    }
+
     public function about(){
     	return view('pages.about');
     }

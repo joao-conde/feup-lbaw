@@ -47,7 +47,6 @@ function bandMembershipEventListener() {
 }
 
 function handleAPIResponse(membership_status, request) {
-    console.log(request.responseText);
 
     if (request.status == 200) {
 

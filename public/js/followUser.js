@@ -40,15 +40,13 @@ function startStopFollowingEventListener() {
         method = DELETE;
         follow = false;
     }
-
-    console.log(follow);
-    console.log(userOrBandToFollowId);
-
-    sendAsyncAjaxRequest(request,api,method,handleAPIResponse.bind(this, follow, request, followType));
+    
+    
+    sendAsyncAjaxRequest(request,api,method, handleUnfollowFollowAPIResponse.bind(this, follow, request, followType));
 
 }
 
-function handleAPIResponse(follow, request, followType) {
+function handleUnfollowFollowAPIResponse(follow, request, followType) {
 
     if(request.status == 200) {
 

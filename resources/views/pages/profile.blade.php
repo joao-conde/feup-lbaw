@@ -3,7 +3,6 @@
 
 <link rel="stylesheet" href="{{ asset('css/profile.css')}}">
 <link rel="stylesheet" href="{{ asset('css/feed.css')}}">
-{{-- <script defer src="{{ asset('js/newPost.js')}}"></script> --}}
 <script defer src="{{ asset('js/toggleChat.js')}}"></script>
 <script defer src="{{ asset('js/editProfile.js')}}"></script>
 <script defer src="{{ asset('js/post.js')}}"></script>
@@ -21,6 +20,7 @@
 		
 			<div id="profile_area" class="col-12 col-md-9">
 				<div class="jumbotron p-4 mb-1">
+						
 					<div id="username" class="row px-3 justify-content-center">
 						<div class="col-auto align-self-center">
 							<img src="{{asset('images/system/musician-icon.svg')}}" class="profile_type">
@@ -44,7 +44,7 @@
 							</span>
 							@endif
 						</div>
-		
+						
 						@if( $user->id == Auth::user()->id)
 						<div class="col-auto align-self-center">
 							<span id="lock_locked" class="clickable" data-toggle="modal" data-target="#modalPassword">
@@ -81,6 +81,11 @@
 							</div>
 						</div>
 						@endif
+						
+						<a id="helpLock" class="align-self-center" data-placement="bottom" href="#" data-toggle="tooltip" title="Unlock to edit, lock to avoid mistakes!">
+							<i class="far fa-question-circle"></i>
+						</a>
+
 					</div>
 		
 					<div id="profile_pic_div" class="row">
@@ -245,9 +250,9 @@
 		
 							<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 								<div class="navbar-nav">
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Bands</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Following</a>
-									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="#">Followers</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('bands_membership') }}">Bands</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('user_followings') }}">Following</a>
+									<a class="nav-item col-4 nav-link btn btn-secondary text-white mr-2" href="{{ route('user_followers') }}">Followers</a>
 								</div>
 							</div>
 						</nav>
@@ -264,9 +269,13 @@
 		
 		<div class="row no-gutters">
 			<div class="col-3 d-none d-lg-block">
-		
+				
 				<div class="jumbotron p-3 mr-2">
-					<p class="align-middle">Bands</p>
+					<p class="inline">Bands 
+						<a id="helpLock" class="align-self-center" data-placement="bottom" href="#" data-toggle="tooltip" title="Checkout all your bands or create new ones!">
+							<i class="far fa-question-circle"></i>
+						</a>
+					</p>
 					@foreach($user->bands() as $band)
 					<a class="d-block" href="{{route('band_profile', [$band->id])}}">
 						<img class="profile_img_feed" src="{{ Band::getBandIconPicturePath($band->id) }}">
@@ -279,13 +288,13 @@
 		
 						<a class="mr-1 d-block mr-2" href="#">
 							<small>
-								<p class="text-secondary mt-2 mb-0">See all</p>
+								<a class="text-secondary mt-2 mb-0" href="{{route('bands_membership')}}">See all</a>
 							</small>
 		
 						</a>
 						<a class="mr-1 d-block" href="{{route('create_band')}}">
 							<small>
-								<p class="text-secondary mt-2 mb-0">Create Band</p>
+								<a class="text-secondary mt-2 mb-0" href="{{ route('create_band') }}">Create Band</a>
 							</small>
 						</a>
 		

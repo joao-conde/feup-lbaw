@@ -212,7 +212,7 @@ function removeInviteAPI(userId){
     let request = new XMLHttpRequest();
     let method = DELETE;
     let api = '/api/band_invitation/' + bandId + '/' + userId + '/inactive';
-
+    
     sendAsyncAjaxRequest(request, api, method, handleDeleteMemberFromListAPIResponse.bind(this, request, "delete"));
 }
 
@@ -224,4 +224,102 @@ function handleDeleteMemberFromListAPIResponse(response){
     let member = this.parentNode.parentNode;
     member.removeChild(this.parentNode);
     
+}
+
+
+/*******************
+* SCHEDULE CONCERT *
+*******************/
+
+let scheduleButton = document.querySelector('#schedule_button');
+let locationsDiv = document.querySelectorAll('div.location');
+let locationField = document.querySelector('#location');
+let date = document.querySelector('#date');
+let description = document.querySelector('#description');
+let concertLines = document.querySelectorAll('.concert_line');
+
+if(scheduleButton != null)
+    addScheduleListener();
+
+function addScheduleListener(){
+    scheduleButton.addEventListener('click',scheduleConcert);
+}
+
+for(let i = 0; i < locationsDiv.length; i++) {
+
+    let cityId = parseInt(locationsDiv[i].querySelector('.cityId').innerHTML);
+    let cityName = locationsDiv[i].querySelector('.cityName').innerHTML;
+    let countryName = locationsDiv[i].querySelector('.countryName').innerHTML;
+
+    locationsDiv[i].addEventListener('click',editLocation.bind(this,cityId,cityName,countryName));
+}
+
+function editLocation(cityId,cityName,countryName) {
+    let data = {locationId:cityId};
+    let request = new XMLHttpRequest();
+    let api = '/api/bands/'+bandId+'/concertDate';
+    sendAsyncAjaxRequest(request,api,POST,handleLocation.bind(request,cityName,countryName),JSON_ENCODE,JSON.stringify(data));
+}
+
+function handleLocation(cityName, countryName){
+    locationField.innerHTML = cityName + ', ' + countryName;
+}
+
+function scheduleConcert(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let id = this.querySelector('.id');
+    let method = POST;
+    let api = '/api/bands/'+bandId+'/concerts';
+
+    let locationNames = locationField.innerHTML.split(", ");
+
+    let data = {
+        cityName: locationNames[0],
+        countryName: locationNames[1],
+        date: date.value,
+        description: description.value,
+        bandId: bandId
+    };
+    sendAsyncAjaxRequest(request,api,method,handleConcertAPIResponse.bind(this,request),JSON_ENCODE,JSON.stringify(data));
+}
+
+function handleConcertAPIResponse(request){
+    if(request.status == 200){
+        let child = createElementFromHTML(request.response);
+        let position = document.querySelector('#scheduled_concerts');
+        position.appendChild(child);
+    }
+}
+
+for(let line in concertLines){
+    if(!isNaN(concertLines[line]))
+        break;
+    let dbutton = concertLines[line].querySelector('#remove_button');
+    dbutton.addEventListener('click', removeConcert.bind(concertLines[line]));
+}
+
+function removeConcert(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let concertId = this.querySelector('.concert_id');
+
+    let method = DELETE;
+    let api = '/api/bands/'+bandId+'/concerts/'+concertId.innerHTML+'/remove';
+
+    let data = {
+        bandId: bandId
+    };
+    sendAsyncAjaxRequest(request,api,method,handleRemoveConcertAPIResponse.bind(this,request),JSON_ENCODE,JSON.stringify(data));
+
+}
+
+function handleRemoveConcertAPIResponse(request){
+    if(request.status == 200) {
+        this.parentNode.removeChild(this);
+    }
 }

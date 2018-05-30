@@ -1,12 +1,16 @@
 <div id="leftfeedmenu" class="py-3 card bg-light rounded-0 col-2 d-none d-md-block">
   <a class="mr-1 d-block" href="{{route('profile', Auth::user()->id)}}">
     <img class="profile mr-2" src="{{ Auth::user()->getProfilePicturePath() }}">
-    <span class="text-secondary align-middle">My Profile</span>
+    <span class="text-secondary align-middle">{{explode(" ",Auth::user()->name)[0]}}</span>
   </a>
 
   <hr>
 
-  <p class="align-middle mb-1">Bands</p>
+  <p class="align-middle mb-1">Bands
+    <a id="helpLock" class="align-self-center" data-placement="bottom" href="#" data-toggle="tooltip" title="Checkout all your bands or create new ones!">
+          <i class="far fa-question-circle"></i>
+    </a>
+  </p>
   @foreach(Auth::user()->bands() as $band)
   <a class="mr-1 d-block" href="{{route('band_profile', [$band->id])}}">
     <img class="profile_img_feed" src="{{ Band::getBandIconPicturePath($band->id) }}">
@@ -28,7 +32,11 @@
 
   <hr>
 
-  <p class="align-middle mb-1">Fellow Musicians</p>
+  <p class="align-middle mb-1">Fellow Musicians
+    <a id="helpLock" class="align-self-center" data-placement="bottom" href="#" data-toggle="tooltip" title="Checkout the rock stars you play with!">
+          <i class="far fa-question-circle"></i>
+    </a>
+  </p>
 
   @foreach(Auth::user()->fellowMusicians() as $fellowMusician)
   <a class="mr-1 d-block" href="{{'/users/'.$fellowMusician->id}}">

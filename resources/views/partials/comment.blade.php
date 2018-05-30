@@ -7,10 +7,6 @@
 
             <div class="col-1 align-self-center comment_author">
                 <a href="/users/{{$comment->userid}}"><img src="{{ User::getUserProfilePicturePath($comment->userid) }}" class=" profile_img_message mr-2"></a>
-                {{-- <small>
-                    <a class="text-secondary align-middle" href="/users/{{$comment->userid}}">{{$comment->author}}</a>
-                    <span>:</span>
-                </small> --}}
             </div>
 
             <div class="col-9 align-self-center">

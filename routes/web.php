@@ -27,6 +27,7 @@ Route::post('/do_search', 'PagesController@do_search')->name('do_search');
 // STATIC
 Route::get('/about', 'PagesController@about');
 Route::get('/faqs', 'PagesController@faq');
+Route::get('/terms', 'PagesController@terms');
 
 // ADMIN
 Route::get('/users', 'UserController@listUserPermissions')->middleware('admin');;
@@ -76,6 +77,10 @@ Route::put('api/bands/{id}/followers/{userId}','BandController@startFollowing');
 Route::delete('api/bands/{id}/followers/{userId}','BandController@stopFollowing');
 
 Route::put('/api/bands/{bandId}/invitations/{userId}', 'BandController@inviteMember');
+Route::post('/api/bands/{bandId}/concerts', 'BandController@scheduleConcert');
+Route::post('/api/bands/{bandId}/concertDate', 'BandController@concertDate');
+Route::delete('/api/bands/{bandId}/concerts/{concertId}/remove', 'BandController@removeConcert');
+
 
 Route::put('api/user_skills/{skillId}','UserController@addSkill');
 Route::delete('api/user_skills/{skillId}','UserController@deleteSkill');
@@ -134,6 +139,8 @@ Route::get('users/followers', 'UserController@userFollowers')->name('user_follow
 Route::get('users/bands_following', 'UserController@bandFollowings')->name('bands_following');
 Route::get('users/fellow_musicians', 'UserController@fellowMusicians')->name('fellow_musicians');
 Route::get('users/bands_membership', 'UserController@bandMemberships')->name('bands_membership');
+
+
 //Profile
 Route::get('users/{id}', 'UserController@show')->name('profile');
 
@@ -141,9 +148,4 @@ Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('po
 
 // Errors
 Route::get('/403', 'ErrorPagesController@error403');
-
-
-
-
-
-
+Route::get('/404', 'ErrorPagesController@error404');

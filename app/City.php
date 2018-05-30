@@ -33,7 +33,6 @@ class City extends Model
                   ORDER BY city.name';
                   
         return DB::select($query);
-
     }
 
 
