@@ -113,8 +113,6 @@ if (postButton != null) {
 
 }
 
-
-
 function sendCreatePostRequest(media_URL) {
 
   let request = new XMLHttpRequest();
@@ -123,8 +121,6 @@ function sendCreatePostRequest(media_URL) {
   let url = media_URL == undefined ? "" : media_URL;
 
   let api = '/api/users/' + userId + '/posts';
-
-  console.log(media_URL);
 
   let data = {
     private: privatePost,

@@ -6,11 +6,29 @@
 
     </div>
     <div class="col-2">
-        <span class="badge badge-primary align-middle">4</span>
+        <?php 
+                
+            $unreadMessages = 0;
+            foreach (Auth::user()->unreadMessages() as $unreadMessage) {
+                
+                if($unreadMessage->creatorid == $friend->id) {
+                   $unreadMessages = $unreadMessage->numberofmessages;
+                }
+            }
+                
+        ?>
+
+        @if($unreadMessages > 0)
+        <span class="badge badge-primary align-middle newMessages">{{$unreadMessages}}</span>
+        @else
+        <span class="badge badge-primary align-middle d-none newMessages">{{$unreadMessages}}</span>
+        @endif
+
+        
     </div>
 </div>
 
-<div class="collapse" id="{{"user_".$friend->id}}">
+<div class="collapse collapse-messages" id="{{"user_".$friend->id}}">
     <div class="card card-body rounded-0 p-0 m-0 chats">
         <div class="container pr-0 messagesList">
             <?php $messages =  $user->friendMessages($friend->id,0) ?>

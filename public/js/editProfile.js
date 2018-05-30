@@ -871,3 +871,30 @@ function deleteLocationAjaxRequestHandler() {
 
 }
 
+
+/**************
+* REPORT USER *
+**************/
+let reportButton = document.querySelector('#reportButton');
+let reportedUserId = document.querySelector('#userId');
+
+if(reportButton != null)
+    reportButton.addEventListener('click',reportUser);
+
+function reportUser(){
+    event.preventDefault();
+
+    let request = new XMLHttpRequest();
+
+    let reportApi = '/api/users/{userId}/report';
+
+    let data = {
+        reportedUserId: reportedUserId.innerHTML
+    }
+
+    sendAsyncAjaxRequest(request,reportApi,POST,handleReportedUserResponse,JSON_ENCODE,JSON.stringify(data));    
+}
+
+function handleReportedUserResponse(request){
+    return;
+}

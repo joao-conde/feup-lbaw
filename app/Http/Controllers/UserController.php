@@ -623,4 +623,19 @@ class UserController extends Controller {
             'results' => $ownBandsResult,
             'route' => 'band_profile']);
     }
+
+    public function reportUser(Request $request){
+
+        $reportId = DB::select("select id from report order by date desc limit 1;");
+
+        $report = new Report();
+        $report->id = $reportId[0]->id+1;
+        $report->text = str_random(10);
+        $report->reporteduserid = $request->reportedUserId;
+        $report->reporteruserid = Auth::user()->id;
+        $report->reporttype = 'user_report';
+        $report->save();
+
+        return response('',200);
+    }
 }

@@ -1,4 +1,5 @@
-@extends('layouts.profile_layout') @section('leftmenumobile')
+@extends('layouts.profile_layout') 
+
 
 <link href="{{ asset('css/feed.css') }}" rel="stylesheet">
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
@@ -9,11 +10,13 @@
 <script defer src="{{ asset('js/editBandPage.js')}}"></script>
 <script defer src="{{ asset('js/post.js')}}"></script> 
 
+@section('leftmenumobile')
 @include('partials.leftmenumobile') 
 
-@endsection @section('logged_content')
+@endsection 
+@section('logged_content')
 
-<p class="d-none" id="bandId">{{$band->id}}</p>
+<p class="d-none" id="bandId">{{$band->id}}</p> 
 <p id="posts_page_type" class="d-none">band</p>
 
 
@@ -41,7 +44,6 @@
 
                         <img id="profile_pic" class="profile_image d-block my-3" src="{{$band->getProfilePicturePath()}}" alt="Profile Image"> @include('partials.followbutton', ['followType' => 'band','isFollowing' => $band->isFollowing(Auth::user()->id),
                         'userOrBandToFollowId'=> $band->id])
-
                     </div>
 
                     <div class="col-12 col-lg-7 p-3 align-self-start text-justify">
@@ -63,7 +65,8 @@
 
                         <div class="row justify-content-center p-2">
                             <div class="col-auto align-self-center">
-                                @if($roundedRate > 0) @for($i = 0; $i
+                                @if($roundedRate > 0) 
+                                    @for($i = 0; $i
                                     < $wholeRate; $i++) <span class="mt-1 text-primary fullstar">
                                         <i class="fas fa-star"></i>
                                     </span>
@@ -71,11 +74,13 @@
                                     <span class="mt-1 text-primary halfstar">
                                         <i class="fas fa-star-half"></i>
                                     </span>
-                                    @endif @for($i = $wholeRate; $i
+                                    @endif 
+                                    @for($i = $wholeRate; $i
                                         < 5; $i++) <span class="mt-1 text-primary emptystar">
                                             <i class="far fa-star"></i>
                                         </span>
-                                        @endfor @endif
+                                        @endfor 
+                                @endif
 
                                         <small class="m-1 text-info">{{$roundedRate > 0 ? $roundedRate : "Not rated yet"}}</small>
                                     </div>
@@ -158,14 +163,6 @@
 
                 <div class="autocomplete" id="inviteMember">
                     <input id="band_members" placeholder="Invite member..." type="text" name="name" autocomplete="off">
-                </div>
-                <div class="collapse show" id="new_members">
-                </div>
-
-                @if($isFounder)
-
-                <div class="mt-3 autocomplete" id="inviteMember">
-                    <input id="band_members" placeholder="Invite member..." type="text" name="name">
                 </div>
                 <div class="collapse show" id="new_members">
                 </div>

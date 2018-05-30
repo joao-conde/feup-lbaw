@@ -17,7 +17,7 @@
 	</section>
 
 	<section class="pb-3">
-		<h1 class="mt-3 text-secondary">Our Team</h1>
+		<h1 class="mt-3 text-secondary d-inline">Our Team </h1> <h2 class="d-inline mt-3 text-secondary">- Contact us!</h2>
 		<hr>
 		<div class="row text-center py-3 justify-content-center">
 			<div class="col-12 col-md-3 d-flex justify-content-center mt-2">
@@ -25,6 +25,7 @@
 					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t1.0-9/10801679_739706209412016_9088497699719155212_n.jpg?oh=d1c2973856091cfbece0da266c887660&oe=5B453EB9" alt="Card image">
 					<div class="card-body">
 						<h4 class="card-title">Danny Soares</h4>
+						<h6>up201505509@fe.up.pt</h6>
 					</div>
 				</div>
 			</div>
@@ -34,6 +35,7 @@
 					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t1.0-9/10514583_817103501641193_4194298598428747641_n.jpg?oh=30e7960c7d0fdc61376dd4153c8ba0fa&oe=5B37B068" alt="Card image">
 					<div class="card-body">
 						<h4 class="card-title">João Furriel</h4>
+						<h6>up201104913@fe.up.pt</h6>
 					</div>
 				</div>
 			</div>
@@ -42,6 +44,7 @@
 					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t1.0-9/12802752_1222285871132467_1164102876889737192_n.jpg?_nc_cat=0&oh=b6c2e6bb21ca4913dbddf4e774a378ce&oe=5B8F655A" alt="Card image">
 					<div class="card-body">
 						<h4 class="card-title">João Conde</h4>
+						<h6>up201503256@fe.up.pt</h6>
 					</div>
 				</div>
 			</div>
@@ -51,6 +54,7 @@
 					<img class="card-img-top border rounded" src="https://scontent.flis7-1.fna.fbcdn.net/v/t31.0-8/328119_421006244641460_2055447235_o.jpg?oh=5d9f90854cec611bb5206d3fac14d445&oe=5B360644" alt="Card image">
 					<div class="card-body">
 						<h4 class="card-title">Leo Teixeira</h4>
+						<h6>up201502848@fe.up.pt</h6>
 					</div>
 				</div>
 			</div>
