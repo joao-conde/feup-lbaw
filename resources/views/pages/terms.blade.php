@@ -5,7 +5,7 @@
 
 <div class="container main_content">
 	<section class="py-3">
-		<div class="jumbotron">
+		<div class="jumbotron mt-5">
 			<div class="row">
 				<div class="col-12 text-secondary">
 					<h2 class="text-secondary">Terms of Service</h2>
@@ -19,7 +19,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Connect musicians</h4>
+			<h4 class="card-title text-primary">Connect musicians</h4>
 			<span>
 				We help connect thousands of musicians around the globe, enabling strong connections and facilitate the creation of world-wide
 				famous bands.
@@ -31,7 +31,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Give tools to freely communicate</h4>
+			<h4 class="card-title text-primary">Give tools to freely communicate</h4>
 			<span>
 				Express your opinions, share your favourite songs, chat with other talented artists, make real connections and share interests.
 				All with our services.
@@ -43,7 +43,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Help you launch your career </h4>
+			<h4 class="card-title text-primary">Help you launch your career </h4>
 			<span>
 				Setup band meetings and concerts while announcing them all within our social network.
 			</span>
@@ -56,7 +56,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Your personal information is yours only</h4>
+			<h4 class="card-title text-primary">Your personal information is yours only</h4>
 
 			<span>
 				Unlike other inferior social networks we do not require your data and every personal information you wish to save will be
@@ -71,7 +71,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Your share of the work to keep MusicBox alive</h4>
+			<h4 class="card-title text-primary">Your share of the work to keep MusicBox alive</h4>
 
 			<span>
 				We live and operate as a community thus requiring every single one of our musicians to agree on a set of basic rules, keeping
@@ -84,7 +84,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Offensive content</h4>
+			<h4 class="card-title text-primary">Offensive content</h4>
 
 			<span>
 				Offensive content will not be tolerated and will be quickly reported and later on his user banned.
@@ -96,7 +96,7 @@
 
 	<div class="card text-center p-2">
 		<div class="card-body">
-			<h4 class="card-title">Unrelated content</h4>
+			<h4 class="card-title text-primary">Unrelated content</h4>
 
 			<span>
 				Keep in mind this social network is about MUSIC. We want to keep it as much as possible

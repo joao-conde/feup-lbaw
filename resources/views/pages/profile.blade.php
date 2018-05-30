@@ -27,7 +27,7 @@
 						</div>
 		
 						<div class="col-10 align-self-center">
-		
+							<div id="userId" class="d-none">{{ $user->id }}</div>
 							<h3 id="h3userName" class="d-inline-block align-middle mr-2">{{$user->name}}</h3>
 							@if( $user->id == Auth::user()->id)
 							<span id="edit_name_button" class="edit_field d-none">
@@ -95,6 +95,7 @@
 							<img id="profile_pic" class="profile_image d-block my-3" src="{{$user->getProfilePicturePath()}}" alt="Profile Image"> 
 							@if($user->id != Auth::user()->id) 
 							@include('partials.followbutton', ['followType'=> 'user','isFollowing' => $isFollowing, 'userOrBandToFollowId'=> $user->id])
+							<button id="reportButton" class="btn btn-primary">Report</button>
 							@else
 							<span id="edit_picture_button">
 								<input id="inputPicture" name="picture" type="file" class="d-none">

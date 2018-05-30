@@ -19,8 +19,8 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 | -------- | -- |:------:| --------- |
 |US01      |About Page|medium|100%|
 |US02      |FAQ Page|medium|100%|
-|US03      |Contact Page|medium|0%|
-|US04      |Terms Page|medium|50%|
+|US03      |Contact Page|medium|100%|
+|US04      |Terms Page|medium|100%|
 
 
 ### UnauthenticatedUser
@@ -52,7 +52,7 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US22      |Band Page|high|100%|
 |US23      |Comment|medium|80%|
 |US24      |Report bands'|medium|0%|
-|US25      |Report users'|medium|0%|
+|US25      |Report users'|medium|100%|
 |US26      |Rate bands|medium|0%|
 |US27      |Rate users|medium|0%|
 |US28      |Apply to Bands|low|0%|
