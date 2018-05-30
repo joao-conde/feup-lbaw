@@ -32,8 +32,8 @@
                 </a>
             </div>
         </li>
-        
-        @include('layouts.header.partials.notifications')
+
+        @include('layouts.header.partials.notifications', ['notificationsInfo' => Auth::user()->getNotifications()])
 
         <li class="nav-item dropdown">
             <a class="nav-link text-success p-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

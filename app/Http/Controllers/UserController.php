@@ -74,6 +74,15 @@ class UserController extends Controller {
 
     }
 
+    public function getNotifications(Request $request){
+    
+        $notifications = Auth::user()->getNotifications();
+
+        return view('layouts.header.partials.notificationslist', [
+                    'notifications' => $notifications['notifications'],
+                    'count' => $notifications['count']]);      
+    }
+    
     public function api_userFollowing(Request $request){
 
 
@@ -510,9 +519,6 @@ class UserController extends Controller {
         
         return view('pages.feed', ['posts' => $posts]);
     }
-
-
-    
 
 
     public function userFollowings(){

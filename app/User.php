@@ -365,7 +365,7 @@ class User extends Authenticatable
             ON user_follower.followingUserId = mb_user.id 
             AND user_follower.followedUserId = ?
             AND user_follower.isactive = true
-            LEFT JOIN (select * from user_follower) as follows
+            LEFT JOIN user_follower as follows
             ON follows.followingUserId = ?
             AND follows.followedUserId = mb_user.id
             ORDER BY is_following DESC, mb_user.name ASC";

@@ -13,7 +13,7 @@
 
     <div class="container-fluid main_form">
         <div class="row justify-content-center mt-5">
-            <div class="col-sm-4">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-6 col-xl-5">
                 <div class="jumbotron text-center bg-primary">
                     <h2>Login</h2>
                     <form method="POST" action="{{ route('do_login') }}">
@@ -37,9 +37,12 @@
                     </form>
                     <div class="row justify-content-center">
                         <p class="text-secondary">Do not have account? Register <a href="{{url("/register")}}"> Here</a>!</p>
+                    </div>
+                    <div class="row justify-content-center">
                         <p class="text-secondary">Forgot your password? Click <a href="{{url("/email")}}"> Here</a>!</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
