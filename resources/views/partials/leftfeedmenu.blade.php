@@ -36,7 +36,7 @@
     <small class="text-primary">{{$fellowMusician->name}}</small>
   </a>
   @endforeach
-  <a class="mr-1 d-block mr-2" href="#">
+  <a class="mr-1 d-block mr-2" href="{{ route('fellow_musicians') }}">
     <small><p class="text-secondary mt-2">See all</p></small>
   </a>
 

@@ -93,7 +93,7 @@ Route::post('api/users/{id}/verify_pwd','UserController@validatePassword');
 Route::delete('api/users/{id}/location','UserController@deleteLocation');
 
 Route::put('/api/read_notifications','UserController@readNotifications')->name('read_notifications');
-Route::get('/api/notifications','UserController@getNotifications')->name('get_notifications');
+Route::get('/api/notifications/{offset}','UserController@getNotifications')->name('get_notifications');
 Route::get('/api/user_friends','UserController@getFriends');
 Route::get('/api/user_followers','UserController@getFollowers');
 Route::get('/api/user_following','UserController@api_userFollowing');
@@ -132,6 +132,7 @@ Route::get('bands/new_genre', 'BandController@getNewGenrePartial');
 Route::get('users/following', 'UserController@userFollowings')->name('user_followings');
 Route::get('users/followers', 'UserController@userFollowers')->name('user_followers');
 Route::get('users/bands_following', 'UserController@bandFollowings')->name('bands_following');
+Route::get('users/fellow_musicians', 'UserController@fellowMusicians')->name('fellow_musicians');
 Route::get('users/bands_membership', 'UserController@bandMemberships')->name('bands_membership');
 //Profile
 Route::get('users/{id}', 'UserController@show')->name('profile');

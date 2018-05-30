@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Band;
+use App\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,10 +31,12 @@ class PagesController extends Controller
     public function search(){
         $text = Session::get('searchData')['text'];
 
-        $searchResultUsers = User::getUsersByPattern(Auth::user()->id, $text.':*');
-        $searchResultBands = Band::getBandsByPattern(Auth::user()->id, $text.':*');
-        $searchResultBandsByGenre = Band::getBandsByGenre(Auth::user()->id, $text.':*');
-        $searchResultUsersBySkill = User::getUsersBySkill(Auth::user()->id, $text.':*');
+        $pattern = Content::patternToTSVector($text);
+
+        $searchResultUsers = User::getUsersByPattern(Auth::user()->id, $pattern);
+        $searchResultBands = Band::getBandsByPattern(Auth::user()->id, $pattern);
+        $searchResultBandsByGenre = Band::getBandsByGenre(Auth::user()->id, $pattern);
+        $searchResultUsersBySkill = User::getUsersBySkill(Auth::user()->id, $pattern);
 
     	return view('pages.search.page', [
             'searchResultUsers' => $searchResultUsers,
@@ -43,4 +46,6 @@ class PagesController extends Controller
             'text' => $text
         ]);
     }
+
+    
 }

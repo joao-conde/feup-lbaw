@@ -35,6 +35,20 @@ function requestPatternHandler(obj, api) {
 
     let followingUsers = JSON.parse(this.responseText);
     obj.listElements.innerHTML = "";
+    let pendingUsers = document.querySelectorAll(".pending_member");
+    console.log(followingUsers);
+    console.log(pendingUsers);
+
+    for (let i = 0; i < followingUsers.length; i++) {
+        for (let j = 0; j < pendingUsers.length; j++) {
+            if(followingUsers[i].id == pendingUsers[j].innerHTML){
+                followingUsers.splice(i, 1);
+                i--;
+                break;
+            }
+        }
+        
+    }
     
     for (let i = 0; i < followingUsers.length; i++) {
 
@@ -94,7 +108,8 @@ function buildPendingMemberItem(data){
     member.href = "/users/" + data.userId;    
 
     let small = document.createElement('small');
-    small.classList.add("text-primary");
+    small.classList.add("text-secondary");
+    small.classList.add("ml-1");
     small.innerHTML = data.name;
 
     link.appendChild(small);
@@ -103,8 +118,14 @@ function buildPendingMemberItem(data){
     let status = document.createElement('small');
     status.classList.add("ml-1");
     status.innerHTML = "p";
-
     member.appendChild(status);
+
+    let pending_flag = document.createElement('span');
+    pending_flag.classList.add("pending_member");
+    pending_flag.classList.add("d-none");
+    pending_flag.innerHTML = data.userId;
+    member.appendChild(pending_flag);
+
 
     let removeInvBtn = document.createElement('span');
     removeInvBtn.classList.add("col-2", "clickable", "remove_invite_button");
