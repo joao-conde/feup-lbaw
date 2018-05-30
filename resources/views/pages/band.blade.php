@@ -93,8 +93,7 @@
                                             <a class="text-primary" href={{ "/users/".$band[ 'founders'][0]->userid}}>{{$band['founders'][0]->membername}}</p>
                                         </a>
                                         @if(count($band['founders']) > 2) @for($i = 1; $i
-                                        < count($band[ 'founders'])-1;
-                                            $i++) , <a class="text-primary" href={ { "/users/".$band[ 'founders'][$i]->userid}}></i> {{$band['founders'][$i]->membername}}</i>
+                                        < count($band[ 'founders'])-1; $i++) , <a class="text-primary" href={ { "/users/".$band[ 'founders'][$i]->userid}}></i> {{$band['founders'][$i]->membername}}</i>
                                             </a>
                                             @endfor and
                                             <a class="text-primary" href={ { "/users/".$band[ 'founders'][count($band[ 'founders'])-1]->userid}}></i> {{$band['founders'][count($band['founders'])-1]->membername}}</a>
@@ -137,12 +136,10 @@
         <div class="col-3 d-none d-lg-block">
 
             <div id="members" class="jumbotron p-3 mr-2">
-                Members             
-                
-                @foreach($members as $member)
+                <h4>Members</h4> @foreach($members as $member)
 
                 <div class="d-block">
-                    
+
                     <img class="profile_img_feed" src="{{User::getUserIconPicturePath($member->userid)}}">
                     <a href="{{'/users/'.$member->userid}}">
                         <small class="text-primary">{{$member->membername}}</small>
@@ -150,38 +147,26 @@
 
                     @if($member->owner == true)
                     <small class="ml-1">f</small>
-                    @endif 
-                    
-                    @if($member->pending == true)
+                    @endif @if($member->pending == true)
                     <small class="ml-1">p</small>
-                    @endif 
-                    
-                    @if($isFounder && !$member->owner)
-
-                        @if($member->pending == true)
-                        <span class="col-2 clickable remove_invite_button">
-                                <span id="userId" class="d-none">{{$member->userid}}</span>
-                                <i class="fas fa-times text-danger"></i>
-                        </span>
-                        @endif
-
-                        @if($member->pending == false)
-                        <span class="col-2 clickable remove_member_button">
-                            <span id="memberId" class="d-none">{{$member->userid}}</span>
-                            <i class="fas fa-times text-danger"></i>
-                        </span>
-                        @endif
-                    
-                    @endif
+                    @endif @if($isFounder && !$member->owner) @if($member->pending == true)
+                    <span class="col-2 clickable remove_invite_button">
+                        <span id="userId" class="d-none">{{$member->userid}}</span>
+                        <i class="fas fa-times text-danger"></i>
+                    </span>
+                    @endif @if($member->pending == false)
+                    <span class="col-2 clickable remove_member_button">
+                        <span id="memberId" class="d-none">{{$member->userid}}</span>
+                        <i class="fas fa-times text-danger"></i>
+                    </span>
+                    @endif @endif
 
                 </div>
 
-            
-                @endforeach 
-                
-                @if($isFounder)
 
-                <div class="autocomplete" id="inviteMember">
+                @endforeach @if($isFounder)
+
+                <div class="mt-3 autocomplete" id="inviteMember">
                     <input id="band_members" placeholder="Invite member..." type="text" name="name">
                 </div>
                 <div class="collapse show" id="new_members">
@@ -189,14 +174,29 @@
 
                 @endif
 
+                <hr>
+                <div id="concerts">
+                    <h4>Scheduled Concerts</h4> @foreach($concerts as $concert) @include('partials.concert',[$concert, $band]) @endforeach
 
-            </div>
+                    
+                    <h5 class="m-0 mt-3 text-primary">New concert</h5>
+                    <div class="new_concert d-block">
+                        <input name="description" placeholder="Short description"></input>
+                        <div class="btn-group edit_field">
+                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Edit Location
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left col-12 p-3 bg-secondary">
+                                    @foreach($cities as $city)
+                                        @include('partials.location')
+                                    @endforeach
+                                    
+                                </div>
+                        </div>
+                        <input name="date" type="date" placeholder="Date"></input>
+                    </div>
+                </div>
 
-            <div id="concerts" class="jumbotron p-3 mr-2">
-                Scheduled Concerts
-                @foreach($concerts as $concert)
-                    @include('partials.concert',[$concert, $band])
-                @endforeach
             </div>
 
         </div>
