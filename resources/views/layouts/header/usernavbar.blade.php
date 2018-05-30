@@ -1,4 +1,5 @@
 <script defer src="{{ asset('js/notifications.js') }}"></script>
+<script defer src="{{ asset('js/messages.js') }}"></script>
 
 <nav class="navbar navbar-expand navbar-light p-0">
     

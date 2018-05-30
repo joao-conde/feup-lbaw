@@ -5,24 +5,30 @@ let messagesCount = document.querySelector('#message_count');
 let messages_div = document.querySelector('div#messages_div');
 let read_messages = document.querySelector("#messages_read");
 
-setTimeout(function(){ 
+setInterval(function(){ 
     sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/messages/' + nMessagesLoaded, GET, updateMessagesHandler);
 }, 1000);
 
 function updateMessagesHandler() {
-
     messages_div.innerHTML = this.responseText;
     let newCount = messages_div.querySelector('#count_messages').innerHTML;
 
-    notsCount.innerHTML = newCount > 0 ? newCount : "";
+    messagesCount.innerHTML = newCount > 0 ? newCount : "";
+
+    readMessages();
 }
 
-read_messages.addEventListener('click', function(){
+console.log(read_messages);
 
-    sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages', PUT, null);
+read_messages.addEventListener('click', readMessages);
 
-    notsCount.innerHTML = "";
-});
+function readMessages(){
+
+    let ids = document.querySelectorAll(".message_user_id");
+    for (let i = 0; i < ids.length; i++) {
+        sendAsyncAjaxRequest(new XMLHttpRequest(), '/api/read_messages/' + ids[i].innerHTML , PUT, null);
+    }
+}
 
 document.querySelector("#see_more_messages").addEventListener('click', function(){
 

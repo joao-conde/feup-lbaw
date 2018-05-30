@@ -1,11 +1,11 @@
 <link href="{{ asset('css/notifications.css') }}" rel="stylesheet">
 
 <li class="nav-item dropdown">
-    <a class="nav-link text-success pt-3 read-messages" href="#" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+    <a id="messages_read" class="nav-link text-success pt-3 read-messages" href="#" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
         <i class="far fa-envelope"></i>
         <span id="message_count" class="badge badge-secondary bg-primary text-warning">@if($messagesInfo['count'] > 0) {{$messagesInfo['count']}} @endif</span>
     </a>
-    <div id="messagesList" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+    <div class="notificationsList dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
         
         <h5 class=" dropdown-item text-center">Messages</h5>
         <div class="dropdown-divider"></div>
