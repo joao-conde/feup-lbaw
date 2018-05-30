@@ -151,7 +151,8 @@ CREATE TABLE mb_user (
     admin BOOLEAN NOT NULL DEFAULT FALSE,
     remember_token TEXT,
     email text NOT NULL DEFAULT 'danny.a_soares@hotmail.com',
-    password_token text
+    password_token text,
+    online BOOLEAN NOT NULL DEFAULT false
 );
 
 ALTER TABLE ONLY mb_user

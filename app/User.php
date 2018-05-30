@@ -481,21 +481,30 @@ class User extends Authenticatable
                   JOIN mb_user ON us_user_following.followedUserId = mb_user.id
                   WHERE us_user_following.followedUserId 
                   IN
-                    (SELECT id 
+                    (SELECT us_being_followed.followinguserid 
                      FROM user_follower as us_being_followed
                      WHERE us_being_followed.followedUserId = ?)
                   AND us_user_following.followingUserId = ? 
-                  AND isactive = true';
+                  AND isactive = true
+                  ORDER BY mb_user.name';
 
         return DB::Select($query, [$this->id, $this->id]);
 
 
     }
 
-    public function friendMessages($friendId, $offset) {
+    public function friendMessages($friendId) {
 
-        return Message::getMessagesFromUser($this->id, $friendId, $offset);
+        return Message::getMessagesFromUser($this->id, $friendId);
 
     }
+
+    public function unreadMessages() {
+
+        return Message::getUnreadMessages($this->id);
+
+    }
+
+
 
 }

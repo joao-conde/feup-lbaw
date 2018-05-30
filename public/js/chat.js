@@ -1,8 +1,10 @@
 const CHAT_INTERVAL_REFRESH_TIME = 1000;
 let newMessageForms = document.querySelectorAll('form.sendMessageForm');
 let messagesListDivs = document.querySelectorAll('div.messagesList');
+let badges = document.querySelectorAll('span.newMessages');
+let dropDownItems = document.querySelectorAll('div.chat_dropdown');
 
-function addListenersToSendMessageForm(newMessageForm, messagesListDiv) {
+function addListenersToSendMessageForm(newMessageForm, messagesListDiv, dropdown, badge) {
 
     let inputNewMessage = newMessageForm.querySelector('textarea.messageInput');
     let sendMessageButton = newMessageForm.querySelector('button.sendMessageButton');
@@ -12,7 +14,21 @@ function addListenersToSendMessageForm(newMessageForm, messagesListDiv) {
 
     inputNewMessage.addEventListener('keyup',enterKeyListener.bind(this,inputNewMessage,friendId));
 
+    inputNewMessage.addEventListener('focus',function() {
+
+        badge.innerHTML = 0;
+        badge.selfHide();
+    });
+
+
     messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
+
+    dropdown.addEventListener('click',function(){
+
+        badge.innerHTML = 0;
+        badge.selfHide();
+
+    });
 
 }
 
@@ -39,7 +55,7 @@ function sendMessageRequest(inputNewMessage, friendId, event) {
 
 
 for(let i = 0; i < newMessageForms.length; i++) {
-    addListenersToSendMessageForm(newMessageForms[i],messagesListDivs[i]);
+    addListenersToSendMessageForm(newMessageForms[i],messagesListDivs[i], dropDownItems[i],badges[i]);
 }
 
 window.setInterval(requestMoreMessages,CHAT_INTERVAL_REFRESH_TIME);
@@ -57,14 +73,14 @@ function requestMoreMessages() {
             lastMessageId: lastMessageId
         }
 
-        sendAsyncAjaxRequest(request, api, GET, handleNewMessagesRequestListener.bind(request,messagesListDivs[i]), URL_ENCODE, data);
+        sendAsyncAjaxRequest(request, api, GET, handleNewMessagesRequestListener.bind(request,messagesListDivs[i], badges[i]), URL_ENCODE, data);
 
     }
 
 }
 
 
-function handleNewMessagesRequestListener(messagesListDiv) {
+function handleNewMessagesRequestListener(messagesListDiv, badge) {
 
     if(this.status != 200 || this.responseText == '')
         return;
@@ -74,9 +90,19 @@ function handleNewMessagesRequestListener(messagesListDiv) {
     for(let i = 0; i < newMessages.length; i++) {
 
         messagesListDiv.appendChild(newMessages[i]);
+        badge.innerHTML = parseInt(badge.innerHTML) + 1;
+        badge.selfShow();
 
     }
 
+
+    if(newMessages.length > 0) {
+
+        
+        badge.innerHTML = newMessages.length;
+
+    }
+        
     messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
 
 }
@@ -90,3 +116,6 @@ function enterKeyListener(inputNewMessage, friendId, evento) {
         sendMessageRequest(inputNewMessage,friendId);
 
 }
+
+
+
