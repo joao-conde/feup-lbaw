@@ -45,8 +45,8 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |US15      |Unfollow Users|high|100%|
 |US16      |Follow Bands|high|100%|
 |US17      |Unfollow Bands|high|100%|
-|US18      |Create Band Page|high|90%|
-|US19      |Post|high|70%-João Conde|
+|US18      |Create Band Page|high|100%|
+|US19      |Post|high|100%|
 |US20      |Search for users/bands|high|100%|
 |US21      |Profile Page|high|100%|
 |US22      |Band Page|high|100%|
@@ -86,8 +86,8 @@ Leonardo Manuel Gomes Teixeira - up201502848@fe.up.pt
 |Identifier|Name|Priority|State|
 | -------- | -- |:------:| --------- |
 |US45      |Recruit users|high|100%|
-|US46      |Remove users|high|90%|
-|US47      |Schedule Concerts|high|0%|
+|US46      |Remove users|high|100%|
+|US47      |Schedule Concerts|high|30%|
 |US48      |Post|high|100%|
 |US49      |Post|high|100%|
 |US50      |Remove posts|high|100%|
@@ -98,5 +98,7 @@ PORMENORES QUE FALTAM FAZER:
 
 - IMPORTANTE: 
   - Novo user not admin
-- New Band page: sem dropdown genres
-- Post não aparecem os ENTERs
+  - Online help
+  - Validate HTML, CSS, JS e LARAVEL?
+
+- Comments na página de perfil de outro user disabled

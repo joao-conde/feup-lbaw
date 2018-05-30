@@ -355,12 +355,10 @@ class UserController extends Controller {
 
 
         $alreadyExists = DB::select($verifyQuery, [Auth::user()->id, $userToFollowId]);
-
         if(count($alreadyExists) == 1) {
             DB::update($updateQuery, [Auth::user()->id, $userToFollowId]);
             return response('',200);
         }
-
         else
             return response('',500);
 
