@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Post;
+use App\Report;
 
 class PostController extends Controller
 {
@@ -87,6 +88,31 @@ class PostController extends Controller
         return response(200);
     }
 
-    
+    public function reportPost(Request $request){
+        
+        if (!Auth::check()) return response('No user logged',500);
+
+        $postId = $request->postId;
+
+        $query = "select * from mb_user join content on content.creatorid = mb_user.id join post on content.id = post.contentid and post.id = ?;";
+        $user = DB::select($query,[$postId]);
+
+        $content = DB::select("select * from content join post on post.contentid = content.id and post.id = ?;",[$postId]);
+
+        // dd(Auth::user()->id);
+        $reportId = DB::select("select id from report order by date desc limit 1;");
+
+        $report = new Report();
+        $report->id = $reportId[0]->id+1;
+        $report->text = str_random(10);
+        $report->reportedcontentid = $content[0]->id;
+        $report->reporteduserid = $user[0]->id;
+        $report->reporteruserid = Auth::user()->id;
+        $report->reporttype = 'content_report';
+        $report->save();
+
+        return response('',200);
+    }
 
 }
+

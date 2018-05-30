@@ -10,6 +10,7 @@ return array(
     'App\\Band' => $baseDir . '/app/Band.php',
     'App\\City' => $baseDir . '/app/City.php',
     'App\\Comment' => $baseDir . '/app/Comment.php',
+    'App\\Concert' => $baseDir . '/app/Concert.php',
     'App\\Console\\Commands\\GenerateRoutesForJavascript' => $baseDir . '/app/Console/Commands/GenerateRoutesForJavascript.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Content' => $baseDir . '/app/Content.php',

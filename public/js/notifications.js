@@ -8,6 +8,8 @@ setInterval(function(){
 function updateNotificationsHandler() {
 
     let notifications_div = document.querySelector('div#notifications_div');
+    // if(notifications_div == null)
+    // 	return;
     notifications_div.innerHTML = this.responseText;
     
     let newCount = notifications_div.querySelector('#count_hidden').innerHTML;

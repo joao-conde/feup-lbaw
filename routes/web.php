@@ -141,8 +141,12 @@ Route::get('users/bands_membership', 'UserController@bandMemberships')->name('ba
 
 //Profile
 Route::get('users/{id}', 'UserController@show')->name('profile');
-
 Route::get('users/{userId}/posts/{postId}', 'PostController@showPost')->name('post_page');
+
+Route::post('/api/comments/{commentId}/report','CommentController@reportComment');
+Route::post('/api/users/{userId}/posts/{postId}/report','PostController@reportPost');
+
+
 
 // Errors
 Route::get('/403', 'ErrorPagesController@error403');

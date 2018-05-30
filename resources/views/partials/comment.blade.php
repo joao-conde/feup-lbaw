@@ -24,11 +24,11 @@
                 <small>{{date('d/m/Y H:i',strtotime($comment->date))}}</small>
             </div>
 
-            @if($comment->userid == Auth::user()->id)
             <div class="col">
                 <span class="p-2 clickable text-secondary" data-toggle="dropdown" id="moreOption" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v"></i>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreOption">
+                        @if($comment->userid == Auth::user()->id)
                         <span class="dropdown-item clickable delete_comment_button">
                             <i class=" mr-2 clickable fas fa-trash-alt"></i>
                             <small>Remove Comment</small>
@@ -37,14 +37,15 @@
                             <i class="mr-2 fas fa-pencil-alt"></i>
                             <small>Edit Comment</small>
                         </span>
-
+                        @else
+                        <span class="dropdown-item clickable report_button">
+                            <i class="mr-3 ml-1 fas fa-exclamation"></i>
+                            <small>Report Content</small>
+                        </span>
+                        @endif
                     </div>
                 </span>
             </div>
-            @endif
-
         </div>
-
     </div>
-
 </div>
