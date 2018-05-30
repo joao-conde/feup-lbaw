@@ -7,7 +7,7 @@
         <small>{{$message->text}}</small>
     </div>
     <div class="col-auto px-2 mr-0">
-        <a href="{{"users/".$message->creatorid}}" data-toggle="tooltip" title="{{date('d/m H:i',strtotime($message->date))}}" data-placement="left">
+        <a href="{{"/users/".$message->creatorid}}" data-toggle="tooltip" title="{{date('d/m H:i',strtotime($message->date))}}" data-placement="left">
             <img src="{{ User::getUserIconPicturePath($message->creatorid) }}" class="profile_img_chat_window">
         </a>
     </div>
@@ -17,7 +17,7 @@
     <p class="d-none messageId">{{$message->id}}</p>
     <p class="d-none isown">0</p>
     <div class="col-auto px-2">
-        <a href="{{"users/".$message->creatorid}}" data-toggle="tooltip" title="{{date('d/m H:i',strtotime($message->date))}}" data-placement="left">
+        <a href="{{"/users/".$message->creatorid}}" data-toggle="tooltip" title="{{date('d/m H:i',strtotime($message->date))}}" data-placement="left">
             <img src="{{ User::getUserIconPicturePath($message->creatorid) }}" class="profile_img_chat_window">
         </a>
     </div>

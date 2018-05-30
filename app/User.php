@@ -533,6 +533,12 @@ class User extends Authenticatable
 
     }
 
+    public function getBandMessages($bandId) {
+
+        return Message::getMessagesFromBands($bandId);
+
+    }
+
 
 
 }

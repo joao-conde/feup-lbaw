@@ -116,6 +116,11 @@ Route::delete('/api/comments/{comment}','CommentController@deleteComment');
 Route::post('/api/users/{userId}/messages/{friendId}', 'MessageController@store');
 Route::get('/api/users/{userId}/messages/{friendId}', 'MessageController@getNewMessages');
 
+Route::post('/api/bands/{bandId}/messages', 'MessageController@storeBandMessage');
+Route::get('/api/bands/{bandId}/messages', 'MessageController@getBandNewMessages');
+
+
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('do_login')->middleware('not_banned');

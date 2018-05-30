@@ -3,7 +3,6 @@
     <div class="col">
         <img src="{{ User::getUserIconPicturePath($friend->id) }}" class="mr-2 profile_img_chat">
         <small class="text-secondary">{{$friend->name}}</small>
-
     </div>
     <div class="col-2">
         <?php 
@@ -31,7 +30,7 @@
 <div class="collapse collapse-messages" id="{{"user_".$friend->id}}">
     <div class="card card-body rounded-0 p-0 m-0 chats">
         <div class="container pr-0 messagesList">
-            <?php $messages =  $user->friendMessages($friend->id,0) ?>
+            <?php $messages =  $user->friendMessages($friend->id) ?>
             @for($i = count($messages)-1; $i >= 0; $i--)
                 @include('partials.message',['message' => $messages[$i]])
             @endfor

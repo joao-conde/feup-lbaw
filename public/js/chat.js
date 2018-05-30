@@ -69,7 +69,7 @@ for(let i = 0; i < newMessageForms.length; i++) {
     addListenersToSendMessageForm(newMessageForms[i],messagesListDivs[i], dropDownItems[i],badges[i]);
 }
 
-window.setInterval(requestMoreMessages,CHAT_INTERVAL_REFRESH_TIME);
+
 
 function requestMoreMessages() {
 
@@ -139,5 +139,125 @@ function enterKeyListener(inputNewMessage, friendId, evento) {
 
 }
 
+//band chat
+
+
+let newBandMessageForms = document.querySelectorAll('form.sendBandMessageForm');
+let bandMessagesListDivs = document.querySelectorAll('div.messagesListBand');
+let bandDropDownItems = document.querySelectorAll('div.chat_dropdown_band');
+let bandBadges = document.querySelectorAll('span.newMessagesBand');
+
+window.setInterval(requestPeriodicMessages,CHAT_INTERVAL_REFRESH_TIME);
+
+function requestPeriodicMessages() {
+
+    requestMoreMessages();
+    requestMoreBandMessages();
+
+}
+
+function requestMoreBandMessages() {
+
+    for(let i = 0; i < bandMessagesListDivs.length; i++) {
+       
+        let lastMessageId = bandMessagesListDivs[i].children.length > 0 ? bandMessagesListDivs[i].children[bandMessagesListDivs[i].children.length-1].querySelector('p.messageId').innerHTML : 0;
+        let bandId = parseInt(newBandMessageForms[i].querySelector('p.bandId').innerHTML);
+
+        let request = new XMLHttpRequest();
+        let api = '/api/bands/' + bandId + '/messages';
+        let data = {
+            lastMessageId: lastMessageId
+        }
+
+        sendAsyncAjaxRequest(request, api, GET, handleNewMessagesRequestListenerBand.bind(request,bandMessagesListDivs[i], bandBadges[i]), URL_ENCODE, data);
+
+    }
+
+}
+
+function handleNewMessagesRequestListenerBand(messagesListDiv, badge) {
+
+    if(this.status != 200 || this.responseText == '')
+        return;
+
+    let newMessages = createElementsArrayFromHTML(this.responseText);
+
+
+    for(let i = 0; i < newMessages.length; i++) {
+
+        messagesListDiv.appendChild(newMessages[i]);
+
+        badge.innerHTML = parseInt(badge.innerHTML) + 1;
+        badge.selfShow();
+
+    }
+
+    // let messagesOwns = messagesListDiv.querySelectorAll('p.isown');
+    // let isOwn = parseInt(messagesOwns[messagesOwns.length-1].innerHTML);
+
+    // if(isOwn == 1) {
+
+    //     badge.innerHTML = 0;
+    //     badge.selfHide();
+
+    // }
+
+
+    // if(newMessages.length > 0) {
+    //     badge.innerHTML = newMessages.length;
+    // }
+        
+    messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
+
+
+
+}
+
+
+for(let i = 0; i < newBandMessageForms.length; i++) {
+    addListenersToSendBandMessageForm(newBandMessageForms[i],bandMessagesListDivs[i], bandDropDownItems[i],badges[i]);
+}
+
+
+function addListenersToSendBandMessageForm(newBandMessageForm, bandMessagesListDiv, dropdown, badge) {
+
+    let inputNewMessageBand = newBandMessageForm.querySelector('textarea.messageInput');
+    let sendBandMessageButton = newBandMessageForm.querySelector('button.sendMessageButton');
+    let bandId = parseInt(newBandMessageForm.querySelector('p.bandId').innerHTML);
+
+    sendBandMessageButton.addEventListener('click',sendBandMessageRequest.bind(this,inputNewMessageBand,bandId));
+
+    // inputNewMessage.addEventListener('keyup',enterKeyListener.bind(this,inputNewMessage,friendId));
+
+    // inputNewMessage.addEventListener('focus',cleanNotifications.bind(this,badge, friendId));
+    // inputNewMessage.addEventListener('click',cleanNotifications.bind(this,badge, friendId));
+
+    // messagesListDiv.parentElement.scrollTop = messagesListDiv.parentElement.scrollHeight;
+
+    // dropdown.addEventListener('click',cleanNotifications.bind(this,badge, friendId));
+
+}
+
+
+function sendBandMessageRequest(inputNewMessageBand, bandId) {
+
+    if(event != undefined)
+        event.preventDefault();
+
+    let request = new XMLHttpRequest();
+    let api = '/api/bands/' + bandId + '/messages';
+
+    let data = JSON.stringify({message: inputNewMessageBand.value.trim()});
+
+    sendAsyncAjaxRequest(request,api,POST,function() {
+
+        if(this.status != 200)
+            return;
+            inputNewMessageBand.value = "";
+    
+    }
+    ,JSON_ENCODE,data);
+
+}
 
 

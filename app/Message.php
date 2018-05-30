@@ -38,6 +38,8 @@ class Message extends Model {
 
     }
 
+    
+
     public static function getUnreadMessages($userId) {
 
         $query = "SELECT content.creatorId as creatorId, count(content.creatorId) as numberofmessages
@@ -55,10 +57,29 @@ class Message extends Model {
 
     }
 
-    public static function getMessagesFromBands($userId, $bandId) {
+    public static function getMessagesFromBands($bandId) {
 
+        $query = 'SELECT message.id, creatorId, text, date, isActive
+                    FROM message
+                    JOIN content ON content.id = message.contentId
+                    WHERE bandId = ?
+                    ORDER BY date ASC';
 
-        
+        return DB::select($query, [$bandId]);
+
+    }
+
+    public static function getNewBandMessages($bandId, $lastId) {
+
+        $query = 'SELECT message.id, creatorId, text, date, isActive
+                    FROM message
+                    JOIN content ON content.id = message.contentId
+                    WHERE bandId = ?
+                    AND message.id > ?
+                    ORDER BY date ASC';
+
+        return DB::select($query,[$bandId,$lastId]);
+
     }
 
 
